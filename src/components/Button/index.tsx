@@ -1,27 +1,21 @@
-import React from 'react';
-// import './button.css';
+import React from 'react'
+import '@/styles/components/atoms/Button.module.scss'
 
 interface ButtonProps {
-  primary?: boolean;
-  backgroundColor?: string;
   size?: 'small' | 'medium' | 'large';
   text: string;
   onClick?: () => void;
 }
 
 const Button = ({
-  primary = false,
   size = 'medium',
-  backgroundColor,
   text,
   ...props
 }: ButtonProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
   return (
     <button
       type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      style={{ backgroundColor }}
+      className={['a-button', `a-button-${size}`].join('')}
       {...props}
     >
       {text}

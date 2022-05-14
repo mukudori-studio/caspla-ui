@@ -1,0 +1,78 @@
+@use './variable' as var;
+// Media Query
+// 固定パターン
+$breakpoints:(
+  pc: var.$break-point--pc,
+  pc--under: var.$break-point--pc--under,
+  tablet-pc: var.$break-point--narrow-pc,
+  tablet-pc--under: var.$break-point--narrow-pc--under,
+  tablet: var.$break-point--tablet,
+  tablet--under: var.$break-point--tablet--under,
+  sp-small: var.$break-point-sp-small,
+) !default;
+
+// ○○px以上
+@mixin mq-up($breakpoint) {
+  @media ( min-width: #{map-get($breakpoints, $breakpoint)} ) {
+    @content;
+  }
+}
+
+// ○○px以下
+@mixin mq-down($breakpoint) {
+  @media ( max-width: #{map-get($breakpoints, $breakpoint)} ) {
+    @content;
+  }
+}
+
+
+// Flex Box
+// NOTE：使い方 @inlcude flex(横, 縦, カラム, 種別)
+@mixin flex($justify: start, $align: center, $column: row, $type: flex) {
+
+  // justify-content水平方向揃え（第1引数）
+  @if $justify == start {
+    justify-content: flex-start;
+  } @else if $justify == end {
+    justify-content: flex-end;
+  } @else if $justify == center {
+    justify-content: center;
+  } @else if $justify == between {
+    justify-content: space-between;
+  } @else if $justify == around {
+    justify-content: space-around;
+  } @else if $justify == evenly {
+    justify-content: space-evenly;
+  }
+
+  // align-items垂直方向揃え（第2引数）
+  @if $align == start {
+    align-items: flex-start;
+  } @else if $align == end {
+    align-items: flex-end;
+  } @else if $align == center {
+    align-items: center;
+  } @else if $align == baseline {
+    align-items: baseline;
+  } @else if $align == stretch {
+    align-items: stretch;
+  }
+
+  // 縦並び（第3引数）
+  @if $column == 'row' {
+    flex-direction: row;
+  } @else if $column == 'column' {
+    flex-direction: column;
+  } @else if $column == 'row-reverse' {
+    flex-direction: row-reverse;
+  } @else if $column == 'column-reverse' {
+    flex-direction: column-reverse;
+  }
+
+  // display種別(第4引数)
+  @if $type == flex {
+    display: flex;
+  } @else if $type == inline-flex {
+    display: inline-flex;
+  }
+}
