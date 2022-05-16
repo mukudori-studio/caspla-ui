@@ -7,7 +7,7 @@
 }
 
 body {
-  background: g.$color-black;
+  background: g.$color-mono-0;
   color: g.$color-black;
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-feature-settings: 'palt';
@@ -17,20 +17,30 @@ body {
   }
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   line-height: 1.75;
   @include g.mq-down(tablet--under) {
     font-size: 3.467vw; // 13px
   }
 }
 
-ul, ol, li {
+ul,
+ol,
+li {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-a, img, button {
+a,
+img,
+button {
   display: block;
   margin: 0;
   padding: 0;

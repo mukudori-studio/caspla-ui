@@ -1,7 +1,7 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import Button from './'
+import Button from './';
 
 export default {
   title: 'Atoms/Button',
@@ -9,16 +9,25 @@ export default {
   argTypes: {
     size: {
       control: {
-        type: 'select', 
-        options: ['small', 'medium', 'large']
-      }
+        type: 'select',
+        options: ['small', 'medium', 'large'],
+      },
+    },
+    color: {
+      control: {
+        type: 'select',
+        options: ['primary', 'secondary'],
+      },
+    },
+    disabled: {
+      control: { type: 'boolean' },
     },
   },
-} as ComponentMeta<typeof Button>
+} as ComponentMeta<typeof Button>;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />
+const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
-export const Primary = Template.bind({})
-Primary.args = {
-  text: 'Button'
-}
+export const Default = Template.bind({});
+Default.args = {
+  text: 'Button',
+};

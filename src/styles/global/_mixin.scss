@@ -1,7 +1,7 @@
 @use './variable' as var;
 // Media Query
 // 固定パターン
-$breakpoints:(
+$breakpoints: (
   pc: var.$break-point--pc,
   pc--under: var.$break-point--pc--under,
   tablet-pc: var.$break-point--narrow-pc,
@@ -25,11 +25,9 @@ $breakpoints:(
   }
 }
 
-
 // Flex Box
 // NOTE：使い方 @inlcude flex(横, 縦, カラム, 種別)
 @mixin flex($justify: start, $align: center, $column: row, $type: flex) {
-
   // justify-content水平方向揃え（第1引数）
   @if $justify == start {
     justify-content: flex-start;
