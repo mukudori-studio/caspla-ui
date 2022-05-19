@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "APP_ENV=local next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "APP_ENV=staging next start",
+    "start-production": "APP_ENV=staging next start",
     "lint": "next lint",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
