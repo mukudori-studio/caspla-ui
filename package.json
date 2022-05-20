@@ -8,8 +8,8 @@
     "start": "APP_ENV=staging next start",
     "start-production": "APP_ENV=staging next start",
     "lint": "next lint",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "storybook": "start-storybook -p ./public -p 6006",
+    "build-storybook": "build-storybook -s public",
     "chromatic": "npx chromatic --project-token=3c916191bcb3",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json,css,scss}'"
   },

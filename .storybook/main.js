@@ -9,6 +9,7 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
   ],
+  staticDirs: ['../public'],
   webpackFinal: async (config) => {
     config.resolve.alias = {
       '@/components': path.resolve(__dirname, '../src/components'),
@@ -24,6 +25,9 @@ module.exports = {
           loader: 'css-loader',
           options: {
             importLoaders: 2,
+            modules: {
+              localIdentName: "[local]___[hash:base64:2]",
+            },
           },
         },
         {
