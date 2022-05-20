@@ -1,0 +1,63 @@
+@use '../../global' as g;
+
+.o-footer {
+  background: g.$color-primary;
+  color: g.$color-mono-0;
+  padding: 50px 50px 42px;
+
+  &__inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  &__top {
+    @include g.flex;
+    gap: 30px;
+    margin-bottom: 40px;
+  }
+
+  &__link {
+    color: g.$color-mono-0;
+    font-size: 14px;
+    text-decoration: none;
+    transition: .2s;
+    line-height: 1.1;
+    
+    &:hover {
+      opacity: .8;
+    }
+  }
+
+  &__icon {
+    width: 24px;
+    color: g.$color-mono-0;
+  }
+
+  &__bottom {
+    @include g.flex(between);
+  }
+
+  &__logos {
+    @include g.flex;
+    gap: 28px;
+  }
+
+  &__copy {
+    font-size: 14px;
+    line-height: 1.1;
+  }
+
+  &__socials {
+    @include g.flex(end);
+    gap: 28px;
+  }
+
+  &__social {
+    display: block;
+    transition: .2s;
+    
+    &:hover {
+      opacity: .8;
+    }
+  }
+}
