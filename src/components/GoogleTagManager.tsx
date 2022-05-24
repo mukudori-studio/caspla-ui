@@ -5,7 +5,7 @@ export type GoogleTagManagerId = `GTM-${string}`
 
 type tagManagerProps = {
   googleTagManagerId: GoogleTagManagerId
-};
+}
 
 const GoogleTagManager = ({ googleTagManagerId }: tagManagerProps) => {
   return (

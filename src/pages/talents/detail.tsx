@@ -4,21 +4,20 @@ import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import styles from '@/styles/Home.module.scss'
 
-const Home: NextPage = () => {
+const TalentDetail: NextPage = () => {
   return (
     <div className={styles.container}>
-      <Meta title="トップ" />
+      <Meta title="タレント詳細" />
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Caspla UI
+          タレント詳細
         </h1>
         <Link href="/talents"><a>タレント一覧へ</a></Link>
 
-        <Button text='ボタンだよ' />
       </main>
     </div>
   )
 }
 
-export default Home
+export default TalentDetail
