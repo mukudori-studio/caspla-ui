@@ -1,0 +1,208 @@
+{
+  "openapi": "3.1.0",
+  "x-stoplight": {
+    "id": "tq2uwe7l4jldi"
+  },
+  "info": {
+    "title": "talents",
+    "version": "1.0",
+    "summary": "タレントに関連する情報の取得"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/talents": {
+      "get": {
+        "summary": "talents",
+        "tags": [
+          "talent"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/talents"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-talents",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "accessToken"
+          }
+        ]
+      }
+    },
+    "/talents/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Talent Detail",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TalentDetail"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-talents-id"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "talents": {
+        "title": "talents",
+        "x-stoplight": {
+          "id": "c6nzs4ue8cyhj"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "thumnailUrl": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "displayName",
+          "fullName",
+          "description"
+        ]
+      },
+      "TalentDetail": {
+        "title": "TalentDetail",
+        "x-stoplight": {
+          "id": "eql1h6r2gfkax"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "thumbnailUrl": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string",
+            "enum": [
+              "male",
+              "female",
+              "other"
+            ]
+          },
+          "birthday": {
+            "type": "string",
+            "format": "date"
+          },
+          "age": {
+            "type": "number"
+          },
+          "bloodType": {
+            "type": "string",
+            "enum": [
+              "a",
+              "b",
+              "o",
+              "ab",
+              "other"
+            ]
+          },
+          "height": {
+            "type": "number"
+          },
+          "weight": {
+            "type": "number"
+          },
+          "threeSize": {
+            "type": "array",
+            "items": {}
+          },
+          "birthPlace": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "history": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "belong": {
+            "type": "string"
+          },
+          "twitterId": {
+            "type": "string"
+          },
+          "likeCount": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "fullName",
+          "displayName",
+          "gender",
+          "bloodType",
+          "likeCount"
+        ]
+      }
+    }
+  }
+}

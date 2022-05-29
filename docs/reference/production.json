@@ -1,0 +1,151 @@
+{
+  "openapi": "3.1.0",
+  "x-stoplight": {
+    "id": "10svpwbnkb0q5"
+  },
+  "info": {
+    "title": "production",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/productions": {
+      "get": {
+        "summary": "Production",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Production"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-productions"
+      }
+    },
+    "/productions/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "production Detail",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductionDetail"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-productions-id"
+      }
+    },
+    "/productoins/{id}/talents": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Talent affiliated with",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "get-productoins-id-talents"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Production": {
+        "title": "Production",
+        "x-stoplight": {
+          "id": "wdq0cdiuvkkvg"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "thumbnailUrl": {
+            "type": "string"
+          },
+          "category": {
+            "type": "array",
+            "items": {}
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "ProductionDetail": {
+        "title": "ProductionDetail",
+        "x-stoplight": {
+          "id": "97052l1cyazlm"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "thumbnailUrl": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      }
+    }
+  }
+}

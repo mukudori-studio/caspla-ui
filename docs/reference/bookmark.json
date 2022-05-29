@@ -1,0 +1,72 @@
+{
+  "openapi": "3.1.0",
+  "x-stoplight": {
+    "id": "kaoqwtcet3lx0"
+  },
+  "info": {
+    "title": "bookmark",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/bookmarks/talents/{userId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "talent_booksmarks",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-bookmarks-talents-userId",
+        "parameters": [
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "header",
+            "name": "user_id",
+            "description": "ユーザー毎のユニークID"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token",
+            "description": "セッション情報"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "bookmarks": {
+        "title": "bookmarks",
+        "x-stoplight": {
+          "id": "v2xoe9gd8nlkp"
+        },
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
