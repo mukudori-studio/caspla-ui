@@ -1,6 +1,7 @@
 {
   "name": "Caspla Ui",
   "description": "",
+  "spectralExtends": [],
   "formats": [
     "oas2",
     "oas3",
