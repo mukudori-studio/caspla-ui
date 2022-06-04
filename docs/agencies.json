@@ -1,0 +1,199 @@
+{
+  "openapi": "3.1.0",
+  "x-stoplight": {
+    "id": "c5unb9q19t1cf"
+  },
+  "info": {
+    "title": "プロダクション",
+    "version": "1.0",
+    "summary": "プロダクション用API"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/agencies": {
+      "get": {
+        "summary": "プロダクション一覧",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "page": {
+                      "type": "number",
+                      "example": 3
+                    },
+                    "agencies": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "thumbnail_url": {
+                            "type": "string"
+                          },
+                          "activities": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "description": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "description"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "page"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-agency",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "芸能事務所名が入ります"
+            },
+            "in": "query",
+            "name": "keyword",
+            "description": "プロダクション名検索"
+          }
+        ],
+        "description": ""
+      },
+      "parameters": []
+    },
+    "/agencies/{id}": {
+      "get": {
+        "summary": "プロダクション一覧",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "thumbnail_url": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "casts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "number"
+                          },
+                          "full_name": {
+                            "type": "string"
+                          },
+                          "caspla_id": {
+                            "type": "string"
+                          },
+                          "thumbnail_url": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "full_name",
+                          "caspla_id"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "description",
+                    "casts"
+                  ]
+                }
+              }
+            }
+          },
+          "": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-agency",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "芸能事務所名が入ります"
+            },
+            "in": "query",
+            "name": "keyword",
+            "description": "プロダクション名検索"
+          }
+        ],
+        "description": ""
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}

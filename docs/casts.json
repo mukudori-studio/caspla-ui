@@ -1,0 +1,497 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Casts",
+    "version": "1.0",
+    "description": "タレントの一覧、詳細の閲覧",
+    "summary": "タレントに関連する情報を取得するAPI"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "paths": {
+    "/casts": {
+      "parameters": [],
+      "get": {
+        "summary": "タレント一覧",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "page": {
+                      "type": "number",
+                      "example": 3
+                    },
+                    "casts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "full_name": {
+                            "type": "string",
+                            "example": "ミスター キャスプラ"
+                          },
+                          "caspla_id": {
+                            "type": "string",
+                            "example": "mrCaspla2022"
+                          },
+                          "thumbnail_url": {
+                            "type": "string"
+                          },
+                          "profile": {
+                            "type": "string"
+                          },
+                          "activities": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "example": "musician"
+                            }
+                          },
+                          "bookmarked": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "full_name",
+                          "caspla_id",
+                          "bookmarked"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "page",
+                    "casts"
+                  ]
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "page": 3,
+                      "casts": [
+                        {
+                          "id": 0,
+                          "full_name": "ミスター キャスプラ",
+                          "caspla_id": "mrCaspla2022",
+                          "thumbnail_url": "string",
+                          "description": "string",
+                          "activities": [
+                            "musician"
+                          ],
+                          "liked": true
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-talents-casplaId",
+        "description": "タレント情報の一覧を取得",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token",
+            "description": "ログインしてる場合はアクセストークンを渡す"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "タレント名"
+            },
+            "in": "query",
+            "name": "keyword",
+            "description": "キーワード検索"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "man"
+            },
+            "in": "query",
+            "name": "gender",
+            "description": "性別検索"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "30s"
+            },
+            "in": "query",
+            "name": "age",
+            "description": "年代検索"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "example": "musician, dancer"
+            },
+            "in": "query",
+            "name": "activity",
+            "description": "活動区分検索"
+          }
+        ]
+      }
+    },
+    "/casts/{caspla_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "caspla_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "タレント詳細",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "full_name": {
+                      "type": "string"
+                    },
+                    "caspla_id": {
+                      "type": "string"
+                    },
+                    "thumbnail_url": {
+                      "type": "string"
+                    },
+                    "profile": {
+                      "type": "string"
+                    },
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "example": "musician"
+                      }
+                    },
+                    "bookmarked": {
+                      "type": "boolean"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "enum": [
+                        "man",
+                        "woman"
+                      ]
+                    },
+                    "birthday": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "age": {
+                      "type": "number"
+                    },
+                    "star_sign": {
+                      "type": "string"
+                    },
+                    "birthplace": {
+                      "type": "string"
+                    },
+                    "blood_type": {
+                      "type": "string"
+                    },
+                    "height": {
+                      "type": "number"
+                    },
+                    "weight": {
+                      "type": "number"
+                    },
+                    "bust": {
+                      "type": "number"
+                    },
+                    "waist": {
+                      "type": "number"
+                    },
+                    "hip": {
+                      "type": "number"
+                    },
+                    "cup": {
+                      "type": "string"
+                    },
+                    "foot_size": {
+                      "type": "string"
+                    },
+                    "history": {
+                      "type": "string"
+                    },
+                    "note": {
+                      "type": "string"
+                    },
+                    "agency_name": {
+                      "type": "string"
+                    },
+                    "twitter_id": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "full_name",
+                    "caspla_id",
+                    "bookmarked"
+                  ]
+                }
+              }
+            }
+          },
+          "": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-talents-casplaId",
+        "description": "タレント情報の詳細を取得",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token",
+            "description": "ログインしてる場合はアクセストークンを渡す"
+          }
+        ]
+      },
+      "patch": {
+        "summary": "",
+        "operationId": "patch-casts-caspla_id",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "access_token",
+            "description": "認証必須"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "caspla_id": {
+                    "type": "string"
+                  },
+                  "thumbnail": {
+                    "type": "string"
+                  },
+                  "profile": {
+                    "type": "string"
+                  },
+                  "gender": {
+                    "type": "string"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "age": {
+                    "type": "number"
+                  },
+                  "star_sign": {
+                    "type": "string"
+                  },
+                  "birthplace": {
+                    "type": "string"
+                  },
+                  "blood_type": {
+                    "type": "string"
+                  },
+                  "height": {
+                    "type": "number"
+                  },
+                  "weight": {
+                    "type": "number"
+                  },
+                  "bust": {
+                    "type": "number"
+                  },
+                  "waist": {
+                    "type": "number"
+                  },
+                  "hip": {
+                    "type": "number"
+                  },
+                  "cup": {
+                    "type": "string"
+                  },
+                  "foot_size": {
+                    "type": "number"
+                  },
+                  "history": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  },
+                  "agency_id": {
+                    "type": "number"
+                  },
+                  "twitter_id": {
+                    "type": "string"
+                  },
+                  "": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/casts/new": {
+      "post": {
+        "summary": "キャストの新規登録",
+        "tags": [],
+        "responses": {},
+        "operationId": "post-casts-new",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token",
+            "description": "認証必須",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "first_name": {
+                    "type": "string"
+                  },
+                  "last_name": {
+                    "type": "string"
+                  },
+                  "caspla_id": {
+                    "type": "string"
+                  },
+                  "thumbnail": {
+                    "type": "string"
+                  },
+                  "profile": {
+                    "type": "string"
+                  },
+                  "gender": {
+                    "type": "string"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "age": {
+                    "type": "number"
+                  },
+                  "star_sign": {
+                    "type": "string"
+                  },
+                  "birthplace": {
+                    "type": "string"
+                  },
+                  "blood_type": {
+                    "type": "string"
+                  },
+                  "height": {
+                    "type": "number"
+                  },
+                  "weight": {
+                    "type": "number"
+                  },
+                  "bust": {
+                    "type": "number"
+                  },
+                  "waist": {
+                    "type": "number"
+                  },
+                  "hip": {
+                    "type": "number"
+                  },
+                  "cup": {
+                    "type": "string"
+                  },
+                  "foot_size": {
+                    "type": "number"
+                  },
+                  "history": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {}
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  },
+  "x-extension-1": null
+}
