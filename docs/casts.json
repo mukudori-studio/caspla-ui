@@ -12,8 +12,18 @@
     }
   ],
   "paths": {
-    "/casts": {
-      "parameters": [],
+    "/casts/{page}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "page",
+          "in": "path",
+          "required": true,
+          "description": "ページ数"
+        }
+      ],
       "get": {
         "summary": "タレント一覧",
         "tags": [],
@@ -289,7 +299,7 @@
         ]
       },
       "patch": {
-        "summary": "",
+        "summary": "タレントの更新",
         "operationId": "patch-casts-caspla_id",
         "responses": {
           "200": {
@@ -385,9 +395,6 @@
                     "type": "number"
                   },
                   "twitter_id": {
-                    "type": "string"
-                  },
-                  "": {
                     "type": "string"
                   }
                 }
