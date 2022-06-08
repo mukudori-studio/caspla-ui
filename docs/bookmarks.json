@@ -16,7 +16,7 @@
     "\b/bookmarks/post": {
       "parameters": [],
       "post": {
-        "summary": "post_bookmark",
+        "summary": "ブックマーク追加・削除",
         "tags": [],
         "responses": {
           "200": {
@@ -50,7 +50,7 @@
         }
       ],
       "get": {
-        "summary": "bookmarks",
+        "summary": "ブックマーク一覧",
         "tags": [],
         "responses": {},
         "operationId": "get-bookmarks-bookmarks_id",
@@ -63,12 +63,13 @@
               }
             }
           }
-        }
+        },
+        "parameters": []
       }
     },
     "/bookmarks/lists": {
       "get": {
-        "summary": "lists",
+        "summary": "ブックマークのリスト",
         "tags": [],
         "responses": {
           "200": {

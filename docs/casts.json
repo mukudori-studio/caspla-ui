@@ -260,8 +260,28 @@
                     "agency_name": {
                       "type": "string"
                     },
-                    "twitter_id": {
-                      "type": "string"
+                    "links": {
+                      "type": "object",
+                      "properties": {
+                        "site_url": {
+                          "type": "string"
+                        },
+                        "twitter_id": {
+                          "type": "string"
+                        },
+                        "tiktok_id": {
+                          "type": "string"
+                        },
+                        "instagram_id": {
+                          "type": "string"
+                        },
+                        "facebook_id": {
+                          "type": "string"
+                        },
+                        "youtube_id": {
+                          "type": "string"
+                        }
+                      }
                     }
                   },
                   "required": [
@@ -396,12 +416,58 @@
                   },
                   "twitter_id": {
                     "type": "string"
+                  },
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "site_url": {
+                        "type": "string"
+                      },
+                      "twitter_id": {
+                        "type": "string"
+                      },
+                      "tiktok_id": {
+                        "type": "string"
+                      },
+                      "instagram_id": {
+                        "type": "string"
+                      },
+                      "faccebook_id": {
+                        "type": "string"
+                      },
+                      "youtube_id": {
+                        "type": "string"
+                      },
+                      "": {
+                        "type": "string"
+                      }
+                    }
                   }
                 }
               }
             }
           }
         }
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-casts-caspla_id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "タレント削除(仮) ※仕様決めてないので要検討",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "access_token",
+            "description": "アクセストークンで本人か所属しているプロダクションのみ削除可能"
+          }
+        ]
       }
     },
     "/casts/new": {
@@ -487,6 +553,29 @@
                   },
                   "note": {
                     "type": "string"
+                  },
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "site_url": {
+                        "type": "string"
+                      },
+                      "twitter_id": {
+                        "type": "string"
+                      },
+                      "tiktok_id": {
+                        "type": "string"
+                      },
+                      "instagram_id": {
+                        "type": "string"
+                      },
+                      "facebook_id": {
+                        "type": "string"
+                      },
+                      "youtuve_id": {
+                        "type": "string"
+                      }
+                    }
                   }
                 }
               },

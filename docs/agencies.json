@@ -88,7 +88,7 @@
     },
     "/agencies/{id}": {
       "get": {
-        "summary": "プロダクション一覧",
+        "summary": "プロダクション詳細",
         "tags": [],
         "responses": {
           "200": {
@@ -109,6 +109,29 @@
                     },
                     "description": {
                       "type": "string"
+                    },
+                    "site_url": {
+                      "type": "string"
+                    },
+                    "links": {
+                      "type": "object",
+                      "properties": {
+                        "site_url": {
+                          "type": "string"
+                        },
+                        "twitter_id": {
+                          "type": "string"
+                        },
+                        "facebook_id": {
+                          "type": "string"
+                        },
+                        "instagram_id": {
+                          "type": "string"
+                        },
+                        "youtube_id": {
+                          "type": "string"
+                        }
+                      }
                     },
                     "casts": {
                       "type": "array",
