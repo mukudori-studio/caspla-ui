@@ -12,18 +12,8 @@
     }
   ],
   "paths": {
-    "/casts/{page}": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "page",
-          "in": "path",
-          "required": true,
-          "description": "ページ数"
-        }
-      ],
+    "/casts": {
+      "parameters": [],
       "get": {
         "summary": "タレント一覧",
         "tags": [],
@@ -156,6 +146,16 @@
             "in": "query",
             "name": "activity",
             "description": "活動区分検索"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1
+            },
+            "in": "query",
+            "name": "page",
+            "description": "Page",
+            "required": true
           }
         ]
       }
