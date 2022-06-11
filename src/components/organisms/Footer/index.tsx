@@ -36,7 +36,7 @@ const Footer = () => {
         <div className={styles['o-footer__bottom']}>
           <div className={styles['o-footer__logos']}>
             <Image
-              src='/common/logo.svg'
+              src='/common/logo-footer.svg'
               alt='Caspla Logo'
               className={styles['o-footer__logo']}
               width={118}

@@ -11,6 +11,8 @@ body {
   color: g.$color-black;
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-feature-settings: 'palt';
+  margin: 0;
+  padding: 0;
 
   @include g.mq-down(tablet--under) {
     font-size: 3.467vw; // 13px
@@ -50,4 +52,8 @@ button {
 
 img {
   width: 100%;
+}
+
+.wrapper {
+  padding-top: 80px;
 }

@@ -1,1 +1,73 @@
 @use '../../global' as g;
+
+.o-header {
+  @include g.flex(between);
+  width: 100vw;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: g.$color-mono-0;
+  border-bottom: 1px solid g.$color-mono-50;
+  padding: 0 16px 0 30px;
+
+  
+
+  &__right {
+    @include g.flex(end);
+    gap: 20px;
+  }
+
+  &__text {
+    font-size: 14px;
+    letter-spacing: 1.4px;
+    color: g.$color-mono-80;
+    text-decoration: none;
+    transition: .2s;
+    font-weight: bold;
+
+    &:active {
+      opacity: .8;
+    }
+
+    @include g.mq-up(tablet-pc) {
+      &:hover {
+        opacity: .8;
+      }
+    }
+  }
+
+  &__signin {
+    @include g.flex(center, center, column);
+    width: 48px;
+    height: 48px;
+    background: g.$color-mono-80;
+    border-radius: 100%;
+    text-decoration: none;
+    transition: .2s;
+    font-weight: bold;
+
+    &:active {
+      opacity: .8;
+    }
+
+    @include g.mq-up(tablet-pc) {
+      &:hover {
+        opacity: .8;
+      }
+    }
+
+    &__text {
+      font-size: 10px;
+      transform: scale(.8);
+      color: g.$color-mono-0;
+    }
+  }
+
+  &__icon {
+    width: 16px;
+    display: block;
+    color: g.$color-mono-0;
+    margin-bottom: 2px;
+  }
+}
