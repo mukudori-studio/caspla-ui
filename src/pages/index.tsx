@@ -6,6 +6,7 @@ import SearchKeyword from '@/components/atoms/SearchKeyword'
 import styles from '@/styles/Home.module.scss'
 
 const Home: NextPage = () => {
+  console.log(process.env.NEXT_PUBLIC_API_BASE_URL)
   return (
     <div className={styles.container}>
       <Meta title="トップ" />

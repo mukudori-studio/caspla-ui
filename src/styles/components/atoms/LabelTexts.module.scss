@@ -1,0 +1,25 @@
+@use '../../global' as g;
+
+.a-label-text {
+  @include g.flex(start, start);
+  gap: 10px 10px;
+
+  &__label {
+    @include g.flex(center);
+    min-height: 30px;
+    padding: 3px 6px;
+    font-size: 14px;
+    line-height: 1.1;
+    border-radius: 5px;
+    
+    &--gray {
+      background: g.$color-mono-10;
+      color: g.$color-mono-80;
+    }
+
+    &--purple {
+      background: g.$color-secondary;
+      color: g.$color-primary;
+    }
+  }
+}
