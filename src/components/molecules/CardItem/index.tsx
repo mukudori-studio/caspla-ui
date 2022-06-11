@@ -1,0 +1,88 @@
+import React from 'react'
+import Router from 'next/router'
+import Image from 'next/image'
+import BookMark from '@/components/atoms/BookMark'
+import LabelTexts from '@/components/atoms/LabelTexts'
+import activities from '@/utils/activities'
+import styles from '@/styles/components/molecules/CardItem.module.scss'
+
+interface CardItemProps {
+  type?: 'cast' | 'agient';
+  thumbnail?: string;
+  id: string | number;
+  name: string;
+  displayName?: string;
+  profile?: string;
+  activity?: Array<string>;
+  withBookmark?: boolean;
+  onClick?: () => void;
+}
+
+const CardItem = ({
+  id,
+  name,
+  thumbnail = '',
+  displayName = '',
+  activity = [],
+  profile = '',
+  type = 'cast',
+  withBookmark = false,
+  ...props
+}: CardItemProps) => {
+  // NOTE:タレントとプロダクションで遷移先を分けておく(ビジネスロジック的に親に持たせる方が良いかも)
+  const linkUrl = type === 'cast' ? `/talents/${id}` : `/agients/${id}`
+  const toDetail = () => {
+    Router.push(linkUrl)
+  }
+
+  // TODO：ループ処理整理
+  const filteredActivity = activities.filter(data => activity.find(val => data.key === val))
+  const formattedActivity = filteredActivity.map(data => data.textJA)
+
+  // NOTE：Boomark
+  const [flag, setFlag] = React.useState(withBookmark)
+  const changeBookmark = ((e: any, bool: boolean) => {
+    e.stopPropagation()
+    setFlag(!flag)
+    console.log(flag)
+  })
+
+  // NOTE：テキストフォーマット
+
+  return (
+    <button type="button" onClick={toDetail} className={styles['m-card-item']}>
+      <div className={styles['m-card-item__content']}>
+        {
+          thumbnail === '' ? (
+            <div className={styles['m-card-item__thumbnail']}></div>
+          ) : (
+            <Image
+              src={thumbnail}
+              className={styles['m-card-item__thumbnail']}
+              width={'auto'}
+              height={'auto'}
+              layout="fixed"
+            />
+          )
+        }
+        <div className={styles['m-card-item__head']}>
+          <h1 className={styles['m-card-item__name']}>{name}</h1>
+          <div className={styles['m-card-item__activities']}>
+            {
+              activity.length > 0 && (<LabelTexts texts={formattedActivity} />)
+            }
+            { withBookmark && (<BookMark changeBookmark={changeBookmark} />)}
+          </div>
+          {
+            (type === 'cast' && displayName !== '') && (
+              <div className={styles['m-card-item__sub']}>{displayName}</div>
+            )
+          }
+        </div>
+        <p className={styles['m-card-item__sub']}>{profile}</p>
+      </div>
+    </button>
+  );
+};
+
+export default CardItem;
