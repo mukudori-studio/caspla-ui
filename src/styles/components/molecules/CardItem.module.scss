@@ -10,7 +10,7 @@
     opacity: .8;
   }
 
-  @include mq-up(tablet-pc) {
+  @include g.mq-up(tablet-pc) {
     &:hover {
       opacity: .8;
     }
@@ -49,7 +49,7 @@
       transform: scale(.98);
     }
 
-    @include mq-up(tablet-pc) {
+    @include g.mq-up(tablet-pc) {
       &:hover {
         opacity: .8;
       }

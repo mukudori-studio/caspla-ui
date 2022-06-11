@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Link from "next/link"
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
-import styles from '@/styles/Home.module.scss'
+import styles from '@/styles/Talent.module.scss'
 
 const Talents: NextPage = () => {
   return (

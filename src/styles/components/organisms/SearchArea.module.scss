@@ -1,0 +1,53 @@
+@use '../../global' as g;
+
+.o-search-area {
+  max-width: 1088px;
+  padding: 0 40px;
+
+  &__keyword {
+    position: relative;
+    max-width: 632px;
+    margin: 0 auto 28px;
+  }
+
+  &__input {
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    padding: 0 64px 0 20px; // NOTE：アイコン分余白を空けておく
+    background: g.$color-mono-5;
+    outline: none;
+    border: 0;
+    transition: .2s;
+
+    &:focus {
+      box-shadow: 0 0 2px rgba(10, 10, 10, 0.2);
+    }
+  }
+
+  &__search {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    cursor: pointer;
+    background: g.$color-mono-5;
+    padding: 4px 10px;
+    transition: .2s;
+
+    &:hover, &:focus {
+      opacity: .8;
+    }
+
+    &:active {
+      transform: translateY(-50%) scale(0.9);
+    }
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    color: g.$color-primary;
+  }
+}

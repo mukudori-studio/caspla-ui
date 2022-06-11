@@ -1,40 +1,33 @@
+import React from 'react'
 import Router from 'next/router'
 import type { NextPage } from 'next'
 import { isMobile } from "react-device-detect"
 import Link from "next/link"
 import Meta from '@/components/Meta'
-import Button from '@/components/atoms/Button'
+import SearchArea from '@/components/organisms/SearchArea'
 import Image from 'next/image'
-import styles from '@/styles/Home.module.scss'
+import styles from '@/styles/Dashboard.module.scss'
 
 const Home: NextPage = () => {
-  
+
   const logoWidth =  isMobile ? 140 : 280
   const logoHeight =  isMobile ? 32 : 65
 
-  // NOTE：検索実行
-  const onSearch = () => {
-    Router.push('/talents')
-  }
-
   return (
-    <div className={styles['p-dash-board']}>
+    <main className={styles['p-dash-board']}>
       <Meta title="トップ" />
-
-      <main className={styles['p-dash-board__main']}>
+      <div className={styles['p-dash-board__logo']}>
         <Image
           src='/common/logo.svg'
           alt='Caspla Logo'
-          className={styles['p-dash-board__logo']}
+          className={styles['p-dash-board__logo__image']}
           width={logoWidth}
           height={logoHeight}
           layout="fixed"
         />
-        <Link href="/talents"><a>タレント一覧へ</a></Link>
-        <input />
-        <Button text='ボタンだよ' onClick={onSearch} />
-      </main>
-    </div>
+      </div>
+      <SearchArea />
+    </main>
   )
 }
 

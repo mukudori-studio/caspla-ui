@@ -5,7 +5,7 @@ import Link from "next/link"
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 
-import styles from '@/styles/Home.module.scss'
+import styles from '@/styles/Signin.module.scss'
 
 const Signin: NextPage = () => {
   

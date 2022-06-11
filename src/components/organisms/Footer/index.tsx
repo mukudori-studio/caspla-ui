@@ -20,7 +20,7 @@ const Footer = () => {
   const thisYear: String = dayjs().locale('ja').format('YYYY')
 
   return (
-    <footer className={styles['o-footer']}>
+    <footer className={styles['o-footer']} id="global-footer">
       <div className={styles['o-footer__inner']}>
         <ul className={styles['o-footer__top']}>
           {
