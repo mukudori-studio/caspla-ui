@@ -1,6 +1,7 @@
 @use '../../global' as g;
 
 .m-card-item {
+  width: 100%;
   background: transparent;
   outline: 0;
   transition: .2s;

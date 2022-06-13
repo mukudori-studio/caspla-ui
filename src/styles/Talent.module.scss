@@ -1,11 +1,20 @@
 @use './global' as g;
 
-.p-dash-board {
-  min-height: 100%;
-  padding-top: 68px;
+.p-talents {
+  &__wrapper {
+    width: 100%;
+    max-width: 1024px;
+    padding: 0 32px;
+    margin: 0 auto;
+  }
 
-  &__logo {
-    @include g.flex(center);
-    margin: 0 auto 64px;
+  &__item {
+    &:not(:last-of-type) {
+      margin-bottom: 12px;
+    }
+  }
+  
+  &__pagination {
+    margin-top: 80px;
   }
 }
