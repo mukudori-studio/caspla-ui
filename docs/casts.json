@@ -29,6 +29,9 @@
                       "type": "number",
                       "example": 3
                     },
+                    "total_count": {
+                      "type": "number"
+                    },
                     "casts": {
                       "type": "array",
                       "items": {
@@ -73,6 +76,7 @@
                   },
                   "required": [
                     "page",
+                    "total_count",
                     "casts"
                   ]
                 },
@@ -98,6 +102,9 @@
                 }
               }
             }
+          },
+          "": {
+            "description": ""
           }
         },
         "operationId": "get-talents-casplaId",
