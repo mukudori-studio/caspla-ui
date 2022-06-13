@@ -30,6 +30,9 @@
                       "type": "number",
                       "example": 3
                     },
+                    "total_count": {
+                      "type": "number"
+                    },
                     "agencies": {
                       "type": "array",
                       "items": {
@@ -60,10 +63,14 @@
                           "description"
                         ]
                       }
+                    },
+                    "": {
+                      "type": "string"
                     }
                   },
                   "required": [
-                    "page"
+                    "page",
+                    "total_count"
                   ]
                 }
               }
