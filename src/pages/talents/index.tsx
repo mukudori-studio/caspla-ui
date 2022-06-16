@@ -9,9 +9,8 @@ const fetcher = (url: RequestInfo) => fetch(url).then(r => r.json())
 
 const Talents: NextPage = () => {
 
-  const { data, error } = useSWR('https://zipcloud.ibsnet.co.jp/api/search?zipcode=6640846', fetcher)
-
-  console.log(data, error)
+  const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/open/gettalents`, fetcher)
+  console.log('タレント一覧', data, error)
 
   return (
     <div className={styles['p-talents']}>
