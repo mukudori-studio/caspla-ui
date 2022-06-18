@@ -38,9 +38,7 @@ const Talents: NextPage = () => {
             activity={['musician', 'idol']}
           />
         </div>
-        <div className={styles['p-talents__pagination']}>
-          <Pagination totalCount={3} currentNum={1} />
-        </div>
+        <Pagination totalCount={3} currentNum={1} />
       </main>
     </div>
   )

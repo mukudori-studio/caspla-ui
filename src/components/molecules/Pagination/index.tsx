@@ -18,6 +18,7 @@ const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 14px;
+  margin-top: 80px;
 }
 & li {
   list-style-type: none;
