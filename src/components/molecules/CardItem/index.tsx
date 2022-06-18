@@ -79,7 +79,9 @@ const CardItem = ({
             )
           }
         </div>
-        <p className={styles['m-card-item__sub']}>{profile}</p>
+        <div className={styles['m-card-item__profile']}>
+          <p className={styles['m-card-item__text']}>{profile}</p>
+        </div>
       </div>
     </button>
   );

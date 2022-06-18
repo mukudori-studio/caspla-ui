@@ -18,8 +18,11 @@
   }
 
   &__content {
-    @include g.flex;
-    gap: 30px;
+    display: grid;
+    grid-template:
+      "thumbnail . head" auto
+      "thumbnail . ." 30px
+      "thumbnail . profile" auto / 146px 30px auto;
     background: g.$color-mono-5;
     border-radius: 10px;
     padding: 30px;
@@ -33,12 +36,14 @@
     display: block;
     background: #CFD2D7;
     border-radius: 100%;
+    grid-area: thumbnail;
   }
 
   &__head {
+    @include g.flex(between);
     flex: 1 0 0;
     position: relative;
-    padding-bottom: 34px;
+    grid-area: head;
   }
 
   &__bookmark {
@@ -62,13 +67,30 @@
     color: g.$color-primary;
     letter-spacing: 2.4px;
     line-height: 1.1;
+    margin: 0;
+    text-align: left;
+    flex: 1 0 0;
   }
 
   &__sub {
     position: absolute;
-    left: bottom;
+    left: 0;
+    bottom: -16px;
     font-size: 16px;
     color: rgba(16, 33, 56, 0.5);
     line-height: 1.1;
+  }
+
+  &__profile {
+    grid-area: profile;
+  }
+
+  &__text {
+    @include g.line-clamp;
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: left;
+    margin: 0;
+    overflow: hidden;
   }
 }
