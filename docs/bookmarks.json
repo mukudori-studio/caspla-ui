@@ -24,7 +24,7 @@
           }
         },
         "operationId": "post-bookmarks-post-caspla_id",
-        "description": "ブックマークへの追加、削除を行うAPI",
+        "description": "ブックマークへの追加を行うAPI",
         "parameters": [
           {
             "schema": {
@@ -33,6 +33,14 @@
             "in": "header",
             "name": "caspla_id",
             "description": "対象タレントのcaspla id",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token",
             "required": true
           }
         ]
@@ -52,7 +60,47 @@
       "get": {
         "summary": "ブックマーク一覧",
         "tags": [],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "bookmarks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "caspla_id": {
+                            "type": "string"
+                          },
+                          "thumbnail_url": {
+                            "type": "string"
+                          },
+                          "bookmark_id": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "operationId": "get-bookmarks-bookmarks_id",
         "requestBody": {
           "content": {
@@ -64,10 +112,78 @@
             }
           }
         },
-        "parameters": []
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token",
+            "required": true
+          }
+        ],
+        "description": "ブックマークに紐づくタレントの取得"
+      },
+      "put": {
+        "summary": "",
+        "operationId": "put-bookmarks-list_id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "bookmark_name",
+            "description": "変更するリストの名前",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token",
+            "required": true
+          }
+        ],
+        "description": "ブックマークの名称を変更"
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "delete-bookmarks-list_id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "bookmark_id",
+            "description": "削除するブックマークのID",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token",
+            "required": true
+          }
+        ],
+        "description": "ブックマークを削除"
       }
     },
-    "/bookmarks/lists": {
+    "/bookmarks/list": {
       "get": {
         "summary": "ブックマークのリスト",
         "tags": [],
@@ -99,8 +215,100 @@
           }
         },
         "operationId": "get-bookmarks-lists",
-        "description": "ブックマークのリストを取得するAPI"
-      }
+        "description": "ブックマークのリストを取得するAPI",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token",
+            "required": true
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/bookmarks/cast": {
+      "put": {
+        "summary": "move",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "put-bookmarks",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "caspla_id",
+            "description": "移動したいタレントのcaspla id",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "bookmark_id",
+            "description": "移動先のリストのID",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token",
+            "required": true
+          }
+        ],
+        "description": "タレントを別のブックマークに移動するAPI"
+      },
+      "delete": {
+        "summary": "delete",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "operationId": "delete-bookmarks",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "caspla_id",
+            "description": "削除するタレントのcaspla id",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "list_id",
+            "description": "削除するブックマークのID",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token",
+            "required": true
+          }
+        ],
+        "description": "タレントをブックマークから削除"
+      },
+      "parameters": []
     }
   },
   "components": {

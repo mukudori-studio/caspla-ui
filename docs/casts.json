@@ -129,7 +129,7 @@
           },
           {
             "schema": {
-              "type": "string",
+              "type": "array",
               "example": "man"
             },
             "in": "query",
@@ -138,7 +138,7 @@
           },
           {
             "schema": {
-              "type": "string",
+              "type": "array",
               "example": "30s"
             },
             "in": "query",
@@ -196,6 +196,9 @@
                       "type": "string"
                     },
                     "caspla_id": {
+                      "type": "string"
+                    },
+                    "cover_image_url": {
                       "type": "string"
                     },
                     "thumbnail_url": {
@@ -289,6 +292,9 @@
                           "type": "string"
                         }
                       }
+                    },
+                    "": {
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -364,6 +370,9 @@
                     "type": "string"
                   },
                   "caspla_id": {
+                    "type": "string"
+                  },
+                  "cover_image": {
                     "type": "string"
                   },
                   "thumbnail": {
@@ -444,16 +453,14 @@
                       },
                       "youtube_id": {
                         "type": "string"
-                      },
-                      "": {
-                        "type": "string"
                       }
                     }
                   }
                 }
               }
             }
-          }
+          },
+          "description": ""
         }
       },
       "delete": {
@@ -510,6 +517,9 @@
                     "type": "string"
                   },
                   "thumbnail": {
+                    "type": "string"
+                  },
+                  "cover_image": {
                     "type": "string"
                   },
                   "profile": {
@@ -579,7 +589,7 @@
                       "facebook_id": {
                         "type": "string"
                       },
-                      "youtuve_id": {
+                      "youtube_id": {
                         "type": "string"
                       }
                     }
