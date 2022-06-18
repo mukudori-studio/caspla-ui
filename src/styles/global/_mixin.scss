@@ -74,3 +74,10 @@ $breakpoints: (
     display: inline-flex;
   }
 }
+
+// 3点リーダー
+@mixin line-clamp($line: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+}
