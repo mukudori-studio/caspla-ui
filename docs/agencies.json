@@ -87,6 +87,13 @@
             "in": "query",
             "name": "keyword",
             "description": "プロダクション名検索"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token"
           }
         ],
         "description": ""
@@ -207,6 +214,13 @@
             "in": "query",
             "name": "keyword",
             "description": "プロダクション名検索"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "access_token"
           }
         ],
         "description": ""
