@@ -292,9 +292,6 @@
                           "type": "string"
                         }
                       }
-                    },
-                    "": {
-                      "type": "string"
                     }
                   },
                   "required": [
@@ -575,6 +572,9 @@
                     "type": "object",
                     "properties": {
                       "site_url": {
+                        "type": "string"
+                      },
+                      "blog_url": {
                         "type": "string"
                       },
                       "twitter_id": {
