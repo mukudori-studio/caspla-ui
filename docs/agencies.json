@@ -63,9 +63,6 @@
                           "description"
                         ]
                       }
-                    },
-                    "": {
-                      "type": "string"
                     }
                   },
                   "required": [
@@ -162,6 +159,9 @@
                         "site_url": {
                           "type": "string"
                         },
+                        "blog_url": {
+                          "type": "string"
+                        },
                         "twitter_id": {
                           "type": "string"
                         },
@@ -172,6 +172,9 @@
                           "type": "string"
                         },
                         "youtube_id": {
+                          "type": "string"
+                        },
+                        "": {
                           "type": "string"
                         }
                       }
