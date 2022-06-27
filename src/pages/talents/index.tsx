@@ -11,7 +11,13 @@ const Talents: NextPage = () => {
 
   const getTalents = async () => {
     try {
-      const response = await axiosClient.get('/api/v1/open/gettalents')
+      // const response = await axiosClient.get('/api/v1/open/gettalents')
+      const response = await axiosClient.get('/api/v1/open/casts', {
+        params: {
+          page: 1,
+        }
+      })
+      
       return response
     }
     catch(e) {

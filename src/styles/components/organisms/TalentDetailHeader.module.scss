@@ -1,0 +1,111 @@
+@use '../../global' as g;
+
+.o-talent-detail-header {
+  &__image {
+    width: 100vw;
+    height: 450px;
+    object-fit: cover;
+
+    &--empty {
+      @include g.flex(center);
+      background: g.$color-mono-5;
+    }
+  }
+
+  &__image-icon {
+    font-size: 72px;
+    color: g.$color-mono-10;
+  }
+
+  &__wrapper {
+    max-width: 956px;
+    margin: 0 auto;
+    position: relative;
+    padding-top: 36px;
+  }
+
+  &__top {
+    @include g.flex(start);
+    gap: 16px;
+    position: absolute;
+    top: -114px;
+    left: 0;
+    width: 100%;
+  }
+
+  &__activity {
+    margin-top: -50px;
+  }
+
+  &__thumbnail {
+    @include g.flex(center);
+    width: 228px;
+    height: 228px;
+    object-fit: cover;
+    border-radius: 100%;
+    overflow: hidden;
+
+    &--empty {
+      background: #CFD2D7;
+    }
+  }
+
+  &__bottom {
+    padding-left: 244px;
+    position: relative;
+    z-index: 10;
+  }
+
+  &__name {
+    font-size: 24px;
+    margin: 0;
+    line-height: 1.4;
+    letter-spacing: 1px;
+  }
+
+  &__caspla-id {
+    font-size: 16px;
+    margin: 0;
+    color: g.$color-mono-50;
+    letter-spacing: .8px;
+    margin-bottom: 12px;
+  }
+
+  &__links {
+    @include g.flex(end);
+    margin-top: -16px;
+  }
+  
+  &__link {
+    @include g.flex(center);
+    width: 40px;
+    height: 40px;
+    transition: .2s;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+
+  &__link-icon {
+    font-size: 24px;
+    color: g.$color-primary;
+  }
+
+  &__production-link {
+    font-size: 14px;
+    background: #6681CC;
+    color: g.$color-mono-0;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 30px;
+    line-height: 1.1;
+    display: inline-block;
+    transition: .2s;
+    margin-bottom: 16px;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+}
