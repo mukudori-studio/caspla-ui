@@ -1,6 +1,13 @@
 @use './global' as g;
 
 .p-talents {
+  // TODO：margin設定全画面で共通化できそうだったらあとで対応
+  margin-bottom: 120px;
+
+  @include g.mq-down(tablet--under) {
+    margin-bottom: 60px;
+  }
+
   &__wrapper {
     width: 100%;
     max-width: 1024px;
@@ -12,5 +19,27 @@
     &:not(:last-of-type) {
       margin-bottom: 12px;
     }
+  }
+}
+
+.p-talent-detail {
+  // TODO：margin設定全画面で共通化できそうだったらあとで対応
+  margin-bottom: 120px;
+
+  @include g.mq-down(tablet--under) {
+    margin-bottom: 60px;
+  }
+
+  &__content {
+    width: 680px;
+    margin: 0 auto;
+
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+    }
+  }
+
+  &__description {
+    margin: 30px 0;
   }
 }

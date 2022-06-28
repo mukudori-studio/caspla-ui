@@ -14,14 +14,22 @@
 
   &__image-icon {
     font-size: 72px;
+    width: 72px;
+    height: 72px;
     color: g.$color-mono-10;
   }
 
   &__wrapper {
+    width: calc(100% - 60px);
     max-width: 956px;
     margin: 0 auto;
     position: relative;
     padding-top: 36px;
+
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+      padding-top: 84px;
+    }
   }
 
   &__top {
@@ -31,10 +39,18 @@
     top: -114px;
     left: 0;
     width: 100%;
+
+    @include g.mq-down(tablet--under) {
+      top: -65px;
+    }
   }
 
   &__activity {
     margin-top: -50px;
+
+    @include g.mq-down(tablet--under) {
+      display: none;
+    }
   }
 
   &__thumbnail {
@@ -45,6 +61,11 @@
     border-radius: 100%;
     overflow: hidden;
 
+    @include g.mq-down(tablet--under) {
+      width: 130px;
+      height: 130px;
+    }
+
     &--empty {
       background: #CFD2D7;
     }
@@ -54,6 +75,10 @@
     padding-left: 244px;
     position: relative;
     z-index: 10;
+
+    @include g.mq-down(tablet--under) {
+      padding-left: 0;
+    }
   }
 
   &__name {
@@ -78,6 +103,7 @@
   
   &__link {
     @include g.flex(center);
+    min-width: 120px;
     width: 40px;
     height: 40px;
     transition: .2s;
@@ -89,6 +115,8 @@
 
   &__link-icon {
     font-size: 24px;
+    width: 24px;
+    height: 24px;
     color: g.$color-primary;
   }
 

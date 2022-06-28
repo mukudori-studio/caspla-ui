@@ -1,17 +1,17 @@
 import React from 'react'
-import Link from "next/link"
 import Image from 'next/image'
 import { isMobile } from "react-device-detect"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImages } from '@fortawesome/free-solid-svg-icons'
+import { faImages, faUser } from '@fortawesome/free-solid-svg-icons'
 import LabelTexts from '@/components/atoms/LabelTexts'
 import SnsLinksArea from '@/components/organisms/SnsLinksArea'
+import activities from '@/utils/activities'
 import styles from '@/styles/components/organisms/TalentDetailHeader.module.scss'
 
 type TalentDetailHeaderProps = {
   coverImage?: string
   thumbnailImage?: string
-  activities?: Array<string>
+  activity?: Array<string>
   name: string
   agencyId?: string
   agencyName?: string
@@ -31,7 +31,7 @@ type TalentDetailHeaderProps = {
 const TalentDetailHeader = ({
   coverImage = '',
   thumbnailImage = '',
-  activities = [],
+  activity = [],
   name,
   agencyId = '',
   agencyName = '',
@@ -48,6 +48,10 @@ const TalentDetailHeader = ({
   description = '',
   ...props
 }: TalentDetailHeaderProps) => {
+
+  // TODO：ループ処理整理
+  const filteredActivity = activities.filter(data => activity.find(val => data.key === val))
+  const formattedActivity = filteredActivity.map(data => data.textJA)
 
   return (
     <div className={styles['o-talent-detail-header']}>
@@ -75,13 +79,13 @@ const TalentDetailHeader = ({
               />
             ) : (
               <div className={[styles['o-talent-detail-header__thumbnail'], styles['o-talent-detail-header__thumbnail--empty']].join(' ')}>
-                <FontAwesomeIcon icon={faImages} className={styles['o-talent-detail-header__image-icon']} />
+                <FontAwesomeIcon icon={faUser} className={styles['o-talent-detail-header__image-icon']} />
               </div>
             )
           }
           {
             activities.length > 0 && (
-              <div className={styles['o-talent-detail-header__activity']}><LabelTexts texts={activities} color={'purple'} /></div>
+              <div className={styles['o-talent-detail-header__activity']}><LabelTexts texts={formattedActivity} color={'purple'} /></div>
             )
           }
           {/* TODO:bookmarkあとで追加 */}

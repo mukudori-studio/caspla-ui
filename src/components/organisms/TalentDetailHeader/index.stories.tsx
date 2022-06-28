@@ -12,7 +12,7 @@ const Template: ComponentStory<typeof TalentDetailHeader> = (args) => <TalentDet
 
 export const Default = Template.bind({});
 Default.args = {
-  activities: ['musician'],
+  activity: ['musician'],
   name: 'キン肉マンソルジャー',
   agencyId: 'production',
   agencyName: 'ゆでたまご',

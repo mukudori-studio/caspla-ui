@@ -1,0 +1,45 @@
+@use '../../global' as g;
+
+.o-talent-profile {
+  background: g.$color-mono-5;
+  padding: 16px;
+  letter-spacing: 1px;
+  line-height: 1.8;
+  padding: 20px 28px;
+  border-radius: 10px;
+  font-size: 18px;
+  color: g.$color-mono-80;
+
+  @include g.mq-down(tablet--under) {
+    padding: 10px 16px;
+  }
+
+  &__items {
+    @include g.flex(start, start);
+    flex-wrap: wrap;
+    gap: 4px 60px;
+    margin: 0;
+
+    @include g.mq-down(tablet--under) {
+      gap: 4px 24px;
+    }
+  }
+
+  &__label {
+    width: 78px;
+  }
+
+  &__text {
+    width: calc(100% - 138px);
+    margin-left: 0;
+    letter-spacing: 2px;
+    @include g.mq-down(tablet--under) {
+      width: calc(100% - 102px);
+    }
+  }
+
+  &__description {
+    margin: 24px 0 0;
+    font-size: 18px;
+  }
+}
