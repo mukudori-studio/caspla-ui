@@ -1,0 +1,18 @@
+@use '../../global' as g;
+
+.modal {
+  @include g.flex(center);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(13, 33, 56, 0.5);
+  z-index: 1000;
+  animation: 0.3s ease 0s;
+  > * {
+    width: 100%;
+    margin: auto;
+    animation: scaleon 0.25s ease-out 0s;
+  }
+}
