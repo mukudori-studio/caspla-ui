@@ -19,6 +19,12 @@ export default {
         options: ['primary', 'secondary', 'default'],
       },
     },
+    weight: {
+      control: {
+        type: 'select',
+        options: ['normal', 'bold'],
+      },
+    },
     disabled: {
       control: { type: 'boolean' },
     },
