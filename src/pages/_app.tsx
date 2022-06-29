@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         googleTagManagerId={googleTagManagerId as GoogleTagManagerId}
       />
       <Header />
-      <div style={{ minHeight: 'calc(100vh - 191px)' }} className={'wrapper'}>
+      <div style={{ minHeight: 'calc(100vh - 191px)' }} className={'wrapper'} id="root">
         <Component {...pageProps} />
       </div>
       <Footer />

@@ -26,7 +26,7 @@ const Modal = ({...props}: ModalProps) => {
   return (
     <Portal>
       <div
-        className={styles.modal}
+        className={styles['m-modal']}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
       >
