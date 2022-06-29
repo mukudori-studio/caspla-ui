@@ -33,4 +33,8 @@
     background: g.$color-secondary;
     color: g.$color-primary;
   }
+  &--default {
+    background: g.$color-mono-10;
+    color: g.$color-mono-80;
+  }
 }

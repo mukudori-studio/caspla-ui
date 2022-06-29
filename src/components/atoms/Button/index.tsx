@@ -3,7 +3,7 @@ import styles from '@/styles/components/atoms/Button.module.scss';
 
 interface ButtonProps {
   size?: 'small' | 'medium' | 'large';
-  color?: 'primary' | 'secondary';
+  color?: 'primary' | 'secondary' | 'default';
   text: string;
   disabled?: boolean;
   onClick?: () => void;
