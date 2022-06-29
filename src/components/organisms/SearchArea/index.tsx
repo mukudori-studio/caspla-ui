@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import Button from '@/components/atoms/Button'
 import styles from '@/styles/components/organisms/SearchArea.module.scss'
 
 const SearchKeyword = () => {
@@ -36,6 +37,9 @@ const SearchKeyword = () => {
     <div className={styles['o-search-area']}>
       {/* TODO:カテゴリ分けあとで入れる */}
       <div className={styles['o-search-area__keyword']}>
+        <div className={styles['o-search-area__icon']}>
+          <FontAwesomeIcon icon={faMagnifyingGlass} className={styles['o-search-area__icon']} />
+        </div>
         <input
           className={styles['o-search-area__input']}
           type="search"
@@ -44,9 +48,9 @@ const SearchKeyword = () => {
           onKeyPress={pressEnter}
           onChange={(e) => handleInputKeyoword(e)}
         />
-        <button className={styles['o-search-area__search']} onClick={onSearch}>
-          <FontAwesomeIcon icon={faMagnifyingGlass} className={styles['o-search-area__icon']} />
-        </button>
+        <div className={styles['o-search-area__search']}>
+          <Button text="検索" onClick={onSearch} size="small" color="primary" />
+        </div>
       </div>
     </div>
   )
