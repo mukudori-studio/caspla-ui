@@ -25,7 +25,6 @@ type TalentDetailHeaderProps = {
   instagram?: string
   youtube?: string
   tiktok?: string
-  description?: string
 }
 
 const TalentDetailHeader = ({
@@ -45,7 +44,6 @@ const TalentDetailHeader = ({
   instagram = '',
   youtube = '',
   tiktok = '',
-  description = '',
   ...props
 }: TalentDetailHeaderProps) => {
 
@@ -93,7 +91,7 @@ const TalentDetailHeader = ({
         <div className={styles['o-talent-detail-header__bottom']}>
           <h1 className={styles['o-talent-detail-header__name']}>{name}</h1>
           <h2 className={styles['o-talent-detail-header__caspla-id']}>{casplaId}</h2>
-          { (agencyId !== '' && agencyName !== '') && <a href={'/production/${agencyId}'} className={styles['o-talent-detail-header__production-link']}>{agencyName}</a> }
+          { (agencyId !== '' && agencyName !== '') && <a href={'/production-detail/${agencyId}'} className={styles['o-talent-detail-header__production-link']}>{agencyName}</a> }
           {
             (
               siteUrl !== '' ||

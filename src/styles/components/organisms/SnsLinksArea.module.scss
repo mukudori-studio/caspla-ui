@@ -24,6 +24,8 @@
   }
 
   &__link-icon {
+    width: 24px;
+    height: 24px;
     font-size: 24px;
     color: g.$color-primary;
   }
@@ -39,6 +41,7 @@
 
   &__button {
     width: 146px;
+    min-width: 120px;
 
     @include g.mq-down(tablet--under) {
       width: 100%;
