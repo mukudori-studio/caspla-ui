@@ -33,7 +33,7 @@ const Home: NextPage = () => {
       </div>
       <div className={styles['p-top-page__buttons']}>
         <div className={[buttonStyles['a-button'], buttonStyles['a-button--small'], buttonStyles['a-button--primary'], buttonStyles['a-button--bold']].join(' ')}>タレント検索</div>
-        <Button size="small" color="default" text="オーディション検索" weight="bold" onClick={toggleModal} />
+        <Button size="small" color="default" text="オーディション検索" weight="bold" />
       </div>
       <div className={styles['p-top-page__search-area']}>
         <SearchKeyword />
