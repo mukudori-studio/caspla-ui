@@ -1,11 +1,11 @@
-import React from 'react';
-import styles from '@/styles/components/atoms/CheckboxButton.module.scss';
+import React from 'react'
+import styles from '@/styles/components/atoms/CheckboxButton.module.scss'
 
 type CheckboxButtonProps = {
-  id: string,
-  value: string,
-  label: string,
-  onChange?: (e:any) => void;
+  id: string
+  value: string
+  label: string
+  onChange?: (e:any) => void
   checked?: boolean
 }
 
@@ -17,10 +17,10 @@ const CheckboxButton = (({
   onChange
 }: CheckboxButtonProps) => {
 
-  const checkedStyle = checked ? [styles['a-check-box-button__text'], styles['a-check-box-button__text--checked']].join(' ') : styles['a-check-box-button__text']
+  const checkedStyle = checked ? [styles['a-checkbox-button__text'], styles['a-checkbox-button__text--checked']].join(' ') : styles['a-checkbox-button__text']
 
   return (
-    <label htmlFor={id} className={styles['a-check-box-button']}>
+    <label htmlFor={id} className={styles['a-checkbox-button']}>
       <input
         id={id}
         type="checkbox"
@@ -28,7 +28,7 @@ const CheckboxButton = (({
         checked={checked}
         onChange={onChange}
         value={value}
-        className={styles['a-check-box-button__input']}
+        className={styles['a-checkbox-button__input']}
       />
       <div className={checkedStyle}>{label}</div>
     </label>

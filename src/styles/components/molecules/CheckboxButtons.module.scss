@@ -1,0 +1,6 @@
+@use '../../global' as g;
+
+.m-checkbox-buttons {
+  @include g.flex(start, start);
+  gap: 10px;
+}

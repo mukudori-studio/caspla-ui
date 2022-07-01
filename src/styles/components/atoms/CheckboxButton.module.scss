@@ -1,6 +1,6 @@
 @use '../../global' as g;
 
-.a-check-box-button {
+.a-checkbox-button {
   @include g.flex(center);
   
   &__input {
