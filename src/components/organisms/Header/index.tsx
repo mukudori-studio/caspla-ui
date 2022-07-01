@@ -1,7 +1,6 @@
 import React from 'react'
 import Link from "next/link"
 import Image from 'next/image'
-import { isMobile } from "react-device-detect"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import styles from '@/styles/components/organisms/Header.module.scss'
@@ -17,9 +16,6 @@ const Header = ({
   ...props
 }: HeaderProps) => {
 
-  const logoWidth =  isMobile ? 100 : 118
-  const logoHeight =  isMobile ? 32 : 28
-
   return (
     <header className={styles['o-header']}>
       <div className={styles['o-header__left']}>
@@ -29,8 +25,8 @@ const Header = ({
               src='/common/logo.svg'
               alt='Caspla Logo'
               className={styles['p-dash-board__logo']}
-              width={logoWidth}
-              height={logoHeight}
+              width={118}
+              height={28}
               layout="fixed"
             />
           </a>

@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import { isMobile } from "react-device-detect"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImages, faUser } from '@fortawesome/free-solid-svg-icons'
 import LabelTexts from '@/components/atoms/LabelTexts'
@@ -44,7 +43,6 @@ const TalentDetailHeader = ({
   instagram = '',
   youtube = '',
   tiktok = '',
-  ...props
 }: TalentDetailHeaderProps) => {
 
   // TODO：ループ処理整理

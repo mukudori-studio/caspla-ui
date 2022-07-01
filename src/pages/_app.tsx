@@ -1,5 +1,4 @@
 import '@/styles/globals.scss';
-import { isMobile } from "react-device-detect"
 import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil'
 

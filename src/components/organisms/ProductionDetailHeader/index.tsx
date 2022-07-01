@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import { isMobile } from "react-device-detect"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImages } from '@fortawesome/free-solid-svg-icons'
 import SnsLinksArea from '@/components/organisms/SnsLinksArea'

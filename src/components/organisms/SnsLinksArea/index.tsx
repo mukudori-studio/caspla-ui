@@ -1,10 +1,6 @@
 import React from 'react'
-import Link from "next/link"
-import Image from 'next/image'
-import { isMobile } from "react-device-detect"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTwitter, faFacebookF, faInstagram, faTiktok, faYoutube } from '@fortawesome/free-brands-svg-icons'
-import { faImages } from '@fortawesome/free-solid-svg-icons'
 import styles from '@/styles/components/organisms/SnsLinksArea.module.scss'
 import buttonStyles from '@/styles/components/atoms/Button.module.scss';
 
@@ -25,8 +21,7 @@ const SNSLinksArea = ({
   twitter = '',
   instagram = '',
   youtube = '',
-  tiktok = '',
-  ...props
+  tiktok = ''
 }: SNSLinksAreaProps) => {
 
   return (

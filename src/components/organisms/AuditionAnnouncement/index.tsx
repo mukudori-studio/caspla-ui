@@ -1,9 +1,4 @@
 import React from 'react'
-import Link from "next/link"
-import Image from 'next/image'
-import { isMobile } from "react-device-detect"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
 import styles from '@/styles/components/organisms/AuditionAnnouncement.module.scss'
 
 const AuditionAnnouncement = () => {
