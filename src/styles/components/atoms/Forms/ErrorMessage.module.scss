@@ -1,0 +1,14 @@
+@use '../../../global' as g;
+
+.a-error-message {
+  font-size: 14px;
+  color: g.$color-alert;
+  text-align: left;
+  line-height: 1.4;
+  letter-spacing: 1px;
+  font-weight: bold;
+
+  @include g.mq-down(tablet--under) {
+    font-size: 12px;
+  }
+}
