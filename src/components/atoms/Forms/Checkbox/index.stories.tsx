@@ -15,7 +15,6 @@ const Template: ComponentStory<typeof Checkbox> = (args) => <Checkbox {...args} 
 
 const checkboxData = {
   id: 'val1',
-  value: 'val1',
   label: 'ラベル1'
 }
 

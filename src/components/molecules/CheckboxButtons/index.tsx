@@ -1,7 +1,7 @@
 import React from 'react'
 import Router from 'next/router'
 import Image from 'next/image'
-import CheckboxButton from '@/components/atoms/CheckboxButton'
+import CheckboxButton from '@/components/atoms/Forms/CheckboxButton'
 import styles from '@/styles/components/molecules/CheckboxButtons.module.scss'
 
 type CheckboxButtonsProps = {

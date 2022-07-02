@@ -7,6 +7,12 @@ export default {
   title: 'Atoms/Button',
   component: Button,
   argTypes: {
+    type: {
+      control: {
+        type: 'type',
+        options: ['button', 'submit'],
+      },
+    },
     size: {
       control: {
         type: 'select',

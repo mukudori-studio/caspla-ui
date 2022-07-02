@@ -26,25 +26,21 @@
       left: 0;
       top: 0;
       display: block;
-    }
-
-    &:before {
-      
-      content: "";
-      background: g.$color-mono-5;
       border-radius: 5px;
       width: 20px;
       height: 20px;
+    }
+
+    &:before {
+      content: "";
+      background: g.$color-mono-5;
     }
 
     &:after {
       @include g.flex(center);
       content: '✓';
       opacity: 0;
-      width: 20px;
-      height: 20px;
-
-
+      transition: .1s;
     }
   }
 }
