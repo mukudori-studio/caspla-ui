@@ -360,10 +360,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "first_name": {
-                    "type": "string"
-                  },
-                  "last_name": {
+                  "full_name": {
                     "type": "string"
                   },
                   "caspla_id": {
@@ -504,10 +501,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "first_name": {
-                    "type": "string"
-                  },
-                  "last_name": {
+                  "full_name": {
                     "type": "string"
                   },
                   "caspla_id": {
@@ -594,7 +588,11 @@
                       }
                     }
                   }
-                }
+                },
+                "required": [
+                  "full_name",
+                  "caspla_id"
+                ]
               },
               "examples": {}
             }
