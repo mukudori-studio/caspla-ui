@@ -1,5 +1,4 @@
 import '@/styles/globals.scss';
-import { isMobile } from "react-device-detect"
 import type { AppProps } from 'next/app';
 import { RecoilRoot } from 'recoil'
 
@@ -17,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         googleTagManagerId={googleTagManagerId as GoogleTagManagerId}
       />
       <Header />
-      <div style={{ minHeight: 'calc(100vh - 191px)' }} className={'wrapper'}>
+      <div style={{ minHeight: 'calc(100vh - 191px)' }} className={'wrapper'} id="root">
         <Component {...pageProps} />
       </div>
       <Footer />

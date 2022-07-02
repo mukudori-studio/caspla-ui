@@ -16,12 +16,18 @@ const nextConfig = {
     ]
   },
   async redirects() {
-    return [
+    return process.env.NEXT_MAINTENANCE_MODE === 'true' ? [
+      {
+        source: "/((?!maintenance.html$).*$)",
+        destination: "/maintenance.html",
+        permanent: false,
+      }
+    ] : [
       {
         source: '/',
-        destination: '/dashboard',
+        destination: '/top',
         permanent: true,
-      },
+      }
     ]
   },
 };

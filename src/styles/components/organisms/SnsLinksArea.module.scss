@@ -1,0 +1,50 @@
+@use '../../global' as g;
+
+.o-sns-links {
+  @include g.mq-up(tablet) {
+    @include g.flex(between);
+  }
+
+  &__items {
+    @include g.flex;
+    @include g.mq-down(tablet--under) {
+      margin-bottom: 14px;
+    }
+  }
+
+  &__link {
+    @include g.flex(center);
+    width: 40px;
+    height: 40px;
+    transition: .2s;
+
+    &:hover {
+      opacity: .8;
+    }
+  }
+
+  &__link-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    color: g.$color-primary;
+  }
+
+  &__sites {
+    @include g.flex(center);
+    gap: 16px;
+
+    @include g.mq-down(tablet--under) {
+      gap: 10px;
+    }
+  }
+
+  &__button {
+    width: 146px;
+    min-width: 120px;
+
+    @include g.mq-down(tablet--under) {
+      width: 100%;
+    }
+  }
+}
