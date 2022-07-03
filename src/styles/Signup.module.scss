@@ -2,8 +2,48 @@
 
 .p-sign-up {
   @include g.page-margin;
+
   &__content {
     max-width: 400px;
     margin: 0 auto;
+
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+    }
+  }
+
+  &__form {
+    margin-top: 34px;
+  }
+
+  &__checkbox {
+    @include g.flex(center);
+    margin: 28px auto;
+  }
+
+  &__br {
+    @include g.mq-down(tablet--under) {
+      display: none;
+    }
+  }
+
+  &__notes {
+    margin: 14px 0 0 12px;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__note {
+    color: g.$color-mono-80;
+    opacity: 0.5;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+
+    &::marker {
+      content: "※";
+      font-size: 10px;
+    }
   }
 }

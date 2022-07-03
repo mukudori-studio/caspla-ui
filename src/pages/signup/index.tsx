@@ -9,6 +9,7 @@ import Input from '@/components/atoms/Forms/Input'
 import Checkbox from '@/components/atoms/Forms/Checkbox'
 import ErrorMessage from '@/components/atoms/Forms/ErrorMessage'
 import FormTitle from '@/components/atoms/Forms/Title'
+import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
 
 import styles from '@/styles/Signup.module.scss'
@@ -50,14 +51,21 @@ const Signin: NextPage = () => {
         <Card>
           <>
             <FormTitle title="新規登録" />
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-up__form']}>
+              <FormLabel text="メールアドレス" label="email" reqired={true} />
               <Input id="email" register={register} required={true} error={errors?.email} type={'email'} max={10} />
               {errors.email && <ErrorMessage text={'入力必須項目です。'} />}
               {/* TODO：将来的にreact-hooks-formの方に制御もたせたほうが良いかもしれない */}
               <div className={styles['p-sign-up__checkbox']}>
                 <Checkbox id={'newsLetter'} checked={needLetter} label={'Caspla のニュースレターを受け取る'} onChange={onCheckLetter} />
               </div>
+              
               <Button text="確認メールを送信" color="primary" size="large" type="submit" />
+
+              <ul className={styles['p-sign-up__notes']}>
+                <li className={styles['p-sign-up__note']}>利用規約とプライバシーポリシーが適用されます。<br className={styles['p-sign-up__br']} />事前にご確認の上、メールをご送信ください。</li>
+                <li className={styles['p-sign-up__note']}>利用者の許可なく外部サービスを利用されることはありません。</li>
+              </ul>
             </form>
           </>
         </Card>
