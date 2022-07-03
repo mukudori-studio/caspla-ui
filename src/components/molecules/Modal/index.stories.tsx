@@ -14,6 +14,6 @@ const toggleModal = (e:any) => {
   }
 };
 
-const Template: ComponentStory<typeof Modal> = (args) => <Modal {...args} close={toggleModal}><div>test</div></Modal>;
+const Template: ComponentStory<typeof Modal> = (args) => <Modal {...args} close={toggleModal}></Modal>;
 
 export const Default = Template.bind({});

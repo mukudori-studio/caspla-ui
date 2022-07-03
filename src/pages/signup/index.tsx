@@ -31,7 +31,14 @@ const Signin: NextPage = () => {
     //   console.log(res)
     //   Router.push('/signup/sent-email')
     // })
-    Router.push('/signup/sent-email')
+    axiosClient.post('/api/v1/auth/signin', {
+      email: 'darshana',
+      needLetter: '1234'
+    }).then(res => {
+      console.log(res)
+      Router.push('/signup/sent-email')
+    })
+    // Router.push('/signup/sent-email')
   }
 
   return (
