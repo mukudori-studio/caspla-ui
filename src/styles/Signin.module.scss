@@ -1,8 +1,9 @@
 @use './global' as g;
 
-.p-dash-board {
+.p-sign-in {
+  @include g.page-margin;
   min-height: 100%;
-  padding-top: 68px;
+
 
   &__logo {
     @include g.flex(center);

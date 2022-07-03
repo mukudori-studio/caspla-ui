@@ -1,12 +1,8 @@
 @use './global' as g;
 
 .p-top-page {
+  @include g.page-margin;
   min-height: 100%;
-  padding: 68px 0 120px;
-
-  @include g.mq-down(tablet--under) {
-    padding: 60px 0;
-  }
 
   &__logo {
     @include g.flex(center);

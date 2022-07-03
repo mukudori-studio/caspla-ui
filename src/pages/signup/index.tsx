@@ -9,6 +9,7 @@ import Input from '@/components/atoms/Forms/Input'
 import Checkbox from '@/components/atoms/Forms/Checkbox'
 import ErrorMessage from '@/components/atoms/Forms/ErrorMessage'
 import FormTitle from '@/components/atoms/Forms/Title'
+import Card from '@/components/molecules/Card'
 
 import styles from '@/styles/Signup.module.scss'
 
@@ -42,18 +43,25 @@ const Signin: NextPage = () => {
   }
 
   return (
-    <div className={styles['p-signin']}>
+    <div className={styles['p-sign-up']}>
       <Meta title="新規登録" />
 
-      <FormTitle title="新規登録" />
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input id="email" register={register} required={true} error={errors?.email} type={'email'} max={10} />
-        {errors.email && <ErrorMessage text={'入力必須項目です。'} />}
-        {/* TODO：将来的にreact-hooks-formの方に制御もたせたほうが良いかもしれない */}
-        <Checkbox id={'newsLetter'} checked={needLetter} label={'Caspla のニュースレターを受け取る'} onChange={onCheckLetter} />
-        <Button text="確認メールを送信" color="primary" size="large" type="submit" />
-      </form>
+      <section className={styles['p-sign-up__content']}>
+        <Card>
+          <>
+            <FormTitle title="新規登録" />
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Input id="email" register={register} required={true} error={errors?.email} type={'email'} max={10} />
+              {errors.email && <ErrorMessage text={'入力必須項目です。'} />}
+              {/* TODO：将来的にreact-hooks-formの方に制御もたせたほうが良いかもしれない */}
+              <div className={styles['p-sign-up__checkbox']}>
+                <Checkbox id={'newsLetter'} checked={needLetter} label={'Caspla のニュースレターを受け取る'} onChange={onCheckLetter} />
+              </div>
+              <Button text="確認メールを送信" color="primary" size="large" type="submit" />
+            </form>
+          </>
+        </Card>
+      </section>
     </div>
   )
 }
