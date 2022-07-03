@@ -1,6 +1,9 @@
-import '@/styles/globals.scss';
-import type { AppProps } from 'next/app';
+import '@/styles/globals.scss'
+import type { AppProps } from 'next/app'
 import { RecoilRoot } from 'recoil'
+
+import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 import { googleTagManagerId } from '@/utils/gtm'
 import GoogleTagManager, { GoogleTagManagerId } from '@/components/GoogleTagManager'
@@ -17,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       />
       <Header />
       <div style={{ minHeight: 'calc(100vh - 191px)' }} className={'wrapper'} id="root">
+        <ToastContainer />
         <Component {...pageProps} />
       </div>
       <Footer />
