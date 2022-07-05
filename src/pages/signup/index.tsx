@@ -18,7 +18,7 @@ type InputProps = {
   email: string
 };
 
-const Signin: NextPage = () => {
+const Signup: NextPage = () => {
 
   const [needLetter, setNeedLetter] = useState(true)
   const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
@@ -53,7 +53,7 @@ const Signin: NextPage = () => {
             <FormTitle title="新規登録" />
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-up__form']}>
               <FormLabel text="メールアドレス" label="email" reqired={true} />
-              <Input id="email" register={register} required={true} error={errors?.email} type={'email'} max={10} />
+              <Input id="email" register={register} required={true} error={errors?.email} type={'email'} />
               {errors.email && <ErrorMessage text={'入力必須項目です。'} />}
               {/* TODO：将来的にreact-hooks-formの方に制御もたせたほうが良いかもしれない */}
               <div className={styles['p-sign-up__checkbox']}>
@@ -74,4 +74,4 @@ const Signin: NextPage = () => {
   )
 }
 
-export default Signin
+export default Signup

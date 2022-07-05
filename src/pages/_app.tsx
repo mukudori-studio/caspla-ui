@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       />
       <Header />
       <div style={{ minHeight: 'calc(100vh - 191px)' }} className={'wrapper'} id="root">
-        <ToastContainer />
+        <ToastContainer position="bottom-left" />
         <Component {...pageProps} />
       </div>
       <Footer />
