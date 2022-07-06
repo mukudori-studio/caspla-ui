@@ -11,7 +11,7 @@ type InputProps = {
   required?: boolean
   disabled? : boolean
   error?: any
-  type?: 'text' | 'email' | 'passowrd' | 'number' | 'tel'
+  type?: 'text' | 'email' | 'password' | 'number' | 'tel'
 };
 
 const Input = ({
@@ -29,7 +29,8 @@ const Input = ({
   const inputSyle = error !== '' ? [styles['a-input'], styles['a-input--error']].join(' ') : styles['a-input']
 
   return (
-    <input className={inputSyle} type={type} {...register(id, { required, pattern, min, max, disabled })} />
+    // <input className={inputSyle} type={type} id={id} disabled={disabled} {...register(id, { required, pattern, min, max })} />
+    <input className={inputSyle} type={type} id={id} disabled={disabled} {...register(id, { required })} />
   )
 }
 

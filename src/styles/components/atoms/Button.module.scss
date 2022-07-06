@@ -47,4 +47,9 @@
   &--bold {
     font-weight: bold;
   }
+
+  &:disabled {
+    cursor: inherit;
+    background: g.$color-mono-50;
+  }
 }

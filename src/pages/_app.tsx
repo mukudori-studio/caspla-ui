@@ -1,7 +1,6 @@
 import '@/styles/globals.scss'
 import type { AppProps } from 'next/app'
 import { RecoilRoot } from 'recoil'
-
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 
