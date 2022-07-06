@@ -13,7 +13,8 @@ import FormTitle from '@/components/atoms/Forms/Title'
 import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
 import { sessionState } from '@/stores/Session'
-import styles from '@/styles/Signup.module.scss'
+import buttonStyles from '@/styles/components/atoms/Button.module.scss'
+import styles from '@/styles/Signin.module.scss'
 
 type InputProps = {
   userId: string
@@ -50,29 +51,39 @@ const Signin: NextPage = () => {
       isSubmitting = false
     })
   }
+
+  const forgetLinkStyle = styles['p-sign-in__link']
+  const linkButtonStyle = [styles['p-sign-in__sign-up'], buttonStyles['a-button'], buttonStyles['a-button--primary'], buttonStyles['a-button--large'], buttonStyles['a-button--bold']].join(' ')
   
   return (
-    <div className={styles['p-sign-up']}>
+    <div className={styles['p-sign-in']}>
       <Meta title="ログイン" />
 
-      <section className={styles['p-sign-up__content']}>
+      <section className={styles['p-sign-in__content']}>
         <Card>
           <>
             <FormTitle title="ログイン" />
-            <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-up__form']}>
-              <FormLabel text="メールアドレス" label="userId" reqired={true} />
-              <Input id="userId" register={register} required={true} />
-
-              <FormLabel text="パスワード" label="password" reqired={true} />
-              <Input id="password" type="password" register={register} required={true} />
+            <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-in__form']}>
+              <div className={styles['p-sign-in__item']}>
+                <FormLabel text="メールアドレス" label="userId" reqired={true} />
+                <Input id="userId" register={register} required={true} />
+              </div>
+              <div className={styles['p-sign-in__item']}>
+                <FormLabel text="パスワード" label="password" reqired={true} />
+                <Input id="password" type="password" register={register} required={true} />
+              </div>
               <Link href="/password-reset/reissue">
-                <a className={'p-sign-up__link'}>パスワードを忘れた方はこちら</a>
+                <a className={forgetLinkStyle}>パスワードを忘れた方はこちら</a>
               </Link>
-              
-              <Button text="ログイン" color="primary" size="large" type="submit" disabled={!isValid && isSubmitting} />
+              <div className={styles['p-sign-in__button']}>
+                <Button text="ログイン" color="primary" size="large" type="submit" weight="bold" disabled={!isValid && isSubmitting} />
+              </div>
             </form>
 
             <FormTitle title="新規登録" />
+            <Link href="/singup/">
+              <a className={linkButtonStyle}>新規で会員登録する</a>
+            </Link>
           </>
         </Card>
       </section>
