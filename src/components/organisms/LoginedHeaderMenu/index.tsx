@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Router from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useResetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify'
@@ -27,8 +27,16 @@ const LoginedHeaderMenu = ({
   ...props
 }: LoginedHeaderMenuProps) => {
 
+  const [showMenu, setToggleMenu] = useState(false)
+  const [session, setSession] = useRecoilState(sessionState)
+  const resetSession = useResetRecoilState(sessionState)
+
+  const toggleMenu = () => setToggleMenu(!showMenu)
+  const hideMenu = () => setToggleMenu(false)
+
   const signOut = () => {
-    useResetRecoilState(sessionState)
+    hideMenu()
+    resetSession()
     Router.push('/signin')
     toast.success('ログアウトしました', {
       autoClose: 3000,
@@ -38,13 +46,8 @@ const LoginedHeaderMenu = ({
       draggable: true,
     })
   }
-  let showMenu = true
   const popOverStyle = showMenu ? [styles['m-logined-header-menu__popover'], styles['m-logined-header-menu__popover--show']].join(' ') : styles['m-logined-header-menu__popover']
   const menuStyle = styles['m-logined-header-menu__item']
-  const toggleMenu = () => {
-    console.log(!showMenu)
-    showMenu = !showMenu
-  }
 
   return (
     <div className={styles['m-logined-header-menu']}>
@@ -68,7 +71,7 @@ const LoginedHeaderMenu = ({
       <div className={popOverStyle}>
         <PopOver>
           <ul className={styles['m-logined-header-menu__list']}>
-            <li><Link href=""><a className={menuStyle}>アカウント設定</a></Link></li>
+            <li><Link href=""><a className={menuStyle} onClick={hideMenu}>アカウント設定</a></Link></li>
             <li><button onClick={signOut} className={menuStyle}>ログアウト</button></li>
           </ul>
         </PopOver>
