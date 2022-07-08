@@ -1,0 +1,11 @@
+@use '../../../global' as g;
+
+.a-form-note {
+  display: inline-block;
+  color: g.$color-mono-80;
+  opacity: 0.5;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+}
