@@ -1,5 +1,4 @@
 import React from 'react'
-import { RecoilRoot } from 'recoil'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
 import Select from '.';
@@ -7,7 +6,6 @@ import Select from '.';
 export default {
   title: 'Atoms/Forms/Select',
   component: Select,
-  decorators: [(storyFn) => <RecoilRoot>{storyFn()}</RecoilRoot>],
 } as ComponentMeta<typeof Select>;
 
 const Template: ComponentStory<typeof Select> = (args) => <Select {...args} />;
