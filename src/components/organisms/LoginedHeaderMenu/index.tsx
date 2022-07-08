@@ -71,7 +71,8 @@ const LoginedHeaderMenu = ({
       <div className={popOverStyle}>
         <PopOver>
           <ul className={styles['m-logined-header-menu__list']}>
-            <li><Link href=""><a className={menuStyle} onClick={hideMenu}>アカウント設定</a></Link></li>
+          <li><Link href="/dashboard"><a className={menuStyle} onClick={hideMenu}>ダッシュボード</a></Link></li>
+            <li><Link href="/setting/account"><a className={menuStyle} onClick={hideMenu}>アカウント設定</a></Link></li>
             <li><button onClick={signOut} className={menuStyle}>ログアウト</button></li>
           </ul>
         </PopOver>

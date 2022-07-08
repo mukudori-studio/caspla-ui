@@ -38,7 +38,7 @@ const Signin: NextPage = () => {
         userId: res.data.userId,
         asRole: res.data.asRole
       })
-      Router.push('/top')
+      Router.push('/dashboard')
     }).catch((err) => {
       toast.error('ID、もしくはパスワードが正しくありません。', {
         autoClose: 3000,
