@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from "next/link"
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -18,6 +18,12 @@ const Header = ({
 }: HeaderProps) => {
 
   const session = useRecoilValue(sessionState)
+  const [logined, setLogined] = useState(false)
+
+  useEffect(() => {
+    const checkLogined = session?.accessToken !== '' ? true : false
+    setLogined(checkLogined)
+}, [])
 
   return (
     <header className={styles['o-header']}>
@@ -44,7 +50,7 @@ const Header = ({
         }
       </div>
       {
-        session?.accessToken !== '' ? (
+        logined ? (
           <LoginedHeaderMenu roles={[]} casplaId={'test'} name={'test'} />
         ) : (
           <div className={styles['o-header__right']}>
