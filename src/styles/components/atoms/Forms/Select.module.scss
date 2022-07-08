@@ -1,0 +1,53 @@
+@use '../../../global' as g;
+
+.a-form-select {
+  position: relative;
+  width: 100%;
+
+  &:after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-top: 12px solid g.$color-mono-80;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    pointer-events: none;
+    transform: translateY(-50%);
+
+    @include g.mq-down(tablet--under) {
+      border-top-width: 8px;
+      border-left-width: 4px;
+      border-right-width: 4px;
+      right: 8px;
+    }
+  }
+
+  &__pulldown {
+    position: relative;
+    width: 100%;
+    appearance: none;
+    background: g.$color-mono-5;
+    border-radius: 5px;
+    height: 50px;
+    outline: none;
+    padding: 0 26px 0 20px;
+    border: 0;
+    font-size: 18px;
+    color: g.$color-mono-80;
+    cursor: pointer;
+
+    &:disabled {
+      // TODO：Disabled必要になったらパターン用意
+      cursor: inherit;
+    }
+
+    @include g.mq-down(tablet--under) {
+      height: 40px;
+      font-size: 16px;
+      padding: 0 18px 0 12px;
+    }
+  }
+}
