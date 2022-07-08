@@ -4,6 +4,7 @@ import styles from '@/styles/components/atoms/Forms/RadioButton.module.scss'
 
 type RadioButtonProps = {
   id: string
+  name: string
   checked?: boolean
   label: string
   note?: string
@@ -13,6 +14,7 @@ type RadioButtonProps = {
 
 const RadioButton = ({
   id,
+  name,
   checked = false,
   label,
   note = '',
@@ -22,7 +24,7 @@ const RadioButton = ({
 
   return (
     <div className={styles['a-form-radio-button']}>
-      <input type="radio" onChange={onChange} id={id} name={id} checked={checked} disabled={disabled} className={styles['a-form-radio-button__input']} />
+      <input type="radio" onChange={onChange} id={id} name={name} value={id} checked={checked} disabled={disabled} className={styles['a-form-radio-button__input']} />
       <label className={styles['a-form-radio-button__label']} htmlFor={id}>
         <div className={styles['a-form-radio-button__text']}>{label}</div>
         { note !== '' && <div className={styles['a-form-radio-button__note']}>{note}</div> }

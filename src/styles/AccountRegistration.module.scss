@@ -1,0 +1,36 @@
+@use './global' as g;
+
+.p-account-registration {
+  @include g.page-margin;
+
+  &__content {
+    max-width: 640px;
+    margin: 0 auto;
+
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+    }
+  }
+
+  &__section {
+    margin-bottom: 60px;
+    
+    @include g.mq-down(tablet--under) {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__item {
+    margin-top: 30px;
+
+    @include g.mq-down(tablet--under) {
+      margin-top: 20px;
+    }
+  }
+
+  &__radio {
+    &:not(:first-of-type) {
+      margin-top: 15px;
+    }
+  }
+}

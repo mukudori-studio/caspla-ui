@@ -3,25 +3,29 @@
 .a-input {
   width: 100%;
   background: g.$color-mono-5;
-    font-size: 14px;
-    transition: .2s;
-    border-radius: 5px;
-    padding: 0 20px;
-    height: 50px;
-    border: 1px solid transparent;
+  font-size: 14px;
+  transition: .2s;
+  border-radius: 5px;
+  padding: 0 20px;
+  height: 50px;
+  border: 1px solid transparent;
 
-    @include g.mq-down(tablet--under) {
-      font-size: 16px;
-      padding: 0 14px;
-    }
+  @include g.mq-down(tablet--under) {
+    font-size: 16px;
+    padding: 0 14px;
+  }
 
-    &:focus {
-      background: g.$color-mono-0;
-      border-color: g.$color-mono-5;
-      outline: 0;
-    }
-  
-    &--error {
-      background: g.$color-error;
-    }
+  &:focus {
+    background: g.$color-mono-0;
+    border-color: g.$color-mono-5;
+    outline: 0;
+  }
+
+  &:disabled {
+    background: #CFD2D7;
+  }
+
+  &--error {
+    background: g.$color-error;
+  }
 }
