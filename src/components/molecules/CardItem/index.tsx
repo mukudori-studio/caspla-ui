@@ -9,9 +9,9 @@ import styles from '@/styles/components/molecules/CardItem.module.scss'
 interface CardItemProps {
   type?: 'cast' | 'agient';
   thumbnail?: string;
-  id: string | number;
+  id?: string | number;
   name: string;
-  displayName?: string;
+  casplaId?: string;
   profile?: string;
   activity?: Array<string>;
   withBookmark?: boolean;
@@ -22,7 +22,7 @@ const CardItem = ({
   id,
   name,
   thumbnail = '',
-  displayName = '',
+  casplaId = '',
   activity = [],
   profile = '',
   type = 'cast',
@@ -30,7 +30,7 @@ const CardItem = ({
   ...props
 }: CardItemProps) => {
   // NOTE:タレントとプロダクションで遷移先を分けておく(ビジネスロジック的に親に持たせる方が良いかも)
-  const linkUrl = type === 'cast' ? `/talents/${id}` : `/agients/${id}`
+  const linkUrl = type === 'cast' ? `/talents/detail/${id}` : `/productions/detail/${id}`
   const toDetail = () => {
     Router.push(linkUrl)
   }
@@ -53,7 +53,7 @@ const CardItem = ({
     <button type="button" onClick={toDetail} className={styles['m-card-item']}>
       <div className={styles['m-card-item__content']}>
         {
-          thumbnail === '' ? (
+          thumbnail === null ? (
             <div className={styles['m-card-item__thumbnail']}></div>
           ) : (
             <Image
@@ -74,8 +74,8 @@ const CardItem = ({
             { withBookmark && (<BookMark changeBookmark={changeBookmark} />)}
           </div>
           {
-            (type === 'cast' && displayName !== '') && (
-              <div className={styles['m-card-item__sub']}>{displayName}</div>
+            (type === 'cast' && casplaId !== '') && (
+              <div className={styles['m-card-item__sub']}>{casplaId}</div>
             )
           }
         </div>
