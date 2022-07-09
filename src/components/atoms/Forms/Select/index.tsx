@@ -29,7 +29,7 @@ const Select = ({
         {
           options.map(data => {
             return (
-              <option value="data" selected={data.value === selected}>{data.text}</option>
+              <option value={data.value} selected={data.value === selected} key={`${data.text}-${data.value}`}>{data.text}</option>
             )
           })
         }

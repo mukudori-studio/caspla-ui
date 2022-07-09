@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import styles from '@/styles/components/molecules/Card.module.scss'
 
 type CardProps = {
