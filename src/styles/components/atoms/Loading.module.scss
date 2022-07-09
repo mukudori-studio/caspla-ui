@@ -1,0 +1,33 @@
+@use '../../global' as g;
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to{
+    transform: rotate(359deg);
+  }
+}
+
+.a-loading {
+  @include g.flex(center);
+  background: transparent;
+  
+  &__outer {
+    @include g.flex(center);
+    width: 80px;
+    height: 80px;
+    padding: 2px;
+    border-radius: 50%;
+    background: rgb(63,249,220);
+    background: linear-gradient(0deg, #fff 33%, #D9CADF 100%);
+    animation: spin 1s linear 0s infinite;
+  }
+
+  &__inner {
+    width: 100%;
+    height: 100%;
+    background: g.$color-mono-0;
+    border-radius: 50%;
+  }
+}
