@@ -1,26 +1,29 @@
-import React, { useState } from 'react'
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
-import { axiosClient } from '@/utils/axiosClient'
 import Meta from '@/components/Meta'
+import Card from '@/components/molecules/Card'
+import LinkButton from '@/components/atoms/LinkButton'
 import FormTitle from '@/components/atoms/Forms/Title'
+import styles from '@/styles/PasswordReset.module.scss'
 
-
-import styles from '@/styles/Signup.module.scss'
-
-type InputProps = {
-  email: string
-};
-
-const SendReissue: NextPage = () => {
-
+const SentSignupMail: NextPage = () => {
   
   return (
-    <div className={styles['p-signin']}>
-      <Meta title="メール送信" />
-      メールが送信されました。hogehoge
+    <div className={styles['p-password-reset']}>
+      <Meta title="パスワード再設定メール送信" />
+      <section className={styles['p-password-reset__content']}>
+        <Card>
+          <>
+            <FormTitle title="パスワード再設定メール送信" />
+            <p className={styles['p-password-reset__description']}>パスワード再設定用ページのURLを記載したメールを入力していただいたメールアドレス宛に送信しました。<br />受信したメールアドレスのURLより、パスワードの再設定画面へアクセスしてください。</p>
+            
+            <div className={styles['p-password-reset__button']}>
+              <LinkButton href="/signin" text="ログインに戻る" />
+            </div>
+          </>
+        </Card>
+      </section>
     </div>
   )
 }
 
-export default SendReissue
+export default SentSignupMail

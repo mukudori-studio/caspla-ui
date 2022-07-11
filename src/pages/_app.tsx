@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         googleTagManagerId={googleTagManagerId as GoogleTagManagerId}
       />
       <Header />
-      <div style={{ minHeight: 'calc(100vh - 191px)' }} className={'wrapper'} id="root">
+      <div style={{ minHeight: 'calc(100% - 181px)' }} className={'wrapper'} id="root">
         <ToastContainer position="bottom-left" />
         <Component {...pageProps} />
       </div>

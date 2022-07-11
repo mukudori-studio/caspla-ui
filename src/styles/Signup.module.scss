@@ -10,6 +10,12 @@
     @include g.mq-down(tablet--under) {
       width: 89vw;
     }
+
+    &--sent-email {
+      @include g.mq-up(tablet) {
+        max-width: 632px;
+      }
+    }
   }
 
   &__form {
@@ -44,6 +50,71 @@
     &::marker {
       content: "※";
       font-size: 10px;
+    }
+  }
+
+  &__description {
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: g.$color-mono-50;
+    line-height: 1.8;
+    margin: 28px 0;
+  }
+
+  &__button {
+    max-width: 320px;
+    margin: 30px auto;
+  }
+}
+
+// NOTE:登録完了画面
+.p-sign-up-complete {
+  
+  &__content {
+    max-width: 632px;
+    width: 100%;
+    margin: 120px auto;
+    text-align: center;
+
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+      margin: 60px auto;
+    }
+  }
+
+  &__title {
+    font-size: 24px;
+    letter-spacing: 1px;
+    line-height: 1.3;
+    margin: 0 auto 0;
+
+    @include g.mq-down(tablet--under) {
+      font-size: 21px;
+    }
+  }
+
+  &__lead {
+    color: g.$color-mono-50;
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 1.8;
+    margin: 28px 0 30px;
+  }
+  
+  &__buttons {
+    @include g.mq-up(tablet) {
+      @include g.flex(center);
+      gap: 16px;
+    }
+  }
+
+  &__button {
+    width: 100%;
+
+    @include g.mq-down(tablet--under) {
+      &:not(:last-of-type) {
+        margin-bottom: 16px;
+      }
     }
   }
 }
