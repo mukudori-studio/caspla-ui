@@ -8,6 +8,7 @@ type PasswordInputProps = {
   register?: any
   placeholder?: string
   error?: string
+  min?: number
 };
 
 const PasswordInput = ({
@@ -15,6 +16,7 @@ const PasswordInput = ({
   register,
   placeholder = '',
   error = '',
+  min = 8
 }: PasswordInputProps) => {
 
   const [typeState, setInputType] = useState('password')
@@ -28,7 +30,7 @@ const PasswordInput = ({
           type={typeState}
           placeholder={placeholder}
           id={id}
-          {...register(id, { required: "パスワードは必須項目です", minLength: { value: 8, message: "パスワードは8文字以上で入力してください" } })}
+          {...register(id, { required: "パスワードは必須項目です", minLength: { value: min, message: "パスワードは8文字以上で入力してください" } })}
         />
         {/* TODO：パスワードの表示、非表示切り替えを行う */}
       </div>

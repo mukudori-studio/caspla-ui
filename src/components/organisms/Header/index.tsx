@@ -23,7 +23,7 @@ const Header = ({
   useEffect(() => {
     const checkLogined = session?.accessToken !== '' ? true : false
     setLogined(checkLogined)
-}, [])
+  })
 
   return (
     <header className={styles['o-header']}>

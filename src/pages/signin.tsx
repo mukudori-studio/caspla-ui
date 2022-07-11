@@ -70,7 +70,7 @@ const Signin: NextPage = () => {
               </div>
               <div className={styles['p-sign-in__item']}>
                 <FormLabel text="パスワード" label="password" reqired={true} />
-                <PasswordInput id="password" register={register} />
+                <PasswordInput id="password" register={register} min={4} />
               </div>
               <Link href="/password-reset/reissue">
                 <a className={forgetLinkStyle}>パスワードを忘れた方はこちら</a>
