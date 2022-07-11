@@ -9,11 +9,12 @@ import { toast } from 'react-toastify'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Forms/Input'
+import LinkButton from '@/components/atoms/LinkButton'
 import FormTitle from '@/components/atoms/Forms/Title'
 import FormLabel from '@/components/atoms/Forms/Label'
+import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import Card from '@/components/molecules/Card'
 import { sessionState } from '@/stores/Session'
-import buttonStyles from '@/styles/components/atoms/Button.module.scss'
 import styles from '@/styles/Signin.module.scss'
 
 type InputProps = {
@@ -53,7 +54,6 @@ const Signin: NextPage = () => {
   }
 
   const forgetLinkStyle = styles['p-sign-in__link']
-  const linkButtonStyle = [styles['p-sign-in__sign-up'], buttonStyles['a-button'], buttonStyles['a-button--primary'], buttonStyles['a-button--large'], buttonStyles['a-button--bold']].join(' ')
   
   return (
     <div className={styles['p-sign-in']}>
@@ -70,20 +70,20 @@ const Signin: NextPage = () => {
               </div>
               <div className={styles['p-sign-in__item']}>
                 <FormLabel text="パスワード" label="password" reqired={true} />
-                <Input id="password" type="password" register={register} required={true} />
+                <PasswordInput id="password" register={register} />
               </div>
               <Link href="/password-reset/reissue">
                 <a className={forgetLinkStyle}>パスワードを忘れた方はこちら</a>
               </Link>
               <div className={styles['p-sign-in__button']}>
-                <Button text="ログイン" color="primary" size="large" type="submit" weight="bold" disabled={!isValid && isSubmitting} />
+                <Button text="ログイン" color="primary" size="large" type="submit" weight="bold" disabled={!isValid || isSubmitting} />
               </div>
             </form>
 
             <FormTitle title="新規登録" />
-            <Link href="/singup/">
-              <a className={linkButtonStyle}>新規で会員登録する</a>
-            </Link>
+            <div className={styles['p-sign-in__sign-up']}>
+              <LinkButton href="/singup/" text="新規で会員登録する" size="large" weight="bold" />
+            </div>
           </>
         </Card>
       </section>
