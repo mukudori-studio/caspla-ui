@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -6,11 +6,11 @@ import type { NextPage } from 'next'
 import { axiosClient } from '@/utils/axiosClient'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Forms/Input'
 import FormTitle from '@/components/atoms/Forms/Title'
 import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
-
+import PasswordInput from '@/components/molecules/Forms/PasswordInput'
+import RePasswordInput from '@/components/molecules/Forms/RePasswordInput'
 import styles from '@/styles/PasswordReset.module.scss'
 
 type InputProps = {
@@ -18,14 +18,15 @@ type InputProps = {
   rePassword: string
 };
 
-const PasswordReissue: NextPage = () => {
+const PasswordRegister: NextPage = () => {
 
   // NOTE：URLパラメーターが空の場合はリダイレクト
   const router = useRouter()
   const { token } = router.query
   if (token === '') Router.replace('/password-reset/reissue')
 
-  const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
+  const { register, watch, handleSubmit, formState: { errors }, getValues } = useForm<InputProps>()
+  const [passwordErrorState, setPasswordError] = useState('')
 
   const onSubmit: SubmitHandler<InputProps> = async (data) => {
     try {
@@ -49,8 +50,6 @@ const PasswordReissue: NextPage = () => {
     }
   }
 
-  console.log(watch())
-
   return (
     <div className={styles['p-password-reset']}>
       <Meta title="パスワードの再設定" />
@@ -63,11 +62,11 @@ const PasswordReissue: NextPage = () => {
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-password-reset__form']}>
               <div className={styles['p-password-reset__item']}>
                 <FormLabel text="パスワード" label="password" reqired={true} />
-                <Input id="password" register={register} required={true} />
+                <PasswordInput id="password" register={register} error={errors?.password?.message} />
               </div>
               <div className={styles['p-password-reset__item']}>
                 <FormLabel text="パスワード(確認用)" label="rePassword" reqired={true} />
-                <Input id="rePassword" register={register} required={true} />
+                <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} />
               </div>
               <div className={styles['p-password-reset__button']}>
                 <Button text="送信" color="primary" size="large" type="submit" />
@@ -80,4 +79,4 @@ const PasswordReissue: NextPage = () => {
   )
 }
 
-export default PasswordReissue
+export default PasswordRegister
