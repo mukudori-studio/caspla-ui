@@ -14,14 +14,12 @@ const TalentDetail: NextPage = () => {
   const { casplaId } = router.query
   const [talentDetailState, setTalentDetail] = useState({})
 
-  useEffect(() => {
-    const id:any = casplaId
+  const id:any = casplaId
     getTalentDetail(id).then(res => {
       console.log(res)
     }).catch(() => {
       router.back
     })
-  })
 
   const text= 'saaaa'
   const profileDummy = {
