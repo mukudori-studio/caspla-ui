@@ -1,6 +1,8 @@
+import { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
-import Link from "next/link"
+import { useRouter } from 'next/router'
 import Meta from '@/components/Meta'
+import getTalentDetail from '@/apis/talents/getTalentDetail'
 import DescriptionContent from '@/components/atoms/DescriptionContent'
 import TalentDetailHeader from '@/components/organisms/TalentDetailHeader'
 import TalentProfile from '@/components/organisms/TalentProfile'
@@ -8,8 +10,20 @@ import styles from '@/styles/Talent.module.scss'
 
 const TalentDetail: NextPage = () => {
 
-  const text = 'test'
+  const router = useRouter()
+  const { casplaId } = router.query
+  const [talentDetailState, setTalentDetail] = useState({})
 
+  useEffect(() => {
+    const id:any = casplaId
+    getTalentDetail(id).then(res => {
+      console.log(res)
+    }).catch(() => {
+      router.back
+    })
+  })
+
+  const text= 'saaaa'
   const profileDummy = {
     activities: ['model'],
     name: '峰 不二子',
