@@ -26,11 +26,63 @@
     @include g.mq-down(tablet--under) {
       margin-top: 20px;
     }
+
+    &--height-weight {
+      @include g.flex;
+      gap: 50px;
+
+      @include g.mq-down(tablet--under) {
+        gap: 20px;
+      }
+    }
   }
 
   &__radio {
     &:not(:first-of-type) {
       margin-top: 15px;
+    }
+  }
+
+  &__sizes, &__foot {
+    @include g.flex(start, start);
+    gap: 10px;
+  }
+
+  &__size-input {
+    @include g.flex;
+    gap: 6px;
+    width: 140px;
+  }
+
+  &__foot {
+    margin-top: 10px;
+  }
+
+  &__foot-input {
+    @include g.flex;
+    gap: 6px;
+    width: 220px;
+  }
+
+  &__link {
+    &:not(:last-of-type) {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__button {
+    margin: 10px auto 0;
+
+    @include g.mq-up(tablet) {
+      max-width: 308px;
+    }
+
+    &--submit {
+      margin-top: 60px;
+
+      @include g.mq-down(tablet--under) {
+        margin-top: 30px;
+      }
     }
   }
 }

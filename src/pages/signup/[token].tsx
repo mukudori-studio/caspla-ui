@@ -48,6 +48,7 @@ const AccountRegistration: NextPage = () => {
       setValue('rePassword', registration.password)
       setValue('role', registration.role)
       setRole(registration.role)
+      setSubmitButton(registration.role)
       resetRegistrationState()
     }
   }, [])
@@ -58,15 +59,17 @@ const AccountRegistration: NextPage = () => {
     { id: 'company', label: '企業・団体（制作会社向け）', note: '制作会社や団体向けのアカウントです。オーディション機能を利用できます（Coming Soon）' },
     { id: 'talent', label: 'タレント(フリー)', note: '無所属、もしくは個人で活動されているタレント様向けのアカウントです。プロフィール機能や各種SNSとの連携が可能です。' },
   ]
+
+  const setSubmitButton = (role: string) => {
+    role === 'fan' ? setSubmitButtonColor('primary') : setSubmitButtonColor('secondary')
+    if (role === 'production' || role === 'compnay') setSubmitText('会社情報の入力へ')
+    else if (role === 'talent') setSubmitText('タレントプロフィールの入力へ')
+    else setSubmitText('この内容で登録する')
+  }
   const onChangeRole = (e:any) => {
     const changeValue = e.target.value
     setRole(changeValue)
-
-    changeValue === 'fan' ? setSubmitButtonColor('primary') : setSubmitButtonColor('secondary')
-
-    if (changeValue === 'production' || changeValue === 'compnay') setSubmitText('会社情報の入力へ')
-    else if (changeValue === 'talent') setSubmitText('タレントプロフィールの入力へ')
-    else setSubmitText('この内容で登録する')
+    setSubmitButton(changeValue)
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {

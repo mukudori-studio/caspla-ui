@@ -7,8 +7,11 @@ import { registrationState } from '@/stores/Registration'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import Input from '@/components/molecules/Forms/Input'
+import LinkInput from '@/components/molecules/Forms/LinkInput'
 import Textarea from '@/components/molecules/Forms/Textarea'
-import Checkbox from '@/components/atoms/Forms/Checkbox'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTwitter, faFacebookSquare, faInstagram, faYoutube, faTiktok } from '@fortawesome/free-brands-svg-icons'
+import { faGlobe } from '@fortawesome/free-solid-svg-icons'
 import Select from '@/components/atoms/Forms/Select'
 import DateSelect from '@/components/molecules/Forms/DateSelect'
 import FormTitle from '@/components/atoms/Forms/Title'
@@ -17,8 +20,11 @@ import FormLabel from '@/components/atoms/Forms/Label'
 import styles from '@/styles/AccountRegistration.module.scss'
 
 type InputProps = {
-  email: string
+  profile?: string
   gender?: string
+  birthYear?: string
+  birthMonth?: string
+  birthDay?: string
   birthplace?: string
   height?: string
   weight?: string
@@ -42,15 +48,19 @@ const Signup: NextPage = () => {
 
   const [registration, setRegistration] = useRecoilState(registrationState)
   const [needLetter, setNeedLetter] = useState(true)
-  const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
+  const { register, watch, handleSubmit, formState: { errors }, setValue } = useForm<InputProps>()
 
-  const onCheckLetter = (e:any) => setNeedLetter(e.target.checked)
-  const changeBirthday = (year: string, month: string, day: string) => console.log(year, month, day)
+  const changeBirthday = (year: string, month: string, day: string) => {
+    setValue('birthYear', year)
+    setValue('birthMonth', month)
+    setValue('birthDay', day)
+  }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    console.log(registration)
+    console.log(data)
     // Router.push('/signup/complete')
   }
+
 
   return (
     <div className={styles['p-account-registration']}>
@@ -64,76 +74,77 @@ const Signup: NextPage = () => {
             TODO：API側の仕様固まってから対応
           </div>
           <div className={styles['p-account-registration__item']}>
-            <FormLabel text="略歴" label="profile" reqired={false} />
-            
+            <FormLabel text="略歴" label="profile" />
+            <Textarea id="profile" register={register} error={errors?.profile?.message} />
           </div>
           <div className={styles['p-account-registration__item']}>
-            <FormLabel text="性別" label="gender" reqired={true} />
+            <FormLabel text="性別" label="gender" />
             <Select options={[{value: 'man', text: '男性'}, {value: 'woman', text: '女性'}]} />
           </div>
           <div className={styles['p-account-registration__item']}>
-            <FormLabel text="生年月日" label="birthday" reqired={true} />
+            <FormLabel text="生年月日" label="birthday" />
             <DateSelect onChange={changeBirthday}  />
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="出身地" label="birthplace" />
             <Input id="birthplace" register={register} />
           </div>
-          <div className={styles['p-account-registration__item']}>
-            <FormLabel text="身長" label="birthplace" />
-            <Input id="height" register={register} />
-            cm
-            <FormLabel text="体重" label="birthplace" />
-            <Input id="weight" register={register} />
-            kg
+          <div className={[styles['p-account-registration__item'], styles['p-account-registration__item--height-weight']].join(' ')}>
+            <div>
+              <FormLabel text="身長" label="birthplace" />
+              <div className={styles['p-account-registration__sizes']}>
+                <div className={styles['p-account-registration__size-input']}>
+                  <Input id="height" register={register} type="number" />cm
+                </div>
+              </div>
+            </div>
+            <div>
+              <FormLabel text="体重" label="birthplace" />
+              <div className={styles['p-account-registration__sizes']}>
+                <div className={styles['p-account-registration__size-input']}>
+                  <Input id="weight" register={register} type="number" />kg
+                </div>
+              </div>
+            </div>
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="サイズ" label="birthplace" />
-            <Input id="bust" register={register} placeholder="B(バスト)" />
-            <Input id="waist" register={register} placeholder="W(ウエスト)" />
-            <Input id="hip" register={register} placeholder="H(ヒップ)" />
-            <Input id="footSize" register={register} placeholder="F(足のサイズ)" />
+            <div className={styles['p-account-registration__sizes']}>
+              <div className={styles['p-account-registration__size-input']}><Input id="bust" register={register} placeholder="B(バスト)" type="number" /></div>
+              <div className={styles['p-account-registration__size-input']}><Input id="waist" register={register} placeholder="W(ウエスト)" type="number" /></div>
+              <div className={styles['p-account-registration__size-input']}><Input id="hip" register={register} placeholder="H(ヒップ)" type="number" /></div>
+            </div>
+            <div className={styles['p-account-registration__foot']}>
+              <div className={styles['p-account-registration__foot-input']}><Input id="footSize" register={register} placeholder="F(足のサイズ)" />cm</div>
+            </div>
           </div>
+          {/* TODO：後で他ページでも使用するのでコンポーネントできりだせるようにする */}
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="関連URL(Webサイト、SNS)" label="birthplace" />
-            <div className={styles['p-account-registration__link']}>
-              <span>公式サイト</span>
-              <Input id="siteUrl" register={register} placeholder="webサイトのURLを入力ください。" />
-            </div>
-            <div className={styles['p-account-registration__link']}>
-              <span>ブログ</span>
-              <Input id="blogUrl" register={register} placeholder="ブログのURLを入力ください。" />
-            </div>
-            <div className={styles['p-account-registration__link']}>
-              <Input id="twitterId" register={register} placeholder="TwitterのIDを入力してください。" />
-            </div>
-            <div className={styles['p-account-registration__link']}>
-              <Input id="facebookId" register={register} placeholder="FacebookのIDを入力してください。" />
-            </div>
-            <div className={styles['p-account-registration__link']}>
-              <Input id="youtubeId" register={register} placeholder="YoutubeチャンネルのIDを入力してください。" />
-            </div>
-            <div className={styles['p-account-registration__link']}>
-              <Input id="instagramId" register={register} placeholder="InstragramのIDを入力してください。" />
-            </div>
-            <div className={styles['p-account-registration__link']}>
-              <Input id="tiktokId" register={register} placeholder="TiktokのIDを入力してください。" />
-            </div>
+            <div className={styles['p-account-registration__link']}><LinkInput id="siteUrl" register={register} type="url" placeholder="URLを入力" /></div>
+            <div className={styles['p-account-registration__link']}><LinkInput id="blogUrl" register={register} type="blog" placeholder="URLを入力" /></div>
+            <div className={styles['p-account-registration__link']}><LinkInput id="twitterId" register={register} type="twitter" placeholder="TwitterのIDを入力" /></div>
+            <div className={styles['p-account-registration__link']}><LinkInput id="facebookId" register={register} type="facebook" placeholder="FacebookのIDを入力" /></div>
+            <div className={styles['p-account-registration__link']}><LinkInput id="youtubeId" register={register} type="youtube" placeholder="YoutubeチャンネルのIDを入力" /></div>
+            <div className={styles['p-account-registration__link']}><LinkInput id="instagramId" register={register} type="instagram" placeholder="InstragramのIDを入力" /></div>
+            <div className={styles['p-account-registration__link']}><LinkInput id="tiktokId" register={register} type="tiktok" placeholder="TiktokのIDを入力してください。" /></div>
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="活動区分" label="activities" />
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="出演履歴" label="history" />
-            <Textarea id="history" register={register} />
+            <Textarea id="history" register={register} error={errors?.history?.message} />
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="その他" label="history" />
-            <Textarea id="note" register={register} />
+            <Textarea id="note" register={register} error={errors?.note?.message} />
           </div>
-          <Button text="この内容で登録する" color="primary" size="large" type="submit" />
+          <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
+            <Button text="この内容で登録する" color="primary" size="large" type="submit" />
+          </div>
         </form>
-        <Button text="前の画面に戻る" color="default" size="large" onClick={() => Router.back()}/>
+        <div className={styles['p-account-registration__button']}><Button text="前の画面に戻る" color="default" size="large" onClick={() => Router.back()}/></div>
       </section>
     </div>
   )
