@@ -1,7 +1,7 @@
 import React from 'react'
 import ErrorMessage from '@/components/atoms/Forms/ErrorMessage'
 import type { ChangeEventHandler, FocusEventHandler } from 'react'
-import styles from '@/styles/components/atoms/Forms/Input.module.scss'
+import styles from '@/styles/components/molecules/Forms/Input.module.scss'
 
 
 export type TextareaProps = {
@@ -21,9 +21,9 @@ export const Textarea = (
   }
 ) => {
 
-  const textareaClassName = [styles['a-input__textarea'], props.className].join(' ')
+  const textareaClassName = [styles['m-input__input--textarea'], props.className].join(' ')
   return (
-    <div className={[styles['a-input'], styles['a-input--textarea']].join(' ')}>
+    <div className={styles['m-input']}>
       <textarea
         minLength={props.min}
         maxLength={props.max}

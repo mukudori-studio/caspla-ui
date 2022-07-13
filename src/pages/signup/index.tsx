@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import Router from 'next/router'
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
-import { axiosClient } from '@/utils/axiosClient'
+import { toast } from 'react-toastify'
+import sendEmail from '@/apis/auth/sendEmail'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Forms/Input'
+import Input from '@/components/molecules/Forms/Input'
 import Checkbox from '@/components/atoms/Forms/Checkbox'
-import ErrorMessage from '@/components/atoms/Forms/ErrorMessage'
 import FormTitle from '@/components/atoms/Forms/Title'
 import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
@@ -20,27 +20,17 @@ type InputProps = {
 
 const Signup: NextPage = () => {
 
-  const [needLetter, setNeedLetter] = useState(true)
+  const [needForLetter, setneedForLetter] = useState(true)
   const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
 
-  const onCheckLetter = (e:any) => setNeedLetter(e.target.checked)
+  const onCheckLetter = (e:any) => setneedForLetter(e.target.checked)
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    // axiosClient.post('/api/v1/open/casts', {
-    //   email: data.email,
-    //   needLetter: needLetter
-    // }).then(res => {
-    //   console.log(res)
-    //   Router.push('/signup/sent-email')
-    // })
-    axiosClient.post('/api/v1/auth/signin', {
-      email: 'darshana',
-      needLetter: '1234'
-    }).then(res => {
-      console.log(res)
+    sendEmail(data, needForLetter).then(res => {
       Router.push('/signup/sent-email')
+    }).catch(() => {
+      toast.error('メールの送信に失敗しました。', { autoClose: 3000, draggable: true})
     })
-    // Router.push('/signup/sent-email')
   }
 
   return (
@@ -53,11 +43,10 @@ const Signup: NextPage = () => {
             <FormTitle title="新規登録" />
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-up__form']}>
               <FormLabel text="メールアドレス" label="email" reqired={true} />
-              <Input id="email" register={register} required={true} error={errors?.email} type={'email'} />
-              {errors.email && <ErrorMessage text={'入力必須項目です。'} />}
+              <Input id="email" register={register} required={true} error={errors?.email?.message} type={'email'} />
               {/* TODO：将来的にreact-hooks-formの方に制御もたせたほうが良いかもしれない */}
               <div className={styles['p-sign-up__checkbox']}>
-                <Checkbox id={'newsLetter'} checked={needLetter} label={'Caspla のニュースレターを受け取る'} onChange={onCheckLetter} />
+                <Checkbox id={'newsLetter'} checked={needForLetter} label={'Caspla のニュースレターを受け取る'} onChange={onCheckLetter} />
               </div>
               
               <Button text="確認メールを送信" color="primary" size="large" type="submit" />

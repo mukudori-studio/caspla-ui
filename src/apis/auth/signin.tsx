@@ -4,7 +4,7 @@ const signIn = async (data: any) => {
   try {
 
     const postData = {
-      userId: data.userId,
+      casplaId: data.casplaId,
       password: data.password
     }
 

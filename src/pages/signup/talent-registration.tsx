@@ -5,7 +5,7 @@ import type { NextPage } from 'next'
 import { axiosClient } from '@/utils/axiosClient'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Forms/Input'
+import Input from '@/components/molecules/Forms/Input'
 import Checkbox from '@/components/atoms/Forms/Checkbox'
 import ErrorMessage from '@/components/atoms/Forms/ErrorMessage'
 import FormTitle from '@/components/atoms/Forms/Title'
@@ -53,8 +53,7 @@ const Signup: NextPage = () => {
             <FormTitle title="新規登録" />
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-up__form']}>
               <FormLabel text="メールアドレス" label="email" reqired={true} />
-              <Input id="email" register={register} required={true} error={errors?.email} type={'email'} />
-              {errors.email && <ErrorMessage text={'入力必須項目です。'} />}
+              <Input id="email" register={register} required={true} error={errors?.email?.message} type={'email'} />
               {/* TODO：将来的にreact-hooks-formの方に制御もたせたほうが良いかもしれない */}
               <div className={styles['p-sign-up__checkbox']}>
                 <Checkbox id={'newsLetter'} checked={needLetter} label={'Caspla のニュースレターを受け取る'} onChange={onCheckLetter} />

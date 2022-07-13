@@ -6,7 +6,7 @@ import type { NextPage } from 'next'
 import { axiosClient } from '@/utils/axiosClient'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Forms/Input'
+import Input from '@/components/molecules/Forms/Input'
 import FormTitle from '@/components/atoms/Forms/Title'
 import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
@@ -53,7 +53,7 @@ const PasswordReissue: NextPage = () => {
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-password-reset__form']}>
               
                 <FormLabel text="メールアドレス" label="email" reqired={true} />
-                <Input id="email" register={register} required={true} />
+                <Input id="email" register={register} error={errors?.email?.message} required={true} />
               <div className={styles['p-password-reset__button']}>
                 <Button text="送信" color="primary" size="large" type="submit" />
               </div>

@@ -8,7 +8,7 @@ import signIn from '@/apis/auth/signin'
 import { toast } from 'react-toastify'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
-import Input from '@/components/atoms/Forms/Input'
+import Input from '@/components/molecules/Forms/Input'
 import LinkButton from '@/components/atoms/LinkButton'
 import FormTitle from '@/components/atoms/Forms/Title'
 import FormLabel from '@/components/atoms/Forms/Label'
@@ -18,7 +18,7 @@ import { sessionState } from '@/stores/Session'
 import styles from '@/styles/Signin.module.scss'
 
 type InputProps = {
-  userId: string
+  casplaId: string
   password: string
 }
 
@@ -27,7 +27,7 @@ const Signin: NextPage = () => {
   const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
   const [session, setSession] = useRecoilState(sessionState)
 
-  const isValid = !!watch().userId && !!watch().password
+  const isValid = !!watch().casplaId && !!watch().password
   let isSubmitting = false
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
@@ -41,13 +41,7 @@ const Signin: NextPage = () => {
       })
       Router.push('/dashboard')
     }).catch((err) => {
-      toast.error('ID、もしくはパスワードが正しくありません。', {
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      })
+      toast.error('ID、もしくはパスワードが正しくありません。', { autoClose: 3000, draggable: true})
     }).finally(() => {
       isSubmitting = false
     })
@@ -65,8 +59,8 @@ const Signin: NextPage = () => {
             <FormTitle title="ログイン" />
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-in__form']}>
               <div className={styles['p-sign-in__item']}>
-                <FormLabel text="メールアドレス" label="userId" reqired={true} />
-                <Input id="userId" register={register} required={true} />
+                <FormLabel text="メールアドレス" label="casplaId" reqired={true} />
+                <Input id="casplaId" register={register} required={true} />
               </div>
               <div className={styles['p-sign-in__item']}>
                 <FormLabel text="パスワード" label="password" reqired={true} />
@@ -82,7 +76,7 @@ const Signin: NextPage = () => {
 
             <FormTitle title="新規登録" />
             <div className={styles['p-sign-in__sign-up']}>
-              <LinkButton href="/singup/" text="新規で会員登録する" size="large" weight="bold" />
+              <LinkButton href="/signup/" text="新規で会員登録する" size="large" weight="bold" />
             </div>
           </>
         </Card>
