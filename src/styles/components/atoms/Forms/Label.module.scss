@@ -2,6 +2,7 @@
 
 .a-form-label {
   @include g.flex(start);
+  gap: 8px;
   font-size: 12px;
   color: g.$color-mono-50;
   line-height: 1.1;
@@ -10,5 +11,16 @@
 
   @include g.mq-down(tablet--under) {
     font-size: 10px;
+  }
+
+  &__required {
+    @include g.flex(center);
+    height: 14px;
+    padding: 0 6px 1px;
+    background: g.$color-alert;
+    font-size: 10px;
+    color: g.$color-mono-0;
+    line-height: 1.1;
+    border-radius: 14px;
   }
 }
