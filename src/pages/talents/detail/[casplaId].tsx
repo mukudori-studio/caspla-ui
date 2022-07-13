@@ -18,7 +18,7 @@ const TalentDetail: NextPage = () => {
     getTalentDetail(id).then(res => {
       console.log(res)
     }).catch(() => {
-      router.back
+      router.back()
     })
 
   const text= 'saaaa'

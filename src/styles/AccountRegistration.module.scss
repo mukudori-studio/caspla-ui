@@ -4,7 +4,7 @@
   @include g.page-margin;
 
   &__content {
-    max-width: 640px;
+    max-width: 632px;
     margin: 0 auto;
 
     @include g.mq-down(tablet--under) {

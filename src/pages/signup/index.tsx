@@ -25,6 +25,8 @@ const Signup: NextPage = () => {
 
   const onCheckLetter = (e:any) => setneedForLetter(e.target.checked)
 
+  const isValid = !watch().email
+
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     sendEmail(data, needForLetter).then(res => {
       Router.push('/signup/sent-email')
@@ -49,7 +51,7 @@ const Signup: NextPage = () => {
                 <Checkbox id={'newsLetter'} checked={needForLetter} label={'Caspla のニュースレターを受け取る'} onChange={onCheckLetter} />
               </div>
               
-              <Button text="確認メールを送信" color="primary" size="large" type="submit" />
+              <Button text="確認メールを送信" color="primary" size="large" type="submit" disabled={isValid} />
 
               <ul className={styles['p-sign-up__notes']}>
                 <li className={styles['p-sign-up__note']}>利用規約とプライバシーポリシーが適用されます。<br className={styles['p-sign-up__br']} />事前にご確認の上、メールをご送信ください。</li>
