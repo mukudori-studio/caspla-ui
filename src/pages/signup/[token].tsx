@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 import { registrationState } from '@/stores/Registration'
 import { toast } from 'react-toastify'
 import fanRegistration from '@/apis/auth/fanRegistration'
@@ -34,7 +34,23 @@ const AccountRegistration: NextPage = () => {
   const [submitButtonColorState, setSubmitButtonColor] = useState('primary')
   const [submitTextState, setSubmitText] = useState('この内容で登録する')
   const [registration, setRegistration] = useRecoilState(registrationState)
-  const { register, watch, handleSubmit, formState: { errors }, getValues } = useForm<InputProps>()
+  const resetRegistrationState = useResetRecoilState(registrationState)
+  const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
+
+  useEffect(() => {
+    if (registration.fullName !== '') {
+      setValue('thumbail', '')
+      setValue('fullName', registration.fullName)
+      setValue('furigana', registration.furigana)
+      setValue('email', registration.email)
+      setValue('casplaId', registration.casplaId)
+      setValue('password', registration.password)
+      setValue('rePassword', registration.password)
+      setValue('role', registration.role)
+      setRole(registration.role)
+      resetRegistrationState()
+    }
+  }, [])
 
   const roles = [
     { id: 'fan', label: 'ファン', note: 'Casplaに参加する最低限の機能だけを持ったアカウントです。ブックマーク機能の利用や公開オーディションへの投票が可能です。' },
@@ -71,6 +87,7 @@ const AccountRegistration: NextPage = () => {
       if (roleState === 'talent') Router.push('/signup/talent-registration')
 
     } else {
+      // TODO：投げる前にthumbnailとroleをObjectに入れてから投げるようにする
       fanRegistration(data, '', roleState).then(() => {
         Router.push('/signup/complete')
       }).catch(() => {

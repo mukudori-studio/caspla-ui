@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import Router from 'next/router'
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
-import { axiosClient } from '@/utils/axiosClient'
+import { useRecoilState } from 'recoil'
+import { registrationState } from '@/stores/Registration'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import Input from '@/components/molecules/Forms/Input'
@@ -39,6 +40,7 @@ type InputProps = {
 
 const Signup: NextPage = () => {
 
+  const [registration, setRegistration] = useRecoilState(registrationState)
   const [needLetter, setNeedLetter] = useState(true)
   const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
 
@@ -46,21 +48,8 @@ const Signup: NextPage = () => {
   const changeBirthday = (year: string, month: string, day: string) => console.log(year, month, day)
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    // axiosClient.post('/api/v1/open/casts', {
-    //   email: data.email,
-    //   needLetter: needLetter
-    // }).then(res => {
-    //   console.log(res)
-    //   Router.push('/signup/sent-email')
-    // })
-    axiosClient.post('/api/v1/auth/signin', {
-      email: 'darshana',
-      needLetter: '1234'
-    }).then(res => {
-      console.log(res)
-      Router.push('/signup/sent-email')
-    })
-    // Router.push('/signup/sent-email')
+    console.log(registration)
+    // Router.push('/signup/complete')
   }
 
   return (
