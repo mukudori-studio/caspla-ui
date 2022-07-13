@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ja'
 import Select from '@/components/atoms/Forms/Select'
@@ -6,7 +6,7 @@ import styles from '@/styles/components/molecules/Forms/DateSelect.module.scss'
 
 type DateSelectProps = {
   date?: string
-  onChange: (date: string) => void
+  onChange: (year: string, month: string, day: string) => void
 }
 
 const DateSelect = ({
@@ -16,13 +16,16 @@ const DateSelect = ({
 }: DateSelectProps) => {
 
   const [yearState, setYear] = useState(dayjs(date).locale('ja').format('YYYY'))
+  useEffect(() => {onChange(yearState, monthState, dayState)}, [yearState])
   const [monthState, setMonth] = useState(dayjs(date).locale('ja').format('M'))
+  useEffect(() => {onChange(yearState, monthState, dayState)}, [monthState])
   const [dayState, setDay] = useState(dayjs(date).locale('ja').format('D'))
+  useEffect(() => {onChange(yearState, monthState, dayState)}, [dayState])
 
 
-  let yearOptions = []
-  let monthOptions = []
-  let dayOptions = []
+  let yearOptions = [{value: '', text: '未選択'}]
+  let monthOptions = [{value: '', text: '未選択'}]
+  let dayOptions = [{value: '', text: '未選択'}]
   
   //年の生成
   for(let i = 1920; i <= 2020; i++) {
@@ -39,15 +42,12 @@ const DateSelect = ({
 
   const onChangeYear = (e:any) => {
     setYear(e.target.value)
-    onChange(`${yearState}-${monthState}-${dayState}`)
   }
   const onChangeMonth = (e:any) => {
     setMonth(e.target.value)
-    onChange(`${yearState}-${monthState}-${dayState}`)
   }
   const onChangeDay = (e:any) => {
     setDay(e.target.value)
-    onChange(`${yearState}-${monthState}-${dayState}`)
   }
 
   return (
