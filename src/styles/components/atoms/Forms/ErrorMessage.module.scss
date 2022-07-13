@@ -7,6 +7,7 @@
   line-height: 1.4;
   letter-spacing: 1px;
   font-weight: bold;
+  margin-top: 6px;
 
   @include g.mq-down(tablet--under) {
     font-size: 12px;

@@ -1,12 +1,7 @@
 @use './global' as g;
 
 .p-talents {
-  // TODO：margin設定全画面で共通化できそうだったらあとで対応
-  margin-bottom: 120px;
-
-  @include g.mq-down(tablet--under) {
-    margin-bottom: 60px;
-  }
+  @include g.page-margin;
 
   &__wrapper {
     width: 100%;

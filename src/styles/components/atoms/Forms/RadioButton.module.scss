@@ -1,0 +1,67 @@
+@use '../../../global' as g;
+
+.a-form-radio-button {
+  width: 100%;
+  
+  &__input {
+    display: none;
+
+    &:checked {
+      & + .a-form-radio-button__label {
+        background: g.$color-primary;
+        color: g.$color-mono-0;
+        cursor: inherit;
+
+        &:after {
+          display: block;
+          background: g.$color-primary;
+          left: 19px;
+          top: 19px;
+          width: 12px;
+          height: 12px;
+        }
+      }
+    }
+  }
+
+  &__label {
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+    background: g.$color-mono-10;
+    padding: 18px 20px 18px 65px;
+    cursor: pointer;
+    position: relative;
+
+    @include g.mq-down(tablet--under) {
+      padding-left: 48px;
+    }
+
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      border-radius: 100%;
+    }
+
+    &:before {
+      top: 15px;
+      left: 15px;
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: g.$color-mono-0;
+    }
+  }
+
+  &__text {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.1;
+  }
+
+  &__note {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+}

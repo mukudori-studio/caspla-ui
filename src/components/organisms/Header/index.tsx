@@ -1,20 +1,29 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from "next/link"
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { useRecoilValue } from 'recoil'
+import { sessionState } from '@/stores/Session'
+import LoginedHeaderMenu from '@/components/organisms/LoginedHeaderMenu'
 import styles from '@/styles/components/organisms/Header.module.scss'
 
 type HeaderProps = {
-  isLogined?: boolean
   showMenu?: boolean
 }
 
 const Header = ({
-  isLogined = false,
   showMenu = true,
   ...props
 }: HeaderProps) => {
+
+  const session = useRecoilValue(sessionState)
+  const [logined, setLogined] = useState(false)
+
+  useEffect(() => {
+    const checkLogined = session?.accessToken !== '' ? true : false
+    setLogined(checkLogined)
+  })
 
   return (
     <header className={styles['o-header']}>
@@ -41,9 +50,8 @@ const Header = ({
         }
       </div>
       {
-        isLogined ? (
-          <div className={styles['o-header__right']}>
-          </div>
+        logined ? (
+          <LoginedHeaderMenu roles={[]} casplaId={'test'} name={'test'} />
         ) : (
           <div className={styles['o-header__right']}>
             <Link href={'/signup'}><a className={styles['o-header__text']}>新規登録</a></Link>

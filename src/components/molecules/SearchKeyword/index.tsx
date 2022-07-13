@@ -20,12 +20,11 @@ const SearchKeyword = () => {
 
   const onSearch = () => {
     if (stateKeyword === '') {
-      Router.push({pathname: '/talents', query: { page: 1 }})
+      Router.push({pathname: '/talents/1'})
     } else {
       Router.push({
-        pathname: '/talents',
+        pathname: '/talents/1',
         query: {
-          page: 1,
           keyword: stateKeyword
         }
       })

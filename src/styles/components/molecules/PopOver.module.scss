@@ -1,0 +1,56 @@
+@use '../../global' as g;
+
+.m-pop-over {
+  width: 100%;
+  position: relative;
+  padding-top: 18px;
+  z-index: 100;
+
+  &__triangle {
+    position: absolute;
+    z-index: 101;
+    right: 18px;
+    top: 8px;
+    height: 17px;
+    width: 17px;
+    background: g.$color-mono-0;
+    transform: rotate(30deg) skewY(30deg) scaleX(.86666);
+    border-top-left-radius: 5px;
+    
+
+    &--outer {
+      box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.15);
+    }
+    &--inner {
+      z-index: 103;
+    }
+
+    &:before, &:after {
+      content: "";
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      background: g.$color-mono-0;
+    }
+
+    &:before {
+      transform: translateX(50%) skewX(-45deg);
+      border-top-right-radius: 5px;
+    }
+
+    &:after {
+      transform: translateY(50%) skewY(-45deg);
+      border-bottom-left-radius: 5px; 
+    }
+  }
+
+  &__content {
+    width: 100%;
+    position: relative;
+    z-index: 102;
+    border-radius: 10px;
+    background: g.$color-mono-0;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  }
+}

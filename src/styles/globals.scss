@@ -6,6 +6,10 @@
   -webkit-overflow-scrolling: touch;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   background: g.$color-mono-0;
   color: g.$color-mono-80;
@@ -60,4 +64,8 @@ img {
 
 .wrapper {
   padding-top: 80px;
+}
+
+#__next {
+  height: 100%;
 }

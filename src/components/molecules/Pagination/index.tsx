@@ -10,6 +10,7 @@ type PaginationProps = {
   listLimit?: number
   totalCount: number
   currentNum: number
+  onChangePagination: (page: number) => void
 }
 
 // NOTE：react-paginateの仕様的にstyled-componentsの書き方でないとスタイル上書き出来ない
@@ -86,21 +87,18 @@ const Pagination = ({
   pageRangeDisplayed = 2,
   marginPagesDisplayed = 1,
   totalCount,
-  currentNum
+  currentNum,
+  onChangePagination
 }: PaginationProps) => {
 
   const handlePaginate = (selectedItem: { selected: number }) => {
-    // if(selectedItem.selected === 0) {
-    //   Router.push(rootPath)
-    // } else {
-    //   Router.push(`${rootPath || ''}/page/${selectedItem.selected}`)
-    // }
+    onChangePagination(selectedItem.selected)
   }
 
   return (
     <PaginationWrapper>
       <ReactPaginate
-        pageCount={Math.ceil(totalCount / listLimit)}
+        pageCount={totalCount}
         initialPage={currentNum}
         previousLabel="<"
         nextLabel=">"
