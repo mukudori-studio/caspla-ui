@@ -85,4 +85,20 @@
       }
     }
   }
+
+  &__check-ids {
+    @include g.flex(between, start);
+    gap: 10px;
+
+    > div {
+      &:first-of-type {
+        flex: 1;
+      }
+    }
+  }
+
+  &__check-id {
+    flex: 120px 0 0;
+    margin-top: 10px;
+  }
 }

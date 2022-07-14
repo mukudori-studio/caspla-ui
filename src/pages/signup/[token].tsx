@@ -5,6 +5,7 @@ import type { NextPage } from 'next'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { registrationState } from '@/stores/Registration'
 import { toast } from 'react-toastify'
+import checkCasplaId from '@/apis/auth/checkCasplaId'
 import fanRegistration from '@/apis/auth/fanRegistration'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
@@ -31,6 +32,7 @@ type InputProps = {
 const AccountRegistration: NextPage = () => {
 
   const [roleState, setRole] = useState('fan')
+  const [checledCasplaIdState, setCheckCasplaId] = useState(false)
   const [submitButtonColorState, setSubmitButtonColor] = useState('primary')
   const [submitTextState, setSubmitText] = useState('この内容で登録する')
   const [registration, setRegistration] = useRecoilState(registrationState)
@@ -70,6 +72,16 @@ const AccountRegistration: NextPage = () => {
     const changeValue = e.target.value
     setRole(changeValue)
     setSubmitButton(changeValue)
+  }
+
+  const onCheckId = async () => {
+    checkCasplaId(getValues('casplaId')).then(res => {
+      // TODO：APIから該当するユーザーが以内場合は200返してもらう
+      setCheckCasplaId(true)
+    }).catch(() => {
+      setCheckCasplaId(false)
+      toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
+    })
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
@@ -124,7 +136,12 @@ const AccountRegistration: NextPage = () => {
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="Caspla ID" label="casplaId" reqired={true} />
-              <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} type={'text'} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+              <div className={styles['p-account-registration__check-ids']}>
+                <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} type={'text'} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+                <div className={styles['p-account-registration__check-id']}>
+                  <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
+                </div>
+              </div>
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="パスワード" label="password" reqired={true} />
@@ -151,7 +168,7 @@ const AccountRegistration: NextPage = () => {
               <FormNote text="※アカウントタイプは後ほどアカウント管理画面でも変更可能です。" />
             </div>
           </section>
-          <Button text={submitTextState} color={submitButtonColorState} size="large" type="submit" weight="bold" />
+          <Button text={submitTextState} color={submitButtonColorState} size="large" type="submit" weight="bold" disabled={!checledCasplaIdState} />
         </form>
       </section>
     </div>
