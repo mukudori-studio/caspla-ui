@@ -59,11 +59,11 @@ const Signin: NextPage = () => {
             <FormTitle title="ログイン" />
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-in__form']}>
               <div className={styles['p-sign-in__item']}>
-                <FormLabel text="メールアドレス" label="casplaId" reqired={true} />
+                <FormLabel text="メールアドレス" label="casplaId" required={true} />
                 <Input id="casplaId" register={register} required={true} />
               </div>
               <div className={styles['p-sign-in__item']}>
-                <FormLabel text="パスワード" label="password" reqired={true} />
+                <FormLabel text="パスワード" label="password" required={true} />
                 <PasswordInput id="password" register={register} min={4} />
               </div>
               <Link href="/password-reset/reissue">

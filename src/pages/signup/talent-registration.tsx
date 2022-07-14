@@ -84,7 +84,7 @@ const Signup: NextPage = () => {
         <FormTitle title="タレントプロフィール入力" />
         <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
           <div className={styles['p-account-registration__item']}>
-            <FormLabel text="カバー写真" label="coverImage" reqired={false} />
+            <FormLabel text="カバー写真" label="coverImage" required={false} />
             TODO：API側の仕様固まってから対応
           </div>
           <div className={styles['p-account-registration__item']}>

@@ -44,7 +44,7 @@ const Signup: NextPage = () => {
           <>
             <FormTitle title="新規登録" />
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-up__form']}>
-              <FormLabel text="メールアドレス" label="email" reqired={true} />
+              <FormLabel text="メールアドレス" label="email" required={true} />
               <Input id="email" register={register} required={true} error={errors?.email?.message} type={'email'} />
               {/* TODO：将来的にreact-hooks-formの方に制御もたせたほうが良いかもしれない */}
               <div className={styles['p-sign-up__checkbox']}>

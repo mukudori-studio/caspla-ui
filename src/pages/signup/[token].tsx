@@ -123,19 +123,19 @@ const AccountRegistration: NextPage = () => {
                 TODO：サムネイルの仕様固まったらサムネイルコンポーネント追加
             </div>
             <div className={styles['p-account-registration__item']}>
-              <FormLabel text="名前" label="fullName" reqired={true} />
+              <FormLabel text="名前" label="fullName" required={true} />
               <Input id="fullName" register={register} required={true} error={errors?.fullName?.message} type={'text'} note="※プロダクション・企業・団体でこのアカウントをご登録の場合は、ご担当者様のお名前を入力してください。" />
             </div>
             <div className={styles['p-account-registration__item']}>
-              <FormLabel text="フリガナ" label="furigana" reqired={false} />
+              <FormLabel text="フリガナ" label="furigana" required={false} />
               <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} type={'text'} />
             </div>
             <div className={styles['p-account-registration__item']}>
-              <FormLabel text="メールアドレス" label="email" reqired={true} />
+              <FormLabel text="メールアドレス" label="email" required={true} />
               <Input id="email" register={register} required={true} type={'email'} disabled={false} note="※メールアドレスは後ほど管理画面で変更が可能です。" />
             </div>
             <div className={styles['p-account-registration__item']}>
-              <FormLabel text="Caspla ID" label="casplaId" reqired={true} />
+              <FormLabel text="Caspla ID" label="casplaId" required={true} />
               <div className={styles['p-account-registration__check-ids']}>
                 <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} type={'text'} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
                 <div className={styles['p-account-registration__check-id']}>
@@ -144,11 +144,11 @@ const AccountRegistration: NextPage = () => {
               </div>
             </div>
             <div className={styles['p-account-registration__item']}>
-              <FormLabel text="パスワード" label="password" reqired={true} />
+              <FormLabel text="パスワード" label="password" required={true} />
               <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数字で入力してください。" />
             </div>
             <div className={styles['p-account-registration__item']}>
-              <FormLabel text="パスワード(確認用)" label="rePassword" reqired={true} />
+              <FormLabel text="パスワード(確認用)" label="rePassword" required={true} />
               <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} />
             </div>
           </section>
