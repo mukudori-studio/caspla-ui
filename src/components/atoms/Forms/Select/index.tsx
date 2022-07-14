@@ -24,7 +24,7 @@ const Select = ({
     <div className={styles['a-form-select']}>
       <select onChange={onChange} className={styles['a-form-select__pulldown']} disabled={disabled}>
         {
-          !required && <option value="null">{placeholder}</option>
+          !required && <option value="">{placeholder}</option>
         }
         {
           options.map(data => {

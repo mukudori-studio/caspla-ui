@@ -1,22 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
-import { useRecoilState } from 'recoil'
+import { toast } from 'react-toastify'
+import { useRecoilValue } from 'recoil'
 import { registrationState } from '@/stores/Registration'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
+import CheckboxButtons from '@/components/molecules/Forms/CheckboxButtons'
 import Input from '@/components/molecules/Forms/Input'
 import LinkInput from '@/components/molecules/Forms/LinkInput'
 import Textarea from '@/components/molecules/Forms/Textarea'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTwitter, faFacebookSquare, faInstagram, faYoutube, faTiktok } from '@fortawesome/free-brands-svg-icons'
-import { faGlobe } from '@fortawesome/free-solid-svg-icons'
 import Select from '@/components/atoms/Forms/Select'
 import DateSelect from '@/components/molecules/Forms/DateSelect'
 import FormTitle from '@/components/atoms/Forms/Title'
 import FormLabel from '@/components/atoms/Forms/Label'
-
+import activities from '@/utils/activities'
+import bloodTypes from '@/utils/bloodTypes'
+import starSigns from '@/utils/starSigns'
 import styles from '@/styles/AccountRegistration.module.scss'
 
 type InputProps = {
@@ -25,6 +26,8 @@ type InputProps = {
   birthYear?: string
   birthMonth?: string
   birthDay?: string
+  starSign?: string
+  bloodType?: string
   birthplace?: string
   height?: string
   weight?: string
@@ -46,20 +49,31 @@ type InputProps = {
 
 const Signup: NextPage = () => {
 
-  const [registration, setRegistration] = useRecoilState(registrationState)
-  const [needLetter, setNeedLetter] = useState(true)
-  const { register, watch, handleSubmit, formState: { errors }, setValue } = useForm<InputProps>()
+  const registration = useRecoilValue(registrationState)
+  const { register, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
   const changeBirthday = (year: string, month: string, day: string) => {
     setValue('birthYear', year)
     setValue('birthMonth', month)
     setValue('birthDay', day)
   }
+  const changeGender = (e:any) => setValue('gender', e.target.value)
+  const changeStarSign = (e:any) => setValue('starSign', e.target.value)
+  const changeBloodType = (e:any) => {
+    console.log(e.target.value)
+    setValue('bloodType', e.target.value)
+  }
+  const checkActivity = (data: Array<string>) => setValue('activities', data)
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     console.log(data)
     // Router.push('/signup/complete')
   }
+
+  useEffect(() => {
+    if (registration.fullName === '') Router.replace('/signup/')
+    toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
+  }, [])
 
 
   return (
@@ -79,11 +93,19 @@ const Signup: NextPage = () => {
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="性別" label="gender" />
-            <Select options={[{value: 'man', text: '男性'}, {value: 'woman', text: '女性'}]} />
+            <Select options={[{value: 'man', text: '男性'}, {value: 'woman', text: '女性'}]} onChange={changeGender} />
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="生年月日" label="birthday" />
             <DateSelect onChange={changeBirthday}  />
+          </div>
+          <div className={styles['p-account-registration__item']}>
+            <FormLabel text="星座" label="starSign" />
+            <Select options={starSigns} onChange={changeStarSign} />
+          </div>
+          <div className={styles['p-account-registration__item']}>
+            <FormLabel text="血液型" label="starSign" />
+            <Select options={bloodTypes} onChange={changeBloodType} />
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="出身地" label="birthplace" />
@@ -131,6 +153,7 @@ const Signup: NextPage = () => {
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="活動区分" label="activities" />
+            <CheckboxButtons checkboxes={activities} onChange={checkActivity} checkedItems={getValues('activities')} />
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="出演履歴" label="history" />

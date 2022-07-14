@@ -4,7 +4,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import CheckboxButtons from './';
 
 export default {
-  title: 'Molecules/CheckboxButtons',
+  title: 'Molecules/Forms/CheckboxButtons',
   component: CheckboxButtons,
   argTypes: {
     onChange: { action: 'onChange' }
@@ -15,10 +15,11 @@ const Template: ComponentStory<typeof CheckboxButtons> = (args) => <CheckboxButt
 
 export const Default = Template.bind({});
 Default.args = {
+  checkedItems: ['val1', 'val3'],
   checkboxes: [
-    { id: 'val1', value: 'val1', label: 'ラベル1', checked: false},
-    { id: 'val2', value: 'val2', label: 'ラベル2', checked: true},
-    { id: 'val3', value: 'val3', label: 'ラベル3', checked: false},
-    { id: 'val4', value: 'val4', label: 'ラベル4', checked: true},
+    { id: 'val1', value: 'val1', text: 'ラベル1'},
+    { id: 'val2', value: 'val2', text: 'ラベル2'},
+    { id: 'val3', value: 'val3', text: 'ラベル3'},
+    { id: 'val4', value: 'val4', text: 'ラベル4'},
   ]
 };

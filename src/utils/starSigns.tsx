@@ -1,16 +1,16 @@
 const starSigns = [
-  { key: 'aries', textJA: '牡羊座'},
-  { key: 'taurus', textJA: '牡牛座'},
-  { key: 'gemini', textJA: '双子座'},
-  { key: 'cancer', textJA: '蟹座'},
-  { key: 'leo', textJA: '獅子座'},
-  { key: 'virgo', textJA: '乙女座'},
-  { key: 'libra', textJA: '天秤座'},
-  { key: 'scorpio', textJA: '蠍座'},
-  { key: 'sagittarius', textJA: '射手座'},
-  { key: 'capricorn', textJA: '山羊座'},
-  { key: 'aquarius', textJA: '水瓶座'},
-  { key: 'pisces', textJA: '魚座'},
+  { value: 'aries', text: '牡羊座'},
+  { value: 'taurus', text: '牡牛座'},
+  { value: 'gemini', text: '双子座'},
+  { value: 'cancer', text: '蟹座'},
+  { value: 'leo', text: '獅子座'},
+  { value: 'virgo', text: '乙女座'},
+  { value: 'libra', text: '天秤座'},
+  { value: 'scorpio', text: '蠍座'},
+  { value: 'sagittarius', text: '射手座'},
+  { value: 'capricorn', text: '山羊座'},
+  { value: 'aquarius', text: '水瓶座'},
+  { value: 'pisces', text: '魚座'},
 ]
 
 export default starSigns
