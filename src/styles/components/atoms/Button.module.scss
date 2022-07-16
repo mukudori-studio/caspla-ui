@@ -51,5 +51,6 @@
   &:disabled {
     cursor: inherit;
     background: g.$color-mono-50;
+    color: g.$color-mono-0;
   }
 }

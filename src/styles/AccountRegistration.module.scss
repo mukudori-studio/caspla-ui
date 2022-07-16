@@ -87,7 +87,26 @@
   }
 
   &__check-ids {
-    @include g.flex(between, start);
+    @include g.flex(start, start);
+    gap: 10px;
+
+    > div {
+      &:first-of-type {
+        flex: 1;
+      }
+    }
+  }
+  &__check-input {
+    max-width: 186px;
+  }
+
+  &__check-id {
+    flex: 120px 0 0;
+    margin-top: 10px;
+  }
+
+  &__zips {
+    @include g.flex(start, start);
     gap: 10px;
 
     > div {
@@ -97,8 +116,16 @@
     }
   }
 
-  &__check-id {
-    flex: 120px 0 0;
+  &__zip-input {
+    max-width: 186px;
+  }
+
+  &__zip-search {
+    flex: 146px 0 0;
     margin-top: 10px;
+
+    @include g.mq-down(tablet--under) {
+      width: 120px;
+    }
   }
 }

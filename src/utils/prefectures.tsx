@@ -1,4 +1,4 @@
-const activities = [
+const prefectures = [
   { code: '1', name: '北海道', kana_name: { half_upper: 'ﾎﾂｶｲﾄﾞｳ', full_lower: 'ホッカイドウ' }, en_name: { en: 'Hokkaido', ja: 'Hokkaido' }, start_date: '1947-05-03', end_date: null, note: null },
   { code: '2', name: '青森県', kana_name: { half_upper: 'ｱｵﾓﾘｹﾝ', full_lower: 'アオモリケン' }, en_name: { en: null, ja: 'Aomori' }, start_date: '1947-05-03', end_date: null, note: null },
   { code: '3', name: '岩手県', kana_name: { half_upper: 'ｲﾜﾃｹﾝ', full_lower: 'イワテケン' }, en_name: { en: null, ja: 'Iwate' }, start_date: '1947-05-03', end_date: null, note: null },
@@ -48,4 +48,4 @@ const activities = [
   { code: '47', name: '沖縄県', kana_name: { half_upper: 'ｵｷﾅﾜｹﾝ', full_lower: 'オキナワケン' }, en_name: { en: null, ja: 'Okinawa' }, start_date: '1972-05-15', end_date: null, note: '適用開始年月日は、「琉球諸島及び大東諸島に関する日本国とアメリカ合衆国との間の協定」(昭和47年3月21日条約第2号)の効力発生の日(昭和47年5月15日)としている。'}
 ]
 
-export default activities
+export default prefectures
