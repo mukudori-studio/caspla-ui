@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import Meta from '@/components/Meta'
 import Image from 'next/image'
 import Button from '@/components/atoms/Button'
-import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic'
 const SearchKeyword = dynamic(() => import('@/components/molecules/SearchKeyword'), { ssr: false })
 const Modal = dynamic(() => import('@/components/molecules/Modal'), { ssr: false })
 import AuditionAnnouncement from '@/components/organisms/AuditionAnnouncement'

@@ -43,6 +43,7 @@ const SearchKeyword = () => {
         type="search"
         maxLength={255}
         value={stateKeyword}
+        placeholder="タレント検索"
         onKeyPress={pressEnter}
         onChange={(e) => handleInputKeyoword(e)}
       />

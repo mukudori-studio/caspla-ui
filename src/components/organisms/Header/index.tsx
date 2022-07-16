@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import Link from "next/link"
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilValue } from 'recoil'
 import { sessionState } from '@/stores/Session'
+const SearchKeyword = dynamic(() => import('@/components/molecules/SearchKeyword'), { ssr: false })
 import LoginedHeaderMenu from '@/components/organisms/LoginedHeaderMenu'
 import styles from '@/styles/components/organisms/Header.module.scss'
 
@@ -17,6 +19,9 @@ const Header = ({
   ...props
 }: HeaderProps) => {
 
+  const [showMenuState, setShowMenu] = useState(showMenu)
+
+
   const session = useRecoilValue(sessionState)
   const [logined, setLogined] = useState(false)
 
@@ -25,11 +30,19 @@ const Header = ({
     setLogined(checkLogined)
   })
 
+  useEffect(() => {
+    setShowMenu(showMenu)
+  }, [showMenu])
+
+  const logoLinkStyle = styles['o-header__logo'] 
+
+  const headerStyle = showMenuState ? styles['o-header'] : [styles['o-header'], styles['o-header--no-menu']].join(' ')
+
   return (
-    <header className={styles['o-header']}>
+    <header className={headerStyle}>
       <div className={styles['o-header__left']}>
         <Link href={'/top'}>
-          <a>
+          <a className={logoLinkStyle}>
             <Image
               src='/common/logo.svg'
               alt='Caspla Logo'
@@ -40,15 +53,8 @@ const Header = ({
             />
           </a>
         </Link>
-        {
-          showMenu && (
-            <div>
-              
-            </div>
-          )
-            
-        }
       </div>
+      { showMenuState && <div className={styles['o-header__search']}><SearchKeyword /></div> }
       {
         logined ? (
           <LoginedHeaderMenu roles={[]} casplaId={'test'} name={'test'} />

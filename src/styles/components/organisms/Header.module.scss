@@ -1,7 +1,6 @@
 @use '../../global' as g;
 
 .o-header {
-  @include g.flex(between);
   width: 100vw;
   height: 80px;
   position: fixed;
@@ -12,11 +11,82 @@
   z-index: 100;
   padding: 0 16px 0 30px;
 
-  
+  @include g.mq-up(tablet) {
+    @include g.flex(between);
+  }
+
+  @include g.mq-down(tablet--under) {
+    padding: 8px 16px 10px 20px;
+    height: 120px;
+    display: grid;
+    grid-template:
+      " left    .    right " 42px
+      "   .     .      .   " 12px
+      "search search search" 40px
+      /108px auto 1fr;
+    align-items: center;
+  }
+
+  &__left {
+    grid-area: left;
+
+    @include g.mq-up(tablet) {
+      @include g.flex(start);
+      gap: 30px;
+    }
+    @include g.mq-down(tablet--under) {
+      width: 108px;
+      height: 28px;
+    }
+  }
+
+  &__logo {
+    display: block;
+    @include g.mq-down(tablet--under) {
+      height: 28px;
+    }
+  }
+
+  &__search {
+    grid-area: search;
+    max-width: 632px;
+    width: 46.2vw;
+
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+
+      .m-search-keyword__search {
+        height: 27px;
+      }
+    }
+  }
+
+  // NOTE:メインコンテンツ部分
+  & + div {
+    padding-top: 80px;
+    
+    @include g.mq-down(tablet--under) {
+      padding-top: 120px;
+    }
+  }
+
+  &--no-menu {
+    @include g.mq-down(tablet--under) {
+      height: 60px;
+      & + div {
+        padding-top: 60px;
+      }
+    }
+  }
 
   &__right {
     @include g.flex(end);
+    grid-area: right;
     gap: 20px;
+
+    @include g.mq-down(tablet--under) {
+      height: 42px;
+    }
   }
 
   &__text {
@@ -56,6 +126,11 @@
       &:hover {
         opacity: .8;
       }
+    }
+
+    @include g.mq-down(tablet--under) {
+      width: 42px;
+      height: 42px;
     }
 
     &__text {
