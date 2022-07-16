@@ -70,12 +70,10 @@ const Signup: NextPage = () => {
   }
 
   useEffect(() => {
-    if (registration.fullName === '') {
-      console.log(registration.fullName === '')
-      Router.replace('/signup/')
-      toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
-      return
-    }
+    // if (registration.fullName === '') {
+    //   Router.replace('/signup/')
+    //   toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
+    // }
   }, [])
 
 

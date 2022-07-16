@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import Meta from '@/components/Meta'
 import getTalentDetail from '@/apis/talents/getTalentDetail'
 import DescriptionContent from '@/components/atoms/DescriptionContent'
@@ -15,11 +15,14 @@ const TalentDetail: NextPage = () => {
   const [talentDetailState, setTalentDetail] = useState({})
 
   const id:any = casplaId
+  
+  useEffect(() => {
     getTalentDetail(id).then(res => {
       console.log(res)
     }).catch(() => {
-      router.back()
+      Router.back()
     })
+  }, [])
 
   const text= 'saaaa'
   const profileDummy = {

@@ -44,10 +44,16 @@
 
   &__content {
     background: g.$color-mono-5;
-    padding: 34px 26px 26px;
+    padding: 20px 15px 15px;
     border-radius: 10px;
     position: relative;
     margin: 0 auto 30px;
+
+    @include g.mq-up(tablet) {
+      @include g.flex(start, start);
+      gap: 15px;
+      padding: 34px 26px 26px;
+    }
   }
 
   &__title {
@@ -58,22 +64,68 @@
     left: 26px;
     top: -7px;
     margin: 0;
+
+    @include g.mq-down(tablet--under) {
+      left: 15px;
+    }
+  }
+
+  &__item {
+    &--gender {
+      @include g.mq-up(tablet) {
+        width: 44px;
+      }
+    }
+
+    &--age {
+      @include g.mq-up(tablet) {
+        flex: 240px 0 0;
+      }
+    }
+
+    &--activity {
+      @include g.mq-up(tablet) {
+        flex: 1;
+      }
+    }
   }
 
   &__label {
+    @include g.flex;
+    height: 20px;
     font-size: 10px;
     line-height: 1.1;
-    color: g.$color-mono-50;
+    color: #CFD2D7;
     font-weight: normal;
+    position: relative;
+    margin: 0 0 8px;
+
+    span {
+      background: g.$color-mono-5;
+      padding-right: 10px;
+      position: realtive;
+      z-index: 1;
+    }
     
     &:after {
       content: "";
       display: block;
       width: 100%;
       height: 1px;
-      background: g.$color-mono-50;
+      background: #CFD2D7;
       border: 0;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      z-index: 0;
     }
+  }
+
+
+  &__search {
+    max-width: 632px;
+    margin: 0 auto;
   }
   
 }

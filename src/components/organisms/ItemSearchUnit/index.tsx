@@ -57,27 +57,27 @@ const ItemSearchUnit = ({
       </div>
       <div className={styles['o-item-search-unit__content']}>
         <h2 className={styles['o-item-search-unit__title']}>絞り込み条件</h2>
-        <div className={styles['o-item-search-unit__item']}>
-          <h3 className={styles['o-item-search-unit__label']}>性別</h3>
+        <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--gender']].join(' ')}>
+          <h3 className={styles['o-item-search-unit__label']}><span>性別</span></h3>
           <div className={styles['o-item-search-unit__check-box']}>
             <CheckboxButtons checkedItems={stateGender} checkboxes={[
               {value: 'man', text: '男性'}, {value: 'woman', text: '女性'},
             ]} onChange={onChangeGender} />
           </div>
         </div>
-        <div className={styles['o-item-search-unit__item']}>
-          <h3 className={styles['o-item-search-unit__label']}>年齢</h3>
+        <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--age']].join(' ')}>
+          <h3 className={styles['o-item-search-unit__label']}><span>年齢</span></h3>
           <div className={styles['o-item-search-unit__check-box']}></div>
         </div>
-        <div className={styles['o-item-search-unit__item']}>
-          <h3 className={styles['o-item-search-unit__label']}>活動区分</h3>
+        <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--activity']].join(' ')}>
+          <h3 className={styles['o-item-search-unit__label']}><span>活動区分</span></h3>
           <div className={styles['o-item-search-unit__check-box']}>
           <CheckboxButtons checkedItems={stateActivity} checkboxes={activities} onChange={onChangeActivity} />
           
           </div>
         </div>
       </div>
-      <div><SearchKeyword onClick={onSearch} /></div>
+      <div className={styles['o-item-search-unit__search']}><SearchKeyword onClick={onSearch} /></div>
     </div>
   )
 }

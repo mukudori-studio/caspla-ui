@@ -38,9 +38,11 @@
   }
 
   &__search-area {
+    width: 632px;
+    margin: 0 auto;
+    
     @include g.mq-down(tablet--under) {
       width: 89vw;
-      margin: 0 auto;
     }
   }
 
