@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilValue } from 'recoil'
 import { sessionState } from '@/stores/Session'
-const SearchKeyword = dynamic(() => import('@/components/molecules/SearchKeyword'), { ssr: false })
+import SearchKeyword from '@/components/molecules/SearchKeyword'
 import LoginedHeaderMenu from '@/components/organisms/LoginedHeaderMenu'
 import styles from '@/styles/components/organisms/Header.module.scss'
 
@@ -64,7 +64,7 @@ const Header = ({
           </a>
         </Link>
       </div>
-      { showMenuState && <div className={styles['o-header__search']}><SearchKeyword onClick={onSearch} /></div> }
+      { showMenuState && <div className={styles['o-header__search']}><SearchKeyword onClick={onSearch} placeholder="タレント検索" /></div> }
       {
         logined ? (
           <LoginedHeaderMenu roles={[]} casplaId={'test'} name={'test'} />

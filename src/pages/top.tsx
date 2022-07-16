@@ -4,12 +4,13 @@ import type { NextPage } from 'next'
 import Meta from '@/components/Meta'
 import Image from 'next/image'
 import Button from '@/components/atoms/Button'
-import dynamic from 'next/dynamic'
-const SearchKeyword = dynamic(() => import('@/components/molecules/SearchKeyword'), { ssr: false })
-const Modal = dynamic(() => import('@/components/molecules/Modal'), { ssr: false })
+import SearchKeyword from '@/components/molecules/SearchKeyword'
 import AuditionAnnouncement from '@/components/organisms/AuditionAnnouncement'
+import dynamic from 'next/dynamic'
 import styles from '@/styles/Top.module.scss'
 import buttonStyles from '@/styles/components/atoms/Button.module.scss'
+
+const Modal = dynamic(() => import('@/components/molecules/Modal'), { ssr: false })
 
 const Home: NextPage = () => {
 

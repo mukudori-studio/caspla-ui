@@ -62,7 +62,7 @@ const Talents: NextPage = () => {
       <main className={styles['p-talents__wrapper']}>
         { loadingState && <Loading /> }
         {
-          !loadingState && talentsState.length === 0 ? (
+          !loadingState || talentsState.length === 0 ? (
             <Nodata text="タレント情報は0件となります。" />
           ) : (
             <>

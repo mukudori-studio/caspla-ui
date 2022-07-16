@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
 import Router, {useRouter} from 'next/router'
 import SearchKeyword from '@/components/molecules/SearchKeyword'
 import CheckboxButtons from '@/components/molecules/Forms/CheckboxButtons'
