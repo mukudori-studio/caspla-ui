@@ -19,7 +19,7 @@ const getTalents = async ({
 
     const response = await axiosClient.get('/api/v1/open/casts', {
       params: {
-        page: Number(pageId) - 1,
+        page: Number(pageId),
         activity: activity,
         age: age,
         gender: gender,

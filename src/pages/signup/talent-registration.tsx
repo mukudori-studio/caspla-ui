@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Router from 'next/router'
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
 import { toast } from 'react-toastify'
 import { useRecoilValue } from 'recoil'
@@ -60,7 +60,6 @@ const Signup: NextPage = () => {
   const changeGender = (e:any) => setValue('gender', e.target.value)
   const changeStarSign = (e:any) => setValue('starSign', e.target.value)
   const changeBloodType = (e:any) => {
-    console.log(e.target.value)
     setValue('bloodType', e.target.value)
   }
   const checkActivity = (data: Array<string>) => setValue('activities', data)
@@ -71,8 +70,12 @@ const Signup: NextPage = () => {
   }
 
   useEffect(() => {
-    if (registration.fullName === '') Router.replace('/signup/')
-    toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
+    if (registration.fullName === '') {
+      console.log(registration.fullName === '')
+      Router.replace('/signup/')
+      toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
+      return
+    }
   }, [])
 
 

@@ -8,17 +8,17 @@ export default {
   title: 'Atoms/Forms/Input',
   component: Input,
   decorators: [(storyFn) => <RecoilRoot>{storyFn()}</RecoilRoot>],
-} as ComponentMeta<typeof Input>;
+} as ComponentMeta<typeof Input>
 
-const Template: ComponentStory<typeof Input> = (args) => <Input {...args} />;
+const Template: ComponentStory<typeof Input> = (args) => <Input {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   id: 'val',
   register: () => {}
 }
 
-export const WithError = Template.bind({});
+export const WithError = Template.bind({})
 WithError.args = {
   id: 'val',
   register: () => {},

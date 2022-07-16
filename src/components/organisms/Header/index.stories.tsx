@@ -1,13 +1,15 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import React from 'react'
+import { RecoilRoot } from 'recoil'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import Header from './';
+import Header from './'
 
 export default {
   title: 'Organisms/Header',
   component: Header,
-} as ComponentMeta<typeof Header>;
+  decorators: [(storyFn) => <RecoilRoot>{storyFn()}</RecoilRoot>],
+} as ComponentMeta<typeof Header>
 
-const Template: ComponentStory<typeof Header> = () => <Header />;
+const Template: ComponentStory<typeof Header> = () => <Header />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})

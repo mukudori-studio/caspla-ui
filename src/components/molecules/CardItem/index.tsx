@@ -36,8 +36,8 @@ const CardItem = ({
   }
 
   // TODO：ループ処理整理
-  const filteredActivity = activities.filter(data => activity.find(val => data.key === val))
-  const formattedActivity = filteredActivity.map(data => data.textJA)
+  const filteredActivity = activities.filter(data => activity.find(val => data.value === val))
+  const formattedActivity = filteredActivity.map(data => data.text)
 
   // NOTE：Boomark
   const [flag, setFlag] = React.useState(withBookmark)
@@ -79,9 +79,7 @@ const CardItem = ({
             )
           }
         </div>
-        <div className={styles['m-card-item__profile']}>
-          <p className={styles['m-card-item__text']}>{profile}</p>
-        </div>
+        <p className={styles['m-card-item__profile']}>{profile}</p>
       </div>
     </button>
   );

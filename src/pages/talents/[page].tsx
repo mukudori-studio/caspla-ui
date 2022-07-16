@@ -6,7 +6,9 @@ import Meta from '@/components/Meta'
 import Nodata from '@/components/atoms/Nodata'
 import CardItem from '@/components/molecules/CardItem'
 import Pagination from '@/components/molecules/Pagination'
+const ItemSearchUnit = dynamic(() => import('@/components/organisms/ItemSearchUnit'), { ssr: false })
 import styles from '@/styles/Talent.module.scss'
+import dynamic from 'next/dynamic'
 
 const Talents: NextPage = () => {
 
@@ -19,7 +21,6 @@ const Talents: NextPage = () => {
   const pageId = page
   
   useEffect(() => {
-    console.log(activity)
     
     getTalents({
       pageId: pageId,
@@ -30,6 +31,17 @@ const Talents: NextPage = () => {
       setTotalCount(Math.ceil(res.data.response_message.totalCount /50))
     })
   }, [])
+
+  const onSearch = (val:any) => {
+    getTalents({
+      pageId: pageId,
+      keyword: val !== undefined ? val : '',
+    }).then(res => {
+      setTalents(res.data.response_message.casts)
+      setPage(res.data.response_message.page + 1)
+      setTotalCount(Math.ceil(res.data.response_message.totalCount /50))
+    })
+  }
 
   const onChangePagination = (page: number) => {
     console.log(page)
@@ -68,6 +80,7 @@ const Talents: NextPage = () => {
             <Nodata text="タレント情報は0件となります。" />
           )
         }
+        <ItemSearchUnit onClick={onSearch} />
       </main>
     </div>
   )

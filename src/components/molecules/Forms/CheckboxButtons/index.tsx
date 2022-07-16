@@ -19,6 +19,7 @@ const CheckboxButtons = ({
 
   const changeCheckbox = (e:any | never) => {
     const checkedValue = e.target.value
+    console.log(checkedValue)
     let formattedValue:Array<string> = []
     if (checkedItemState.length === 0) {
       formattedValue.push(checkedValue)

@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
-import Router, { useRouter } from 'next/router'
+import React, { useState, useEffect } from 'react'
+import Router from 'next/router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
-import mobileType from '@/utils/userAgent'
+const mobileType = dynamic(() => import('@/utils/userAgent'), { ssr: false })
 import Button from '@/components/atoms/Button'
 import styles from '@/styles/components/molecules/SearchKeyword.module.scss'
+import dynamic from 'next/dynamic'
 
-const SearchKeyword = () => {
+type SearchKeywordProps = {
+  onClick: (val: string) => void
+}
+
+const SearchKeyword = ({ onClick }:SearchKeywordProps) => {
   
   const [stateKeyword, setKeyword] = useState('')
   
@@ -19,17 +24,14 @@ const SearchKeyword = () => {
   }
 
   const onSearch = () => {
-    if (stateKeyword === '') {
-      Router.push({pathname: '/talents/1'})
-    } else {
-      Router.push({
-        pathname: '/talents/1',
-        query: {
-          keyword: stateKeyword
-        }
-      })
-    }
+    onClick(stateKeyword)
   }
+
+  useEffect(() => {
+    if (Router.query.keyword === undefined) return
+    const inputedKeyword:any = Router.query?.keyword
+    setKeyword(inputedKeyword)
+  }, [])
 
   const buttonsSize = mobileType === 'mobile' ? 'small' : 'medium'
 

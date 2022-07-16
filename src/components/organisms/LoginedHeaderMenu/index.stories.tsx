@@ -1,14 +1,15 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-
-import LoginedHeaderMenu from './';
+import React from 'react'
+import { RecoilRoot } from 'recoil'
+import { ComponentStory, ComponentMeta } from '@storybook/react'
+import LoginedHeaderMenu from './'
 
 export default {
   title: 'Organisms/LoginedHeaderMenu',
   component: LoginedHeaderMenu,
-} as ComponentMeta<typeof LoginedHeaderMenu>;
+  decorators: [(storyFn) => <RecoilRoot>{storyFn()}</RecoilRoot>],
+} as ComponentMeta<typeof LoginedHeaderMenu>
 
-const Template: ComponentStory<typeof LoginedHeaderMenu> = (args) => <LoginedHeaderMenu {...args} />;
+const Template: ComponentStory<typeof LoginedHeaderMenu> = (args) => <LoginedHeaderMenu {...args} />
 
 const data = {
   id: 1,

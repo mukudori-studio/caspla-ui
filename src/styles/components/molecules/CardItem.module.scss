@@ -20,13 +20,22 @@
   &__content {
     display: grid;
     grid-template:
+      "thumbnail . ." 4px
       "thumbnail . head" auto
-      "thumbnail . ." 30px
-      "thumbnail . profile" auto / 146px 30px auto;
+      "thumbnail . ." 20px
+      "thumbnail . profile" auto
+      "thumbnail . ." auto/ 146px 30px auto;
     background: g.$color-mono-5;
     border-radius: 10px;
-    padding: 30px;
+    padding: 20px 30px;
     position: relative;
+
+    @include g.mq-down(tablet--under) {
+      padding: 10px 16px;
+      grid-template:
+        "thumbnail . head" auto/ 60px 10px 1fr;
+      align-items: center;
+    }
   }
 
   &__thumbnail {
@@ -37,10 +46,14 @@
     background: #CFD2D7;
     border-radius: 100%;
     grid-area: thumbnail;
+
+    @include g.mq-down(tablet--under) {
+      width: 60px;
+      height: 60px;
+    }
   }
 
   &__head {
-    @include g.flex(between);
     flex: 1 0 0;
     position: relative;
     grid-area: head;
@@ -63,34 +76,53 @@
   }
 
   &__name {
+    @include g.line-clamp(1);
+    overflow: hidden;
     font-size: 24px;
     color: g.$color-primary;
     letter-spacing: 2.4px;
     line-height: 1.1;
     margin: 0;
     text-align: left;
-    flex: 1 0 0;
+
+    @include g.mq-down(tablet--under) {
+      font-size: 18px;
+      letter-spacing: 1.8px;
+    }
   }
 
   &__sub {
-    position: absolute;
-    left: 0;
-    bottom: -16px;
+    @include g.line-clamp(1);
+    overflow: hidden;
+    margin-top: 12px;
+    text-align: left;
     font-size: 16px;
+    letter-spacing: 1.6px;
     color: rgba(16, 33, 56, 0.5);
     line-height: 1.1;
+
+    @include g.mq-down(tablet--under) {
+      font-size: 14px;
+      letter-spacing: 1.4px;
+      margin-top: 6px;
+    }
   }
 
   &__profile {
     grid-area: profile;
-  }
-
-  &__text {
-    @include g.line-clamp;
+    @include g.line-clamp(3);
     font-size: 14px;
+    letter-spacing: 1px;
     line-height: 1.6;
     text-align: left;
     margin: 0;
     overflow: hidden;
+
+    @include g.mq-down(tablet--under) {
+      display: none;
+    }
+  }
+  &__activities {
+    display: none;
   }
 }

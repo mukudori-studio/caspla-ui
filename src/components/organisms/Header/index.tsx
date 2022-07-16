@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Router from 'next/router'
 import dynamic from 'next/dynamic'
 import Link from "next/link"
 import Image from 'next/image'
@@ -35,8 +36,17 @@ const Header = ({
   }, [showMenu])
 
   const logoLinkStyle = styles['o-header__logo'] 
-
   const headerStyle = showMenuState ? styles['o-header'] : [styles['o-header'], styles['o-header--no-menu']].join(' ')
+  const onSearch = (val: string) => {
+    val === '' ?
+        Router.push({pathname: '/talents/1'}) :
+        Router.push({
+          pathname: '/talents/1',
+          query: {
+            keyword: val
+          }
+        })
+  }
 
   return (
     <header className={headerStyle}>
@@ -54,7 +64,7 @@ const Header = ({
           </a>
         </Link>
       </div>
-      { showMenuState && <div className={styles['o-header__search']}><SearchKeyword /></div> }
+      { showMenuState && <div className={styles['o-header__search']}><SearchKeyword onClick={onSearch} /></div> }
       {
         logined ? (
           <LoginedHeaderMenu roles={[]} casplaId={'test'} name={'test'} />

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Router from 'next/router'
 import type { NextPage } from 'next'
 import Meta from '@/components/Meta'
 import Image from 'next/image'
@@ -16,6 +17,17 @@ const Home: NextPage = () => {
 
   const toggleModal = () => {
     setIsOpenModal(!isOpenModal)
+  }
+  
+  const onSearch = (val: string) => {
+    val === '' ?
+        Router.push({pathname: '/talents/1'}) :
+        Router.push({
+          pathname: '/talents/1',
+          query: {
+            keyword: val
+          }
+        })
   }
 
   return (
@@ -36,7 +48,7 @@ const Home: NextPage = () => {
         <Button size="small" color="default" text="オーディション検索" weight="bold" onClick={toggleModal} />
       </div>
       <div className={styles['p-top-page__search-area']}>
-        <SearchKeyword />
+        <SearchKeyword onClick={onSearch} />
         <div className={styles['p-top-page__note']}>Casplaはあなたのキャスティングを<br />手助けするタレントデータベース<br />好きな条件を入れて検索してみよう!</div>
       </div>
       {isOpenModal && (
