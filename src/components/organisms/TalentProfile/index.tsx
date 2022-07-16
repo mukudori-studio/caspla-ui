@@ -49,8 +49,8 @@ const TalentProfile = ({
     if (star === '' || star === undefined) {
       return '未入力'
     } else {
-      const filteredStar = starSigns.find(data => data.key === star)
-      return filteredStar?.textJA
+      const filteredStar = starSigns.find(data => data.value === star)
+      return filteredStar?.value
     }
   }
 

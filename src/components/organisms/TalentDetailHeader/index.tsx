@@ -46,8 +46,8 @@ const TalentDetailHeader = ({
 }: TalentDetailHeaderProps) => {
 
   // TODO：ループ処理整理
-  const filteredActivity = activities.filter(data => activity.find(val => data.key === val))
-  const formattedActivity = filteredActivity.map(data => data.textJA)
+  const filteredActivity = activities.filter(data => activity.find(val => data.value === val))
+  const formattedActivity = filteredActivity.map(data => data.text)
 
   return (
     <div className={styles['o-talent-detail-header']}>
