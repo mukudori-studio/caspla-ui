@@ -17,8 +17,9 @@ const TalentDetail: NextPage = () => {
   const id:any = casplaId
   
   useEffect(() => {
+    if (id === undefined) return
     getTalentDetail(id).then(res => {
-      console.log(res)
+      console.log(res.data.response_message)
     }).catch(() => {
       Router.back()
     })

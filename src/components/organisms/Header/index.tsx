@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Router from 'next/router'
-import dynamic from 'next/dynamic'
 import Link from "next/link"
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

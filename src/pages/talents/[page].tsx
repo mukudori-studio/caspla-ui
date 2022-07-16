@@ -26,7 +26,7 @@ const Talents: NextPage = () => {
     
     getTalents({
       pageId: pageId,
-      keyword: keyword !== undefined ? keyword : '',
+      keyword: keyword !== undefined ? keyword : 'all',
     }).then(res => {
       setTalents(res.data.response_message.casts)
       setPage(res.data.response_message.page + 1)
@@ -37,17 +37,17 @@ const Talents: NextPage = () => {
   }, [])
 
   const onSearch = (val:any) => {
-    setLoading(true)
-    getTalents({
-      pageId: pageId,
-      keyword: val !== undefined ? val : '',
-    }).then(res => {
-      setTalents(res.data.response_message.casts)
-      setPage(res.data.response_message.page + 1)
-      setTotalCount(Math.ceil(res.data.response_message.totalCount /50))
-    }).finally(() => {
-      setLoading(false)
-    })
+    // setLoading(true)
+    // getTalents({
+    //   pageId: pageId,
+    //   keyword: val !== undefined ? val : '',
+    // }).then(res => {
+    //   setTalents(res.data.response_message.casts)
+    //   setPage(res.data.response_message.page + 1)
+    //   setTotalCount(Math.ceil(res.data.response_message.totalCount /50))
+    // }).finally(() => {
+    //   setLoading(false)
+    // })
   }
 
   const onChangePagination = (page: number) => {
@@ -62,7 +62,7 @@ const Talents: NextPage = () => {
       <main className={styles['p-talents__wrapper']}>
         { loadingState && <Loading /> }
         {
-          !loadingState || talentsState.length === 0 ? (
+          !loadingState && talentsState.length === 0 ? (
             <Nodata text="タレント情報は0件となります。" />
           ) : (
             <>
