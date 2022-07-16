@@ -8,6 +8,8 @@ export default {
   component: ItemSearchUnit,
 } as ComponentMeta<typeof ItemSearchUnit>
 
-const Template: ComponentStory<typeof ItemSearchUnit> = () => <ItemSearchUnit />
+const Template: ComponentStory<typeof ItemSearchUnit> = () => <ItemSearchUnit onClick={onSearch} />
+
+const onSearch = () => console.log('click')
 
 export const Default = Template.bind({});
