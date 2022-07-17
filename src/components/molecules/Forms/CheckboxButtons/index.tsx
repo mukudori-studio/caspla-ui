@@ -19,14 +19,11 @@ const CheckboxButtons = ({
 
   const changeCheckbox = (e:any | never) => {
     const checkedValue = e.target.value
-    let formattedValue:Array<string> = []
-    
-    if (checkedItemState.length === 0) {
-      formattedValue.push(checkedValue)
-      setCheckedItem(() => [...checkedItemState, checkedValue])
-    } else if (checkedItemState.includes(checkedValue)) {
-      formattedValue = checkedItemState.filter((data: string) => data !== checkedValue)
-      setCheckedItem(() => checkedItemState.filter((data: string) => data !== checkedValue))
+    let formattedValue:Array<string> = checkedItems
+
+    if (checkedItems.includes(checkedValue)) {
+      formattedValue = checkedItems.filter((data: string) => data !== checkedValue)
+      setCheckedItem(formattedValue)
     } else {
       formattedValue.push(checkedValue)
       setCheckedItem(() => [...checkedItemState, checkedValue])
@@ -42,10 +39,10 @@ const CheckboxButtons = ({
           return (
             <li className={styles['m-checkbox-buttons__items']} key={`${checkbox.value}-${index}`}>
               <CheckboxButton
-                id={`id_${index}`}
+                id={checkbox.value}
                 value={checkbox.value}
                 label={checkbox.text}
-                checked={checkedItemState.includes(checkbox.value)}
+                checked={checkedItems.includes(checkbox.value)}
                 onChange={changeCheckbox}
               />
             </li>
