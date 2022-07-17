@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil'
 import { registrationState } from '@/stores/Registration'
 import Meta from '@/components/Meta'
 import FormTitle from '@/components/atoms/Forms/Title'
-import CompanyRegistrationTemplate from '@/components/templates/companyRegistrationTemplate'
+import CompanyRegistrationTemplate from '@/components/templates/CompanyRegistrationTemplate'
 
 import styles from '@/styles/AccountRegistration.module.scss'
 
