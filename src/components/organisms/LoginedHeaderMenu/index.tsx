@@ -10,25 +10,11 @@ import { sessionState } from '@/stores/Session'
 import PopOver from '@/components/molecules/Popover'
 import styles from '@/styles/components/organisms/LoginedHeaderMenu.module.scss'
 
-interface LoginedHeaderMenuProps {
-  roles: Array<string>
-  thumbnail?: string
-  casplaId: string
-  name: string
-  agencyName?: string
-}
-
-const LoginedHeaderMenu = ({
-  roles,
-  thumbnail = '',
-  casplaId,
-  name,
-  agencyName = '',
-  ...props
-}: LoginedHeaderMenuProps) => {
+const LoginedHeaderMenu = () => {
 
   const [showMenu, setToggleMenu] = useState(false)
   const [session, setSession] = useRecoilState(sessionState)
+  console.log(session)
   const resetSession = useResetRecoilState(sessionState)
 
   const toggleMenu = () => setToggleMenu(!showMenu)
@@ -52,15 +38,17 @@ const LoginedHeaderMenu = ({
   return (
     <div className={styles['m-logined-header-menu']}>
       <button className={styles['m-logined-header-menu__button']} onClick={toggleMenu}>
-        <div className={styles['m-logined-header-menu__name']}>{name}</div>
-        <div className={styles['m-logined-header-menu__belong']}>{agencyName === '' ? '無所属' : agencyName}</div>
+        <div className={styles['m-logined-header-menu__name']}><span>{session.fullName}</span></div>
+        <div className={styles['m-logined-header-menu__belong']}><span>{session.productionName === '' ? '無所属' : session.productionName}</span></div>
         {
-          thumbnail !== '' ? (
-            <Image
-              src={thumbnail}
-              className={styles['m-logined-header-menu__thumbnail']}
-              layout="fixed"
-            />
+          session.thumbnailImage !== '' ? (
+            <div className={styles['m-logined-header-menu__thumbnail']}>
+              <Image
+                src={session.thumbnailImage}
+                layout="fill"
+                objectFit="contain"
+              />
+            </div>
           ) : (
             <div className={[styles['m-logined-header-menu__thumbnail'], styles['m-logined-header-menu__thumbnail--empty']].join(' ')}>
               <FontAwesomeIcon icon={faUser} className={styles['m-logined-header-menu__image-icon']} />

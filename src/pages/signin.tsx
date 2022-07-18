@@ -36,8 +36,12 @@ const Signin: NextPage = () => {
       setSession({
         accessToken: res.data.accessToken,
         refreshToken: res.data.refreshToken,
-        userId: res.data.userId,
-        asRole: res.data.asRole
+        casplaId: res.data.casplaId,
+        asRole: res.data.asRole,
+        fullName: res.data.fullName,
+        thumbnailImage: res.data.thumbnailImage,
+        productionId: res.data.productionId,
+        productionName: res.data.productionName
       })
       Router.push('/dashboard')
     }).catch((err) => {

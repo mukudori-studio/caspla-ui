@@ -66,7 +66,7 @@ const Header = ({
       { showMenuState && <div className={styles['o-header__search']}><SearchKeyword onClick={onSearch} placeholder="タレント検索" /></div> }
       {
         logined ? (
-          <LoginedHeaderMenu roles={[]} casplaId={'test'} name={'test'} />
+          <LoginedHeaderMenu />
         ) : (
           <div className={styles['o-header__right']}>
             <Link href={'/signup'}><a className={styles['o-header__text']}>新規登録</a></Link>

@@ -30,7 +30,6 @@
     right: 6px;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10;
     width: 94px;
 
     @include g.mq-down(tablet--under) {
