@@ -11,12 +11,10 @@ import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import Checkbox from '@/components/atoms/Forms/Checkbox'
 import FormLabel from '@/components/atoms/Forms/Label'
-import FormNote from '@/components/atoms/Forms/Note'
 import FormTitle from '@/components/atoms/Forms/Title'
 import Input from '@/components/molecules/Forms/Input'
 import RadioButton from '@/components/atoms/Forms/RadioButton'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
-import RePasswordInput from '@/components/molecules/Forms/RePasswordInput'
 import styles from '@/styles/AccountRegistration.module.scss'
 
 type InputProps = {
@@ -37,7 +35,6 @@ const AccountRegistration: NextPage = () => {
   const [checledCasplaIdState, setCheckCasplaId] = useState(false)
   const [needForLetterState, setNeedForLetter] = useState(true)
   const [submitButtonColorState, setSubmitButtonColor] = useState('primary')
-  const [submitTextState, setSubmitText] = useState('この内容で登録する')
   const [session, setSession] = useRecoilState(sessionState)
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
@@ -46,7 +43,7 @@ const AccountRegistration: NextPage = () => {
       Router.replace('/signin')
       toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
     } else if (session.accessToken !== '') {
-      
+      // TODO：API取得
     }
   }, [])
 
@@ -59,16 +56,9 @@ const AccountRegistration: NextPage = () => {
 
   const filteredRole:any = getValues('role') === undefined ? roles[0] : roles.find(data => data.id === getValues('role'))
 
-  const setSubmitButton = (role: string) => {
-    role === 'fan' ? setSubmitButtonColor('primary') : setSubmitButtonColor('secondary')
-    if (role === 'production' || role === 'compnay') setSubmitText('会社情報の入力へ')
-    else if (role === 'talent') setSubmitText('タレントプロフィールの入力へ')
-    else setSubmitText('この内容で登録する')
-  }
   const onChangeRole = (e:any) => {
     const changeValue = e.target.value
     setRole(changeValue)
-    setSubmitButton(changeValue)
   }
 
   const onCheckId = async () => {
@@ -81,13 +71,10 @@ const AccountRegistration: NextPage = () => {
     })
   }
 
-  const toggleNeedForLetter = () => {
-
-  }
+  const toggleNeedForLetter = (e:any) => setValue('needForLetter', e.target.checked)
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    // TODO：role毎に処理が分かれるのでページ遷移が必要なものにかんしてはpush時にstateに入れる
-    if (roleState !== 'fan') {
+    fanRegistration(data, '', roleState).then(() => {
       setSession({
         thumbnail: '',
         fullName: data.fullName,
@@ -97,19 +84,10 @@ const AccountRegistration: NextPage = () => {
         password: data.password,
         role: roleState
       })
-
-      if (roleState === 'production') Router.push('/signup/production-registration')
-      if (roleState === 'company') Router.push('/signup/company-registration')
-      if (roleState === 'talent') Router.push('/signup/talent-registration')
-
-    } else {
-      // TODO：投げる前にthumbnailとroleをObjectに入れてから投げるようにする
-      fanRegistration(data, '', roleState).then(() => {
-        Router.push('/signup/complete')
-      }).catch(() => {
-        toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
-      })
-    }
+      toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+    }).catch(() => {
+      toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
+    })
   }
 
   return (
@@ -129,11 +107,11 @@ const AccountRegistration: NextPage = () => {
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="フリガナ" label="furigana" required={false} />
-              <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} type={'text'} />
+              <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="メールアドレス" label="email" required={true} />
-              <Input id="email" register={register} required={true} type={'email'} disabled={false} note="※メールアドレスは後ほど管理画面で変更が可能です。" />
+              <Input id="email" register={register} required={true} type="email" disabled={false} />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="パスワード" label="password" required={true} />
@@ -143,7 +121,7 @@ const AccountRegistration: NextPage = () => {
               <FormLabel text="Caspla ID" label="casplaId" required={true} />
               <div className={styles['p-account-registration__check-ids']}>
                 <div className={styles['p-account-registration__check-input']}>
-                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} type={'text'} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
                 </div>
                 <div className={styles['p-account-registration__check-id']}>
                   <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
@@ -151,12 +129,14 @@ const AccountRegistration: NextPage = () => {
               </div>
             </div>
             <div className={styles['p-account-registration__item']}>
-              <Checkbox id={'newsLetter'} checked={needForLetterState} label={'Caspla のニュースレターを受け取る'} onChange={toggleNeedForLetter} />
+              <Checkbox id={'newsLetter'} checked={needForLetterState} label="Caspla のニュースレターを受け取る" onChange={toggleNeedForLetter} />
             </div>
-            <Button text={submitTextState} color={submitButtonColorState} size="large" type="submit" weight="bold" disabled={!checledCasplaIdState} />
+            <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
+              <Button text="変更を保存" color={submitButtonColorState} size="large" type="submit" weight="bold" disabled={!checledCasplaIdState} />
+            </div>
           </section>
           <section className={styles['p-account-registration__section']}>
-            <FormTitle title="アカウントタイプ" />
+            <FormLabel text="アカウントタイプ" />
             {/* <p className={styles['p-account-registration__description']}></p> */}
             <div className={styles['p-account-registration__item']}>
               <div className={styles['p-account-registration__radio']}>
