@@ -3,12 +3,13 @@ import Router from 'next/router'
 import { useForm, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
 import { useRecoilState, useResetRecoilState } from 'recoil'
-import { registrationState } from '@/stores/Registration'
+import { sessionState } from '@/stores/Session'
 import { toast } from 'react-toastify'
 import checkCasplaId from '@/apis/auth/checkCasplaId'
 import fanRegistration from '@/apis/auth/fanRegistration'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
+import Checkbox from '@/components/atoms/Forms/Checkbox'
 import FormLabel from '@/components/atoms/Forms/Label'
 import FormNote from '@/components/atoms/Forms/Note'
 import FormTitle from '@/components/atoms/Forms/Title'
@@ -27,31 +28,25 @@ type InputProps = {
   password: string
   rePassword: string
   role: string
+  needForLetter: boolean
 }
 
 const AccountRegistration: NextPage = () => {
 
   const [roleState, setRole] = useState('fan')
   const [checledCasplaIdState, setCheckCasplaId] = useState(false)
+  const [needForLetterState, setNeedForLetter] = useState(true)
   const [submitButtonColorState, setSubmitButtonColor] = useState('primary')
   const [submitTextState, setSubmitText] = useState('この内容で登録する')
-  const [registration, setRegistration] = useRecoilState(registrationState)
-  const resetRegistrationState = useResetRecoilState(registrationState)
+  const [session, setSession] = useRecoilState(sessionState)
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
   useEffect(() => {
-    if (registration.fullName !== '') {
-      setValue('thumbail', '')
-      setValue('fullName', registration.fullName)
-      setValue('furigana', registration.furigana)
-      setValue('email', registration.email)
-      setValue('casplaId', registration.casplaId)
-      setValue('password', registration.password)
-      setValue('rePassword', registration.password)
-      setValue('role', registration.role)
-      setRole(registration.role)
-      setSubmitButton(registration.role)
-      resetRegistrationState()
+    if (session.accessToken === '') {
+      Router.replace('/signin')
+      toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
+    } else if (session.accessToken !== '') {
+      
     }
   }, [])
 
@@ -61,6 +56,8 @@ const AccountRegistration: NextPage = () => {
     { id: 'company', label: '企業・団体（制作会社向け）', note: '制作会社や団体向けのアカウントです。オーディション機能を利用できます（Coming Soon）' },
     { id: 'talent', label: 'タレント(フリー)', note: '無所属、もしくは個人で活動されているタレント様向けのアカウントです。プロフィール機能や各種SNSとの連携が可能です。' },
   ]
+
+  const filteredRole:any = getValues('role') === undefined ? roles[0] : roles.find(data => data.id === getValues('role'))
 
   const setSubmitButton = (role: string) => {
     role === 'fan' ? setSubmitButtonColor('primary') : setSubmitButtonColor('secondary')
@@ -84,10 +81,14 @@ const AccountRegistration: NextPage = () => {
     })
   }
 
+  const toggleNeedForLetter = () => {
+
+  }
+
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     // TODO：role毎に処理が分かれるのでページ遷移が必要なものにかんしてはpush時にstateに入れる
     if (roleState !== 'fan') {
-      setRegistration({
+      setSession({
         thumbnail: '',
         fullName: data.fullName,
         furigana: data.furigana,
@@ -97,7 +98,8 @@ const AccountRegistration: NextPage = () => {
         role: roleState
       })
 
-      if (roleState === 'production' || roleState === 'company') Router.push('/signup/production-registration')
+      if (roleState === 'production') Router.push('/signup/production-registration')
+      if (roleState === 'company') Router.push('/signup/company-registration')
       if (roleState === 'talent') Router.push('/signup/talent-registration')
 
     } else {
@@ -112,12 +114,12 @@ const AccountRegistration: NextPage = () => {
 
   return (
     <div className={styles['p-account-registration']}>
-      <Meta title="アカウント情報登録" />
+      <Meta title="アカウント管理" />
 
       <section className={styles['p-account-registration__content']}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
           <section className={styles['p-account-registration__section']}>
-            <FormTitle title="アカウント情報入力" />
+            <FormTitle title="アカウント管理" />
             <div className={styles['p-account-registration__item']}>
                 TODO：サムネイルの仕様固まったらサムネイルコンポーネント追加
             </div>
@@ -134,6 +136,10 @@ const AccountRegistration: NextPage = () => {
               <Input id="email" register={register} required={true} type={'email'} disabled={false} note="※メールアドレスは後ほど管理画面で変更が可能です。" />
             </div>
             <div className={styles['p-account-registration__item']}>
+              <FormLabel text="パスワード" label="password" required={true} />
+              <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数字で入力してください。" />
+            </div>
+            <div className={styles['p-account-registration__item']}>
               <FormLabel text="Caspla ID" label="casplaId" required={true} />
               <div className={styles['p-account-registration__check-ids']}>
                 <div className={styles['p-account-registration__check-input']}>
@@ -145,31 +151,19 @@ const AccountRegistration: NextPage = () => {
               </div>
             </div>
             <div className={styles['p-account-registration__item']}>
-              <FormLabel text="パスワード" label="password" required={true} />
-              <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数字で入力してください。" />
+              <Checkbox id={'newsLetter'} checked={needForLetterState} label={'Caspla のニュースレターを受け取る'} onChange={toggleNeedForLetter} />
             </div>
-            <div className={styles['p-account-registration__item']}>
-              <FormLabel text="パスワード(確認用)" label="rePassword" required={true} />
-              <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} />
-            </div>
+            <Button text={submitTextState} color={submitButtonColorState} size="large" type="submit" weight="bold" disabled={!checledCasplaIdState} />
           </section>
           <section className={styles['p-account-registration__section']}>
-            <FormTitle title="アカウントタイプ選択" />
+            <FormTitle title="アカウントタイプ" />
             {/* <p className={styles['p-account-registration__description']}></p> */}
             <div className={styles['p-account-registration__item']}>
-              {
-                roles.map((role, index) => {
-                  return(
-                    <div className={styles['p-account-registration__radio']} key={`roles-${index}`}>
-                      <RadioButton id={role.id} name="role" label={role.label} note={role.note} onChange={onChangeRole} checked={role.id === roleState} />
-                    </div>
-                  )
-                })
-              }
-              <FormNote text="※アカウントタイプは後ほどアカウント管理画面でも変更可能です。" />
+              <div className={styles['p-account-registration__radio']}>
+                <RadioButton id={filteredRole.id} name="role" label={filteredRole.label} note={filteredRole.note} onChange={onChangeRole} checked={true} />
+              </div>
             </div>
           </section>
-          <Button text={submitTextState} color={submitButtonColorState} size="large" type="submit" weight="bold" disabled={!checledCasplaIdState} />
         </form>
       </section>
     </div>
