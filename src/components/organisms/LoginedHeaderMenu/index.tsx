@@ -14,7 +14,6 @@ const LoginedHeaderMenu = () => {
 
   const [showMenu, setToggleMenu] = useState(false)
   const [session, setSession] = useRecoilState(sessionState)
-  console.log(session)
   const resetSession = useResetRecoilState(sessionState)
 
   const toggleMenu = () => setToggleMenu(!showMenu)
@@ -60,8 +59,8 @@ const LoginedHeaderMenu = () => {
         <PopOver>
           <ul className={styles['m-logined-header-menu__list']}>
             <li><Link href="/dashboard"><a className={menuStyle} onClick={hideMenu}>ダッシュボード</a></Link></li>
-            <li><Link href="/setting/account-edit"><a className={menuStyle} onClick={hideMenu}>アカウント設定</a></Link></li>
-            <li><Link href="/setting/talnet-edit"><a className={menuStyle} onClick={hideMenu}>プロフィール編集</a></Link></li>
+            <li><Link href="/setting/edit/account"><a className={menuStyle} onClick={hideMenu}>アカウント設定</a></Link></li>
+            <li><Link href="/setting/edit/profile"><a className={menuStyle} onClick={hideMenu}>プロフィール編集</a></Link></li>
             <li><Link href="/setting/production/"><a className={menuStyle} onClick={hideMenu}>プロダクション管理</a></Link></li>
             <li><Link href="/setting/company/"><a className={menuStyle} onClick={hideMenu}>組織管理</a></Link></li>
             <li><button onClick={signOut} className={menuStyle}>ログアウト</button></li>

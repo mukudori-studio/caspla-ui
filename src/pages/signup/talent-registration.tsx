@@ -47,7 +47,7 @@ type InputProps = {
   note?: string
 };
 
-const Signup: NextPage = () => {
+const TalentRegistration: NextPage = () => {
 
   const registration = useRecoilValue(registrationState)
   const [activityState, setActivity] = useState<Array<string>>([])
@@ -176,4 +176,4 @@ const Signup: NextPage = () => {
   )
 }
 
-export default Signup
+export default TalentRegistration
