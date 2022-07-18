@@ -12,7 +12,8 @@
   padding: 0 16px 0 30px;
 
   @include g.mq-up(tablet) {
-    @include g.flex(between);
+    @include g.flex;
+    gap: 30px;
   }
 
   @include g.mq-down(tablet--under) {
@@ -30,10 +31,6 @@
   &__left {
     grid-area: left;
 
-    @include g.mq-up(tablet) {
-      @include g.flex(start);
-      gap: 30px;
-    }
     @include g.mq-down(tablet--under) {
       width: 108px;
       height: 28px;
@@ -83,6 +80,7 @@
     @include g.flex(end);
     grid-area: right;
     gap: 20px;
+    margin-left: auto;
 
     @include g.mq-down(tablet--under) {
       height: 42px;
