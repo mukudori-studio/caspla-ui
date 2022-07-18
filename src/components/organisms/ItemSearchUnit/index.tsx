@@ -6,40 +6,53 @@ import activities from '@/utils/activities'
 import styles from '@/styles/components/organisms/ItemSearchUnit.module.scss'
 
 type ItemSearchUnitProps = {
-  onClick: (values: Array<string>) => void
+  activity?: Array<string>
+  age?: Array<string>
+  gender?: Array<string>
+  onClick: (values: any) => void
 }
 const ItemSearchUnit = ({
+  activity,
+  age,
+  gender,
   onClick
 }:ItemSearchUnitProps) => {
+
+  const ageValues = [
+    {value: 'underTeens', text: '10歳未満'},
+    {value: 'teens', text: '10代'},
+    {value: '20s', text: '20代'},
+    {value: '30s', text: '30代'},
+    {value: '40s', text: '40代'},
+    {value: '50s', text: '50代'},
+    {value: '60s', text: '60歳以上'},
+  ]
   
   const [stateKeyword, setKeyword] = useState('')
-  const [stateGender, setGender] = useState([])
-  const [stateAge, setAge] = useState([])
-  const [stateActivity, setActivity] = useState([])
+  const [stateGender, setGender] = useState<Array<string>>(gender === undefined ? [] : gender)
+  const [stateAge, setAge] = useState<Array<string>>(age === undefined ? [] : age)
+  const [stateActivity, setActivity] = useState<Array<string>>(activity === undefined ? [] : activity)
 
-  const onChangeGender = (data: Array<string>) => {
-    const test = data
-    console.log(test)
-  }
-
-  const onChangeActivity = (data: Array<string>) => {
-    const test = data
-    console.log(test)
-  }
+  const onChangeGender = (data: Array<string>) => setGender(data)
+  const onChangeAge = (data: Array<string>) => setAge(data)
+  const onChangeActivity = (data: Array<string>) => setActivity(data)
   
   const onSearch = (val: string) => {
-    setKeyword(val)
-    if (val === '') {
-      Router.push({pathname: '/talents/1'})
-    } else {
-      Router.push({
-        pathname: '/talents/1',
-        query: {
-          keyword: val
-        }
-      })
+    console.log(stateGender)
+    let queryObject:any = {
+      gender: stateGender,
+      age: stateAge,
+      activity: stateActivity
     }
-    onClick([val])
+
+    if (val !== '') queryObject.keyword = val
+    
+    setKeyword(val)
+    Router.replace({
+      pathname: '/talents/1',
+      query: queryObject
+    })
+    onClick(queryObject)
   }
   
 
@@ -66,13 +79,14 @@ const ItemSearchUnit = ({
         </div>
         <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--age']].join(' ')}>
           <h3 className={styles['o-item-search-unit__label']}><span>年齢</span></h3>
-          <div className={styles['o-item-search-unit__check-box']}></div>
+          <div className={styles['o-item-search-unit__check-box']}>
+            <CheckboxButtons checkedItems={stateAge} checkboxes={ageValues} onChange={onChangeAge} />
+          </div>
         </div>
         <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--activity']].join(' ')}>
           <h3 className={styles['o-item-search-unit__label']}><span>活動区分</span></h3>
           <div className={styles['o-item-search-unit__check-box']}>
-          <CheckboxButtons checkedItems={stateActivity} checkboxes={activities} onChange={onChangeActivity} />
-          
+            <CheckboxButtons checkedItems={stateActivity} checkboxes={activities} onChange={onChangeActivity} />
           </div>
         </div>
       </div>

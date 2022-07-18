@@ -1,10 +1,12 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import qs from 'qs'
 
 const BaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
 
 // NOTE：Default Congig
 export const axiosClient  = axios.create({
   baseURL: BaseUrl,
+  paramsSerializer: (params => qs.stringify(params, { arrayFormat: 'repeat' })),
   timeout: 3000,
   headers: {
     'Content-Type': 'application/json',

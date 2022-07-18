@@ -19,7 +19,7 @@ const CheckboxButtons = ({
 
   const changeCheckbox = (e:any | never) => {
     const checkedValue = e.target.value
-    let formattedValue:Array<string> = checkedItems
+    let formattedValue:any = checkedItems
 
     if (checkedItems.includes(checkedValue)) {
       formattedValue = checkedItems.filter((data: string) => data !== checkedValue)

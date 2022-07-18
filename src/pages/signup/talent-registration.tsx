@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import { useForm, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
@@ -42,7 +42,7 @@ type InputProps = {
   youtubeId?: string
   instagramId?: string
   tiktokId?: string
-  activities?: Array<string>
+  activity?: Array<string>
   history?: string
   note?: string
 };
@@ -50,7 +50,8 @@ type InputProps = {
 const Signup: NextPage = () => {
 
   const registration = useRecoilValue(registrationState)
-  const { register, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
+  const [activityState, setActivity] = useState<Array<string>>([])
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm<InputProps>()
 
   const changeBirthday = (year: string, month: string, day: string) => {
     setValue('birthYear', year)
@@ -59,10 +60,11 @@ const Signup: NextPage = () => {
   }
   const changeGender = (e:any) => setValue('gender', e.target.value)
   const changeStarSign = (e:any) => setValue('starSign', e.target.value)
-  const changeBloodType = (e:any) => {
-    setValue('bloodType', e.target.value)
+  const changeBloodType = (e:any) => setValue('bloodType', e.target.value)
+  const checkActivity = (data: Array<string>) => {
+    setActivity(data)
+    setValue('activity', activityState)
   }
-  const checkActivity = (data: Array<string>) => setValue('activities', data)
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     console.log(data)
@@ -70,10 +72,10 @@ const Signup: NextPage = () => {
   }
 
   useEffect(() => {
-    // if (registration.fullName === '') {
-    //   Router.replace('/signup/')
-    //   toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
-    // }
+    if (registration.fullName === '') {
+      Router.replace('/signup/')
+      toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
+    }
   }, [])
 
 
@@ -154,7 +156,7 @@ const Signup: NextPage = () => {
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="活動区分" label="activities" />
-            <CheckboxButtons checkboxes={activities} onChange={checkActivity} checkedItems={getValues('activities')} />
+            <CheckboxButtons checkboxes={activities} onChange={checkActivity} checkedItems={activityState} />
           </div>
           <div className={styles['p-account-registration__item']}>
             <FormLabel text="出演履歴" label="history" />

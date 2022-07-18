@@ -2,29 +2,30 @@ import { axiosClient } from '@/utils/axiosClient'
 
 type getTalentsProps = {
   pageId?: any
-  activity?: Array<string>
-  age?: Array<string>
-  gender?: Array<string>
+  activity?: any
+  age?: any
+  gender?: any
   keyword?: string | string[]
 }
 
 const getTalents = async ({
   pageId = 1,
-  activity = [],
-  age = [],
-  gender = [],
+  activity,
+  age,
+  gender,
   keyword = ''
 }:getTalentsProps) => {
   try {
 
+    let filterParams: any = {}
+    filterParams.page = Number(pageId)
+    filterParams.keyword = keyword !== '' || keyword !== undefined || !keyword ? keyword : 'all'
+    if (gender !== undefined) filterParams.gender = gender
+    if (age !== undefined) filterParams.age = age
+    if (activity !== undefined) filterParams.activity = activity
+
     const response = await axiosClient.get('/api/v1/open/casts', {
-      params: {
-        page: Number(pageId),
-        activity: activity,
-        age: age,
-        gender: gender,
-        keyword: keyword
-      }
+      params: filterParams
     })
 
     return response
