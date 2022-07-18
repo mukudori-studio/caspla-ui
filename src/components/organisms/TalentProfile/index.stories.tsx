@@ -13,7 +13,9 @@ const Template: ComponentStory<typeof TalentProfile> = (args) => <TalentProfile 
 export const Default = Template.bind({});
 Default.args = {
   gender: 'woman',
-  birthday: '1998-12-12',
+  birthYear: 1000,
+  birthMonth: 5,
+  birthDay: 31,
   age: 24,
   starSign: 'pisces',
   birthplace: '世界のどこか',

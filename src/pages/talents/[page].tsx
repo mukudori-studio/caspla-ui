@@ -33,7 +33,6 @@ const Talents: NextPage = (props:any) => {
   const [talentsState, setTalents] = useState([])
   const [pageState, setPage] = useState(1)
   const [totalCountState, setTotalCount] = useState(1)
-  console.log(props.query.activity)
   const [activityState, setActivity] = useState(props.query.activity === undefined ? [] : props.query.activity)
   const [ageState, setAge] = useState(props.query.age === undefined ? [] : props.query.age)
   const [genderState, setGender] = useState(props.query.gender === undefined ? [] : props.query.gender)

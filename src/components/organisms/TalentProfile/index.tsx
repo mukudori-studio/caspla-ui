@@ -6,7 +6,9 @@ import styles from '@/styles/components/organisms/TalentProfile.module.scss'
 // TODO：あとでNumber型の型推論直す
 type TalentProfileProps = {
   gender?: string
-  birthday?: string
+  birthYear: number
+  birthMonth: number
+  birthDay: number
   age?: any
   starSign?: string
   birthplace?: string
@@ -23,7 +25,9 @@ type TalentProfileProps = {
 
 const TalentProfile = ({
   gender = '',
-  birthday = '',
+  birthYear,
+  birthMonth,
+  birthDay,
   age = null,
   starSign = '',
   birthplace = '',
@@ -60,7 +64,12 @@ const TalentProfile = ({
         <dt className={styles['o-talent-profile__label']}>性別</dt>
         <dd className={styles['o-talent-profile__text']}>{formattedGender(gender)}</dd>
         <dt className={styles['o-talent-profile__label']}>生年月日</dt>
-        <dd className={styles['o-talent-profile__text']}>{birthday === '' ? '未入力' : dayjs(birthday).locale('ja').format('YYYY年MM月DD日')}</dd>
+        <dd className={styles['o-talent-profile__text']}>
+          {
+            !birthYear && !birthMonth && !birthDay ? '未入力' :
+            `${birthYear && `${birthYear}年`}${birthMonth && `${birthMonth}月`}${birthDay && `${birthDay}日`}`
+          }
+        </dd>
         <dt className={styles['o-talent-profile__label']}>年齢</dt>
         <dd className={styles['o-talent-profile__text']}>{!age ? '未入力' : `${age}歳`}</dd>
         <dt className={styles['o-talent-profile__label']}>星座</dt>
