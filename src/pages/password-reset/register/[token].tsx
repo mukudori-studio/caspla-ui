@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import type { NextPage } from 'next'
 import { axiosClient } from '@/utils/axiosClient'
+import resetPassword from '@/apis/resetPassword/resetPassword'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import FormTitle from '@/components/atoms/Forms/Title'
@@ -18,36 +19,25 @@ type InputProps = {
   rePassword: string
 };
 
-const PasswordRegister: NextPage = () => {
+const PasswordReset: NextPage = () => {
 
   // NOTE：URLパラメーターが空の場合はリダイレクト
   const router = useRouter()
   const { token } = router.query
-  if (token === '') Router.replace('/password-reset/reissue')
 
-  const { register, watch, handleSubmit, formState: { errors }, getValues } = useForm<InputProps>()
-  const [passwordErrorState, setPasswordError] = useState('')
+  const { register, handleSubmit, formState: { errors }, getValues } = useForm<InputProps>()
 
-  const onSubmit: SubmitHandler<InputProps> = async (data) => {
-    try {
+  useEffect(() => {
+    if (token === '') Router.replace('/password-reset/reissue')
+  }, [])
 
-      const response = await axiosClient.post('/api/v1/reset_password', {
-        token: token,
-        password: data.password,
-        rePassword: data.rePassword,
-      })
+  const onSubmit: SubmitHandler<InputProps> = (data:any) => {
+    resetPassword(token, data.password, data.rePassword).then(() => {
       toast.success('パスワードの再設定が完了しました。')
       Router.push('/signin')
-
-    } catch {
-      toast.error('パスワードの再設定に失敗しました。', {
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      })
-    }
+    }).catch(() => {
+      toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
+    })
   }
 
   return (
@@ -79,4 +69,4 @@ const PasswordRegister: NextPage = () => {
   )
 }
 
-export default PasswordRegister
+export default PasswordReset

@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Router from 'next/router'
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
 import { toast } from 'react-toastify'
 import type { NextPage } from 'next'
-import { axiosClient } from '@/utils/axiosClient'
+import sendEmail from '@/apis/resetPassword/sendEmail'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import Input from '@/components/molecules/Forms/Input'
@@ -21,24 +21,13 @@ const PasswordReissue: NextPage = () => {
 
   const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
 
-  const onSubmit: SubmitHandler<InputProps> = async (data) => {
-    try {
-
-      const response = await axiosClient.post('/api/v1/auth/signin', {
-        email: data.email
-      })
-      Router.push('/password-reset/sent-email')
-
-    } catch {
-      // TODO：ステータスごとにメッセージ出し分けしたい
-      toast.error('入力いただいたメールアドレスは存在しません。', {
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      })
-    }
+  const onSubmit: SubmitHandler<InputProps> = (data) => {
+    sendEmail(data.email).then((res) => {
+      if (res.data !== undefined) Router.push('/password-reset/sent-email')
+      else toast.error('入力いただいたメールアドレスは存在しません。', { autoClose: 3000, draggable: true})
+    }).catch((err) => {
+      toast.error('入力いただいたメールアドレスは存在しません。', { autoClose: 3000, draggable: true})
+    })
   }
 
   return (
