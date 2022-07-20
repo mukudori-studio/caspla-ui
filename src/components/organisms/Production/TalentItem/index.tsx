@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from 'next/Image'
+import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import LinkButton from '@/components/atoms/LinkButton'
@@ -31,11 +31,11 @@ const TalentItem = (({
           thumbnailImage !== '' && thumbnailImage !== undefined ?
             (
               <div className={styles['o-production-talent-item__image']}>
-                {/* <Image
+                <Image
                   src={thumbnailImage}
                   className={styles['o-production-talent-item__thumbnail']}
                   layout="fixed"
-                /> */}
+                />
               </div>
             ) : (
               <div className={[styles['o-production-talent-item__image'], styles['o-production-talent-item__image--empty']].join(' ')}>

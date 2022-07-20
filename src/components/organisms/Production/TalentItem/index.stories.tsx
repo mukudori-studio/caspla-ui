@@ -6,9 +6,6 @@ import TalentItem from './'
 export default {
   title: 'Organisms/Production/TalentItem',
   component: TalentItem,
-  argTypes: {
-    onChange: { action: 'onChange' }
-  },
 } as ComponentMeta<typeof TalentItem>
 
 const Template: ComponentStory<typeof TalentItem> = (args) => <TalentItem {...args} onChange={onChange} />
