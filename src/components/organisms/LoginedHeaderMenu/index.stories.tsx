@@ -9,7 +9,7 @@ export default {
   decorators: [(storyFn) => <RecoilRoot>{storyFn()}</RecoilRoot>],
 } as ComponentMeta<typeof LoginedHeaderMenu>
 
-const Template: ComponentStory<typeof LoginedHeaderMenu> = (args) => <LoginedHeaderMenu {...args} />
+const Template: ComponentStory<typeof LoginedHeaderMenu> = (args) => <LoginedHeaderMenu />
 
 const data = {
   id: 1,

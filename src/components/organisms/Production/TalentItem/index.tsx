@@ -2,8 +2,8 @@ import React from 'react'
 import Image from 'next/Image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
+import LinkButton from '@/components/atoms/LinkButton'
 import styles from '@/styles/components/organisms/Production/TalentItem.module.scss'
-import Link from 'next/link'
 
 type TalentItemProps = {
   casplaId: string
@@ -22,7 +22,6 @@ const TalentItem = (({
 }: TalentItemProps) => {
 
   const checkedStyle = checked ? [styles['o-production-talent-item__label'], styles['o-production-talent-item__label--checked']].join(' ') : styles['o-production-talent-item__label']
-  const editButtonStyle = [styles['o-production-talent-item__button'], styles['o-production-talent-item__button--edit']].join(' ')
 
   return (
     <div className={styles['o-production-talent-item']}>
@@ -50,12 +49,8 @@ const TalentItem = (({
         </div>
       </label>
       <div className={styles['o-production-talent-item__menu']}>
-        <Link href={`/talents/detail/${casplaId}`}>
-          <a className={styles['o-production-talent-item__button']}>タレントのプロフィールを確認</a>
-        </Link>
-        <Link href={`/setting/production/taelnts/${casplaId}`}>
-          <a className={editButtonStyle}>タレントのプロフィールを編集</a>
-        </Link>
+        <div className={styles['o-production-talent-item__button']}><LinkButton href={`/talents/detail/${casplaId}`} color="third" size="small" weight="bold" text="タレントのプロフィールを確認" /></div>
+        <div className={styles['o-production-talent-item__button']}><LinkButton href={`/setting/production/taelnts/${casplaId}`} color="forth" size="small" weight="bold" text="タレントのプロフィールを編集" /></div>
       </div>
     </div>
   )
