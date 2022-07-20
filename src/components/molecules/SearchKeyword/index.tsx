@@ -33,7 +33,7 @@ const SearchKeyword = ({ placeholder = '', onClick }:SearchKeywordProps) => {
       </div>
       <input
         className={styles['m-search-keyword__input']}
-        type="search"
+        type="text"
         maxLength={255}
         value={stateKeyword}
         placeholder={placeholder}
