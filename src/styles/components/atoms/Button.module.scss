@@ -35,6 +35,14 @@
     background: g.$color-secondary;
     color: g.$color-primary;
   }
+  &--third {
+    background: #6681CC;
+    color: g.$color-mono-0;
+  }
+  &--forth {
+    background: #E0E6F5;
+    color: g.$color-mono-80;
+  }
   &--default {
     background: g.$color-mono-10;
     color: g.$color-mono-80;
