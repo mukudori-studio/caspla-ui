@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from "react-hook-form"
+import { toast } from 'react-toastify'
+import checkCasplaId from '@/apis/auth/checkCasplaId'
 import Button from '@/components/atoms/Button'
 import CheckboxButtons from '@/components/molecules/Forms/CheckboxButtons'
 import Input from '@/components/molecules/Forms/Input'
@@ -14,9 +16,9 @@ import starSigns from '@/utils/starSigns'
 import styles from '@/styles/AccountRegistration.module.scss'
 
 type InputProps = {
-  fullName?: string
-  furigana?: string
-  casplaId?: string
+  fullName: string
+  furigana: string
+  casplaId: string
   thumbnailImage?: string
   profile?: string
   gender?: string
@@ -46,9 +48,9 @@ type InputProps = {
 
 type editPorps = {
   editType?: 'register' | 'edit'
-  fullName?: string
-  furigana?: string
-  casplaId?: string
+  fullName: string
+  furigana: string
+  casplaId: string
   thumbnailImage?: string
   profile?: string
   gender?: string
@@ -84,36 +86,47 @@ const TalentFormTemplate = ({
 }: editPorps) => {
 
   const [activityState, setActivity] = useState<Array<string>>([])
-  const { register, handleSubmit, formState: { errors }, setValue } = useForm<InputProps>()
+  const [checkedCasplaIdState, setCheckCasplaId] = useState(true)
+  const { register, handleSubmit, formState: { errors }, watch, setValue, getValues } = useForm<InputProps>()
+
+  // NOTE：casplaIdを変更していた場合は再度CasplaIdをチェックしないと更新できない
+  useEffect(() => {
+    if (props.casplaId === getValues('casplaId')) {
+      setCheckCasplaId(true)
+    } else {
+      setCheckCasplaId(false)
+    }
+  }, [getValues('casplaId')])
+
 
   useEffect(() => {
     if (editType === 'register') return
-      setValue('fullName', props?.fullName)
-      setValue('furigana', props?.furigana)
-      setValue('casplaId', props.casplaId)
-      setValue('thumbnailImage', props.thumbnailImage)
-      setValue('profile', props.profile)
-      setValue('gender', props.gender)
-      setValue('starSign', props.starSign)
-      setValue('bloodType', props.bloodType)
-      setValue('birthplace', props.birthplace)
-      setValue('height', props.height)
-      setValue('weight', props.weight)
-      setValue('bust', props.bust)
-      setValue('waist', props.waist)
-      setValue('hip', props.hip)
-      setValue('footSize', props.footSize)
-      setValue('profile', props.profile)
-      setValue('siteUrl', props.siteUrl)
-      setValue('blogUrl', props.blogUrl)
-      setValue('twitterId', props.twitterId)
-      setValue('facebookId', props.facebookId)
-      setValue('youtubeId', props.youtubeId)
-      setValue('instagramId', props.blogUrl)
-      setValue('tiktokId', props.tiktokId)
-      setValue('activity', props.activity)
-      setValue('history', props.history)
-      setValue('note', props.note)
+    setValue('fullName', props.fullName)
+    setValue('furigana', props.furigana)
+    setValue('casplaId', props.casplaId)
+    setValue('thumbnailImage', props.thumbnailImage)
+    setValue('profile', props.profile)
+    setValue('gender', props.gender)
+    setValue('starSign', props.starSign)
+    setValue('bloodType', props.bloodType)
+    setValue('birthplace', props.birthplace)
+    setValue('height', props.height)
+    setValue('weight', props.weight)
+    setValue('bust', props.bust)
+    setValue('waist', props.waist)
+    setValue('hip', props.hip)
+    setValue('footSize', props.footSize)
+    setValue('profile', props.profile)
+    setValue('siteUrl', props.siteUrl)
+    setValue('blogUrl', props.blogUrl)
+    setValue('twitterId', props.twitterId)
+    setValue('facebookId', props.facebookId)
+    setValue('youtubeId', props.youtubeId)
+    setValue('instagramId', props.blogUrl)
+    setValue('tiktokId', props.tiktokId)
+    setValue('activity', props.activity)
+    setValue('history', props.history)
+    setValue('note', props.note)
   }, [])
 
   const changeBirthday = (year: string, month: string, day: string) => {
@@ -129,6 +142,16 @@ const TalentFormTemplate = ({
     setValue('activity', activityState)
   }
 
+  const onCheckId = async () => {
+    checkCasplaId(getValues('casplaId')).then(res => {
+      // TODO：APIから該当するユーザーが以内場合は200返してもらう
+      setCheckCasplaId(true)
+    }).catch(() => {
+      setCheckCasplaId(false)
+      toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
+    })
+  }
+
   const onSubmit: SubmitHandler<InputProps> = (data) => submitForm(data)
 
   return (
@@ -137,6 +160,29 @@ const TalentFormTemplate = ({
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="カバー写真" label="coverImage" required={false} />
           TODO：API側の仕様固まってから対応
+        </div>
+        <div className={styles['p-account-registration__item']}>
+          <FormLabel text="名前" label="fullName" required={true} />
+          <Input id="fullName" register={register} required={true} error={errors?.fullName?.message} type={'text'} note="※プロダクション・企業・団体でこのアカウントをご登録の場合は、ご担当者様のお名前を入力してください。" />
+        </div>
+        <div className={styles['p-account-registration__item']}>
+          <FormLabel text="フリガナ" label="furigana" required={false} />
+          <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} type={'text'} />
+        </div>
+        <div className={styles['p-account-registration__item']}>
+          <FormLabel text="メールアドレス" label="email" required={true} />
+          <Input id="email" register={register} required={true} type={'email'} disabled={false} note="※メールアドレスは後ほど管理画面で変更が可能です。" />
+        </div>
+        <div className={styles['p-account-registration__item']}>
+          <FormLabel text="Caspla ID" label="casplaId" required={true} />
+          <div className={styles['p-account-registration__check-ids']}>
+            <div className={styles['p-account-registration__check-input']}>
+              <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} type={'text'} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+            </div>
+            <div className={styles['p-account-registration__check-id']}>
+              <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
+            </div>
+          </div>
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="略歴" label="profile" />
@@ -215,7 +261,7 @@ const TalentFormTemplate = ({
           <Textarea id="note" register={register} error={errors?.note?.message} />
         </div>
         <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
-          <Button text="この内容で登録する" color="primary" size="large" type="submit" />
+          <Button text={editType === 'edit' ? '変更を保存' : 'この内容で追加'} color="primary" size="large" type="submit" disabled={!checkedCasplaIdState} />
         </div>
       </form>
     </div>

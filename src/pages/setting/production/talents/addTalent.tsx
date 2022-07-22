@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import Meta from '@/components/Meta'
@@ -8,16 +8,8 @@ import styles from '@/styles/ProductionSetting.module.scss'
 
 
 const TalentEdit: NextPage = () => {
-
-  // const [talents, setTalent] = useState([])
-  const [talentState, setTalent] = useState({
-    thumbnailImage: '',
-    casplaId: 'testA',
-    fullName: 'aaaa',
-    furigana: 'アアアアア'
-  })
   
-  const onUpdateProfile = (data:any) => {
+  const onSubmitAddTalent = (data:any) => {
     console.log(data)
   }
 
@@ -37,20 +29,19 @@ const TalentEdit: NextPage = () => {
           </div>
         </header>
         <div className={styles['p-production-setting__sub-head']}>
-          <h2 className={styles['p-production-setting__sub-title']}>タレントプロフィールの変更</h2>
+          <h2 className={styles['p-production-setting__sub-title']}>タレントの追加</h2>
           <div className={styles['p-production-setting__menus']}>
             <Link href="/setting/production/talents">
               <a className={styles['p-production-setting__text-link']}>タレント一覧に戻る</a>
-            </Link>
+            </Link>       
           </div>
         </div>
         <div className={styles['p-production-setting__edit']}>
           <TalentFormTemplate
-            editType="edit"
-            submitForm={onUpdateProfile}
-            fullName={talentState.fullName}
-            furigana={talentState.furigana}
-            casplaId={talentState.casplaId}
+            submitForm={onSubmitAddTalent}
+            fullName=""
+            furigana=""
+            casplaId=""
           />
         </div>
       </section>

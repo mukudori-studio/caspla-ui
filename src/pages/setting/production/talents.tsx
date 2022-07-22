@@ -71,7 +71,7 @@ const BelongTalents: NextPage = () => {
           <h2 className={styles['p-production-setting__sub-title']}>タレント一覧</h2>
           <div className={styles['p-production-setting__menus']}>
             <div className={styles['p-production-setting__add-talent']}>
-              <LinkButton href="/setting/production/talents/add" color="third" size="small" weight="bold" text="タレント追加" />
+              <LinkButton href="/setting/production/talents/addTalent" color="third" size="small" weight="bold" text="タレント追加" />
             </div>
             {checkedTalentState.length > 0 && <button className={styles['p-production-setting__text-link']} onClick={deleteTalent}>選択したタレントを削除</button>}
           </div>
