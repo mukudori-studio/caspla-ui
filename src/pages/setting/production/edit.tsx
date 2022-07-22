@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import type { NextPage } from 'next'
 import Meta from '@/components/Meta'
 import LinkButton from '@/components/atoms/LinkButton'
-import CompanyRegistrationTemplate from '@/components/templates/CompanyRegistrationTemplate'
+import CompanyFormTemplate from '@/components/templates/CompanyFormTemplate'
 import styles from '@/styles/ProductionSetting.module.scss'
 import buttonStyles from '@/styles/components/atoms/Button.module.scss'
 
@@ -71,7 +71,7 @@ const EditProduction: NextPage = () => {
           <h2 className={styles['p-production-setting__sub-title']}>事務所情報</h2>
         </div>
         <div className={styles['p-production-setting__edit']}>
-          <CompanyRegistrationTemplate
+          <CompanyFormTemplate
             editType="edit"
             companyImage=""
             companyName="test"

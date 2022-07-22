@@ -50,7 +50,7 @@ const TalentItem = (({
       </label>
       <div className={styles['o-production-talent-item__menu']}>
         <div className={styles['o-production-talent-item__button']}><LinkButton href={`/talents/detail/${casplaId}`} color="third" size="small" weight="bold" text="タレントのプロフィールを確認" /></div>
-        <div className={styles['o-production-talent-item__button']}><LinkButton href={`/setting/production/taelnts/${casplaId}`} color="forth" size="small" weight="bold" text="タレントのプロフィールを編集" /></div>
+        <div className={styles['o-production-talent-item__button']}><LinkButton href={`/setting/production/talents/${casplaId}`} color="forth" size="small" weight="bold" text="タレントのプロフィールを編集" /></div>
       </div>
     </div>
   )

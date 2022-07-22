@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil'
 import { registrationState } from '@/stores/Registration'
 import Meta from '@/components/Meta'
 import FormTitle from '@/components/atoms/Forms/Title'
-import CompanyRegistrationTemplate from '@/components/templates/CompanyRegistrationTemplate'
+import CompanyFormTemplate from '@/components/templates/CompanyFormTemplate'
 
 import styles from '@/styles/AccountRegistration.module.scss'
 
@@ -30,7 +30,7 @@ const Signup: NextPage = () => {
 
       <section className={styles['p-account-registration__content']}>
         <FormTitle title="会社情報入力" />
-        <CompanyRegistrationTemplate zipCode="" submitForm={onSubmit} />
+        <CompanyFormTemplate zipCode="" submitForm={onSubmit} />
       </section>
     </div>
   )
