@@ -4,53 +4,12 @@ import Meta from '@/components/Meta'
 import LinkButton from '@/components/atoms/LinkButton'
 import CompanyFormTemplate from '@/components/templates/CompanyFormTemplate'
 import styles from '@/styles/ProductionSetting.module.scss'
-import buttonStyles from '@/styles/components/atoms/Button.module.scss'
 
-const EditProduction: NextPage = () => {
-
-  const [checkedTalentState, setCheckedTalent] = useState<any>([]);
-  // const [talents, setTalent] = useState([])
-  const [talents, setTalent] = useState([
-    {id: 'val1',
-    value: 'val1',
-    label: 'ラベル1',
-    thumbnailImage: '',
-    casplaId: 'testA',
-    fullName: 'aaaa'},
-    {id: 'val2',
-    value: 'val2',
-    label: 'ラベル2',
-    thumbnailImage: '',
-    casplaId: 'testB',
-    fullName: 'ccc'},
-    {id: 'val3',
-    value: 'val3',
-    label: 'ラベル3',
-    thumbnailImage: '',
-    casplaId: 'testC',
-    fullName: 'ccc'}
-  ])
-  
-  const toggleTalent = (e: any) => {
-    const checkedValue = e.target.id
-    let filteredTalents:Array<string> = checkedTalentState
-    
-    if (checkedTalentState.length === 0) {
-      setCheckedTalent(() => [...checkedTalentState, checkedValue])
-    } else if (checkedTalentState.includes(checkedValue)) {
-      filteredTalents = checkedTalentState.filter((talent: string) => talent !== checkedValue)
-      setCheckedTalent(filteredTalents)
-    } else {
-      setCheckedTalent(() => [...checkedTalentState, checkedValue])
-    }
-    
-  }
+const ProductionEdit: NextPage = () => {
 
   const updateProduction = (data:any) => {
     console.log(data)
   }
-
-  const headMenuStyle = [buttonStyles['a-button'], buttonStyles['a-button--small'], buttonStyles['a-button--secondary'], buttonStyles['a-button--bold'], styles['p-production-setting__button']].join(' ')
 
   return (
     <main className={styles['p-production-setting']}>
@@ -99,4 +58,4 @@ const EditProduction: NextPage = () => {
   )
 }
 
-export default EditProduction
+export default ProductionEdit
