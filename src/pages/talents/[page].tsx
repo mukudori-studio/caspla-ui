@@ -76,10 +76,8 @@ const Talents: NextPage = (props:any) => {
 
       <main className={styles['p-talents__wrapper']}>
         { loadingState && <Loading /> }
-        {
-          !loadingState && talentsState.length === 0 ? (
-            <Nodata text="タレント情報は0件となります。" />
-          ) : (
+        { !loadingState && talentsState.length === 0 && <Nodata text="タレント情報は0件となります。" /> }
+        { !loadingState && talentsState.length > 0 && (
             <>
               <div className={styles['p-talents__items']}>
                 {

@@ -1,0 +1,74 @@
+@use './global' as g;
+
+.p-dash-board {
+  @include g.page-margin(120px);
+  @include g.flex(center, center, column);
+  min-height: 100%;
+  text-align: center;
+
+  @include g.mq-up(tablet) {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+
+  &__content, &__box {
+    min-height: 100%;
+  }
+
+  &__title {
+    font-size: 24px;
+    line-height: 1.1;
+  }
+
+  &__lead {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+
+  &__description {
+    color: g.$color-mono-50;
+    font-size: 16px;
+    margin: 28px auto 84px;
+    line-height: 1.8;
+
+    @include g.mq-down(tablet--under) {
+      margin-bottom: 48px;
+    }
+  }
+
+  &__box {
+    width: 100%;
+    max-width: 956px;
+    border-radius: 5px;
+    background: g.$color-mono-5;
+    padding: 50px 30px;
+    margin: 0 auto;
+
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+      padding: 30px 20px;
+    }
+  }
+
+  &__buttons {
+    
+    @include g.mq-up(tablet) {
+      @include g.flex(center);
+      gap: 16px;
+    }
+
+    @include g.mq-down(tablet--under) {
+      @include g.flex(center, center, column);
+      gap: 10px;
+    }
+  }
+
+  &__button {
+    width: 308px;
+    @include g.mq-down(tablet--under) {
+      width: 100%;
+    }
+  }
+
+  
+}
