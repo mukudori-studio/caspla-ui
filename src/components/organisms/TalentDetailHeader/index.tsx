@@ -1,7 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faImages, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faImages, faUser, faShareNodes } from '@fortawesome/free-solid-svg-icons'
+import { toast } from 'react-toastify'
 import LabelTexts from '@/components/atoms/LabelTexts'
 import SnsLinksArea from '@/components/organisms/SnsLinksArea'
 import activities from '@/utils/activities'
@@ -49,6 +50,12 @@ const TalentDetailHeader = ({
   const filteredActivity = activities.filter(data => activity.find(val => data.value === val))
   const formattedActivity = filteredActivity.map(data => data.text)
 
+  const copyUrl = () => {
+    const copyUrl = location.href;
+    navigator.clipboard.writeText(copyUrl)
+    toast.success('クリップボードにコピーしました。', { autoClose: 3000, draggable: true})
+  }
+
   return (
     <div className={styles['o-talent-detail-header']}>
       {
@@ -92,16 +99,20 @@ const TalentDetailHeader = ({
           { (agencyId !== '' && agencyName !== '') && <a href={'/production-detail/${agencyId}'} className={styles['o-talent-detail-header__production-link']}>{agencyName}</a> }
           {
             (
-              siteUrl !== '' ||
-              blogUrl !== '' ||
-              facebook !== '' ||
-              twitter !== '' ||
-              instagram !== '' ||
-              youtube !== '' ||
-              tiktok !== ''
+              (siteUrl !== '' && siteUrl !== null) ||
+              (blogUrl !== '' || blogUrl !== null) ||
+              (facebook !== '' || facebook !== null) ||
+              (twitter !== '' || twitter !== null) ||
+              (instagram !== '' || instagram !== null) ||
+              (youtube !== '' || youtube !== null) ||
+              (tiktok !== '' || tiktok !== null)
             ) && <SnsLinksArea siteUrl={siteUrl} blogUrl={blogUrl} facebook={facebook} twitter={twitter} instagram={instagram} youtube={youtube} tiktok={tiktok}
           />
           }
+          <button onClick={copyUrl} className={styles['o-talent-detail-header__copy']}>
+            <FontAwesomeIcon icon={faShareNodes} className={styles['o-talent-detail-header__copy-icon']} />
+            <span>シェアする</span>
+          </button>
         </div>
       </div>
     </div>
