@@ -9,18 +9,19 @@ import LinkInput from '@/components/molecules/Forms/LinkInput'
 import Textarea from '@/components/molecules/Forms/Textarea'
 import Select from '@/components/atoms/Forms/Select'
 import FormLabel from '@/components/atoms/Forms/Label'
+import FormNote from '@/components/atoms/Forms/Note'
 import prefectures from '@/utils/prefectures'
-import { axiosClient } from '@/utils/axiosClient'
+
 import styles from '@/styles/AccountRegistration.module.scss'
 
 type InputProps = {
   companyImage?: string
-  companyName: string
+  companyName: string | undefined
   zipCode: string
-  prefecture: string
-  address1: string
+  prefecture: string | undefined
+  address1: string | undefined
   address2?: string
-  tel: string
+  tel: string | undefined
   profile?: string
   siteUrl?: string
   blogUrl?: string
@@ -38,7 +39,7 @@ type registrationPorps = {
   editType?: 'register' | 'edit'
   companyImage?: string
   companyName?: string
-  zipCode?: string
+  zipCode: string
   prefecture?: string
   address1?: string
   address2?: string
@@ -64,8 +65,8 @@ const Signup = ({
 }: registrationPorps) => {
 
   const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<InputProps>()
-  const [searchingState, SetSearching] = useState(false)
-  const [prefectureState, SetPrefecture] = useState('北海道')
+  const [searchingState, setSearching] = useState(false)
+  const [prefectureState, setPrefecture] = useState<any>('北海道')
 
   const changePrefecture = (e:any) => setValue('prefecture', e.target.value)
 
@@ -73,14 +74,36 @@ const Signup = ({
     return { value: data.name, text: data.name}
   })
 
+  useEffect(() => {
+    if (editType === 'register') return
+      setValue('companyImage', props.companyImage)
+      setValue('companyName', props?.companyName)
+      setValue('zipCode', props.zipCode)
+      setValue('prefecture', props.prefecture)
+      setPrefecture(props.prefecture)
+      setValue('address1', props.address1)
+      setValue('address2', props.address2)
+      setValue('tel', props.tel)
+      setValue('profile', props.profile)
+      setValue('siteUrl', props.siteUrl)
+      setValue('blogUrl', props.blogUrl)
+      setValue('twitterId', props.twitterId)
+      setValue('facebookId', props.facebookId)
+      setValue('youtubeId', props.youtubeId)
+      setValue('instagramId', props.blogUrl)
+      setValue('tiktokId', props.tiktokId)
+      setValue('history', props.history)
+      setValue('note', props.note)
+  }, [])
+
   const onSearchZipCode = async () => {
     if(searchingState) return
-    SetSearching(true)
+    setSearching(true)
     searchZipCode(watch('zipCode')).then(res => {
       if (res.status === 200) {
         const result = res.results[0]
         setValue('prefecture', result.address1)
-        SetPrefecture(result.address1)
+        setPrefecture(result.address1)
         setValue('address1', result.address2 + result.address3)
       } else if(res.status === 400) {
         toast.error('郵便番号が正しくありません。', { autoClose: 3000, draggable: true})
@@ -90,7 +113,7 @@ const Signup = ({
     }).catch(err => {
       toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
     }).finally(() => {
-      SetSearching(false)
+      setSearching(false)
     })
     try {
       
@@ -111,7 +134,8 @@ const Signup = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="会社名" label="companyName" required={true} />
-          <Input id="companyName" register={register} required={true} error={errors?.companyName?.message} />
+          <Input id="companyName" register={register} required={true} error={errors?.companyName?.message} disabled={editType === 'edit'} />
+          {editType === 'edit' && <FormNote text={'※会社名を変更したい場合はお問い合わせください。'} />}
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="郵便番号" label="zipCode" required={true} />
@@ -158,7 +182,7 @@ const Signup = ({
           <Button text={editType === 'register' ? 'この内容で登録する' : '変更を保存'} color="primary" size="large" type="submit" />
         </div>
       </form>
-      {editType === 'edit' && <div className={styles['p-account-registration__button']}><Button text="前の画面に戻る" color="default" size="large" onClick={() => Router.back()}/></div>}
+      {editType !== 'edit' && <div className={styles['p-account-registration__button']}><Button text="前の画面に戻る" color="default" size="large" onClick={() => Router.back()}/></div>}
     </div>
   )
 }

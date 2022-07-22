@@ -30,7 +30,7 @@ const Signup: NextPage = () => {
 
       <section className={styles['p-account-registration__content']}>
         <FormTitle title="会社情報入力" />
-        <CompanyRegistrationTemplate submitForm={onSubmit} />
+        <CompanyRegistrationTemplate zipCode="" submitForm={onSubmit} />
       </section>
     </div>
   )

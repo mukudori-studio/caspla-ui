@@ -1,15 +1,20 @@
 @use './global' as g;
 
 .p-production-setting {
-  max-width: 1016px;
-  padding: 120px 30px;
-  // TODO：margin設定全画面で共通化できそうだったらあとで対応
+  @include g.page-margin;
+  max-width: 956px;
   margin: 0 auto;
 
   @include g.mq-down(tablet--under) {
     width: 89vw;
     padding: 30px 0 0;
     margin-bottom: 60px;
+  }
+
+  &__content {
+    @include g.mq-up(tablet) {
+      padding: 0 30px;
+    }
   }
 
   &__head {
@@ -79,5 +84,10 @@
     min-height: 320px;
     line-height: 1.8;
     text-align: center;
+  }
+
+  &__edit {
+    max-width: 632px;
+    margin: 0 auto;
   }
 }
