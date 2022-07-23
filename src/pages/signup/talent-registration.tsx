@@ -7,7 +7,7 @@ import { registrationState } from '@/stores/Registration'
 import Meta from '@/components/Meta'
 import TalentRegistrationTemplate from '@/components/templates/TalentRegistrationTemplate'
 import Button from '@/components/atoms/Button'
-import FormTitle from '@/components/atoms/Forms/Title'
+import PageTitle from '@/components/atoms/PageTitle'
 import styles from '@/styles/AccountRegistration.module.scss'
 
 const TalentRegistration: NextPage = () => {
@@ -32,7 +32,7 @@ const TalentRegistration: NextPage = () => {
       <Meta title="タレントプロフィール入力" />
 
       <section className={styles['p-account-registration__content']}>
-        <FormTitle title="タレントプロフィール入力" />
+        <PageTitle title="タレントプロフィール入力" />
         <TalentRegistrationTemplate submitForm={onSubmit} />
         <div className={styles['p-account-registration__button']}><Button text="前の画面に戻る" color="default" size="large" onClick={() => Router.back()}/></div>
       </section>

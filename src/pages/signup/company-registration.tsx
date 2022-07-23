@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { useRecoilValue } from 'recoil'
 import { registrationState } from '@/stores/Registration'
 import Meta from '@/components/Meta'
-import FormTitle from '@/components/atoms/Forms/Title'
+import PageTitle from '@/components/atoms/PageTitle'
 import CompanyFormTemplate from '@/components/templates/CompanyFormTemplate'
 
 import styles from '@/styles/AccountRegistration.module.scss'
@@ -29,7 +29,7 @@ const Signup: NextPage = () => {
       <Meta title="会社情報入力" />
 
       <section className={styles['p-account-registration__content']}>
-        <FormTitle title="会社情報入力" />
+        <PageTitle title="会社情報入力" />
         <CompanyFormTemplate zipCode="" submitForm={onSubmit} />
       </section>
     </div>

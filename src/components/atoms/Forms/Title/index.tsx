@@ -1,12 +1,12 @@
 import React from 'react'
-import styles from '@/styles/components/atoms/Forms/Title.module.scss'
+import styles from '@/styles/components/atoms/PageTitle.module.scss'
 
-type FormTitleProps = {
+type PageTitleProps = {
   title: string
 }
 
-const FormTitle = ({title}: FormTitleProps) => {
+const PageTitle = ({title}: PageTitleProps) => {
   return <h1 className={styles['a-form-title']}>{title}</h1>
 }
 
-export default FormTitle
+export default PageTitle

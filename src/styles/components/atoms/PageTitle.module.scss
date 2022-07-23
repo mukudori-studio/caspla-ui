@@ -1,18 +1,23 @@
-@use '../../../global' as g;
+@use '../../global' as g;
 
-.a-form-title {
+.a-page-title {
   @include g.flex(center);
   font-size: 24px;
   text-align: center;
   font-weight: bold;
-  min-height: 80px;
+  min-height: 60px;
   color: g.$color-primary;
   border-bottom: 1px solid rgba(129, 82, 150, 0.2);
-  padding: 10px 20px;
+  padding: 10px 0;
   box-sizing: border-box;
   margin: 0 auto;
   line-height: 1.1;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
+
+  &--left {
+    justify-content: flex-start;
+    text-align: left;
+  }
 
   @include g.mq-down(tablet--under) {
     font-size: 20px;

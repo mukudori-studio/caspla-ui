@@ -10,7 +10,7 @@ import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import Input from '@/components/molecules/Forms/Input'
 import LinkButton from '@/components/atoms/LinkButton'
-import FormTitle from '@/components/atoms/Forms/Title'
+import PageTitle from '@/components/atoms/PageTitle'
 import FormLabel from '@/components/atoms/Forms/Label'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import Card from '@/components/molecules/Card'
@@ -60,7 +60,7 @@ const Signin: NextPage = () => {
       <section className={styles['p-sign-in__content']}>
         <Card>
           <>
-            <FormTitle title="ログイン" />
+            <PageTitle title="ログイン" />
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-in__form']}>
               <div className={styles['p-sign-in__item']}>
                 <FormLabel text="メールアドレス" label="casplaId" required={true} />
@@ -78,7 +78,7 @@ const Signin: NextPage = () => {
               </div>
             </form>
 
-            <FormTitle title="新規登録" />
+            <PageTitle title="新規登録" />
             <div className={styles['p-sign-in__sign-up']}>
               <LinkButton href="/signup/" text="新規で会員登録する" size="large" weight="bold" />
             </div>

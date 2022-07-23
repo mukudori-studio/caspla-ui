@@ -11,7 +11,7 @@ import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import Checkbox from '@/components/atoms/Forms/Checkbox'
 import FormLabel from '@/components/atoms/Forms/Label'
-import FormTitle from '@/components/atoms/Forms/Title'
+import PageTitle from '@/components/atoms/PageTitle'
 import Input from '@/components/molecules/Forms/Input'
 import RadioButton from '@/components/atoms/Forms/RadioButton'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
@@ -97,7 +97,7 @@ const AccountRegistration: NextPage = () => {
       <section className={styles['p-account-registration__content']}>
         <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
           <section className={styles['p-account-registration__section']}>
-            <FormTitle title="アカウント管理" />
+            <PageTitle title="アカウント管理" />
             <div className={styles['p-account-registration__item']}>
                 TODO：サムネイルの仕様固まったらサムネイルコンポーネント追加
             </div>

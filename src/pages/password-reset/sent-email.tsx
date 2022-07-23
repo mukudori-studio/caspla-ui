@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Meta from '@/components/Meta'
 import Card from '@/components/molecules/Card'
 import LinkButton from '@/components/atoms/LinkButton'
-import FormTitle from '@/components/atoms/Forms/Title'
+import PageTitle from '@/components/atoms/PageTitle'
 import styles from '@/styles/PasswordReset.module.scss'
 
 const SentSignupMail: NextPage = () => {
@@ -13,7 +13,7 @@ const SentSignupMail: NextPage = () => {
       <section className={styles['p-password-reset__content']}>
         <Card>
           <>
-            <FormTitle title="パスワード再設定メール送信" />
+            <PageTitle title="パスワード再設定メール送信" />
             <p className={styles['p-password-reset__description']}>パスワード再設定用ページのURLを記載したメールを入力していただいたメールアドレス宛に送信しました。<br />受信したメールアドレスのURLより、パスワードの再設定画面へアクセスしてください。</p>
             
             <div className={styles['p-password-reset__button']}>

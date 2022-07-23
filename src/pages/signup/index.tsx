@@ -8,7 +8,7 @@ import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import Input from '@/components/molecules/Forms/Input'
 import Checkbox from '@/components/atoms/Forms/Checkbox'
-import FormTitle from '@/components/atoms/Forms/Title'
+import PageTitle from '@/components/atoms/PageTitle'
 import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
 
@@ -42,7 +42,7 @@ const Signup: NextPage = () => {
       <section className={styles['p-sign-up__content']}>
         <Card>
           <>
-            <FormTitle title="新規登録" />
+            <PageTitle title="新規登録" />
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-up__form']}>
               <FormLabel text="メールアドレス" label="email" required={true} />
               <Input id="email" register={register} required={true} error={errors?.email?.message} type={'email'} />

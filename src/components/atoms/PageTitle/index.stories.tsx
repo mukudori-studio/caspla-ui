@@ -1,14 +1,14 @@
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 
-import FormTitle from './'
+import PageTitle from './'
 
 export default {
-  title: 'Atoms/Forms/FormTitle',
-  component: FormTitle,
-} as ComponentMeta<typeof FormTitle>
+  title: 'Atoms/Forms/PageTitle',
+  component: PageTitle,
+} as ComponentMeta<typeof PageTitle>
 
-const Template: ComponentStory<typeof FormTitle> = (args) => <FormTitle {...args} />
+const Template: ComponentStory<typeof PageTitle> = (args) => <PageTitle {...args} />
 
 export const Default = Template.bind({});
 Default.args = {

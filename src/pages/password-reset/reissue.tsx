@@ -7,7 +7,7 @@ import sendEmail from '@/apis/resetPassword/sendEmail'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import Input from '@/components/molecules/Forms/Input'
-import FormTitle from '@/components/atoms/Forms/Title'
+import PageTitle from '@/components/atoms/PageTitle'
 import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
 
@@ -37,7 +37,7 @@ const PasswordReissue: NextPage = () => {
       <section className={styles['p-password-reset__content']}>
         <Card>
           <>
-            <FormTitle title="パスワードがわからない場合" />
+            <PageTitle title="パスワードがわからない場合" />
             <p className={styles['p-password-reset__description']}>ご登録いただいたメールアドレスあてにご案内をお届けします。</p>
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-password-reset__form']}>
               

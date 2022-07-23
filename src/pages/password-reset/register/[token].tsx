@@ -7,7 +7,7 @@ import { axiosClient } from '@/utils/axiosClient'
 import resetPassword from '@/apis/resetPassword/resetPassword'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
-import FormTitle from '@/components/atoms/Forms/Title'
+import PageTitle from '@/components/atoms/PageTitle'
 import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
@@ -47,7 +47,7 @@ const PasswordReset: NextPage = () => {
       <section className={styles['p-password-reset__content']}>
         <Card>
           <>
-            <FormTitle title="パスワードの再設定" />
+            <PageTitle title="パスワードの再設定" />
             <p className={styles['p-password-reset__description']}>新しいパスワードを入力してください。</p>
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-password-reset__form']}>
               <div className={styles['p-password-reset__item']}>
