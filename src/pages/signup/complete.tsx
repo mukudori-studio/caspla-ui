@@ -14,7 +14,7 @@ const SignupComplete: NextPage = () => {
   useEffect(() => { resetRegistrationState() }, [])
   
   return (
-    <div className={styles['p-sign-up-complete']}>
+    <main className={styles['p-sign-up-complete']}>
       <Meta title="登録完了" />
       <section className={styles['p-sign-up-complete__content']}>
         <h1 className={styles['p-sign-up-complete__title']}>ご登録ありがとうございます！</h1>
@@ -28,7 +28,7 @@ const SignupComplete: NextPage = () => {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   )
 }
 

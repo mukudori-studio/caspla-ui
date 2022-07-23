@@ -111,7 +111,7 @@ const AccountRegistration: NextPage = () => {
   }
 
   return (
-    <div className={styles['p-account-registration']}>
+    <main className={styles['p-account-registration']}>
       <Meta title="アカウント情報登録" />
 
       <section className={styles['p-account-registration__content']}>
@@ -172,7 +172,7 @@ const AccountRegistration: NextPage = () => {
           <Button text={submitTextState} color={submitButtonColorState} size="large" type="submit" weight="bold" disabled={!checledCasplaIdState} />
         </form>
       </section>
-    </div>
+    </main>
   )
 }
 

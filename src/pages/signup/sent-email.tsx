@@ -8,7 +8,7 @@ import styles from '@/styles/Signup.module.scss'
 const SentSignupMail: NextPage = () => {
   
   return (
-    <div className={styles['p-sign-up']}>
+    <main className={styles['p-sign-up']}>
       <Meta title="仮登録メール送信" />
       <section className={[styles['p-sign-up__content'], styles['p-sign-up__content--sent-email']].join(' ')}>
         <Card>
@@ -22,7 +22,7 @@ const SentSignupMail: NextPage = () => {
           </>
         </Card>
       </section>
-    </div>
+    </main>
   )
 }
 

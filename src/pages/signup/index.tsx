@@ -36,7 +36,7 @@ const Signup: NextPage = () => {
   }
 
   return (
-    <div className={styles['p-sign-up']}>
+    <main className={styles['p-sign-up']}>
       <Meta title="新規登録" />
 
       <section className={styles['p-sign-up__content']}>
@@ -61,7 +61,7 @@ const Signup: NextPage = () => {
           </>
         </Card>
       </section>
-    </div>
+    </main>
   )
 }
 

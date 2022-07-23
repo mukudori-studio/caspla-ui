@@ -25,14 +25,14 @@ const Signup: NextPage = () => {
   }
 
   return (
-    <div className={styles['p-account-registration']}>
+    <main className={styles['p-account-registration']}>
       <Meta title="会社情報入力" />
 
       <section className={styles['p-account-registration__content']}>
         <PageTitle title="会社情報入力" />
         <CompanyFormTemplate zipCode="" submitForm={onSubmit} />
       </section>
-    </div>
+    </main>
   )
 }
 

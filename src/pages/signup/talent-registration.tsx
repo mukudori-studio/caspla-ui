@@ -28,7 +28,7 @@ const TalentRegistration: NextPage = () => {
 
 
   return (
-    <div className={styles['p-account-registration']}>
+    <main className={styles['p-account-registration']}>
       <Meta title="タレントプロフィール入力" />
 
       <section className={styles['p-account-registration__content']}>
@@ -36,7 +36,7 @@ const TalentRegistration: NextPage = () => {
         <TalentRegistrationTemplate submitForm={onSubmit} />
         <div className={styles['p-account-registration__button']}><Button text="前の画面に戻る" color="default" size="large" onClick={() => Router.back()}/></div>
       </section>
-    </div>
+    </main>
   )
 }
 

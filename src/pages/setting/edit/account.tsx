@@ -91,7 +91,7 @@ const AccountRegistration: NextPage = () => {
   }
 
   return (
-    <div className={styles['p-account-registration']}>
+    <main className={styles['p-account-registration']}>
       <Meta title="アカウント管理" />
 
       <section className={styles['p-account-registration__content']}>
@@ -146,7 +146,7 @@ const AccountRegistration: NextPage = () => {
           </section>
         </form>
       </section>
-    </div>
+    </main>
   )
 }
 
