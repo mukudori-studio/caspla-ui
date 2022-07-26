@@ -51,11 +51,11 @@ const PasswordReset: NextPage = () => {
             <p className={styles['p-password-reset__description']}>新しいパスワードを入力してください。</p>
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-password-reset__form']}>
               <div className={styles['p-password-reset__item']}>
-                <FormLabel text="パスワード" label="password" required={true} />
+                <FormLabel text="パスワード" label="password" />
                 <PasswordInput id="password" register={register} error={errors?.password?.message} />
               </div>
               <div className={styles['p-password-reset__item']}>
-                <FormLabel text="パスワード(確認用)" label="rePassword" required={true} />
+                <FormLabel text="パスワード(確認用)" label="rePassword" />
                 <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} />
               </div>
               <div className={styles['p-password-reset__button']}>

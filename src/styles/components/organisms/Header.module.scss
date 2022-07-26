@@ -50,7 +50,8 @@
     width: 46.2vw;
 
     @include g.mq-down(tablet--under) {
-      width: 89vw;
+      max-width: 100%;
+      width: 100%;
 
       .m-search-keyword__search {
         height: 27px;
@@ -84,6 +85,7 @@
 
     @include g.mq-down(tablet--under) {
       height: 42px;
+      gap: 12px;
     }
   }
 
@@ -97,6 +99,10 @@
 
     &:active {
       opacity: .8;
+    }
+
+    @include g.mq-down(tablet--under) {
+      font-size: 12px;
     }
 
     @include g.mq-up(tablet-pc) {
@@ -140,8 +146,16 @@
 
   &__icon {
     width: 16px;
+    height: 16px;
+    font-size: 16px;
     display: block;
     color: g.$color-mono-0;
     margin-bottom: 2px;
+
+    @include g.mq-down(tablet--under) {
+      width: 14px;
+      height: 14px;
+      font-size: 14px;
+    }
   }
 }

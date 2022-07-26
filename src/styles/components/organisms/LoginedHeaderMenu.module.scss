@@ -18,7 +18,7 @@
       opacity: .8;
     }
 
-    @include g.mq-up(tablet-pc) {
+    @include g.mq-up(tablet) {
       grid-template:
       " name  . thumbnail" auto
       "   .   . thumbnail" 6px

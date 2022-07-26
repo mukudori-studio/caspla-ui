@@ -20,8 +20,9 @@
   }
 
   @include g.mq-down(tablet--under) {
-    font-size: 20px;
+    font-size: 18px;
+    letter-spacing: 1.5px;
     height: 60px;
-    padding: 6px 12px;
+    padding: 6px 10px;
   }
 }

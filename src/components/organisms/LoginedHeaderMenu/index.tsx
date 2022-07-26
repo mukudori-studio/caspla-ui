@@ -34,13 +34,15 @@ const LoginedHeaderMenu = () => {
   const popOverStyle = showMenu ? [styles['m-logined-header-menu__popover'], styles['m-logined-header-menu__popover--show']].join(' ') : styles['m-logined-header-menu__popover']
   const menuStyle = styles['m-logined-header-menu__item']
 
+  console.log(session)
+
   return (
     <div className={styles['m-logined-header-menu']}>
       <button className={styles['m-logined-header-menu__button']} onClick={toggleMenu}>
         <div className={styles['m-logined-header-menu__name']}><span>{session.fullName}</span></div>
         <div className={styles['m-logined-header-menu__belong']}><span>{session.productionName === '' ? '無所属' : session.productionName}</span></div>
         {
-          session.thumbnailImage !== '' ? (
+          session.thumbnailImage && session.thumbnailImage !== '' ? (
             <div className={styles['m-logined-header-menu__thumbnail']}>
               <Image
                 src={session.thumbnailImage}

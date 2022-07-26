@@ -38,6 +38,7 @@
   }
 
   &__icon-wrap {
+    @include g.flex(center);
     position: absolute;
     width: 24px;
     height: 24px;

@@ -50,8 +50,6 @@ const Signin: NextPage = () => {
       isSubmitting = false
     })
   }
-
-  const forgetLinkStyle = styles['p-sign-in__link']
   
   return (
     <div className={styles['p-sign-in']}>
@@ -63,15 +61,15 @@ const Signin: NextPage = () => {
             <PageTitle title="ログイン" />
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-in__form']}>
               <div className={styles['p-sign-in__item']}>
-                <FormLabel text="メールアドレス" label="casplaId" required={true} />
+                <FormLabel text="メールアドレス" label="casplaId" />
                 <Input id="casplaId" register={register} required={true} />
               </div>
               <div className={styles['p-sign-in__item']}>
-                <FormLabel text="パスワード" label="password" required={true} />
+                <FormLabel text="パスワード" label="password" />
                 <PasswordInput id="password" register={register} min={4} />
               </div>
               <Link href="/password-reset/reissue">
-                <a className={forgetLinkStyle}>パスワードを忘れた方はこちら</a>
+                <a className={styles['p-sign-in__link']}>パスワードを忘れた方はこちら</a>
               </Link>
               <div className={styles['p-sign-in__button']}>
                 <Button text="ログイン" color="primary" size="large" type="submit" weight="bold" disabled={!isValid || isSubmitting} />

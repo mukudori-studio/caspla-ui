@@ -41,7 +41,7 @@ const PasswordReissue: NextPage = () => {
             <p className={styles['p-password-reset__description']}>ご登録いただいたメールアドレスあてにご案内をお届けします。</p>
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-password-reset__form']}>
               
-                <FormLabel text="メールアドレス" label="email" required={true} />
+                <FormLabel text="メールアドレス" label="email" />
                 <Input id="email" register={register} error={errors?.email?.message} required={true} />
               <div className={styles['p-password-reset__button']}>
                 <Button text="送信" color="primary" size="large" type="submit" />

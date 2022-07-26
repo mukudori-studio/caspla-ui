@@ -7,7 +7,7 @@
   font-size: 18px;
 
   @include g.mq-down(tablet--under) {
-    width: 89vw;
+    width: 100%;
     padding: 24px 28px;
     margin: 0 auto;
   }

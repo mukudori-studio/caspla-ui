@@ -8,7 +8,7 @@ export const sessionState = atom({
   default: {
     accessToken: '',
     refreshToken: '',
-    asRole: [],
+    asRole: '',
     casplaId: '',
     fullName: '',
     thumbnailImage: '',
