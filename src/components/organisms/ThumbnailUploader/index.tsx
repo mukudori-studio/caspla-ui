@@ -82,6 +82,7 @@ const ThumbnailUploader = ({
             )
           }
           <input
+            id={id}
             className={styles['o-thumbnail-upload__input']}
             type="file"
             accept="image/*"
