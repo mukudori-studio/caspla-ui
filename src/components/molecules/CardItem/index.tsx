@@ -53,15 +53,14 @@ const CardItem = ({
     <button type="button" onClick={toDetail} className={styles['m-card-item']}>
       <div className={styles['m-card-item__content']}>
         {
-          thumbnail === null ? (
+          !thumbnail && thumbnail === '' ? (
             <div className={styles['m-card-item__thumbnail']}></div>
           ) : (
             <Image
               src={thumbnail}
               className={styles['m-card-item__thumbnail']}
-              width={'auto'}
-              height={'auto'}
-              layout="fixed"
+              objectFit="contain"
+              layout="fill"
             />
           )
         }

@@ -39,7 +39,8 @@ const ProductionDetailHeader = ({
           <Image
             src={thumbnail}
             className={styles['o-production-detail-header__thumbnail']}
-            layout="fixed"
+            objectFit="contain"
+            layout="fill"
           />
         ) : (
           <div className={[styles['o-production-detail-header__thumbnail'], styles['o-production-detail-header__thumbnail--empty']].join(' ')}>

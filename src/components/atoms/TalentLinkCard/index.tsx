@@ -21,7 +21,8 @@ const TalentLinkCard = ({
           <Image
             src={thumbnail}
             className={styles['a-talent-link-card__thumbnail']}
-            layout="fixed"
+            objectFit="contain"
+            layout="fill"
           />
         ) : (
           <div className={[styles['a-talent-link-card__thumbnail'], styles['a-talent-link-card__thumbnail--empty']].join(' ')}>

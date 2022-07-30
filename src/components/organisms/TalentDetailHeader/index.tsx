@@ -63,7 +63,8 @@ const TalentDetailHeader = ({
           <Image
             src={coverImage}
             className={styles['o-talent-detail-header__image']}
-            layout="fixed"
+            objectFit="contain"
+            layout="fill"
           />
         ) : (
           <div className={[styles['o-talent-detail-header__image'], styles['o-talent-detail-header__image--empty']].join(' ')}>
@@ -78,7 +79,8 @@ const TalentDetailHeader = ({
               <Image
                 src={thumbnailImage}
                 className={styles['o-talent-detail-header__thumbnail']}
-                layout="fixed"
+                objectFit="contain"
+                layout="fill"
               />
             ) : (
               <div className={[styles['o-talent-detail-header__thumbnail'], styles['o-talent-detail-header__thumbnail--empty']].join(' ')}>
