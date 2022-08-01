@@ -7,12 +7,12 @@ import styles from '@/styles/components/organisms/Footer.module.scss'
 
 const footerLinks = [
   { url: '', title: 'CASPLAとは' },
-  { url: '', title: '利用規約' },
-  { url: '', title: 'プライバシーポリシー' },
-  { url: '', title: '情報セキュリティ方針' },
-  { url: '', title: '反社基本方針' },
-  { url: '', title: 'ヘルプ' },
-  { url: '', title: 'お問い合わせ' },
+  { url: 'https://docs.caspla.com/info/tos', title: '利用規約' },
+  { url: 'https://docs.caspla.com/info/privacypolicy', title: 'プライバシーポリシー' },
+  { url: 'https://docs.caspla.com/info/securitypolicy', title: '情報セキュリティ方針' },
+  { url: 'https://docs.caspla.com/info/antisocialist', title: '反社基本方針' },
+  { url: 'https://docs.caspla.com/help', title: 'ヘルプ' },
+  { url: 'https://docs.caspla.com/contact', title: 'お問い合わせ' },
 ]
 
 const Footer = () => {
