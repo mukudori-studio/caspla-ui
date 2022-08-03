@@ -8,12 +8,13 @@ export const sessionState = atom({
   default: {
     accessToken: '',
     refreshToken: '',
-    asRole: '',
+    role: '',
     casplaId: '',
     fullName: '',
     thumbnailImage: '',
     productionId: '',
     productionName: '',
+    productionAdmin: ''
   },
   effects_UNSTABLE: [persistAtom]
 })
