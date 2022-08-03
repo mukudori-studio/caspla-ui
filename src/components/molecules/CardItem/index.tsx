@@ -30,7 +30,7 @@ const CardItem = ({
   ...props
 }: CardItemProps) => {
   // NOTE:タレントとプロダクションで遷移先を分けておく(ビジネスロジック的に親に持たせる方が良いかも)
-  const linkUrl = type === 'cast' ? `/talents/detail/${id}` : `/productions/detail/${id}`
+  const linkUrl = type === 'cast' ? `/talents/detail/${casplaId}` : `/productions/detail/${id}`
   const toDetail = () => {
     Router.push(linkUrl)
   }

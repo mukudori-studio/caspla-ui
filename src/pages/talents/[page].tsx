@@ -89,7 +89,7 @@ const Talents: NextPage = (props:any) => {
                           name={talent.fullName}
                           casplaId={talent.casplaId}
                           profile={talent.profile}
-                          thumbnail={talent.thumbnailUrl}
+                          thumbnail={talent.thumbnailUrl?.base64}
                           activity={talent.activities}
                         />
                       </div>

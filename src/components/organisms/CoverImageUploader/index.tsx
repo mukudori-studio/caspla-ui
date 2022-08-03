@@ -1,14 +1,16 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { toast } from 'react-toastify'
 import Loading from '@/components/atoms/Loading'
-import { faCamera, faImages, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
+import uploadImage from '@/apis/uploadImage'
+import { faImages, faXmark } from '@fortawesome/free-solid-svg-icons'
 import styles from '@/styles/components/organisms/CoverImageUploader.module.scss'
 
 type CoverImageUploaderProps = {
   id: string
   type?: 'thumbnail' | 'logo'
   thumbnailUrl?: string
-  onChange: (data: string) => void
+  onChange: (data: object) => void
 }
 
 const CoverImageUploader = ({
@@ -18,20 +20,26 @@ const CoverImageUploader = ({
   onChange
 }: CoverImageUploaderProps) => {
 
-  const [files, setFiles] = React.useState<File[]>([])
   const [uploading, setUploading] = React.useState(false)
   const inputRef = React.useRef(null)
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0] && !uploading) {
       setUploading(true)
-      console.log(e.target.files)
       const file = e.target.files[0]
+      uploadImage(file).then(res => {
+        console.log(res)
+        onChange(res.data)
+      }).catch(err => {
+        toast.error('画像のアップロードに失敗しました。', { autoClose: 2000, draggable: true})
+      }).finally(() => {
+        setUploading(false)
+      })
     }
   }
 
   const resetFile = () => {
-    onChange('')
+    onChange({})
   }
 
   const labelStyle = uploading ? [styles['o-cover-image-upload__label'], styles['o-cover-image-upload__label--upload']].join(' ') : styles['o-cover-image-upload__label']

@@ -16,10 +16,11 @@ import Input from '@/components/molecules/Forms/Input'
 import RadioButton from '@/components/atoms/Forms/RadioButton'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import RePasswordInput from '@/components/molecules/Forms/RePasswordInput'
+import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
 
 type InputProps = {
-  thumbail?: string
+  thumbail?: object
   fullName: string
   furigana?: string
   email: string
@@ -41,7 +42,7 @@ const AccountRegistration: NextPage = () => {
 
   useEffect(() => {
     if (registration.fullName !== '') {
-      setValue('thumbail', '')
+      setValue('thumbail', {})
       setValue('fullName', registration.fullName)
       setValue('furigana', registration.furigana)
       setValue('email', registration.email)
@@ -84,6 +85,10 @@ const AccountRegistration: NextPage = () => {
     })
   }
 
+  const changeThumbnail = (val: object) => {
+    setValue('thumbail', val)
+  }
+
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     // TODO：role毎に処理が分かれるのでページ遷移が必要なものにかんしてはpush時にstateに入れる
     if (roleState !== 'fan') {
@@ -120,6 +125,7 @@ const AccountRegistration: NextPage = () => {
             <PageTitle title="アカウント情報入力" />
             <div className={styles['p-account-registration__item']}>
                 TODO：サムネイルの仕様固まったらサムネイルコンポーネント追加
+                <ThumbnailUploader id="thumbnail" onChange={changeThumbnail} />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="名前" label="fullName" required={true} />

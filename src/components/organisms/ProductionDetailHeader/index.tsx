@@ -8,7 +8,7 @@ import styles from '@/styles/components/organisms/ProductionDetailHeader.module.
 type ProductionDetailHeaderProps = {
   thumbnail?: string
   name: string
-  agencyId?: string
+  productionId?: string
   siteUrl?: string
   blogUrl?: string
   facebook?: string
@@ -21,7 +21,7 @@ type ProductionDetailHeaderProps = {
 const ProductionDetailHeader = ({
   thumbnail = '',
   name,
-  agencyId = '',
+  productionId = '',
   siteUrl = '',
   blogUrl = '',
   facebook = '',
@@ -50,7 +50,7 @@ const ProductionDetailHeader = ({
       }
       <div className={styles['o-production-detail-header__names']}>
         <h1 className={styles['o-production-detail-header__name']}>{name}</h1>
-        <h2 className={styles['o-production-detail-header__caspla-id']}>{agencyId}</h2>
+        <h2 className={styles['o-production-detail-header__caspla-id']}>{productionId}</h2>
       </div>
       <div className={styles['o-production-detail-header__links']}>
         {

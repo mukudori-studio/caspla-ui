@@ -13,7 +13,7 @@ const Template: ComponentStory<typeof ProdcutionDetailHeader> = (args) => <Prodc
 export const Default = Template.bind({});
 Default.args = {
   name: 'キン肉マンソルジャー',
-  agencyId: 'production',
+  productionId: 'production',
   siteUrl: 'hoge',
   blogUrl: 'hoge',
   facebook: 'hoge',
