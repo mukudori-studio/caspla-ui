@@ -6,7 +6,6 @@ import 'dayjs/locale/ja'
 import styles from '@/styles/components/organisms/Footer.module.scss'
 
 const footerLinks = [
-  { url: '', title: 'CASPLAとは' },
   { url: 'https://docs.caspla.com/info/tos', title: '利用規約' },
   { url: 'https://docs.caspla.com/info/privacypolicy', title: 'プライバシーポリシー' },
   { url: 'https://docs.caspla.com/info/securitypolicy', title: '情報セキュリティ方針' },
