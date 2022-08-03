@@ -4,6 +4,7 @@ const fanRegistration = async (data: any, thumbnail: string, role: string) => {
   try {
 
     const postData = {
+      thumbnailImage: data.thumbnailImage,
       fullName: data.fullName,
       furigana: data.furigana,
       email: data.email,

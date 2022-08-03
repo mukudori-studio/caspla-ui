@@ -15,10 +15,11 @@ import PageTitle from '@/components/atoms/PageTitle'
 import Input from '@/components/molecules/Forms/Input'
 import RadioButton from '@/components/atoms/Forms/RadioButton'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
+import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
 
 type InputProps = {
-  thumbail?: string
+  thumbnailImage?: object
   fullName: string
   furigana?: string
   email: string
@@ -73,10 +74,14 @@ const AccountRegistration: NextPage = () => {
 
   const toggleNeedForLetter = (e:any) => setValue('needForLetter', e.target.checked)
 
+  const changeThumbnail = (val: object) => {
+    setValue('thumbnailImage', val)
+  }
+
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     fanRegistration(data, '', roleState).then(() => {
       setSession({
-        thumbnail: '',
+        thumbnailImage: data.thumbnailImage,
         fullName: data.fullName,
         furigana: data.furigana,
         email: data.email,
@@ -99,7 +104,7 @@ const AccountRegistration: NextPage = () => {
           <section className={styles['p-account-registration__section']}>
             <PageTitle title="アカウント管理" />
             <div className={styles['p-account-registration__item']}>
-                TODO：サムネイルの仕様固まったらサムネイルコンポーネント追加
+              <ThumbnailUploader id="thumbnail" onChange={changeThumbnail} />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="名前" label="fullName" required={true} />

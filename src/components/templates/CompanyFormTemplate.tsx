@@ -10,12 +10,13 @@ import Textarea from '@/components/molecules/Forms/Textarea'
 import Select from '@/components/atoms/Forms/Select'
 import FormLabel from '@/components/atoms/Forms/Label'
 import FormNote from '@/components/atoms/Forms/Note'
+import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import prefectures from '@/utils/prefectures'
 
 import styles from '@/styles/AccountRegistration.module.scss'
 
 type InputProps = {
-  companyImage?: string
+  companyImage?: object
   companyName: string | undefined
   zipCode: string
   prefecture: string | undefined
@@ -37,7 +38,7 @@ type InputProps = {
 
 type registrationPorps = {
   editType?: 'register' | 'edit'
-  companyImage?: string
+  companyImage?: object
   companyName?: string
   zipCode: string
   prefecture?: string
@@ -122,6 +123,8 @@ const Signup = ({
     }
   }
 
+  const changeLogo = (val: object) => setValue('companyImage', val)
+
   const onSubmit: SubmitHandler<InputProps> = (data) => submitForm(data)
 
   // NOTE：template部分はaccount-registrationと同じになるためCSSのClassとしては共通で使いまわし
@@ -130,7 +133,7 @@ const Signup = ({
       <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="会社ロゴ" label="companyImage" />
-          TODO：API側の仕様固まってから対応
+          <ThumbnailUploader id="companyLogo" onChange={changeLogo} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="会社名" label="companyName" required={true} />

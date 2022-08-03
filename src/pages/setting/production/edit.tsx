@@ -32,7 +32,7 @@ const ProductionEdit: NextPage = () => {
         <div className={styles['p-production-setting__edit']}>
           <CompanyFormTemplate
             editType="edit"
-            companyImage=""
+            companyImage={{}}
             companyName="test"
             zipCode="123456"
             prefecture="東京都"
