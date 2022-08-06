@@ -9,43 +9,7 @@ import TalentLinkCard from '@/components/atoms/TalentLinkCard'
 import ProductionDetailHeader from '@/components/organisms/ProductionDetailHeader'
 import styles from '@/styles/Production.module.scss'
 
-const TalentDetail: NextPage = () => {
-
-  const text = 'test'
-
-  const productionDummy = {
-    agencyId: 'monkey',
-    name: 'モンキー・パンチ',
-    siteUrl: 'hoge',
-    blogUrl: 'hoge',
-    facebook: 'hoge',
-    twitter: 'hoge',
-    instagram: 'hoge',
-    tiktok: 'hoge',
-    youtube: 'hoge',
-    talents: [
-      {
-        casplaId: 'test1',
-        name: 'テストユーザー',
-        thumbnailImage: ''
-      },
-      {
-        casplaId: 'test2',
-        name: 'テストユーザー',
-        thumbnailImage: ''
-      },
-      {
-        casplaId: 'test3',
-        name: 'テストユーザー',
-        thumbnailImage: ''
-      },
-      {
-        casplaId: 'test4',
-        name: 'テストユーザー',
-        thumbnailImage: ''
-      }
-    ]
-  }
+const productionDetail: NextPage = () => {
 
   const router = useRouter()
   const { productionId } = router.query
@@ -70,23 +34,23 @@ const TalentDetail: NextPage = () => {
       <Meta title="タレント詳細" />
 
       <main className={styles['p-production-detail']}>
-        <ProductionDetailHeader
+        {/* <ProductionDetailHeader
           name={productionDetailState.name}
           productionId={productionDetailState.productionId}
-          siteUrl={productionDetailState.links.siteUrl}
-          blogUrl={productionDetailState.links.blogUrl}
-          facebook={productionDetailState.links.facebook}
-          twitter={productionDetailState.links.twitter}
-          instagram={productionDetailState.links.instagram}
-          tiktok={productionDetailState.links.tiktok}
-          youtube={productionDetailState.links.youtube}
-        />
+          siteUrl={productionDetailState.links?.siteUrl}
+          blogUrl={productionDetailState.links?.blogUrl}
+          facebook={productionDetailState.links?.facebook}
+          twitter={productionDetailState.links?.twitter}
+          instagram={productionDetailState.links?.instagram}
+          tiktok={productionDetailState.links?.tiktok}
+          youtube={productionDetailState.links?.youtube}
+        /> */}
         <div className={styles['p-production-detail__description']}>
-          <DescriptionContent text={text} />
+          {/* <DescriptionContent text={text} /> */}
         </div>
 
         <h2 className={styles['p-production-detail__title']}>在籍一覧</h2>
-        { productionDetailState.casts.length > 0 ? (
+        { productionDetailState.casts?.length > 0 ? (
           <ul className={styles['p-production-detail__list']}>
             {
               productionDetailState.casts.map((data: any) => {
@@ -107,4 +71,4 @@ const TalentDetail: NextPage = () => {
   )
 }
 
-export default TalentDetail
+export default productionDetail
