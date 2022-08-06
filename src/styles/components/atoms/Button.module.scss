@@ -8,6 +8,12 @@
   text-decoration: none;
   text-align: center;
   cursor: pointer;
+  transition: .2s;
+
+  &:hover, &:active {
+    background: g.$color-active;
+    color: g.$color-primary;
+  }
 
   // Size
   &--small {

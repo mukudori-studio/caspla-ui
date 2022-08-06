@@ -29,7 +29,7 @@ const Signup: NextPage = () => {
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     sendEmail(data, needForLetter).then(res => {
-      Router.push('/signup/sent-email')
+      Router.push('/signup/check-verify')
     }).catch(() => {
       toast.error('メールの送信に失敗しました。', { autoClose: 3000, draggable: true})
     })

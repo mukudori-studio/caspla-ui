@@ -47,11 +47,11 @@
   }
 
   &__note {
-    background: g.$color-primary;
+    background: #FED799;
+    color: g.$color-mono-80;
     margin: 22px auto 0;
     padding: 18px 20px;
     border-radius: 10px;
-    color: g.$color-mono-0;
     font-weight: bold;
     text-align: center;
     line-height: 1.7;
@@ -68,7 +68,7 @@
       display: block;
       content: '';
       border-right: 15px solid transparent;
-      border-bottom: 22px solid g.$color-primary;
+      border-bottom: 22px solid #FED799;
       border-left: 15px solid transparent;
       position: absolute;
       left: 50%;

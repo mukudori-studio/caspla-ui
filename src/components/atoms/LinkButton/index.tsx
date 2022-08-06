@@ -5,7 +5,7 @@ import styles from '@/styles/components/atoms/Button.module.scss'
 interface LinkButtonProps {
   type?: 'button' | 'submit'
   size?: 'small' | 'medium' | 'large'
-  color?: 'primary' | 'secondary' | 'third' | 'forth' | 'default'
+  color?: 'primary' | 'secondary' | 'default'
   weight?: 'normal' | 'bold'
   href: string
   text: string

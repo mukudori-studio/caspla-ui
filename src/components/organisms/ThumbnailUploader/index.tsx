@@ -10,7 +10,7 @@ type ThumbnailUploaderProps = {
   id: string
   type?: 'thumbnail' | 'logo'
   thumbnailUrl?: string
-  onChange: (data: object) => void
+  onChange: (data: any) => void
 }
 
 const ThumbnailUploader = ({

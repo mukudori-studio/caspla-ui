@@ -4,7 +4,7 @@ import styles from '@/styles/components/atoms/Button.module.scss'
 interface ButtonProps {
   type?: 'button' | 'submit'
   size?: 'small' | 'medium' | 'large'
-  color?: 'primary' | 'secondary' | 'third' | 'forth' | 'default' | string
+  color?: 'primary' | 'secondary' | 'default' | string
   weight?: 'normal' | 'bold'
   text: string
   disabled?: boolean
