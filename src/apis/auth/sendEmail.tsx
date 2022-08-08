@@ -1,10 +1,10 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const sendEmail = async (data: any, needForLetter: boolean) => {
+const sendEmail = async (email: string | string[] | undefined, needForLetter: any) => {
   try {
 
     const postData = {
-      email: data.email,
+      email: email,
       needForLetter: needForLetter
     }
 

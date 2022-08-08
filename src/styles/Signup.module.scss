@@ -65,6 +65,34 @@
     max-width: 320px;
     margin: 30px auto;
   }
+
+  &__check-code {
+    margin: 30px 0 16px;
+  }
+
+  &__re-send {
+    width: 100%;
+    @include g.flex(end);
+    text-align: right;
+  }
+
+  &__send-button {
+    text-decoration: none;
+    line-height: 1.1;
+    font-size: 14px;
+    color: g.$color-primary;
+    background: transparent;
+    cursor: pointer;
+    transition: .2s;
+
+    &:hover, &:active {
+      opacity: .8;
+    }
+
+    @include g.mq-down(tablet--under) {
+      font-size: 12px;
+    }
+  }
 }
 
 // NOTE:登録完了画面

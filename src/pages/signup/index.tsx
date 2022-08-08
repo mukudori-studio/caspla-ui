@@ -28,8 +28,11 @@ const Signup: NextPage = () => {
   const isValid = !watch().email
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    sendEmail(data, needForLetter).then(res => {
-      Router.push('/signup/check-verify')
+    sendEmail(data.email, needForLetter).then(() => {
+      Router.push({
+        pathname: '/signup/verify-code',
+        query: {email: data.email, needForLetter: needForLetter}
+      })
     }).catch(() => {
       toast.error('メールの送信に失敗しました。', { autoClose: 3000, draggable: true})
     })

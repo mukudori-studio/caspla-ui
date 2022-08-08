@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import Router from 'next/router'
+import React, { useEffect, useState } from 'react'
+import Router, { useRouter } from 'next/router'
 import { useForm, SubmitHandler } from "react-hook-form"
-import Link from 'next/link'
 import type { NextPage } from 'next'
 import { toast } from 'react-toastify'
+import sendEmail from '@/apis/auth/sendEmail'
 import checkVerify from '@/apis/auth/checkVerify'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import Input from '@/components/molecules/Forms/Input'
-import Checkbox from '@/components/atoms/Forms/Checkbox'
 import PageTitle from '@/components/atoms/PageTitle'
 import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
@@ -19,12 +18,12 @@ type InputProps = {
   code: string
 };
 
-const CheckVerify: NextPage = () => {
+const VerifyCode: NextPage = () => {
 
-  const [needForLetter, setneedForLetter] = useState(true)
+  const router = useRouter()
+  const { email, needForLetter } = router.query
+
   const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
-
-  const onCheckLetter = (e:any) => setneedForLetter(e.target.checked)
 
   const isValid = !watch().code
 
@@ -39,6 +38,14 @@ const CheckVerify: NextPage = () => {
     })
   }
 
+  const reSendCode = () => {
+    sendEmail(email, needForLetter).then(res => {
+      toast.success('確認コードを送信しました。', { autoClose: 3000, draggable: true})
+    }).catch(() => {
+      toast.error('メールの送信に失敗しました。', { autoClose: 3000, draggable: true})
+    })
+  }
+
   return (
     <main className={styles['p-sign-up']}>
       <Meta title="確認コードの入力" />
@@ -50,11 +57,13 @@ const CheckVerify: NextPage = () => {
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-up__form']}>
               <FormLabel text="確認コード" label="code" required={true} />
               <Input id="code" register={register} required={true} error={errors?.code?.message} type="text" />
-              <Button text="確認コードを送信" color="primary" size="large" type="submit" disabled={isValid} />
-              <Link href="/password-reset/reissue">
-                <a className={styles['p-sign-in__link']}>確認コードの再送信</a>
-              </Link>
+              <div className={styles['p-sign-up__check-code']}>
+                <Button text="確認コードを送信" color="primary" size="large" type="submit" disabled={isValid} />
+              </div>
             </form>
+            <div className={styles['p-sign-up__re-send']}>
+              <button className={styles['p-sign-up__send-button']} onClick={reSendCode}>確認コードの再送信</button>
+            </div>
           </>
         </Card>
       </section>
@@ -62,4 +71,4 @@ const CheckVerify: NextPage = () => {
   )
 }
 
-export default CheckVerify
+export default VerifyCode
