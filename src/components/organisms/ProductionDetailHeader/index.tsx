@@ -6,7 +6,7 @@ import SnsLinksArea from '@/components/organisms/SnsLinksArea'
 import styles from '@/styles/components/organisms/ProductionDetailHeader.module.scss'
 
 type ProductionDetailHeaderProps = {
-  thumbnail?: string
+  thumbnailImage?: string
   name: string
   productionId?: string
   siteUrl?: string
@@ -19,7 +19,7 @@ type ProductionDetailHeaderProps = {
 }
 
 const ProductionDetailHeader = ({
-  thumbnail = '',
+  thumbnailImage = '',
   name,
   productionId = '',
   siteUrl = '',
@@ -35,9 +35,9 @@ const ProductionDetailHeader = ({
   return (
     <div className={styles['o-production-detail-header']}>
       {
-        thumbnail !== '' ? (
+        thumbnailImage !== '' ? (
           <Image
-            src={thumbnail}
+            src={thumbnailImage}
             className={styles['o-production-detail-header__thumbnail']}
             objectFit="contain"
             layout="fill"

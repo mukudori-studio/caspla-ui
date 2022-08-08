@@ -11,7 +11,7 @@ export const sessionState = atom({
     role: '',
     casplaId: '',
     fullName: '',
-    thumbnailImage: {},
+    thumbnailImage: '',
     productionId: '',
     productionName: '',
     productionAdmin: ''

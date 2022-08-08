@@ -37,6 +37,7 @@ const TalentDetail: NextPage = (props) => {
       <main className={styles['p-talent-detail']}>
         <TalentDetailHeader
           name={talentDetailState?.fullName}
+          thumbnailImage={talentDetailState?.thumbnailImage}
           activity={talentDetailState?.activities}
           agencyId={talentDetailState?.productionId}
           agencyName={talentDetailState?.agencyName}
