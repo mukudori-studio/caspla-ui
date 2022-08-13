@@ -21,6 +21,8 @@
     object-fit: cover;
     border-radius: 100%;
     background: #B2E1E5;
+    position: relative;
+    overflow: hidden;
 
     @include g.mq-down(tablet--under) {
       width: 76px;

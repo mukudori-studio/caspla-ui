@@ -46,6 +46,8 @@
     background: #CFD2D7;
     border-radius: 100%;
     grid-area: thumbnail;
+    position: relative;
+    overflow: hidden;
 
     @include g.mq-down(tablet--under) {
       width: 60px;

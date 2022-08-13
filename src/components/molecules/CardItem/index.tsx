@@ -8,7 +8,7 @@ import styles from '@/styles/components/molecules/CardItem.module.scss'
 
 interface CardItemProps {
   type?: 'cast' | 'agient';
-  thumbnail?: string;
+  thumbnail?: any;
   id?: string | number;
   name: string;
   casplaId?: string;
@@ -47,8 +47,6 @@ const CardItem = ({
     console.log(flag)
   })
 
-  // NOTE：テキストフォーマット
-
   return (
     <button type="button" onClick={toDetail} className={styles['m-card-item']}>
       <div className={styles['m-card-item__content']}>
@@ -56,12 +54,13 @@ const CardItem = ({
           !thumbnail && thumbnail === '' ? (
             <div className={styles['m-card-item__thumbnail']}></div>
           ) : (
-            <Image
-              src={thumbnail}
-              className={styles['m-card-item__thumbnail']}
-              objectFit="contain"
-              layout="fill"
-            />
+            <div className={styles['m-card-item__thumbnail']}>
+              <Image
+                src={thumbnail}
+                objectFit="contain"
+                layout="fill"
+              />
+            </div>
           )
         }
         <div className={styles['m-card-item__head']}>

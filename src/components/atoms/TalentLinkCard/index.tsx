@@ -18,12 +18,13 @@ const TalentLinkCard = ({
     <a href={`/talents/${casplaId}`} className={styles['a-talent-link-card']}>
       {
         thumbnail !== '' ? (
-          <Image
-            src={thumbnail}
-            className={styles['a-talent-link-card__thumbnail']}
-            objectFit="contain"
-            layout="fill"
-          />
+          <div className={styles['a-talent-link-card__thumbnail']}>
+            <Image
+              src={thumbnail}
+              objectFit="contain"
+              layout="fill"
+            />
+          </div>
         ) : (
           <div className={[styles['a-talent-link-card__thumbnail'], styles['a-talent-link-card__thumbnail--empty']].join(' ')}>
             <FontAwesomeIcon icon={faUser} className={styles['a-talent-link-card__image-icon']} />

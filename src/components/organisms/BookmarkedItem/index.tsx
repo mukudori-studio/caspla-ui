@@ -29,7 +29,6 @@ const BookmarkedItem = (({
               <div className={styles['o-book-marked-item__image']}>
                 <Image
                   src={thumbnailImage}
-                  className={styles['o-book-marked-item__thumbnail']}
                   objectFit="contain"
                   layout="fill"
                 />

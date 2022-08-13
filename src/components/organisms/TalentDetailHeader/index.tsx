@@ -60,12 +60,13 @@ const TalentDetailHeader = ({
     <div className={styles['o-talent-detail-header']}>
       {
         coverImage !== '' ? (
-          <Image
-            src={coverImage}
-            className={styles['o-talent-detail-header__image']}
-            objectFit="contain"
-            layout="fill"
-          />
+          <div className={styles['o-talent-detail-header__image']}>
+            <Image
+              src={coverImage}
+              objectFit="contain"
+              layout="fill"
+            />
+          </div>
         ) : (
           <div className={[styles['o-talent-detail-header__image'], styles['o-talent-detail-header__image--empty']].join(' ')}>
             <FontAwesomeIcon icon={faImages} className={styles['o-talent-detail-header__image-icon']} />
@@ -76,12 +77,13 @@ const TalentDetailHeader = ({
         <div className={styles['o-talent-detail-header__top']}>
           {
             thumbnailImage !== '' ? (
-              <Image
-                src={thumbnailImage}
-                className={styles['o-talent-detail-header__thumbnail']}
-                objectFit="contain"
-                layout="fill"
-              />
+              <div className={styles['o-talent-detail-header__thumbnail']}>
+                <Image
+                  src={thumbnailImage}
+                  objectFit="contain"
+                  layout="fill"
+                />
+              </div>
             ) : (
               <div className={[styles['o-talent-detail-header__thumbnail'], styles['o-talent-detail-header__thumbnail--empty']].join(' ')}>
                 <FontAwesomeIcon icon={faUser} className={styles['o-talent-detail-header__image-icon']} />

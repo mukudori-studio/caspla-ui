@@ -30,6 +30,9 @@ const nextConfig = {
       }
     ]
   },
+  images: {
+    domains: ['caspla-files.s3.ap-northeast-1.amazonaws.com', 'caspla-demo.s3.ap-northeast-1.amazonaws.com']
+  }
 };
 
 module.exports = nextConfig;

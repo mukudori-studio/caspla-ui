@@ -36,12 +36,13 @@ const ProductionDetailHeader = ({
     <div className={styles['o-production-detail-header']}>
       {
         thumbnailImage !== '' ? (
-          <Image
-            src={thumbnailImage}
-            className={styles['o-production-detail-header__thumbnail']}
-            objectFit="contain"
-            layout="fill"
-          />
+          <div className={styles['o-production-detail-header__thumbnail']}>
+            <Image
+              src={thumbnailImage}
+              objectFit="contain"
+              layout="fill"
+            />
+          </div>
         ) : (
           <div className={[styles['o-production-detail-header__thumbnail'], styles['o-production-detail-header__thumbnail--empty']].join(' ')}>
             <FontAwesomeIcon icon={faImages} className={styles['o-production-detail-header__image-icon']} />

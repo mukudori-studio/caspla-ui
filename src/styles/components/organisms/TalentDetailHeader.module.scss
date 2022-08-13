@@ -5,6 +5,8 @@
     width: 100vw;
     height: 450px;
     object-fit: cover;
+    position: relative;
+    overflow: hidden;
 
     &--empty {
       @include g.flex(center);
@@ -59,6 +61,7 @@
     height: 228px;
     object-fit: cover;
     border-radius: 100%;
+    position: relative;
     overflow: hidden;
 
     @include g.mq-down(tablet--under) {

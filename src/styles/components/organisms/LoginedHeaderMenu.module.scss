@@ -82,6 +82,8 @@
     grid-area: thumbnail;
     object-fit: cover;
     background: #CFD2D7;
+    position: relative;
+    overflow: hidden;
 
     @include g.mq-down(tablet--under) {
       width: 42px;
