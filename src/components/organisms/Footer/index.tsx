@@ -45,21 +45,21 @@ const Footer = () => {
             <p className={styles['o-footer__copy']}>© {thisYear} Caspla</p>
           </div>
           <ul className={styles['o-footer__socials']}>
-            <li>
+            {/* <li>
               <a className={styles['o-footer__social']} href="" target="_blank">
                 <FontAwesomeIcon icon={faFacebookSquare} className={styles['o-footer__icon']} />
               </a>
-            </li>
+            </li> */}
             <li>
               <a className={styles['o-footer__social']} href="" target="_blank">
                 <FontAwesomeIcon icon={faTwitter} className={styles['o-footer__icon']} />
               </a>
             </li>
-            <li>
+            {/* <li>
               <a className={styles['o-footer__social']} href="" target="_blank">
                 <FontAwesomeIcon icon={faInstagram} className={styles['o-footer__icon']} />
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
