@@ -28,8 +28,6 @@ const TalentDetail: NextPage = (props) => {
     })
   }, [casplaId])
 
-  const text= 'saaaa'
-
   return (
     <div className={styles.container}>
       <Meta title="タレント詳細" />
@@ -37,6 +35,7 @@ const TalentDetail: NextPage = (props) => {
       <main className={styles['p-talent-detail']}>
         <TalentDetailHeader
           name={talentDetailState?.fullName}
+          coverImage={talentDetailState?.coverImage}
           thumbnailImage={talentDetailState?.thumbnailImage}
           activity={talentDetailState?.activities}
           agencyId={talentDetailState?.productionId}
@@ -52,7 +51,9 @@ const TalentDetail: NextPage = (props) => {
         />
         <div className={styles['p-talent-detail__content']}>
           <div className={styles['p-talent-detail__description']}>
-            <DescriptionContent text={text} />
+            {
+              talentDetailState?.profile !== '' && <DescriptionContent text={talentDetailState?.profile} />
+            }
           </div>
           <TalentProfile
             gender={talentDetailState?.gender}

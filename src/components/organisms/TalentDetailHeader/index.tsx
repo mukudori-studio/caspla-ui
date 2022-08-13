@@ -35,7 +35,6 @@ const TalentDetailHeader = ({
   agencyId = '',
   agencyName = '',
   casplaId = '',
-  isTalent = false,
   withBookmark = false,
   siteUrl = '',
   blogUrl = '',

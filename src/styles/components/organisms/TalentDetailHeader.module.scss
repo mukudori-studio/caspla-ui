@@ -12,6 +12,10 @@
       @include g.flex(center);
       background: g.$color-mono-5;
     }
+
+    @include g.mq-down(tablet--under) {
+      height: 50.13vw;
+    }
   }
 
   &__image-icon {
