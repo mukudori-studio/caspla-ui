@@ -3,6 +3,8 @@ import Router from 'next/router'
 import { useForm, SubmitHandler } from "react-hook-form"
 import { toast } from 'react-toastify'
 import searchZipCode from '@/apis/searchZipCode'
+import checkCorpId from '@/apis/auth/checkCorpId'
+import checkProductionId from '@/apis/auth/checkProductionId'
 import Button from '@/components/atoms/Button'
 import Input from '@/components/molecules/Forms/Input'
 import LinkInput from '@/components/molecules/Forms/LinkInput'
@@ -18,6 +20,7 @@ import styles from '@/styles/AccountRegistration.module.scss'
 type InputProps = {
   companyImage?: object
   companyName: string | undefined
+  corpId: string
   zipCode: string
   prefecture: string | undefined
   address1: string | undefined
@@ -37,11 +40,13 @@ type InputProps = {
 }
 
 type registrationPorps = {
+  userType?: 'production' | 'corp'
   editType?: 'register' | 'edit'
   companyImage?: object
   companyName?: string
+  corpId?: string
   zipCode: string
-  prefecture?: string
+  prefecture: string
   address1?: string
   address2?: string
   tel?: string
@@ -60,13 +65,15 @@ type registrationPorps = {
 }
 
 const Signup = ({
+  userType = 'production',
   editType = 'register',
   submitForm,
   ...props
 }: registrationPorps) => {
 
-  const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<InputProps>()
+  const { register, handleSubmit, formState: { errors }, watch, setValue, getValues } = useForm<InputProps>()
   const [searchingState, setSearching] = useState(false)
+  const [checkedIdState, setCheckId] = useState(false)
   const [prefectureState, setPrefecture] = useState<any>('北海道')
 
   const changePrefecture = (e:any) => setValue('prefecture', e.target.value)
@@ -77,24 +84,25 @@ const Signup = ({
 
   useEffect(() => {
     if (editType === 'register') return
-      setValue('companyImage', props.companyImage)
-      setValue('companyName', props?.companyName)
-      setValue('zipCode', props.zipCode)
-      setValue('prefecture', props.prefecture)
-      setPrefecture(props.prefecture)
-      setValue('address1', props.address1)
-      setValue('address2', props.address2)
-      setValue('tel', props.tel)
-      setValue('profile', props.profile)
-      setValue('siteUrl', props.siteUrl)
-      setValue('blogUrl', props.blogUrl)
-      setValue('twitterId', props.twitterId)
-      setValue('facebookId', props.facebookId)
-      setValue('youtubeId', props.youtubeId)
-      setValue('instagramId', props.blogUrl)
-      setValue('tiktokId', props.tiktokId)
-      setValue('history', props.history)
-      setValue('note', props.note)
+    setValue('companyImage', props.companyImage)
+    setValue('companyName', props?.companyName)
+    setValue('zipCode', props?.zipCode)
+    setValue('prefecture', props.prefecture)
+    setPrefecture(props.prefecture)
+    setValue('address1', props.address1)
+    setValue('address2', props.address2)
+    setValue('tel', props.tel)
+    setValue('profile', props.profile)
+    setValue('siteUrl', props.siteUrl)
+    setValue('blogUrl', props.blogUrl)
+    setValue('twitterId', props.twitterId)
+    setValue('facebookId', props.facebookId)
+    setValue('youtubeId', props.youtubeId)
+    setValue('instagramId', props.blogUrl)
+    setValue('tiktokId', props.tiktokId)
+    setValue('history', props.history)
+    setValue('note', props.note)
+    setCheckId(true)
   }, [])
 
   const onSearchZipCode = async () => {
@@ -116,15 +124,26 @@ const Signup = ({
     }).finally(() => {
       setSearching(false)
     })
-    try {
-      
-    } catch(err) {
-      console.log(err)
-    }
   }
 
   const changeLogo = (val: object) => setValue('companyImage', val)
 
+  const onCheckId = () => {
+    if (userType === 'production') {
+      checkProductionId(getValues('corpId')).then(() => {
+        setCheckId(true)
+      }).catch(() => {
+        setCheckId(false)
+      })
+    } else {
+      checkCorpId(getValues('corpId')).then(() => {
+        setCheckId(true)
+      }).catch(() => {
+        setCheckId(false)
+      })
+    }
+  }
+  
   const onSubmit: SubmitHandler<InputProps> = (data) => submitForm(data)
 
   // NOTE：template部分はaccount-registrationと同じになるためCSSのClassとしては共通で使いまわし
@@ -141,10 +160,21 @@ const Signup = ({
           {editType === 'edit' && <FormNote text={'※会社名を変更したい場合はお問い合わせください。'} />}
         </div>
         <div className={styles['p-account-registration__item']}>
+          <FormLabel text={userType === 'production' ? 'プロダクションID' : '企業ID'} label="corpId" required={true} />
+          <div className={styles['p-account-registration__ids']}>
+            <div className={styles['p-account-registration__id-input']}>
+              <Input id="corpId" register={register} required={true} error={errors?.corpId?.message} note="※半角英数字で入力" />
+            </div>
+            <div className={styles['p-account-registration__id-button']}>
+              <Button text="IDをチェック" color="primary" size="small" onClick={onCheckId} disabled={watch('corpId') === ''} />
+            </div>
+          </div>
+        </div>
+        <div className={styles['p-account-registration__item']}>
           <FormLabel text="郵便番号" label="zipCode" required={true} />
           <div className={styles['p-account-registration__zips']}>
             <div className={styles['p-account-registration__zip-input']}>
-              <Input id="zipCode" register={register} required={true} error={errors?.zipCode?.message} max={8} note="※ハイフンなしで入力してください。" />
+              <Input id="zipCode" register={register} required={true} error={errors?.zipCode?.message} max={8} note="※ハイフンなしで入力" />
             </div>
             <div className={styles['p-account-registration__zip-search']}>
               <Button text="郵便番号検索" color="primary" size="small" onClick={onSearchZipCode} disabled={!searchingState && watch('zipCode') === ''} />
@@ -165,7 +195,7 @@ const Signup = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="電話番号" label="tel" required={true} />
-          <Input id="tel" register={register} required={true} type="tel" error={errors?.tel?.message} note="-(ハイフン)なしで入力してください。" />
+          <Input id="tel" register={register} required={true} type="tel" error={errors?.tel?.message} note="-(ハイフン)なしで入力" />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="関連URL(Webサイト、SNS)" label="birthplace" />
@@ -182,7 +212,7 @@ const Signup = ({
           <Textarea id="profile" register={register} error={errors?.profile?.message} />
         </div>
         <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
-          <Button text={editType === 'register' ? 'この内容で登録する' : '変更を保存'} color="primary" size="large" type="submit" />
+          <Button text={editType === 'register' ? 'この内容で登録する' : '変更を保存'} color="primary" size="large" type="submit" disabled={!checkedIdState} />
         </div>
       </form>
       {editType !== 'edit' && <div className={styles['p-account-registration__button']}><Button text="前の画面に戻る" color="default" size="large" onClick={() => Router.back()}/></div>}

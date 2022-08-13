@@ -124,8 +124,7 @@ const AccountRegistration: NextPage = () => {
           <section className={styles['p-account-registration__section']}>
             <PageTitle title="アカウント情報入力" />
             <div className={styles['p-account-registration__item']}>
-                TODO：サムネイルの仕様固まったらサムネイルコンポーネント追加
-                <ThumbnailUploader id="thumbnail" onChange={changeThumbnail} />
+              <ThumbnailUploader id="thumbnail" onChange={changeThumbnail} />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="名前" label="fullName" required={true} />

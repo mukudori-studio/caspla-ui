@@ -141,4 +141,26 @@
       width: 120px;
     }
   }
+
+  &__ids {
+    @include g.flex(between, start);
+    gap: 10px;
+  }
+
+  &__id-input {
+    width: calc(100% - 146px);
+
+    @include g.mq-down(tablet--under) {
+      width: calc(100% - 120px);
+    }
+  }
+
+  &__id-button {
+    width: 146px;
+    margin-top: 10px;
+
+    @include g.mq-down(tablet--under) {
+      width: 120px;
+    }
+  }
 }
