@@ -23,6 +23,10 @@
     @include g.mq-down(tablet--under) {
       height: 50.13vw;
     }
+
+    img {
+      object-fit: cover!important;
+    }
   }
 
   &__image-icon {
