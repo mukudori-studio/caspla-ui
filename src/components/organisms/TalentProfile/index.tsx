@@ -44,52 +44,98 @@ const TalentProfile = ({
 }: TalentProfileProps) => {
 
   const formattedGender = (type: string) => {
-    if (type === 'man') return '男性'
-    else if(type === 'woman') return '女性'
-    else return '未入力'
+    if (type === 'man' || type === '男性') return '男性'
+    else if(type === 'woman' || type === '女性') return '女性'
   }
 
   const filteredStarSign = (star: string) => {
-    if (star === '' || star === undefined) {
-      return '未入力'
-    } else {
-      const filteredStar = starSigns.find(data => data.value === star)
-      return filteredStar?.value
-    }
+    console.log(star)
+    const filteredStar = starSigns.find(data => data.value === star)
+    return filteredStar?.value
   }
 
   return (
     <div className={styles['o-talent-profile']}>
       <dl className={styles['o-talent-profile__items']}>
-        <dt className={styles['o-talent-profile__label']}>性別</dt>
-        <dd className={styles['o-talent-profile__text']}>{formattedGender(gender)}</dd>
-        <dt className={styles['o-talent-profile__label']}>生年月日</dt>
-        <dd className={styles['o-talent-profile__text']}>
-          {
-            !birthYear && !birthMonth && !birthDay ? '未入力' :
-            `${birthYear && `${birthYear}年`}${birthMonth && `${birthMonth}月`}${birthDay && `${birthDay}日`}`
-          }
-        </dd>
-        <dt className={styles['o-talent-profile__label']}>年齢</dt>
-        <dd className={styles['o-talent-profile__text']}>{!age ? '未入力' : `${age}歳`}</dd>
-        <dt className={styles['o-talent-profile__label']}>星座</dt>
-        <dd className={styles['o-talent-profile__text']}>{filteredStarSign(starSign)}</dd>
-        <dt className={styles['o-talent-profile__label']}>出身地</dt>
-        <dd className={styles['o-talent-profile__text']}>{birthplace === '' ? '未入力' : birthplace}</dd>
-        <dt className={styles['o-talent-profile__label']}>血液型</dt>
-        <dd className={styles['o-talent-profile__text']}>{bloodType === '' ? '未入力' : `${bloodType}型`}</dd>
-        <dt className={styles['o-talent-profile__label']}>身長</dt>
-        <dd className={styles['o-talent-profile__text']}>{!height ? '未入力' : `${height}cm`}</dd>
-        <dt className={styles['o-talent-profile__label']}>体重</dt>
-        <dd className={styles['o-talent-profile__text']}>{!weight ? '未入力' : `${weight}kg`}</dd>
-        <dt className={styles['o-talent-profile__label']}>サイズ</dt>
-        <dd className={styles['o-talent-profile__text']}>
-          {(!bust && !waist && !hip && !footSize) && '未入力'}
-          {bust && `B${bust}・`}{waist && `W${waist}`}{hip && `・H${hip}`}{footSize && `(F${footSize})`}
-        </dd>
+        {
+          gender !== '' && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>性別</dt>
+              <dd className={styles['o-talent-profile__text']}>{formattedGender(gender)}</dd>
+            </>
+          )
+        }
+        {
+          birthYear || birthMonth || birthDay && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>生年月日</dt>
+              <dd className={styles['o-talent-profile__text']}>
+                {`${birthYear && `${birthYear}年`}${birthMonth && `${birthMonth}月`}${birthDay && `${birthDay}日`}`}
+              </dd>
+            </>
+          )
+        }
+        {
+          age && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>年齢</dt>
+              <dd className={styles['o-talent-profile__text']}>{`${age}歳`}</dd>
+            </>
+          )
+        }
+        {
+          starSign !== '' && starSign !== undefined && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>星座</dt>
+              <dd className={styles['o-talent-profile__text']}>{filteredStarSign(starSign)}</dd>
+            </>
+          )
+        }
+        {
+          birthplace !== '' && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>出身地</dt>
+              <dd className={styles['o-talent-profile__text']}>{birthplace}</dd>
+            </>
+          )
+        }
+        {
+          bloodType !== '' && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>血液型</dt>
+              <dd className={styles['o-talent-profile__text']}>{`${bloodType}型`}</dd>
+            </>
+          )
+        }
+        {
+          height && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>身長</dt>
+              <dd className={styles['o-talent-profile__text']}>{`${height}cm`}</dd>
+            </>
+          )
+        }
+        {
+          weight && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>体重</dt>
+              <dd className={styles['o-talent-profile__text']}>{`${weight}kg`}</dd>
+            </>
+          )
+        }
+        {
+          (bust || waist || hip || footSize) && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>サイズ</dt>
+              <dd className={styles['o-talent-profile__text']}>
+                {bust && `B${bust}・`}{waist && `W${waist}`}{hip && `・H${hip}`}{footSize && `(F${footSize})`}
+              </dd>
+            </>   
+          )
+        }
       </dl>
-      <p className={styles['o-talent-profile__description']}>出演履歴：{history === '' ? '未入力' : history}</p>
-      <p className={styles['o-talent-profile__description']}>備考：{note === '' ? '未入力' : note}</p>
+      {history !== '' && <p className={styles['o-talent-profile__description']}>出演履歴：{history}</p>}
+      {note !== '' && <p className={styles['o-talent-profile__description']}>備考：{note}</p>}
     </div>
   )
 }
