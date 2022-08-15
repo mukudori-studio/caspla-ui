@@ -26,7 +26,7 @@ type InputProps = {
   birthYear?: string
   birthMonth?: string
   birthDay?: string
-  starSign?: string
+  constellation?: string
   bloodType?: string
   birthplace?: string
   height?: string
@@ -58,7 +58,7 @@ type editPorps = {
   birthYear?: string
   birthMonth?: string
   birthDay?: string
-  starSign?: string
+  constellation?: string
   bloodType?: string
   birthplace?: string
   height?: string
@@ -108,7 +108,7 @@ const TalentFormTemplate = ({
     setValue('thumbnailImage', props.thumbnailImage)
     setValue('profile', props.profile)
     setValue('gender', props.gender)
-    setValue('starSign', props.starSign)
+    setValue('constellation', props.constellation)
     setValue('bloodType', props.bloodType)
     setValue('birthplace', props.birthplace)
     setValue('height', props.height)
@@ -136,7 +136,7 @@ const TalentFormTemplate = ({
     setValue('birthDay', day)
   }
   const changeGender = (e:any) => setValue('gender', e.target.value)
-  const changeStarSign = (e:any) => setValue('starSign', e.target.value)
+  const changeStarSign = (e:any) => setValue('constellation', e.target.value)
   const changeBloodType = (e:any) => setValue('bloodType', e.target.value)
   const checkActivity = (data: Array<string>) => {
     setActivity(data)
@@ -200,11 +200,11 @@ const TalentFormTemplate = ({
           <DateSelect onChange={changeBirthday}  />
         </div>
         <div className={styles['p-account-registration__item']}>
-          <FormLabel text="星座" label="starSign" />
+          <FormLabel text="星座" label="constellation" />
           <Select options={starSigns} onChange={changeStarSign} />
         </div>
         <div className={styles['p-account-registration__item']}>
-          <FormLabel text="血液型" label="starSign" />
+          <FormLabel text="血液型" label="bloodType" />
           <Select options={bloodTypes} onChange={changeBloodType} />
         </div>
         <div className={styles['p-account-registration__item']}>

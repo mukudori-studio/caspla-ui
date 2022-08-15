@@ -62,7 +62,7 @@ const TalentDetail: NextPage = (props) => {
             birthMonth={talentDetailState?.birthMonth}
             birthDay={talentDetailState?.birthDay}
             age={talentDetailState?.age}
-            starSign={talentDetailState?.starSign}
+            starSign={talentDetailState?.constellation}
             birthplace={talentDetailState?.birthplace}
             bloodType={talentDetailState?.bloodType}
             height={talentDetailState?.height}
