@@ -14,7 +14,6 @@ const fanRegistration = async (data: any, thumbnail: string, role: string) => {
 
     const res = await axiosClient.post('/api/v1/auth/create_fan_user', postData)
     return res
-    return
   } catch(err) {
     throw err
   }

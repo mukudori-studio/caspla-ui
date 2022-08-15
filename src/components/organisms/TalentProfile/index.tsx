@@ -49,7 +49,6 @@ const TalentProfile = ({
   }
 
   const filteredStarSign = (star: string) => {
-    console.log(star)
     const filteredStar = starSigns.find(data => data.value === star)
     return filteredStar?.value
   }
@@ -66,7 +65,7 @@ const TalentProfile = ({
           )
         }
         {
-          birthYear || birthMonth || birthDay && (
+          (birthYear || birthMonth || birthDay) && (
             <>
               <dt className={styles['o-talent-profile__label']}>生年月日</dt>
               <dd className={styles['o-talent-profile__text']}>
