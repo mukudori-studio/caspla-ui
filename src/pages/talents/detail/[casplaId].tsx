@@ -31,7 +31,7 @@ const TalentDetail: NextPage = (props) => {
 
   return (
     <div className={styles.container}>
-      <Meta title="タレント詳細" />
+      <Meta title={talentDetailState?.fullName} />
 
       <main className={styles['p-talent-detail']}>
         <TalentDetailHeader
