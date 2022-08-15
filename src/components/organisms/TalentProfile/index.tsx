@@ -53,6 +53,8 @@ const TalentProfile = ({
     return filteredStar?.value
   }
 
+  console.log(age > 0)
+
   return (
     <div className={styles['o-talent-profile']}>
       <dl className={styles['o-talent-profile__items']}>
@@ -75,12 +77,12 @@ const TalentProfile = ({
           )
         }
         {
-          age && (
+          (age !== null) ? (
             <>
               <dt className={styles['o-talent-profile__label']}>年齢</dt>
-              <dd className={styles['o-talent-profile__text']}>{`${age}歳`}</dd>
+              <dd className={styles['o-talent-profile__text']}>{`${Number(age)}歳`}</dd>
             </>
-          )
+          ) : (<></>)
         }
         {
           starSign !== '' && starSign !== undefined && (
