@@ -103,15 +103,7 @@ const TalentDetailHeader = ({
           <h2 className={styles['o-talent-detail-header__caspla-id']}>{casplaId}</h2>
           { (agencyId !== '' && agencyName !== '') && <a href={'/production-detail/${agencyId}'} className={styles['o-talent-detail-header__production-link']}>{agencyName}</a> }
           {
-            (
-              (siteUrl !== '' && siteUrl !== null) ||
-              (blogUrl !== '' || blogUrl !== null) ||
-              (facebook !== '' || facebook !== null) ||
-              (twitter !== '' || twitter !== null) ||
-              (instagram !== '' || instagram !== null) ||
-              (youtube !== '' || youtube !== null) ||
-              (tiktok !== '' || tiktok !== null)
-            ) && <SnsLinksArea siteUrl={siteUrl} blogUrl={blogUrl} facebook={facebook} twitter={twitter} instagram={instagram} youtube={youtube} tiktok={tiktok}
+            (siteUrl !== '' || blogUrl !== '' || facebook !== '' || twitter !== '' || instagram !== '' || youtube !== '' || tiktok !== '') && <SnsLinksArea siteUrl={siteUrl} blogUrl={blogUrl} facebook={facebook} twitter={twitter} instagram={instagram} youtube={youtube} tiktok={tiktok}
           />
           }
           <button onClick={copyUrl} className={styles['o-talent-detail-header__copy']}>

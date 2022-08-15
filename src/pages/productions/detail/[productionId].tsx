@@ -39,11 +39,11 @@ const productionDetail: NextPage = () => {
           productionId={productionDetailState.productionId}
           siteUrl={productionDetailState.links?.siteUrl}
           blogUrl={productionDetailState.links?.blogUrl}
-          facebook={productionDetailState.links?.facebook}
-          twitter={productionDetailState.links?.twitter}
-          instagram={productionDetailState.links?.instagram}
-          tiktok={productionDetailState.links?.tiktok}
-          youtube={productionDetailState.links?.youtube}
+          facebook={productionDetailState.links?.facebookId}
+          twitter={productionDetailState.links?.twitterId}
+          instagram={productionDetailState.links?.instagramId}
+          tiktok={productionDetailState.links?.tiktokId}
+          youtube={productionDetailState.links?.youtubeId}
         /> */}
         <div className={styles['p-production-detail__description']}>
           {/* <DescriptionContent text={text} /> */}

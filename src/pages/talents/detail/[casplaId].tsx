@@ -22,6 +22,7 @@ const TalentDetail: NextPage = (props) => {
     
     getTalentDetail(casplaId).then(res => {
       setTalentDetail(res.response_message.castDetails)
+      console.log(talentDetailState)
     }).catch(err => {
       Router.push('/talents/1')
       toast.error('タレント情報の取得に失敗しました。', { autoClose: 3000, draggable: true})
@@ -43,11 +44,11 @@ const TalentDetail: NextPage = (props) => {
           casplaId={talentDetailState?.casplaId}
           siteUrl={talentDetailState?.links?.siteUrl}
           blogUrl={talentDetailState?.links?.blogUrl}
-          facebook={talentDetailState?.links?.facebookLink}
-          twitter={talentDetailState?.links?.twitterLink}
-          instagram={talentDetailState?.links?.instagramLink}
-          tiktok={talentDetailState?.links?.tiktokLink}
-          youtube={talentDetailState?.links?.youtubeLink}
+          facebook={talentDetailState?.links?.facebookId}
+          twitter={talentDetailState?.links?.twitterId}
+          instagram={talentDetailState?.links?.instagramId}
+          tiktok={talentDetailState?.links?.tiktokId}
+          youtube={talentDetailState?.links?.youtubeId}
         />
         <div className={styles['p-talent-detail__content']}>
           <div className={styles['p-talent-detail__description']}>

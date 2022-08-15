@@ -12,17 +12,9 @@ import styles from '@/styles/Talent.module.scss'
 import dynamic from 'next/dynamic'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const {data} = await getTalents({
-    pageId: context.query.page,
-    keyword: context.query.keyword,
-    activity: context.query.activity,
-    age: context.query.age,
-    gender: context.query.gender
-  })
   return {
     props: {
       query: context.query,
-      data: await data
     }
   }
 }
@@ -41,10 +33,19 @@ const Talents: NextPage = (props:any) => {
   const { page } = router.query
 
   useEffect(() => {
-    setTalents(props.data.response_message.casts)
-    setPage(props.data.response_message.page + 1)
-    setTotalCount(Math.ceil(props.data.response_message.totalCount /50))
-    setLoading(false)
+    getTalents({
+      pageId: props.query.page,
+      keyword: props.query.keyword,
+      activity: props.query.activity,
+      age: props.query.age,
+      gender: props.query.gender
+    })
+    .then(res => {
+      setTalents(res.data.response_message.casts)
+      setPage(res.data.response_message.page + 1)
+      setTotalCount(Math.ceil(res.data.response_message.totalCount /50))
+      setLoading(false)
+    })
   }, [])
 
   const onSearch = async (value:any) => {
