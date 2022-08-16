@@ -31,7 +31,9 @@ const VerifyCode: NextPage = () => {
     checkVerify(data.code).then(res => {
       Router.push({
         pathname: '/signup/account-registration',
-        query: data
+        query: {
+          email: res.response_message.email
+        }
       })
     }).catch(() => {
       toast.error('確認コードの確認に失敗しました。', { autoClose: 3000, draggable: true})

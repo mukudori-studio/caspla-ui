@@ -5,6 +5,7 @@ import type { NextPage } from 'next'
 import { toast } from 'react-toastify'
 import { useRecoilValue } from 'recoil'
 import { registrationState } from '@/stores/Registration'
+import companyRegistration from '@/apis/auth/companyRegistration'
 import Meta from '@/components/Meta'
 import PageTitle from '@/components/atoms/PageTitle'
 import CompanyFormTemplate from '@/components/templates/CompanyFormTemplate'
@@ -21,7 +22,13 @@ const Signup: NextPage = () => {
   }, [])
 
   const onSubmit = (data: object) => {
-    console.log(data)
+    companyRegistration(registration, data)
+    .then(() => {
+      Router.push('/signup/complete')
+    })
+    .catch(err => {
+      toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
+    })
   }
 
   return (

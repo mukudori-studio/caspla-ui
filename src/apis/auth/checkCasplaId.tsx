@@ -4,7 +4,7 @@ const checkCasplaId = async (casplaId: string) => {
   try {
     const res = await axiosClient.get(`/api/v1/auth/check_caspla_id`, {
       params: {
-        username: casplaId
+        caspla_id: casplaId
       }
     })
     return res

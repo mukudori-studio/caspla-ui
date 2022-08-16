@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import { useForm, SubmitHandler } from "react-hook-form"
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { registrationState } from '@/stores/Registration'
 import { toast } from 'react-toastify'
@@ -23,14 +23,22 @@ type InputProps = {
   thumbail?: object
   fullName: string
   furigana?: string
-  email: string
+  email: string | string[] | undefined
   casplaId: string
   password: string
   rePassword: string
   role: string
 }
 
-const AccountRegistration: NextPage = () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {
+      query: context.query,
+    }
+  }
+}
+
+const AccountRegistration: NextPage = (props:any) => {
 
   const [roleState, setRole] = useState('fan')
   const [checledCasplaIdState, setCheckCasplaId] = useState(false)
@@ -41,11 +49,11 @@ const AccountRegistration: NextPage = () => {
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
   useEffect(() => {
+    setValue('email', props.query.email)
     if (registration.fullName !== '') {
       setValue('thumbail', {})
       setValue('fullName', registration.fullName)
       setValue('furigana', registration.furigana)
-      setValue('email', registration.email)
       setValue('casplaId', registration.casplaId)
       setValue('password', registration.password)
       setValue('rePassword', registration.password)
@@ -106,8 +114,8 @@ const AccountRegistration: NextPage = () => {
       if (roleState === 'talent') Router.push('/signup/talent-registration')
 
     } else {
-      // TODO：投げる前にthumbnailとroleをObjectに入れてから投げるようにする
-      fanRegistration(data, '', roleState).then(() => {
+      // TODO：Thumbnail別途対応
+      fanRegistration(data).then(() => {
         Router.push('/signup/complete')
       }).catch(() => {
         toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})

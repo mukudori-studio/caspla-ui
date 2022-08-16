@@ -1,6 +1,6 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const fanRegistration = async (data: any, thumbnail: string, role: string) => {
+const fanRegistration = async (data: any, thumbnail?: string) => {
   try {
 
     const postData = {

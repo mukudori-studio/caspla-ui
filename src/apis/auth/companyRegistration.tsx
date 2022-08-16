@@ -1,10 +1,10 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const companyRegistration = async (account: any, data: any, thumbnail: string) => {
+const companyRegistration = async (account: any, data: any, thumbnail?: string) => {
   try {
 
     const postData = {
-      thumbnailImage: account.thumbnailImage,
+      // thumbnailImage: account.thumbnailImage,
       furigana: account.furigana,
       fullName: account.fullName,
       email: account.email,
