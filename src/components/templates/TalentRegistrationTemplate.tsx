@@ -147,7 +147,7 @@ const TalentFormTemplate = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="性別" label="gender" />
-          <Select options={[{value: 'man', text: '男性'}, {value: 'woman', text: '女性'}]} onChange={changeGender} />
+          <Select options={[{value: '男性', text: '男性'}, {value: '女性', text: '女性'}]} onChange={changeGender} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="生年月日" label="birthday" />

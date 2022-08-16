@@ -4,6 +4,7 @@ import type { NextPage } from 'next'
 import { toast } from 'react-toastify'
 import { useRecoilValue } from 'recoil'
 import { registrationState } from '@/stores/Registration'
+import talentRegistration from '@/apis/auth/talentRegistration'
 import Meta from '@/components/Meta'
 import TalentRegistrationTemplate from '@/components/templates/TalentRegistrationTemplate'
 import Button from '@/components/atoms/Button'
@@ -15,8 +16,13 @@ const TalentRegistration: NextPage = () => {
   const registration = useRecoilValue(registrationState)
   
   const onSubmit = (data:any) => {
-    console.log(data)
-    // Router.push('/signup/complete')
+    talentRegistration(data)
+      .then(() => {
+        Router.push('/signup/complete')
+      })
+      .catch(err => {
+        toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
+      })
   }
 
   useEffect(() => {
