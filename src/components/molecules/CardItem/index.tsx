@@ -54,13 +54,14 @@ const CardItem = ({
           !thumbnail && thumbnail === '' ? (
             <div className={styles['m-card-item__thumbnail']}></div>
           ) : (
-            <div className={styles['m-card-item__thumbnail']}>
-              <Image
-                src={thumbnail}
-                objectFit="contain"
-                layout="fill"
-              />
-            </div>
+            // <div className={styles['m-card-item__thumbnail']}>
+            //   <Image
+            //     src={thumbnail}
+            //     objectFit="contain"
+            //     layout="fill"
+            //   />
+            // </div>
+            <img src="thumbnail" className={styles['m-card-item__thumbnail']} />
           )
         }
         <div className={styles['m-card-item__head']}>
