@@ -170,7 +170,7 @@ const TalentFormTemplate = ({
             <FormLabel text="身長" label="birthplace" />
             <div className={styles['p-account-registration__sizes']}>
               <div className={styles['p-account-registration__size-input']}>
-                <Input id="height" register={register} type="number" />cm
+                <Input id="height" register={register} type="number" steps="0.1" />cm
               </div>
             </div>
           </div>
@@ -178,7 +178,7 @@ const TalentFormTemplate = ({
             <FormLabel text="体重" label="birthplace" />
             <div className={styles['p-account-registration__sizes']}>
               <div className={styles['p-account-registration__size-input']}>
-                <Input id="weight" register={register} type="number" />kg
+                <Input id="weight" register={register} type="number" steps="0.1" />kg
               </div>
             </div>
           </div>
@@ -186,12 +186,12 @@ const TalentFormTemplate = ({
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="サイズ" label="birthplace" />
           <div className={styles['p-account-registration__sizes']}>
-            <div className={styles['p-account-registration__size-input']}><Input id="bust" register={register} placeholder="B(バスト)" type="number" /></div>
-            <div className={styles['p-account-registration__size-input']}><Input id="waist" register={register} placeholder="W(ウエスト)" type="number" /></div>
-            <div className={styles['p-account-registration__size-input']}><Input id="hip" register={register} placeholder="H(ヒップ)" type="number" /></div>
+            <div className={styles['p-account-registration__size-input']}><Input id="bust" register={register} placeholder="B(バスト)" type="number" steps="0.1" /></div>
+            <div className={styles['p-account-registration__size-input']}><Input id="waist" register={register} placeholder="W(ウエスト)" type="number" steps="0.1" /></div>
+            <div className={styles['p-account-registration__size-input']}><Input id="hip" register={register} placeholder="H(ヒップ)" type="number" steps="0.1" /></div>
           </div>
           <div className={styles['p-account-registration__foot']}>
-            <div className={styles['p-account-registration__foot-input']}><Input id="footSize" register={register} placeholder="F(足のサイズ)" />cm</div>
+            <div className={styles['p-account-registration__foot-input']}><Input id="footSize" register={register} placeholder="F(足のサイズ)" steps="0.1" />cm</div>
           </div>
         </div>
         {/* TODO：後で他ページでも使用するのでコンポーネントできりだせるようにする */}

@@ -9,6 +9,7 @@ type InputProps = {
   pattern?: any
   min?: number
   max?: number
+  steps?: string
   required?: boolean
   placeholder? : string
   disabled? : boolean
@@ -25,6 +26,7 @@ const Input = ({
   pattern,
   min = 0,
   max = 255,
+  steps = "1",
   disabled = false,
   error = '',
   note = '',
@@ -36,7 +38,7 @@ const Input = ({
   return (
     <div className={styles['m-input']}>
       <div className={styles['m-input__content']}>
-        <input className={inputSyle} type={type} id={id} disabled={disabled} placeholder={placeholder} {...register(id, {
+        <input className={inputSyle} type={type} id={id} disabled={disabled} placeholder={placeholder} step={steps} {...register(id, {
           required: required && '入力必須項目です。',
           minLength: { value: min, message: `${min}文字以上で入力してください。` },
           maxLength: { value: max, message: `${max}文字以内で入力してください。` },
