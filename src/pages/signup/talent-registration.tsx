@@ -2,8 +2,10 @@ import React, { useEffect } from 'react'
 import Router from 'next/router'
 import type { NextPage } from 'next'
 import { toast } from 'react-toastify'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { registrationState } from '@/stores/Registration'
+import { sessionState } from '@/stores/Session'
+import signIn from '@/apis/auth/signin'
 import talentRegistration from '@/apis/auth/talentRegistration'
 import Meta from '@/components/Meta'
 import TalentRegistrationTemplate from '@/components/templates/TalentRegistrationTemplate'
@@ -14,10 +16,25 @@ import styles from '@/styles/AccountRegistration.module.scss'
 const TalentRegistration: NextPage = () => {
 
   const registration = useRecoilValue(registrationState)
+  const [session, setSession] = useRecoilState(sessionState)
   
   const onSubmit = (data:any) => {
-    talentRegistration(data)
+    talentRegistration(registration, data)
       .then(() => {
+         // TODO：API側でログイン機能実装したら不要になる
+         signIn(data).then(res => {
+          setSession({
+            accessToken: res.data.accessToken,
+            refreshToken: res.data.refreshToken,
+            casplaId: res.data.casplaId,
+            role: res.data.role,
+            fullName: res.data.fullName,
+            thumbnailImage: res.data.thumbnailImage,
+            productionId: res.data.productionId,
+            productionName: res.data.productionName,
+            productionAdmin: res.data.productionAdmin
+          })
+        })
         Router.push('/signup/complete')
       })
       .catch(err => {

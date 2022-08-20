@@ -3,7 +3,9 @@ import Router from 'next/router'
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
 import { toast } from 'react-toastify'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useRecoilState } from 'recoil'
+import { sessionState } from '@/stores/Session'
+import signIn from '@/apis/auth/signin'
 import { registrationState } from '@/stores/Registration'
 import companyRegistration from '@/apis/auth/companyRegistration'
 import Meta from '@/components/Meta'
@@ -15,6 +17,7 @@ import styles from '@/styles/AccountRegistration.module.scss'
 const Signup: NextPage = () => {
 
   const registration = useRecoilValue(registrationState)
+  const [session, setSession] = useRecoilState(sessionState)
 
   useEffect(() => {
     // if (registration.fullName === '') Router.replace('/signup/')
@@ -24,6 +27,20 @@ const Signup: NextPage = () => {
   const onSubmit = (data: object) => {
     companyRegistration(registration, data)
     .then(() => {
+       // TODO：API側でログイン機能実装したら不要になる
+       signIn(data).then(res => {
+        setSession({
+          accessToken: res.data.accessToken,
+          refreshToken: res.data.refreshToken,
+          casplaId: res.data.casplaId,
+          role: res.data.role,
+          fullName: res.data.fullName,
+          thumbnailImage: res.data.thumbnailImage,
+          productionId: res.data.productionId,
+          productionName: res.data.productionName,
+          productionAdmin: res.data.productionAdmin
+        })
+      })
       Router.push('/signup/complete')
     })
     .catch(err => {

@@ -4,9 +4,12 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import type { GetServerSideProps, NextPage } from 'next'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { registrationState } from '@/stores/Registration'
+import { sessionState } from '@/stores/Session'
 import { toast } from 'react-toastify'
 import checkCasplaId from '@/apis/auth/checkCasplaId'
+import updateThumbnail from '@/apis/images/updateThumbnail'
 import fanRegistration from '@/apis/auth/fanRegistration'
+import signIn from '@/apis/auth/signin'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import FormLabel from '@/components/atoms/Forms/Label'
@@ -20,7 +23,6 @@ import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
 
 type InputProps = {
-  thumbail?: object
   fullName: string
   furigana?: string
   email: string | string[] | undefined
@@ -41,17 +43,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 const AccountRegistration: NextPage = (props:any) => {
 
   const [roleState, setRole] = useState('fan')
+  const [userIdState, setUserId] = useState('')
+  const [thumbnailState, setThumbnail] = useState('')
   const [checledCasplaIdState, setCheckCasplaId] = useState(false)
   const [submitButtonColorState, setSubmitButtonColor] = useState('primary')
   const [submitTextState, setSubmitText] = useState('この内容で登録する')
   const [registration, setRegistration] = useRecoilState(registrationState)
   const resetRegistrationState = useResetRecoilState(registrationState)
+  const [session, setSession] = useRecoilState(sessionState)
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
   useEffect(() => {
     setValue('email', props.query.email)
+    setUserId(props.query.userId)
     if (registration.fullName !== '') {
-      setValue('thumbail', {})
       setValue('fullName', registration.fullName)
       setValue('furigana', registration.furigana)
       setValue('casplaId', registration.casplaId)
@@ -94,7 +99,8 @@ const AccountRegistration: NextPage = (props:any) => {
   }
 
   const changeThumbnail = (val: object) => {
-    setValue('thumbail', val)
+    console.log(val)
+    // updateThumbnail
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
@@ -116,6 +122,20 @@ const AccountRegistration: NextPage = (props:any) => {
     } else {
       // TODO：Thumbnail別途対応
       fanRegistration(data).then(() => {
+        // TODO：API側でログイン機能実装したら不要になる
+        signIn(data).then(res => {
+          setSession({
+            accessToken: res.data.accessToken,
+            refreshToken: res.data.refreshToken,
+            casplaId: res.data.casplaId,
+            role: res.data.role,
+            fullName: res.data.fullName,
+            thumbnailImage: res.data.thumbnailImage,
+            productionId: res.data.productionId,
+            productionName: res.data.productionName,
+            productionAdmin: res.data.productionAdmin
+          })
+        })
         Router.push('/signup/complete')
       }).catch(() => {
         toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
