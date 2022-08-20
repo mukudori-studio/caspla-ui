@@ -49,10 +49,19 @@ const TalentDetailHeader = ({
   const filteredActivity = activities.filter(data => activity.find(val => data.value === val))
   const formattedActivity = filteredActivity.map(data => data.text)
 
-  const copyUrl = () => {
-    const copyUrl = location.href;
-    navigator.clipboard.writeText(copyUrl)
-    toast.success('クリップボードにコピーしました。', { autoClose: 3000, draggable: true})
+  const copyUrl = async () => {
+    const copyUrl = location.href
+    const shareData = {
+      title: `${name} | Caspla(キャスプラ)`,
+      text: '',
+      url: location.href
+    }
+    try {
+      await navigator.share(shareData)
+    } catch(e) {
+      navigator.clipboard.writeText(copyUrl)
+      toast.success('クリップボードにコピーしました。', { autoClose: 3000, draggable: true})
+    }
   }
 
   return (
