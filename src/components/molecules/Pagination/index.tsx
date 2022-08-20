@@ -83,13 +83,14 @@ const PaginationWrapper = styled.div`
 
 const Pagination = ({
   rootPath = '/',
-  listLimit = 50,
+  listLimit = 15,
   pageRangeDisplayed = 2,
   marginPagesDisplayed = 1,
   totalCount,
   currentNum,
   onChangePagination
 }: PaginationProps) => {
+  console.log(currentNum)
 
   const handlePaginate = (selectedItem: { selected: number }) => {
     onChangePagination(selectedItem.selected)
@@ -99,7 +100,7 @@ const Pagination = ({
     <PaginationWrapper>
       <ReactPaginate
         pageCount={totalCount}
-        initialPage={currentNum}
+        initialPage={currentNum - 1}
         previousLabel="<"
         nextLabel=">"
         marginPagesDisplayed={marginPagesDisplayed}

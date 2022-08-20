@@ -24,13 +24,10 @@ const Talents: NextPage = (props:any) => {
   const [loadingState, setLoading] = useState(true)
   const [talentsState, setTalents] = useState([])
   const [pageState, setPage] = useState(1)
-  const [totalCountState, setTotalCount] = useState(1)
+  const [totalCountState, setTotalCount] = useState(0)
   const [activityState, setActivity] = useState(props.query.activity === undefined ? [] : props.query.activity)
   const [ageState, setAge] = useState(props.query.age === undefined ? [] : props.query.age)
   const [genderState, setGender] = useState(props.query.gender === undefined ? [] : props.query.gender)
-
-  const router = useRouter()
-  const { page } = router.query
 
   useEffect(() => {
     getTalents({
@@ -42,11 +39,11 @@ const Talents: NextPage = (props:any) => {
     })
     .then(res => {
       setTalents(res.data.response_message.casts)
-      setPage(res.data.response_message.page + 1)
-      setTotalCount(Math.ceil(res.data.response_message.totalCount /50))
+      setPage(res.data.response_message.page)
+      setTotalCount(Math.ceil(res.data.response_message.totalCount /10))
       setLoading(false)
     })
-  }, [])
+  }, [pageState])
 
   const onSearch = async (value:any) => {
     setLoading(true)
@@ -60,14 +57,25 @@ const Talents: NextPage = (props:any) => {
     })
 
     setTalents(data.response_message.casts)
-    setPage(data.response_message.page + 1)
+    setPage(data.response_message.page)
     setTotalCount(Math.ceil(data.response_message.totalCount /50))
     setLoading(false)
     
   }
 
   const onChangePagination = (page: number) => {
-    console.log(page)
+
+    let queryObject: any
+
+    if (props.query.gender !== '' && props.query.gender) queryObject.gender = props.query.gender
+    if (props.query.age !== '' && props.query.age) queryObject.age = props.query.age
+    if (props.query.activity !== '' && props.query.activity) queryObject.activity = props.query.activity
+
+    setPage(page + 1)
+    Router.push({
+      pathname: `/talents/${page + 1}`,
+      query: queryObject
+    })
   }
 
 
