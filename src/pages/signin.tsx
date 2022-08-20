@@ -62,7 +62,7 @@ const Signin: NextPage = () => {
             <PageTitle title="ログイン" />
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-in__form']}>
               <div className={styles['p-sign-in__item']}>
-                <FormLabel text="メールアドレス" label="casplaId" />
+                <FormLabel text="Caspla ID" label="casplaId" />
                 <Input id="casplaId" register={register} required={true} />
               </div>
               <div className={styles['p-sign-in__item']}>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toast } from 'react-toastify'
-import uploadImage from '@/apis/uploadImage'
+import updateThumbnail from '@/apis/images/updateThumbnail'
 import FormLabel from '@/components/atoms/Forms/Label'
 import { faCamera, faImages, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
 import styles from '@/styles/components/organisms/ThumbnailUploader.module.scss'
@@ -28,7 +28,8 @@ const ThumbnailUploader = ({
     if (e.target.files && e.target.files[0] && !uploading) {
       setUploading(true)
       const file = e.target.files[0]
-      uploadImage(file).then(res => {
+      console.log(id)
+      updateThumbnail(id, file).then(res => {
         console.log(res)
         onChange(res.data)
       }).catch(err => {

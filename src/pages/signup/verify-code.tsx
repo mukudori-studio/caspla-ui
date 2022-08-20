@@ -32,7 +32,7 @@ const VerifyCode: NextPage = () => {
       Router.push({
         pathname: '/signup/account-registration',
         query: {
-          code: res.response_message.code,
+          userId: res.response_message.userId,
           email: res.response_message.email
         }
       })
