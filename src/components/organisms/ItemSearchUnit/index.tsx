@@ -73,7 +73,7 @@ const ItemSearchUnit = ({
           <h3 className={styles['o-item-search-unit__label']}><span>性別</span></h3>
           <div className={styles['o-item-search-unit__check-box']}>
             <CheckboxButtons checkedItems={stateGender} checkboxes={[
-              {value: 'man', text: '男性'}, {value: 'woman', text: '女性'},
+              {value: '男性', text: '男性'}, {value: '女性', text: '女性'},
             ]} onChange={onChangeGender} />
           </div>
         </div>
