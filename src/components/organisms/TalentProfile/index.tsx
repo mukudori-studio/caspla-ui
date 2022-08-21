@@ -101,7 +101,7 @@ const TalentProfile = ({
           )
         }
         {
-          bloodType !== '' && (
+          (bloodType !== '' || bloodType !== null) && (
             <>
               <dt className={styles['o-talent-profile__label']}>血液型</dt>
               <dd className={styles['o-talent-profile__text']}>{`${bloodType}型`}</dd>
