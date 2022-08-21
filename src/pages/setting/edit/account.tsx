@@ -79,7 +79,7 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    fanRegistration(data, '', roleState).then(() => {
+    fanRegistration(data, '').then(() => {
       setSession({
         thumbnailImage: data.thumbnailImage,
         fullName: data.fullName,
