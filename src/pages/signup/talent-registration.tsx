@@ -5,7 +5,8 @@ import { toast } from 'react-toastify'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { registrationState } from '@/stores/Registration'
 import { sessionState } from '@/stores/Session'
-import signIn from '@/apis/auth/signin'
+import updateCover from '@/apis/images/updateCover'
+import updateThumbnail from '@/apis/images/updateThumbnail'
 import talentRegistration from '@/apis/auth/talentRegistration'
 import Meta from '@/components/Meta'
 import TalentRegistrationTemplate from '@/components/templates/TalentRegistrationTemplate'
@@ -19,23 +20,28 @@ const TalentRegistration: NextPage = () => {
   const [session, setSession] = useRecoilState(sessionState)
   
   const onSubmit = (data:any) => {
-    talentRegistration(registration, data)
-      .then(() => {
-         // TODO：API側でログイン機能実装したら不要になる
-         signIn(data).then(res => {
-          setSession({
-            accessToken: res.data.accessToken,
-            refreshToken: res.data.refreshToken,
-            casplaId: res.data.casplaId,
-            role: res.data.role,
-            fullName: res.data.fullName,
-            thumbnailImage: res.data.thumbnailImage,
-            productionId: res.data.productionId,
-            productionName: res.data.productionName,
-            productionAdmin: res.data.productionAdmin
-          })
+    console.log(data)
+    talentRegistration(registration, data).then((res) => {
+      setSession({
+        userId: Number(res.data.response_message.userId),
+        accessToken: res.data.response_message.accessToken,
+        casplaId: res.data.response_message.casplaId,
+        role: res.data.response_message.role,
+        fullName: res.data.response_message.fullName,
+      })
+      if (registration.thumbnail) {
+        updateThumbnail(registration.userId, registration.thumbnail).then(res => {
+          setSession({ thumbnailImage: res.data.response_message })
+
+          if (data.coverImage) {
+            updateCover(registration.userId, data.coverImage).then(() => Router.push('/signup/complete'))
+          } else {
+            Router.push('/signup/complete')
+          }
         })
+      } else {
         Router.push('/signup/complete')
+      }
       })
       .catch(err => {
         toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
@@ -43,10 +49,10 @@ const TalentRegistration: NextPage = () => {
   }
 
   useEffect(() => {
-    // if (registration.fullName === '') {
-    //   Router.replace('/signup/')
-    //   toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
-    // }
+    if (!registration.userId) {
+      Router.replace('/signup/')
+      toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
+    }
   }, [])
 
 
