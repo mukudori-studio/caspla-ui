@@ -6,6 +6,7 @@ const { persistAtom } = recoilPersist()
 export const sessionState = atom({
   key: 'session',
   default: {
+    userId: 0,
     accessToken: '',
     refreshToken: '',
     role: '',

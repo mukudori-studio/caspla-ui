@@ -20,27 +20,19 @@ const ThumbnailUploader = ({
   onChange
 }: ThumbnailUploaderProps) => {
 
-  const [uploading, setUploading] = React.useState(false)
+  const [thumbnailState, setThumbnail] = React.useState('')
   const inputRef = React.useRef(null)
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (uploading) return
-    if (e.target.files && e.target.files[0] && !uploading) {
-      setUploading(true)
+    if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
-      console.log(id)
-      updateThumbnail(id, file).then(res => {
-        console.log(res)
-        onChange(res.data)
-      }).catch(err => {
-        toast.error('画像のアップロードに失敗しました。', { autoClose: 2000, draggable: true})
-      }).finally(() => {
-        setUploading(false)
-      })
+      setThumbnail(URL.createObjectURL(file))
+      onChange(file)
     }
   }
 
   const resetFile = () => {
+    setThumbnail('')
     onChange({})
   }
 
@@ -55,7 +47,7 @@ const ThumbnailUploader = ({
       <div className={styles['o-thumbnail-upload__content']}>
 
         {
-          thumbnailUrl !== '' && !uploading ? (
+          thumbnailState !== '' || thumbnailUrl !== '' ? (
             <button className={[styles['o-thumbnail-upload__button'], styles['o-thumbnail-upload__button--cancel']].join(' ')} onClick={resetFile}>
               <FontAwesomeIcon icon={faXmark} className={styles['o-thumbnail-upload__button-icon']} />
             </button>
@@ -65,20 +57,11 @@ const ThumbnailUploader = ({
             </div>
           )
         }
-        {
-          uploading && (
-            <div className={styles['o-thumbnail-upload__loading']}>
-              <div className={styles['o-thumbnail-upload__loading-outer']}>
-                <div className={styles['o-thumbnail-upload__loading-inner']}></div> 
-              </div>
-            </div>
-          )
-        }
 
         <label htmlFor={id} className={styles['o-thumbnail-upload__label']}>
           {
-            thumbnailUrl !== '' ? (
-              <img src={thumbnailUrl} className={styles['o-thumbnail-upload__image']} />
+            thumbnailState !== '' || thumbnailUrl !== '' ? (
+              <img src={thumbnailUrl || thumbnailState} className={styles['o-thumbnail-upload__image']} />
             ) : (
               <div className={[styles['o-thumbnail-upload__image'], styles['o-thumbnail-upload__image--empty']].join(' ')}>
                 {

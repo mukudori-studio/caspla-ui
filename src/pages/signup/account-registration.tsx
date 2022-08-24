@@ -9,7 +9,6 @@ import { toast } from 'react-toastify'
 import checkCasplaId from '@/apis/auth/checkCasplaId'
 import updateThumbnail from '@/apis/images/updateThumbnail'
 import fanRegistration from '@/apis/auth/fanRegistration'
-import signIn from '@/apis/auth/signin'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import FormLabel from '@/components/atoms/Forms/Label'
@@ -42,8 +41,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 const AccountRegistration: NextPage = (props:any) => {
 
-  const [roleState, setRole] = useState('fan')
-  const [userIdState, setUserId] = useState('')
+  const [roleState, setRole] = useState('FAN')
+  const [userIdState, setUserId] = useState(0)
   const [thumbnailState, setThumbnail] = useState('')
   const [checledCasplaIdState, setCheckCasplaId] = useState(false)
   const [submitButtonColorState, setSubmitButtonColor] = useState('primary')
@@ -55,7 +54,7 @@ const AccountRegistration: NextPage = (props:any) => {
 
   useEffect(() => {
     setValue('email', props.query.email)
-    setUserId(props.query.userId)
+    setUserId(Number(props.query.userId))
     if (registration.fullName !== '') {
       setValue('fullName', registration.fullName)
       setValue('furigana', registration.furigana)
@@ -70,16 +69,16 @@ const AccountRegistration: NextPage = (props:any) => {
   }, [])
 
   const roles = [
-    { id: 'fan', label: 'ファン', note: 'Casplaに参加する最低限の機能だけを持ったアカウントです。ブックマーク機能の利用や公開オーディションへの投票が可能です。' },
-    // { id: 'production', label: 'プロダクション', note: '芸能プロフダクション向けの機能を持ったアカウントです。企業情報ページを設置できるほかタレントアカウントの一括管理が可能です。' },
-    { id: 'company', label: '企業・団体（制作会社向け）', note: '制作会社や団体向けのアカウントです。オーディション機能を利用できます（Coming Soon）' },
-    { id: 'talent', label: 'タレント(フリー)', note: '無所属、もしくは個人で活動されているタレント様向けのアカウントです。プロフィール機能や各種SNSとの連携が可能です。' },
+    { id: 'FAN', label: 'ファン', note: 'Casplaに参加する最低限の機能だけを持ったアカウントです。ブックマーク機能の利用や公開オーディションへの投票が可能です。' },
+    // { id: 'PRODUCTION', label: 'プロダクション', note: '芸能プロフダクション向けの機能を持ったアカウントです。企業情報ページを設置できるほかタレントアカウントの一括管理が可能です。' },
+    { id: 'COMPANY', label: '企業・団体（制作会社向け）', note: '制作会社や団体向けのアカウントです。オーディション機能を利用できます（Coming Soon）' },
+    { id: 'TALENT', label: 'タレント(フリー)', note: '無所属、もしくは個人で活動されているタレント様向けのアカウントです。プロフィール機能や各種SNSとの連携が可能です。' },
   ]
 
   const setSubmitButton = (role: string) => {
-    role === 'fan' ? setSubmitButtonColor('primary') : setSubmitButtonColor('secondary')
-    if (role === 'production' || role === 'compnay') setSubmitText('会社情報の入力へ')
-    else if (role === 'talent') setSubmitText('タレントプロフィールの入力へ')
+    role === 'FAN' ? setSubmitButtonColor('primary') : setSubmitButtonColor('secondary')
+    if (role === 'PRODUCTION' || role === 'COMPANY') setSubmitText('会社情報の入力へ')
+    else if (role === 'TALENT') setSubmitText('タレントプロフィールの入力へ')
     else setSubmitText('この内容で登録する')
   }
   const onChangeRole = (e:any) => {
@@ -98,16 +97,14 @@ const AccountRegistration: NextPage = (props:any) => {
     })
   }
 
-  const changeThumbnail = (val: object) => {
-    console.log(val)
-    // updateThumbnail
-  }
+  const changeThumbnail = (val: any) => setThumbnail(val)
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    // TODO：role毎に処理が分かれるのでページ遷移が必要なものにかんしてはpush時にstateに入れる
-    if (roleState !== 'fan') {
+
+    if (roleState !== 'FAN') {
       setRegistration({
-        thumbnail: '',
+        userId: Number(userIdState),
+        thumbnail: thumbnailState,
         fullName: data.fullName,
         furigana: data.furigana,
         email: data.email,
@@ -116,27 +113,29 @@ const AccountRegistration: NextPage = (props:any) => {
         role: roleState
       })
 
-      if (roleState === 'production' || roleState === 'company') Router.push('/signup/production-registration')
-      if (roleState === 'talent') Router.push('/signup/talent-registration')
+      if (roleState === 'PRODUCTION') Router.push('/signup/production-registration')
+      if (roleState === 'COMPANY') Router.push('/signup/company-registration')
+      if (roleState === 'TALENT') Router.push('/signup/talent-registration')
 
     } else {
-      // TODO：Thumbnail別途対応
-      fanRegistration(data).then(() => {
-        // TODO：API側でログイン機能実装したら不要になる
-        signIn(data).then(res => {
-          setSession({
-            accessToken: res.data.accessToken,
-            refreshToken: res.data.refreshToken,
-            casplaId: res.data.casplaId,
-            role: res.data.role,
-            fullName: res.data.fullName,
-            thumbnailImage: res.data.thumbnailImage,
-            productionId: res.data.productionId,
-            productionName: res.data.productionName,
-            productionAdmin: res.data.productionAdmin
-          })
+      fanRegistration(data).then((res: any) => {
+        setSession({
+          userId: Number(res.data.response_message.userId),
+          accessToken: res.data.response_message.accessToken,
+          casplaId: res.data.response_message.casplaId,
+          role: res.data.response_message.role,
+          fullName: res.data.response_message.fullName,
         })
-        Router.push('/signup/complete')
+
+        if (thumbnailState !== '') {
+          updateThumbnail(userIdState, thumbnailState).then(res => {
+            setSession({ thumbnailImage: res.data.response_message })
+
+            Router.push('/signup/complete')
+          })
+        } else {
+          Router.push('/signup/complete')
+        }
       }).catch(() => {
         toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
       })
@@ -170,7 +169,7 @@ const AccountRegistration: NextPage = (props:any) => {
               <FormLabel text="Caspla ID" label="casplaId" required={true} />
               <div className={styles['p-account-registration__check-ids']}>
                 <div className={styles['p-account-registration__check-input']}>
-                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} type={'text'} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} type="text" min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
                 </div>
                 <div className={styles['p-account-registration__check-id']}>
                   <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />

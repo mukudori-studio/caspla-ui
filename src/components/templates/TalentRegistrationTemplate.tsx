@@ -18,7 +18,7 @@ type InputProps = {
   fullName?: string
   furigana?: string
   casplaId?: string
-  thumbnailImage?: object
+  thumbnailImage?: any
   profile?: string
   gender?: string
   birthYear?: string
@@ -43,14 +43,14 @@ type InputProps = {
   activity?: Array<string>
   history?: string
   note?: string
+  coverImage?: any
 }
 
 type editPorps = {
-  editType?: 'register' | 'edit'
   fullName?: string
   furigana?: string
   casplaId?: string
-  thumbnailImage?: object
+  thumbnailImage?: any
   profile?: string
   gender?: string
   birthYear?: string
@@ -75,47 +75,17 @@ type editPorps = {
   activity?: Array<string>
   history?: string
   note?: string
+  coverImage?: any
   submitForm: (data: any) => void
 }
 
 const TalentFormTemplate = ({
-  editType = 'register',
   submitForm,
   ...props
 }: editPorps) => {
 
   const [activityState, setActivity] = useState<Array<string>>([])
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<InputProps>()
-
-  useEffect(() => {
-    if (editType === 'register') return
-      setValue('fullName', props?.fullName)
-      setValue('furigana', props?.furigana)
-      setValue('casplaId', props.casplaId)
-      setValue('thumbnailImage', props.thumbnailImage)
-      setValue('profile', props.profile)
-      setValue('gender', props.gender)
-      setValue('starSign', props.starSign)
-      setValue('bloodType', props.bloodType)
-      setValue('birthplace', props.birthplace)
-      setValue('height', props.height)
-      setValue('weight', props.weight)
-      setValue('bust', props.bust)
-      setValue('waist', props.waist)
-      setValue('hip', props.hip)
-      setValue('footSize', props.footSize)
-      setValue('profile', props.profile)
-      setValue('siteUrl', props.siteUrl)
-      setValue('blogUrl', props.blogUrl)
-      setValue('twitterId', props.twitterId)
-      setValue('facebookId', props.facebookId)
-      setValue('youtubeId', props.youtubeId)
-      setValue('instagramId', props.blogUrl)
-      setValue('tiktokId', props.tiktokId)
-      setValue('activity', props.activity)
-      setValue('history', props.history)
-      setValue('note', props.note)
-  }, [])
 
   const changeBirthday = (year: string, month: string, day: string) => {
     setValue('birthYear', year)
@@ -130,7 +100,7 @@ const TalentFormTemplate = ({
     setValue('activity', activityState)
   }
 
-  const changeCover = (val:any) => setValue('thumbnailImage', val)
+  const changeCover = (val:any) => setValue('coverImage', val)
 
   const onSubmit: SubmitHandler<InputProps> = (data) => submitForm(data)
 

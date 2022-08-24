@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
 import { toast } from 'react-toastify'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { sessionState } from '@/stores/Session'
-import signIn from '@/apis/auth/signin'
+import updateCompanyLogo from '@/apis/images/updateCover'
+import updateThumbnail from '@/apis/images/updateThumbnail'
 import { registrationState } from '@/stores/Registration'
 import companyRegistration from '@/apis/auth/companyRegistration'
 import Meta from '@/components/Meta'
@@ -14,38 +14,42 @@ import CompanyFormTemplate from '@/components/templates/CompanyFormTemplate'
 
 import styles from '@/styles/AccountRegistration.module.scss'
 
-const Signup: NextPage = () => {
+const CompanyRegistration: NextPage = () => {
 
   const registration = useRecoilValue(registrationState)
   const [session, setSession] = useRecoilState(sessionState)
 
   useEffect(() => {
-    // if (registration.fullName === '') Router.replace('/signup/')
-    // toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
+    if (registration.fullName === '') Router.replace('/signup/')
+    toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
   }, [])
 
-  const onSubmit = (data: object) => {
-    companyRegistration(registration, data)
-    .then(() => {
-       // TODO：API側でログイン機能実装したら不要になる
-       signIn(data).then(res => {
-        setSession({
-          accessToken: res.data.accessToken,
-          refreshToken: res.data.refreshToken,
-          casplaId: res.data.casplaId,
-          role: res.data.role,
-          fullName: res.data.fullName,
-          thumbnailImage: res.data.thumbnailImage,
-          productionId: res.data.productionId,
-          productionName: res.data.productionName,
-          productionAdmin: res.data.productionAdmin
-        })
+  const onSubmit = (data: any) => {
+    companyRegistration(registration, data).then((res) => {
+      setSession({
+        userId: Number(res.data.response_message.userId),
+        accessToken: res.data.response_message.accessToken,
+        casplaId: res.data.response_message.casplaId,
+        role: res.data.response_message.role,
+        fullName: res.data.response_message.fullName,
       })
-      Router.push('/signup/complete')
-    })
-    .catch(err => {
-      toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
-    })
+      if (registration.thumbnail) {
+        updateThumbnail(registration.userId, registration.thumbnail).then(res => {
+          setSession({ thumbnailImage: res.data.response_message })
+
+          if (data.companyImage) {
+            updateCompanyLogo(registration.userId, data.companyImage).then(() => Router.push('/signup/complete'))
+          } else {
+            Router.push('/signup/complete')
+          }
+        })
+      } else {
+        Router.push('/signup/complete')
+      }
+      })
+      .catch(err => {
+        toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
+      })
   }
 
   return (
@@ -65,4 +69,4 @@ const Signup: NextPage = () => {
   )
 }
 
-export default Signup
+export default CompanyRegistration

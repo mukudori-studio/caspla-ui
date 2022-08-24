@@ -20,7 +20,8 @@ type InputProps = {
   fullName: string
   furigana: string
   casplaId: string
-  thumbnailImage?: object
+  thumbnailImage?: any
+  coverImage?: any
   profile?: string
   gender?: string
   birthYear?: string
@@ -52,7 +53,8 @@ type editPorps = {
   fullName: string
   furigana: string
   casplaId: string
-  thumbnailImage?: object
+  thumbnailImage?: any
+  coverImage?: any
   profile?: string
   gender?: string
   birthYear?: string
@@ -128,6 +130,7 @@ const TalentFormTemplate = ({
     setValue('activity', props.activity)
     setValue('history', props.history)
     setValue('note', props.note)
+    setValue('coverImage', props.coverImage)
   }, [])
 
   const changeBirthday = (year: string, month: string, day: string) => {
@@ -153,7 +156,7 @@ const TalentFormTemplate = ({
     })
   }
 
-  const changeCover = (val:any) => setValue('thumbnailImage', val)
+  const changeCover = (val:any) => setValue('coverImage', val)
 
   const onSubmit: SubmitHandler<InputProps> = (data) => submitForm(data)
 
@@ -162,7 +165,7 @@ const TalentFormTemplate = ({
       <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="カバー写真" label="coverImage" required={false} />
-          <CoverImageUploader id="coverImage" onChange={changeCover} />
+          <CoverImageUploader id="coverImage" thumbnailUrl={props.coverImage} onChange={changeCover} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="名前" label="fullName" required={true} />

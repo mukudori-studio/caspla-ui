@@ -18,7 +18,7 @@ import prefectures from '@/utils/prefectures'
 import styles from '@/styles/AccountRegistration.module.scss'
 
 type InputProps = {
-  companyImage?: object
+  companyImage?: any
   companyName: string | undefined
   corpId: string
   zipCode: string
@@ -42,7 +42,7 @@ type InputProps = {
 type registrationPorps = {
   userType?: 'production' | 'corp'
   editType?: 'register' | 'edit'
-  companyImage?: object
+  companyImage?: any
   companyName?: string
   corpId?: string
   zipCode: string
@@ -152,7 +152,7 @@ const Signup = ({
       <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="会社ロゴ" label="companyImage" />
-          <ThumbnailUploader id="companyLogo" onChange={changeLogo} />
+          <ThumbnailUploader id="companyImage" thumbnailUrl={props.companyImage} onChange={changeLogo} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="会社名" label="companyName" required={true} />

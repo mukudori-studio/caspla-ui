@@ -1,8 +1,8 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const updateThumbnail = async (userId: number, image: any) => {
+const updateCompanyLogo = async (userId: number, image: any) => {
   try {
-    const res = await axiosClient.post(`/api/v1/casts/update_photo?user_id=${userId}&type=THUMBNAIL`, {
+    const res = await axiosClient.post(`/api/v1/company/update_photo?id=${userId}`, {
       photo: image
     }, {
       headers: {
@@ -15,4 +15,4 @@ const updateThumbnail = async (userId: number, image: any) => {
   }
 }
 
-export default updateThumbnail
+export default updateCompanyLogo
