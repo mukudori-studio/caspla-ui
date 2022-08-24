@@ -4,13 +4,11 @@ const companyRegistration = async (account: any, data: any, thumbnail?: string) 
   try {
 
     const postData = {
-      // thumbnailImage: account.thumbnailImage,
       furigana: account.furigana,
       fullName: account.fullName,
       email: account.email,
       casplaId: account.casplaId,
       password: account.password,
-      companyLogo: data.companyLogo,
       id: data.corpId,
       name: data.companyName,
       description: data.description,

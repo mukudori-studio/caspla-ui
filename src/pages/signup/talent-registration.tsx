@@ -20,7 +20,6 @@ const TalentRegistration: NextPage = () => {
   const [session, setSession] = useRecoilState(sessionState)
   
   const onSubmit = (data:any) => {
-    console.log(data)
     talentRegistration(registration, data).then((res) => {
       setSession({
         userId: Number(res.data.response_message.userId),
