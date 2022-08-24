@@ -22,7 +22,7 @@ const Bookmarks: NextPage = () => {
   }, [])
 
   const onDeleteBookmark = (id: string) => {
-    console.log(id)
+    
   }
 
   return (

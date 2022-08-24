@@ -34,8 +34,6 @@ const LoginedHeaderMenu = () => {
   const popOverStyle = showMenu ? [styles['m-logined-header-menu__popover'], styles['m-logined-header-menu__popover--show']].join(' ') : styles['m-logined-header-menu__popover']
   const menuStyle = styles['m-logined-header-menu__item']
 
-  console.log(session)
-
   return (
     <div className={styles['m-logined-header-menu']}>
       <button className={styles['m-logined-header-menu__button']} onClick={toggleMenu}>

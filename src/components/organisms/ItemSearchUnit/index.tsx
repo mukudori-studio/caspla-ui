@@ -38,7 +38,6 @@ const ItemSearchUnit = ({
   const onChangeActivity = (data: Array<string>) => setActivity(data)
   
   const onSearch = (val: string) => {
-    console.log(stateGender)
     let queryObject:any = {
       gender: stateGender,
       age: stateAge,

@@ -18,7 +18,7 @@ const TalentEdit: NextPage = () => {
   })
   
   const onUpdateProfile = (data:any) => {
-    console.log(data)
+    
   }
 
   return (

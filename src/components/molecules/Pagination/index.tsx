@@ -90,7 +90,6 @@ const Pagination = ({
   currentNum,
   onChangePagination
 }: PaginationProps) => {
-  console.log(currentNum)
 
   const handlePaginate = (selectedItem: { selected: number }) => {
     onChangePagination(selectedItem.selected)

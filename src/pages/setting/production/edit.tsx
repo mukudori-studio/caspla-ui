@@ -8,7 +8,7 @@ import styles from '@/styles/ProductionSetting.module.scss'
 const ProductionEdit: NextPage = () => {
 
   const updateProduction = (data:any) => {
-    console.log(data)
+    
   }
 
   return (

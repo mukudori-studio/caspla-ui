@@ -44,7 +44,6 @@ const CardItem = ({
   const changeBookmark = ((e: any, bool: boolean) => {
     e.stopPropagation()
     setFlag(!flag)
-    console.log(flag)
   })
 
   return (

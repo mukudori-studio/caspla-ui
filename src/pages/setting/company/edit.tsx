@@ -7,7 +7,7 @@ import styles from '@/styles/ProductionSetting.module.scss'
 const CompanyEdit: NextPage = () => {
 
   const updateCompany = (data:any) => {
-    console.log(data)
+    
   }
 
   return (

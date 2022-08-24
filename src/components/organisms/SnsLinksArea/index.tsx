@@ -23,7 +23,6 @@ const SNSLinksArea = ({
   youtube = '',
   tiktok = ''
 }: SNSLinksAreaProps) => {
-  console.log(twitter)
 
   return (
     <div className={styles['o-sns-links']}>

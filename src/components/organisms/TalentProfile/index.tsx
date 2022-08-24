@@ -53,8 +53,6 @@ const TalentProfile = ({
     return filteredStar?.value
   }
 
-  console.log(age > 0)
-
   return (
     <div className={styles['o-talent-profile']}>
       <dl className={styles['o-talent-profile__items']}>

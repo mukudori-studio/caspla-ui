@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { GetServerSidePropsContext } from 'next'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImages, faUser, faShareNodes } from '@fortawesome/free-solid-svg-icons'
@@ -43,22 +44,40 @@ const TalentDetailHeader = ({
   instagram = '',
   youtube = '',
   tiktok = '',
+  ...props
 }: TalentDetailHeaderProps) => {
 
   // TODO：ループ処理整理
   const filteredActivity = activities.filter(data => activity.find(val => data.value === val))
   const formattedActivity = filteredActivity.map(data => data.text)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const ua = window.navigator.userAgent.toLowerCase()
+    if(!ua || ua === '') {
+      setIsMobile(false)
+    } else if (ua.indexOf('iphone') > 0 || ua.indexOf('ipod') > 0 || ua.indexOf('android') > 0 && ua.indexOf('mobile') > 0) {
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  })
 
   const copyUrl = async () => {
     const copyUrl = location.href
+    const pageTitle: string = `${name} | Caspla(キャスプラ)`
     const shareData = {
-      title: `${name} | Caspla(キャスプラ)`,
+      title: pageTitle,
       text: '',
       url: location.href
     }
-    try {
-      await navigator.share(shareData)
-    } catch(e) {
+    if (isMobile) {
+      try {
+        await navigator.share(shareData)
+      } catch(err) {
+
+      }
+    } else {
       navigator.clipboard.writeText(copyUrl)
       toast.success('クリップボードにコピーしました。', { autoClose: 3000, draggable: true})
     }

@@ -10,7 +10,7 @@ import styles from '@/styles/ProductionSetting.module.scss'
 const TalentEdit: NextPage = () => {
   
   const onSubmitAddTalent = (data:any) => {
-    console.log(data)
+    
   }
 
   return (

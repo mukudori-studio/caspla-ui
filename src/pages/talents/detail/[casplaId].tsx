@@ -22,7 +22,6 @@ const TalentDetail: NextPage = (props) => {
     
     getTalentDetail(casplaId).then(res => {
       setTalentDetail(res.response_message.castDetails)
-      console.log(talentDetailState)
     }).catch(err => {
       Router.push('/talents/1')
       toast.error('タレント情報の取得に失敗しました。', { autoClose: 3000, draggable: true})

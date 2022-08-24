@@ -20,7 +20,6 @@ const productionDetail: NextPage = () => {
     if(productionId === undefined) return
     
     getProductionDetail(productionId).then(res => {
-      console.log(res.response_message)
       setProductionDetail(res.response_message.castDetails)
     }).catch(err => {
       Router.push('/top')
