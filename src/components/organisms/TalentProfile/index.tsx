@@ -46,6 +46,7 @@ const TalentProfile = ({
   const formattedGender = (type: string) => {
     if (type === 'man' || type === '男性') return '男性'
     else if(type === 'woman' || type === '女性') return '女性'
+    else ''
   }
 
   const filteredStarSign = (star: string) => {
@@ -99,7 +100,7 @@ const TalentProfile = ({
           )
         }
         {
-          (bloodType !== '' || bloodType !== null) && (
+          (bloodType !== '' && bloodType !== null) && (
             <>
               <dt className={styles['o-talent-profile__label']}>血液型</dt>
               <dd className={styles['o-talent-profile__text']}>{`${bloodType}型`}</dd>
