@@ -1,6 +1,6 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const fanRegistration = async (data: any, thumbnail?: string) => {
+const companyUserRegistration = async (data: any) => {
   try {
 
     const postData = {
@@ -9,7 +9,7 @@ const fanRegistration = async (data: any, thumbnail?: string) => {
       email: data.email,
       casplaId: data.casplaId,
       password: data.password,
-      role: 'FAN_USER'
+      role: 'COMPANY_ADMIN'
     }
 
     const res = await axiosClient.post('/api/v1/auth/save_user', postData)
@@ -19,4 +19,4 @@ const fanRegistration = async (data: any, thumbnail?: string) => {
   }
 }
 
-export default fanRegistration
+export default companyUserRegistration
