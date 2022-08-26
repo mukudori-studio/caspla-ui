@@ -7,7 +7,7 @@ import { faCamera, faImages, faUser, faXmark } from '@fortawesome/free-solid-svg
 import styles from '@/styles/components/organisms/ThumbnailUploader.module.scss'
 
 type ThumbnailUploaderProps = {
-  id: string
+  id: string | undefined
   type?: 'thumbnail' | 'logo'
   thumbnailUrl?: string
   onChange: (data: any) => void

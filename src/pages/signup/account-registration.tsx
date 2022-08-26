@@ -151,7 +151,7 @@ const AccountRegistration: NextPage = (props:any) => {
           <section className={styles['p-account-registration__section']}>
             <PageTitle title="アカウント情報入力" />
             <div className={styles['p-account-registration__item']}>
-              <ThumbnailUploader id={userIdState} onChange={changeThumbnail} />
+              <ThumbnailUploader id={String(userIdState)} onChange={changeThumbnail} />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="名前" label="fullName" required={true} />
