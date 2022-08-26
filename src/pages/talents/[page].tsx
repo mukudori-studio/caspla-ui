@@ -42,6 +42,9 @@ const Talents: NextPage = (props:any) => {
       setPage(res.data.response_message.page)
       setTotalCount(Math.ceil(res.data.response_message.totalCount /10))
       setLoading(false)
+      setTimeout(() => {
+        console.log(talentsState)
+      })
     })
   }, [pageState])
 
@@ -58,12 +61,14 @@ const Talents: NextPage = (props:any) => {
 
     setTalents(data.response_message.casts)
     setPage(data.response_message.page)
-    setTotalCount(Math.ceil(data.response_message.totalCount /50))
+    setTotalCount(Math.ceil(data.response_message.totalCount /10))
     setLoading(false)
     
   }
 
   const onChangePagination = (page: number) => {
+
+    setLoading(true)
 
     let queryObject: any
 
@@ -71,11 +76,14 @@ const Talents: NextPage = (props:any) => {
     if (props.query.age !== '' && props.query.age) queryObject.age = props.query.age
     if (props.query.activity !== '' && props.query.activity) queryObject.activity = props.query.activity
 
+    // setTalents([])
     setPage(page + 1)
     Router.push({
       pathname: `/talents/${page + 1}`,
       query: queryObject
     })
+
+    setLoading(false)
   }
 
 
@@ -92,7 +100,7 @@ const Talents: NextPage = (props:any) => {
                 {
                   talentsState.map((talent: any) => {
                     return (
-                      <div className={styles['p-talents__item']} key={talent.casplaId}>
+                      <div className={styles['p-talents__item']} key={`${talent?.casplaId}-${talent?.fullName}`}>
                         <CardItem
                           id={talent.casplaId}
                           name={talent.fullName}

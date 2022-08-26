@@ -65,7 +65,7 @@ const TalentDetailHeader = ({
 
   const copyUrl = async () => {
     const copyUrl = location.href
-    const pageTitle: string = `${name} | Caspla(キャスプラ)`
+    const pageTitle: string = name + ' | Caspla(キャスプラ)'
     const shareData = {
       title: pageTitle,
       text: '',
