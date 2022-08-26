@@ -42,9 +42,6 @@ const Talents: NextPage = (props:any) => {
       setPage(res.data.response_message.page)
       setTotalCount(Math.ceil(res.data.response_message.totalCount /10))
       setLoading(false)
-      setTimeout(() => {
-        console.log(talentsState)
-      })
     })
   }, [pageState])
 
