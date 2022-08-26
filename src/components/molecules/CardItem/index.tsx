@@ -60,7 +60,7 @@ const CardItem = ({
             //     layout="fill"
             //   />
             // </div>
-            <img src="thumbnail" className={styles['m-card-item__thumbnail']} />
+            <img src={thumbnail} className={styles['m-card-item__thumbnail']} />
           )
         }
         <div className={styles['m-card-item__head']}>
