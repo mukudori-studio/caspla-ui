@@ -30,20 +30,19 @@ const Talents: NextPage = (props:any) => {
   const [genderState, setGender] = useState(props.query.gender === undefined ? [] : props.query.gender)
 
   useEffect(() => {
-    setTimeout(() => {
-      getTalents({
-        pageId: props.query.page,
-        keyword: props.query.keyword,
-        activity: props.query.activity,
-        age: props.query.age,
-        gender: props.query.gender
-      })
-      .then(res => {
-        setTalents(res.data.response_message.casts)
-        setPage(res.data.response_message.page)
-        setTotalCount(Math.ceil(res.data.response_message.totalCount /10))
-        setLoading(false)
-      })
+    console.log(props.query)
+    getTalents({
+      pageId: props.query.page,
+      keyword: props.query.keyword,
+      activity: props.query.activity,
+      age: props.query.age,
+      gender: props.query.gender
+    })
+    .then(res => {
+      setTalents(res.data.response_message.casts)
+      setPage(res.data.response_message.page)
+      setTotalCount(Math.ceil(res.data.response_message.totalCount /10))
+      setLoading(false)
     })
   }, [pageState])
 

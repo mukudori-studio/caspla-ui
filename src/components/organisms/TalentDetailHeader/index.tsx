@@ -14,8 +14,8 @@ type TalentDetailHeaderProps = {
   thumbnailImage?: string
   activity?: Array<string>
   name: string
-  agencyId?: string
-  agencyName?: string
+  productionId?: string
+  productionName?: string
   casplaId?: string
   isTalent?: boolean
   withBookmark?: boolean
@@ -33,8 +33,8 @@ const TalentDetailHeader = ({
   thumbnailImage = '',
   activity = [],
   name,
-  agencyId = '',
-  agencyName = '',
+  productionId = '',
+  productionName = '',
   casplaId = '',
   withBookmark = false,
   siteUrl = '',
@@ -63,7 +63,7 @@ const TalentDetailHeader = ({
     }
   })
 
-  const copyUrl = async () => {
+  const copyUrl = () => {
     const copyUrl = location.href
     const pageTitle: string = name + ' | Caspla(キャスプラ)'
     const shareData = {
@@ -73,7 +73,7 @@ const TalentDetailHeader = ({
     }
     if (isMobile) {
       try {
-        await navigator.share(shareData)
+        navigator.share(shareData)
       } catch(err) {
 
       }
@@ -129,7 +129,7 @@ const TalentDetailHeader = ({
         <div className={styles['o-talent-detail-header__bottom']}>
           <h1 className={styles['o-talent-detail-header__name']}>{name}</h1>
           <h2 className={styles['o-talent-detail-header__caspla-id']}>{casplaId}</h2>
-          { (agencyId !== '' && agencyName !== '') && <a href={'/production-detail/${agencyId}'} className={styles['o-talent-detail-header__production-link']}>{agencyName}</a> }
+          { (productionId !== '' && productionName !== '') && <a href={`/productions/detail/${productionId}`} className={styles['o-talent-detail-header__production-link']}>{productionName}</a> }
           {
             (siteUrl !== '' || blogUrl !== '' || facebook !== '' || twitter !== '' || instagram !== '' || youtube !== '' || tiktok !== '') && <SnsLinksArea siteUrl={siteUrl} blogUrl={blogUrl} facebook={facebook} twitter={twitter} instagram={instagram} youtube={youtube} tiktok={tiktok}
           />

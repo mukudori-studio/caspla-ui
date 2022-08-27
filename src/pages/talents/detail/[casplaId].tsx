@@ -21,6 +21,7 @@ const TalentDetail: NextPage = (props) => {
     if(casplaId === undefined) return
     
     getTalentDetail(casplaId).then(res => {
+      console.log(res.response_message.castDetails)
       setTalentDetail(res.response_message.castDetails)
     }).catch(err => {
       Router.push('/talents/1')
@@ -38,8 +39,8 @@ const TalentDetail: NextPage = (props) => {
           coverImage={talentDetailState?.coverImage}
           thumbnailImage={talentDetailState?.thumbnailImage}
           activity={talentDetailState?.activities}
-          agencyId={talentDetailState?.productionId}
-          agencyName={talentDetailState?.agencyName}
+          productionId={talentDetailState?.production?.productionId}
+          productionName={talentDetailState?.production?.productionName}
           casplaId={talentDetailState?.casplaId}
           siteUrl={talentDetailState?.links?.siteUrl}
           blogUrl={talentDetailState?.links?.blogUrl}
