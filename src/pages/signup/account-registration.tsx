@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form"
 import type { GetServerSideProps, NextPage } from 'next'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { registrationState } from '@/stores/Registration'
-import { sessionState } from '@/stores/Session'
+import { sessionState, sessionThumbnailState } from '@/stores/Session'
 import { toast } from 'react-toastify'
 import checkCasplaId from '@/apis/auth/checkCasplaId'
 import updateThumbnail from '@/apis/images/updateThumbnail'
@@ -50,6 +50,7 @@ const AccountRegistration: NextPage = (props:any) => {
   const [registration, setRegistration] = useRecoilState(registrationState)
   const resetRegistrationState = useResetRecoilState(registrationState)
   const [session, setSession] = useRecoilState(sessionState)
+  const [sessionThumbnail, setThumbnailSession] = useRecoilState(sessionThumbnailState)
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
   useEffect(() => {
@@ -129,7 +130,7 @@ const AccountRegistration: NextPage = (props:any) => {
 
         if (thumbnailState !== '') {
           updateThumbnail(userIdState, thumbnailState).then(res => {
-            setSession({ thumbnailImage: res.data.response_message })
+            setThumbnailSession({ thumbnailImage: res.data.response_message })
 
             Router.push('/signup/complete')
           })

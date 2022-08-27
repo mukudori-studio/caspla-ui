@@ -4,7 +4,6 @@ const talentRegistration = async (account: any, data: any, thumbnail?: string) =
   try {
 
     const postData = {
-      // thumbnailImage: data.thumbnailImage,
       casplaId: account.casplaId,
       fullName: account.fullName,
       email: account.email,
@@ -33,9 +32,9 @@ const talentRegistration = async (account: any, data: any, thumbnail?: string) =
         youtubeId: data.youtubeId,
         tiktokId: data.tiktokId,
         blogUrl: data.blogUrl,
-        siteUrl: data.siteUrl
+        siteUrl: data.siteUrl,
       },
-      activities: data.activity
+      activities: data.activity,
     }
 
     const res = await axiosClient.post('/api/v1/casts/new', postData)

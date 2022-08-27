@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import { toast } from 'react-toastify'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { registrationState } from '@/stores/Registration'
-import { sessionState } from '@/stores/Session'
+import { sessionState, sessionThumbnailState } from '@/stores/Session'
 import updateCover from '@/apis/images/updateCover'
 import updateThumbnail from '@/apis/images/updateThumbnail'
 import talentRegistration from '@/apis/auth/talentRegistration'
@@ -18,6 +18,7 @@ const TalentRegistration: NextPage = () => {
 
   const registration = useRecoilValue(registrationState)
   const [session, setSession] = useRecoilState(sessionState)
+  const [sessionThumbnail, setThumbnailSession] = useRecoilState(sessionThumbnailState)
   
   const onSubmit = (data:any) => {
     talentRegistration(registration, data).then((res) => {
@@ -30,7 +31,7 @@ const TalentRegistration: NextPage = () => {
       })
       if (registration.thumbnail) {
         updateThumbnail(registration.userId, registration.thumbnail).then(res => {
-          setSession({ thumbnailImage: res.data.response_message })
+          setThumbnailSession({ thumbnailImage: res.data.response_message })
 
           if (data.coverImage) {
             updateCover(registration.userId, data.coverImage).then(() => Router.push('/signup/complete'))

@@ -1,8 +1,8 @@
 const bloodTypes = [
-  { value: 'a', text: 'A型'},
-  { value: 'b', text: 'B型'},
-  { value: 'o', text: 'O型'},
-  { value: 'ab', text: 'AB型'},
+  { value: 'A', text: 'A型'},
+  { value: 'B', text: 'B型'},
+  { value: 'O', text: 'O型'},
+  { value: 'AB', text: 'AB型'},
 ]
 
 export default bloodTypes

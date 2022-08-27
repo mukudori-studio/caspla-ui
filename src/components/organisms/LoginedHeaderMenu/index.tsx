@@ -6,7 +6,7 @@ import { useRecoilState, useResetRecoilState } from 'recoil'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify'
-import { sessionState } from '@/stores/Session'
+import { sessionState, sessionThumbnailState } from '@/stores/Session'
 import PopOver from '@/components/molecules/Popover'
 import styles from '@/styles/components/organisms/LoginedHeaderMenu.module.scss'
 
@@ -14,7 +14,10 @@ const LoginedHeaderMenu = () => {
 
   const [showMenu, setToggleMenu] = useState(false)
   const [session, setSession] = useRecoilState(sessionState)
+  const [sessionThumbnail, setThumbnailSession] = useRecoilState(sessionThumbnailState)
+  console.log(sessionThumbnail)
   const resetSession = useResetRecoilState(sessionState)
+  const resetSessionThumbnail = useResetRecoilState(sessionThumbnailState)
 
   const toggleMenu = () => setToggleMenu(!showMenu)
   const hideMenu = () => setToggleMenu(false)
@@ -22,6 +25,7 @@ const LoginedHeaderMenu = () => {
   const signOut = () => {
     hideMenu()
     resetSession()
+    resetSessionThumbnail()
     Router.push('/signin')
     toast.success('ログアウトしました', {
       autoClose: 3000,
@@ -40,7 +44,7 @@ const LoginedHeaderMenu = () => {
         <div className={styles['m-logined-header-menu__name']}><span>{session.fullName}</span></div>
         <div className={styles['m-logined-header-menu__belong']}><span>{session.productionName === '' ? '無所属' : session.productionName}</span></div>
         {
-          session.thumbnailImage && session.thumbnailImage !== '' ? (
+          sessionThumbnail.thumbnailImage && sessionThumbnail.thumbnailImage !== '' ? (
             <div className={styles['m-logined-header-menu__thumbnail']}>
               <Image
                 src={session.thumbnailImage}
