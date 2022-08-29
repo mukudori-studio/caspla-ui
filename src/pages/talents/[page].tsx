@@ -49,17 +49,12 @@ const Talents: NextPage = (props:any) => {
   const onSearch = async (value:any) => {
     setLoading(true)
 
-    const {data} = await getTalents({
-      pageId: 1,
-      keyword: value.keyword,
-      activity: value.activity,
-      age: value.age,
-      gender: value.gender
+    setPage(1)
+    Router.push({
+      pathname: `/talents/1`,
+      query: value
     })
 
-    setTalents(data.response_message.casts)
-    setPage(data.response_message.page)
-    setTotalCount(Math.ceil(data.response_message.totalCount /10))
     setLoading(false)
     
   }
