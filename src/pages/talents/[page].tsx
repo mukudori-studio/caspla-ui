@@ -23,7 +23,7 @@ const Talents: NextPage = (props:any) => {
 
   const [loadingState, setLoading] = useState(true)
   const [talentsState, setTalents] = useState([])
-  const [pageState, setPage] = useState(1)
+  const [pageState, setPage] = useState(props.query.page)
   const [totalCountState, setTotalCount] = useState(0)
   const [activityState, setActivity] = useState(props.query.activity === undefined ? [] : props.query.activity)
   const [ageState, setAge] = useState(props.query.age === undefined ? [] : props.query.age)
@@ -32,7 +32,7 @@ const Talents: NextPage = (props:any) => {
   useEffect(() => {
     console.log(props.query)
     getTalents({
-      pageId: props.query.page,
+      pageId: pageState,
       keyword: props.query.keyword,
       activity: props.query.activity,
       age: props.query.age,

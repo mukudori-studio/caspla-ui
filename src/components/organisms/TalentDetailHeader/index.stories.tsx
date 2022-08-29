@@ -14,8 +14,8 @@ export const Default = Template.bind({});
 Default.args = {
   activity: ['musician'],
   name: 'キン肉マンソルジャー',
-  agencyId: 'production',
-  agencyName: 'ゆでたまご',
+  productionId: 'production',
+  productionName: 'ゆでたまご',
   casplaId: 'mustleManSoldier',
   siteUrl: 'hoge',
   blogUrl: 'hoge',
