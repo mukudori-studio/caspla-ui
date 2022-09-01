@@ -21,7 +21,6 @@ const TalentDetail: NextPage = (props) => {
     if(casplaId === undefined) return
     
     getTalentDetail(casplaId).then(res => {
-      console.log(res.response_message.castDetails)
       setTalentDetail(res.response_message.castDetails)
     }).catch(err => {
       Router.push('/talents/1')

@@ -62,9 +62,9 @@ const TalentDetailHeader = ({
     } else {
       setIsMobile(false)
     }
-    if (name !== '' && name !== undefined) setShareTitle(`${name} | Caspla(キャスプラ)`)
+    setShareTitle(`${name} | Caspla(キャスプラ)`)
     
-  }, [])
+  }, [name])
 
   const copyUrl = () => {
     const copyUrl = location.href
