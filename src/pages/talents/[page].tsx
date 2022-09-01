@@ -68,7 +68,7 @@ const Talents: NextPage = (props:any) => {
 
     setLoading(true)
 
-    let queryObject: any
+    let queryObject: any = {}
 
     if (props.query.gender !== '' && props.query.gender) queryObject.gender = props.query.gender
     if (props.query.age !== '' && props.query.age) queryObject.age = props.query.age
