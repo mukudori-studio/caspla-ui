@@ -51,7 +51,7 @@ const TalentProfile = ({
 
   const filteredStarSign = (star: string) => {
     const filteredStar = starSigns.find(data => data.value === star)
-    return filteredStar?.value
+    return filteredStar?.text
   }
 
   return (

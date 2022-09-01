@@ -50,6 +50,7 @@ const TalentDetailHeader = ({
   // TODO：ループ処理整理
   const filteredActivity = activities.filter(data => activity.find(val => data.value === val))
   const formattedActivity = filteredActivity.map(data => data.text)
+  const [shareTitleState, setShareTitle] = useState('')
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -61,22 +62,19 @@ const TalentDetailHeader = ({
     } else {
       setIsMobile(false)
     }
-  })
+    if (name !== '' && name !== undefined) setShareTitle(`${name} | Caspla(キャスプラ)`)
+    
+  }, [])
 
   const copyUrl = () => {
     const copyUrl = location.href
-    const pageTitle: string = name + ' | Caspla(キャスプラ)'
     const shareData = {
-      title: pageTitle,
+      title: shareTitleState,
       text: '',
       url: location.href
     }
     if (isMobile) {
-      try {
-        navigator.share(shareData)
-      } catch(err) {
-
-      }
+      navigator.share(shareData)
     } else {
       navigator.clipboard.writeText(copyUrl)
       toast.success('クリップボードにコピーしました。', { autoClose: 3000, draggable: true})
