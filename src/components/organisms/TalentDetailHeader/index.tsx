@@ -67,10 +67,11 @@ const TalentDetailHeader = ({
   }, [name])
 
   const copyUrl = () => {
+    console.log(shareTitleState)
     const copyUrl = location.href
     const shareData = {
       title: shareTitleState,
-      text: '',
+      text: shareTitleState,
       url: location.href
     }
     if (isMobile) {
