@@ -7,7 +7,7 @@ const BaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
 export const axiosClient  = axios.create({
   baseURL: BaseUrl,
   paramsSerializer: (params => qs.stringify(params, { arrayFormat: 'repeat' })),
-  timeout: 3000,
+  timeout: 50000,
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*'
