@@ -95,7 +95,11 @@ const TalentDetailHeader = ({
             </div>
           ) : (
             <div className={[styles['o-talent-detail-header__image'], styles['o-talent-detail-header__image--empty']].join(' ')}>
-              <FontAwesomeIcon icon={faImages} className={styles['o-talent-detail-header__image-icon']} />
+              <Image
+                src="/cover-blank.svg"
+                objectFit="contain"
+                layout="fill"
+              />
             </div>
           )
         }

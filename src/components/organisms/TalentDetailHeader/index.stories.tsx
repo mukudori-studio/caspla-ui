@@ -24,5 +24,5 @@ Default.args = {
   instagram: 'hoge',
   tiktok: 'hoge',
   youtube: 'hoge',
-  coverImage: 'https://i0.wp.com/girlydrop.com/wp-content/uploads/2020/02/Whiteday2020-11.jpg'
+  coverImage: ''
 }
