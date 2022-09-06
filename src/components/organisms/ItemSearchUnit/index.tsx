@@ -19,13 +19,13 @@ const ItemSearchUnit = ({
 }:ItemSearchUnitProps) => {
 
   const ageValues = [
-    {value: 'underTeens', text: '10歳未満'},
-    {value: 'teens', text: '10代'},
-    {value: '20s', text: '20代'},
-    {value: '30s', text: '30代'},
-    {value: '40s', text: '40代'},
-    {value: '50s', text: '50代'},
-    {value: '60s', text: '60歳以上'},
+    {value: '10歳未満', text: '10歳未満'},
+    {value: '10代', text: '10代'},
+    {value: '20代', text: '20代'},
+    {value: '30代', text: '30代'},
+    {value: '40代', text: '40代'},
+    {value: '50代', text: '50代'},
+    {value: '60代', text: '60歳以上'},
   ]
   
   const [stateKeyword, setKeyword] = useState('')
