@@ -33,7 +33,7 @@ const Home: NextPage = () => {
 
   return (
     <main className={styles['p-top-page']}>
-      <Meta title="トップ" />
+      <Meta title="トップ" isTop={true} />
       <div className={styles['p-top-page__logo']}>
         <Image
           src='/common/logo.svg'

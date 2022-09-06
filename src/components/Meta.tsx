@@ -1,20 +1,31 @@
 import Head from 'next/head'
+import { useEffect, useState } from 'react'
 
 type MetaProps = {
+  isTop?: boolean
   title: string
   description?: string
 }
 
 const CommonMeta = ({
+  isTop = false,
   title,
   description = "dummy text"
 }: MetaProps) => {
 
+  const [titleState, setTitle] = useState('Caspla(キャスプラ)')
+
+  useEffect(() => {
+
+    if (!isTop) setTitle(`${title} | Caspla(キャスプラ)`)
+
+  }, [title])
+
   return (
     <Head>
-      <title>{title} | Caspla(キャスプラ)</title>
+      <title>{titleState}</title>
       { description && <meta property="description" content={description} /> }
-      <meta property="og:title" content={`${title} | Caspla(キャスプラ)`} />
+      <meta property="og:title" content={titleState} />
       { description && <meta property="og:description" content={description} /> }
       <meta property="og:image" content={`${process.env.NEXT_PUBLIC_SITE_URL}/ogp.png`} />
       <meta name="twitter:card" content="summary_large_image"/>
