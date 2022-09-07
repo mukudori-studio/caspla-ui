@@ -12,9 +12,9 @@ const sessionState = atom({
     role: '',
     casplaId: '',
     fullName: '',
-    productionId: '',
-    productionName: '',
-    productionAdmin: ''
+    companyId: '',
+    companyName: '',
+    isAdmin: false
   },
   effects_UNSTABLE: [persistAtom]
 })

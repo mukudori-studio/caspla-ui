@@ -151,8 +151,7 @@ const Signup = ({
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
         <div className={styles['p-account-registration__item']}>
-          <FormLabel text="会社ロゴ" label="companyImage" />
-          <ThumbnailUploader id="companyImage" thumbnailUrl={props.companyImage} onChange={changeLogo} />
+          <ThumbnailUploader id="companyImage" type="logo" thumbnailUrl={props.companyImage} onChange={changeLogo} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="会社名" label="companyName" required={true} />
