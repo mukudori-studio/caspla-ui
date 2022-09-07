@@ -25,7 +25,7 @@ const CommonMeta = ({
     <Head>
       <title>{titleState}</title>
       { description && <meta property="description" content={description} /> }
-      <meta property="og:title" content={titleState} />
+      <meta property="og:title" content="Caspla(キャスプラ)" />
       { description && <meta property="og:description" content={description} /> }
       <meta property="og:image" content={`${process.env.NEXT_PUBLIC_SITE_URL}/ogp.png`} />
       <meta name="twitter:card" content="summary_large_image"/>
