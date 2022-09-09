@@ -25,7 +25,7 @@ const ItemSearchUnit = ({
     {value: '30代', text: '30代'},
     {value: '40代', text: '40代'},
     {value: '50代', text: '50代'},
-    {value: '60代', text: '60歳以上'},
+    {value: '60歳以上', text: '60歳以上'},
   ]
   
   const [stateKeyword, setKeyword] = useState('')
