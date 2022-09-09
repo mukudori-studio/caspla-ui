@@ -66,7 +66,7 @@ const LoginedHeaderMenu = () => {
             <li><Link href="/setting/edit/account"><a className={menuStyle} onClick={hideMenu}>アカウント設定</a></Link></li>
             { session.role === 'FREE_TALENT' || session.role === 'PRODUCTION_TALENT' && <li><Link href="/setting/edit/profile"><a className={menuStyle} onClick={hideMenu}>プロフィール編集</a></Link></li> }
             { session.role === 'PRODUCTION_ADMIN' && <li><Link href="/setting/production/"><a className={menuStyle} onClick={hideMenu}>プロダクション管理</a></Link></li>}
-            { session.role === 'COMPANY_ADMIN' && '<li><Link href="/setting/company/"><a className={menuStyle} onClick={hideMenu}>組織管理</a></Link></li>' }
+            { session.role === 'COMPANY_ADMIN' && <li><Link href="/setting/company/"><a className={menuStyle} onClick={hideMenu}>組織管理</a></Link></li> }
             <li><button onClick={signOut} className={menuStyle}>ログアウト</button></li>
           </ul>
         </PopOver>

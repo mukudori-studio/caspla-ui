@@ -5,6 +5,7 @@ import type { NextPage } from 'next'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { sessionState } from '@/stores/Session'
 import { toast } from 'react-toastify'
+import getAccount from '@/apis/settings/getAccount'
 import checkCasplaId from '@/apis/auth/checkCasplaId'
 import fanRegistration from '@/apis/auth/fanRegistration'
 import Meta from '@/components/Meta'
@@ -45,6 +46,9 @@ const AccountRegistration: NextPage = () => {
       toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
     } else if (session.accessToken !== '') {
       // TODO：API取得
+      getAccount(session.casplaId).then(res => {
+        console.log(res.data)
+      })
     }
   }, [])
 
