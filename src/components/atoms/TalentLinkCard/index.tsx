@@ -15,7 +15,7 @@ const TalentLinkCard = ({
   name
 }: TalentLinkCardProps) => {
   return (
-    <a href={`/talents/${casplaId}`} className={styles['a-talent-link-card']}>
+    <a href={`/talents/detail/${casplaId}`} className={styles['a-talent-link-card']}>
       {
         thumbnail !== '' ? (
           <div className={styles['a-talent-link-card__thumbnail']}>
