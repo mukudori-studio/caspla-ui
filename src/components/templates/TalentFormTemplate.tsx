@@ -10,6 +10,7 @@ import Textarea from '@/components/molecules/Forms/Textarea'
 import Select from '@/components/atoms/Forms/Select'
 import DateSelect from '@/components/molecules/Forms/DateSelect'
 import FormLabel from '@/components/atoms/Forms/Label'
+import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import CoverImageUploader from '@/components/organisms/CoverImageUploader'
 import activities from '@/utils/activities'
 import bloodTypes from '@/utils/bloodTypes'
@@ -50,6 +51,7 @@ type InputProps = {
 
 type editPorps = {
   editType?: 'register' | 'edit'
+  userId: string
   fullName: string
   furigana: string
   casplaId: string
@@ -156,6 +158,8 @@ const TalentFormTemplate = ({
     })
   }
 
+  const changeThumbnail = (val: any) => setValue('thumbnailImage', val)
+
   const changeCover = (val:any) => setValue('coverImage', val)
 
   const onSubmit: SubmitHandler<InputProps> = (data) => submitForm(data)
@@ -164,8 +168,7 @@ const TalentFormTemplate = ({
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
         <div className={styles['p-account-registration__item']}>
-          <FormLabel text="カバー写真" label="coverImage" required={false} />
-          <CoverImageUploader id="coverImage" thumbnailUrl={props.coverImage} onChange={changeCover} />
+          <ThumbnailUploader id={props.userId} onChange={changeThumbnail} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="名前" label="fullName" required={true} />
@@ -174,10 +177,6 @@ const TalentFormTemplate = ({
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="フリガナ" label="furigana" required={false} />
           <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} type={'text'} />
-        </div>
-        <div className={styles['p-account-registration__item']}>
-          <FormLabel text="メールアドレス" label="email" required={true} />
-          <Input id="email" register={register} required={true} type={'email'} disabled={false} note="※メールアドレスは後ほど管理画面で変更が可能です。" />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="Caspla ID" label="casplaId" required={true} />
@@ -189,6 +188,10 @@ const TalentFormTemplate = ({
               <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
             </div>
           </div>
+        </div>
+        <div className={styles['p-account-registration__item']}>
+          <FormLabel text="カバー写真" label="coverImage" required={false} />
+          <CoverImageUploader id="coverImage" thumbnailUrl={props.coverImage} onChange={changeCover} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="略歴" label="profile" />
