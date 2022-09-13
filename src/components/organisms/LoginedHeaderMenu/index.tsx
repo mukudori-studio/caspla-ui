@@ -14,8 +14,8 @@ const LoginedHeaderMenu = () => {
 
   const [showMenu, setToggleMenu] = useState(false)
   const [session, setSession] = useRecoilState(sessionState)
+  console.log(session)
   const [sessionThumbnail, setThumbnailSession] = useRecoilState(sessionThumbnailState)
-  console.log(sessionThumbnail)
   const resetSession = useResetRecoilState(sessionState)
   const resetSessionThumbnail = useResetRecoilState(sessionThumbnailState)
 

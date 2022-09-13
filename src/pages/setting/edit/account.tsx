@@ -33,7 +33,7 @@ type InputProps = {
 
 const AccountRegistration: NextPage = () => {
 
-  const [roleState, setRole] = useState('fan')
+  const [roleState, setRole] = useState('FAN_USER')
   const [checledCasplaIdState, setCheckCasplaId] = useState(false)
   const [needForLetterState, setNeedForLetter] = useState(true)
   const [submitButtonColorState, setSubmitButtonColor] = useState('primary')
@@ -46,7 +46,7 @@ const AccountRegistration: NextPage = () => {
       toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
     } else if (session.accessToken !== '') {
       // TODO：API取得
-      getAccount(session.casplaId).then(res => {
+      getAccount(session.casplaId, session.accessToken).then(res => {
         console.log(res.data)
       })
     }

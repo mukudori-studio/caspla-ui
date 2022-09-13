@@ -33,6 +33,7 @@ const Signin: NextPage = () => {
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     isSubmitting = true
     signIn(data).then(res => {
+      console.log(res)
       setSession({
         accessToken: res.data.accessToken,
         refreshToken: res.data.refreshToken,
@@ -40,9 +41,9 @@ const Signin: NextPage = () => {
         role: res.data.role,
         fullName: res.data.fullName,
         thumbnailImage: res.data.thumbnailImage,
-        productionId: res.data.productionId,
-        productionName: res.data.productionName,
-        productionAdmin: res.data.productionAdmin
+        companyId: res.data.productionId,
+        companyName: res.data.productionName,
+        isAdmin: res.data.productionAdmin
       })
       Router.push('/dashboard')
     }).catch((err) => {
