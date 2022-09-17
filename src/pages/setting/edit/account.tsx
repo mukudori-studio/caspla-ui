@@ -35,7 +35,7 @@ type InputProps = {
 const AccountRegistration: NextPage = () => {
 
   const [roleState, setRole] = useState('FAN_USER')
-  const [thumbnailState, setThumbnail] = useState('')
+  const [thumbnailState, setThumbnail] = useState<any>('')
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
   const [checkedCasplaIdState, setCheckCasplaId] = useState(false)
   const [needForLetterState, setNeedForLetter] = useState(true)
@@ -84,13 +84,15 @@ const AccountRegistration: NextPage = () => {
   const toggleNeedForLetter = (e:any) => setValue('needForLetter', e.target.checked)
 
   const changeThumbnail = (val: object) => {
-    setValue('thumbnailImage', val)
+    setThumbnail(val)
+    setChangeThumbnail(true)
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    updateAccount(session.casplaId, data, session.accessToken).then(() => {
-      if (changeThumbnailState) {
-        updateThumbnail(session.userId, thumbnailState).then(res => {
+    
+    if (changeThumbnailState) {
+      updateThumbnail(session.userId, thumbnailState).then(() => {
+        updateAccount(session.casplaId, data, session.accessToken).then(() => {
           setSession({
             userId: session.userId,
             thumbnailImage: data.thumbnailImage,
@@ -104,26 +106,33 @@ const AccountRegistration: NextPage = () => {
             companyName: session.companyName,
             isAdmin: session.isAdmin
           })
+          toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+        }).catch(() => {
+          toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
         })
-      } else {
+      })
+    } else {
+      updateAccount(session.casplaId, data, session.accessToken).then((res) => {
         setSession({
           userId: session.userId,
-          thumbnailImage: data.thumbnailImage,
-          fullName: data.fullName,
-          furigana: data.furigana,
-          email: data.email,
-          casplaId: data.casplaId,
-          password: data.password,
+          thumbnailImage: res.data.response_message.thumbnailImage,
+          fullName: res.data.response_message.fullName,
+          furigana: res.data.response_message.furigana,
+          email: res.data.response_message.email,
+          casplaId: res.data.response_message.casplaId,
+          password: res.data.response_message.password,
           role: roleState,
           companyId: session.companyId,
           companyName: session.companyName,
           isAdmin: session.isAdmin
         })
         toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-      }
-    }).catch(() => {
-      toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
-    })
+      }).catch(() => {
+        toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
+      })
+    }
+
+    
   }
 
   return (
@@ -135,7 +144,7 @@ const AccountRegistration: NextPage = () => {
           <section className={styles['p-account-registration__section']}>
             <PageTitle title="アカウント管理" />
             <div className={styles['p-account-registration__item']}>
-              <ThumbnailUploader id="thumbnail" onChange={changeThumbnail} />
+              <ThumbnailUploader id="thumbnail" onChange={changeThumbnail} thumbnailUrl={thumbnailState} />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="名前" label="fullName" required={true} />
