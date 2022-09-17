@@ -42,6 +42,7 @@ const TalentEdit: NextPage = () => {
             fullName=""
             furigana=""
             casplaId=""
+            userId={''}
           />
         </div>
       </section>
