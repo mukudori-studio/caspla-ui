@@ -66,30 +66,32 @@ const ItemSearchUnit = ({
       <div className={styles['o-item-search-unit__lead']}>
         <span>または、さらに条件を変更して検索</span>
       </div>
-      <div className={styles['o-item-search-unit__content']}>
-        <h2 className={styles['o-item-search-unit__title']}>絞り込み条件</h2>
-        <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--gender']].join(' ')}>
-          <h3 className={styles['o-item-search-unit__label']}><span>性別</span></h3>
-          <div className={styles['o-item-search-unit__check-box']}>
-            <CheckboxButtons checkedItems={stateGender} checkboxes={[
-              {value: '男性', text: '男性'}, {value: '女性', text: '女性'},
-            ]} onChange={onChangeGender} />
+      <div className={styles['o-item-search-unit__wrapper']}>
+        <div className={styles['o-item-search-unit__content']}>
+          <h2 className={styles['o-item-search-unit__title']}>条件を絞り込んで再検索</h2>
+          <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--gender']].join(' ')}>
+            <h3 className={styles['o-item-search-unit__label']}><span>性別</span></h3>
+            <div className={styles['o-item-search-unit__check-box']}>
+              <CheckboxButtons checkedItems={stateGender} checkboxes={[
+                {value: '男性', text: '男性'}, {value: '女性', text: '女性'},
+              ]} onChange={onChangeGender} />
+            </div>
+          </div>
+          <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--age']].join(' ')}>
+            <h3 className={styles['o-item-search-unit__label']}><span>年齢</span></h3>
+            <div className={styles['o-item-search-unit__check-box']}>
+              <CheckboxButtons checkedItems={stateAge} checkboxes={ageValues} onChange={onChangeAge} />
+            </div>
+          </div>
+          <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--activity']].join(' ')}>
+            <h3 className={styles['o-item-search-unit__label']}><span>活動区分</span></h3>
+            <div className={styles['o-item-search-unit__check-box']}>
+              <CheckboxButtons checkedItems={stateActivity} checkboxes={activities} onChange={onChangeActivity} />
+            </div>
           </div>
         </div>
-        <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--age']].join(' ')}>
-          <h3 className={styles['o-item-search-unit__label']}><span>年齢</span></h3>
-          <div className={styles['o-item-search-unit__check-box']}>
-            <CheckboxButtons checkedItems={stateAge} checkboxes={ageValues} onChange={onChangeAge} />
-          </div>
-        </div>
-        <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--activity']].join(' ')}>
-          <h3 className={styles['o-item-search-unit__label']}><span>活動区分</span></h3>
-          <div className={styles['o-item-search-unit__check-box']}>
-            <CheckboxButtons checkedItems={stateActivity} checkboxes={activities} onChange={onChangeActivity} />
-          </div>
-        </div>
+        <div className={styles['o-item-search-unit__search']}><SearchKeyword onClick={onSearch} color="white" /></div>
       </div>
-      <div className={styles['o-item-search-unit__search']}><SearchKeyword onClick={onSearch} /></div>
     </div>
   )
 }

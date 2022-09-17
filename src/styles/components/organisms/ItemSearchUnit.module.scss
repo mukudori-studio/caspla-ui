@@ -42,9 +42,12 @@
     }
   }
 
-  &__content {
+  &__wrapper {
     background: g.$color-mono-5;
-    padding: 20px 15px 15px;
+    padding: 0 15px 30px;
+  }
+
+  &__content {
     border-radius: 10px;
     position: relative;
     margin: 0 auto 30px;
@@ -52,7 +55,11 @@
     @include g.mq-up(tablet) {
       @include g.flex(start, start);
       gap: 15px;
-      padding: 34px 26px 26px;
+      padding: 34px 26px 0;
+    }
+
+    @include g.mq-down(tablet--under) {
+      padding-top: 20px;
     }
   }
 
@@ -66,7 +73,7 @@
     margin: 0;
 
     @include g.mq-down(tablet--under) {
-      left: 15px;
+      left: 0;
     }
   }
 

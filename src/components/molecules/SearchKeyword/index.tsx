@@ -6,11 +6,16 @@ import buttonStyles from '@/styles/components/atoms/Button.module.scss'
 import styles from '@/styles/components/molecules/SearchKeyword.module.scss'
 
 type SearchKeywordProps = {
+  color?: 'white' | 'gray'
   placeholder?: string
   onClick: (val: string) => void
 }
 
-const SearchKeyword = ({ placeholder = '', onClick }:SearchKeywordProps) => {
+const SearchKeyword = ({
+  color = 'gray',
+  placeholder = '',
+  onClick
+}:SearchKeywordProps) => {
   
   const [stateKeyword, setKeyword] = useState('')
   
@@ -26,13 +31,15 @@ const SearchKeyword = ({ placeholder = '', onClick }:SearchKeywordProps) => {
     setKeyword(inputedKeyword)
   }, [])
 
+  const inputColor = color === 'white' ? [styles['m-search-keyword__input'], styles['m-search-keyword__input--white']].join(' ') : styles['m-search-keyword__input']
+
   return (
     <div className={styles['m-search-keyword']}>
       <div className={styles['m-search-keyword__icon-wrap']}>
         <FontAwesomeIcon icon={faMagnifyingGlass} className={styles['m-search-keyword__icon']} />
       </div>
       <input
-        className={styles['m-search-keyword__input']}
+        className={inputColor}
         type="text"
         maxLength={255}
         value={stateKeyword}

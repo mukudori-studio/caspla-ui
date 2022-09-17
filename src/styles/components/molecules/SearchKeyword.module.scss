@@ -23,6 +23,10 @@
       height: 40px;
       padding: 0 62px 0 44px;
     }
+
+    &--white {
+      background: g.$color-mono-0;
+    }
   }
 
   &__search {
