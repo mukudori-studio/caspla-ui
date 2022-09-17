@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import Meta from '@/components/Meta'
@@ -8,6 +8,12 @@ import styles from '@/styles/ProductionSetting.module.scss'
 
 
 const TalentEdit: NextPage = () => {
+
+  const [changeThumbnailState, setChangeThumbnail] = useState(false)
+  const [changeCoverState, setChangeCover] = useState(false)
+
+  const onChangeThumbnail = () => setChangeThumbnail(true)
+  const onChangeCover = () => setChangeCover(true)
   
   const onSubmitAddTalent = (data:any) => {
     

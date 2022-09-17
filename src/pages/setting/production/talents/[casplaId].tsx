@@ -16,6 +16,11 @@ const TalentEdit: NextPage = () => {
     fullName: 'aaaa',
     furigana: 'アアアアア'
   })
+  const [changeThumbnailState, setChangeThumbnail] = useState(false)
+  const [changeCoverState, setChangeCover] = useState(false)
+
+  const onChangeThumbnail = () => setChangeThumbnail(true)
+  const onChangeCover = () => setChangeCover(true)
   
   const onUpdateProfile = (data:any) => {
     
@@ -47,6 +52,8 @@ const TalentEdit: NextPage = () => {
         <div className={styles['p-production-setting__edit']}>
           <TalentFormTemplate
             editType="edit"
+            changeThumbnail={onChangeThumbnail}
+            changeCover={onChangeCover}
             submitForm={onUpdateProfile}
             fullName={talentState.fullName}
             furigana={talentState.furigana}

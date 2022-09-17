@@ -81,11 +81,15 @@ type editPorps = {
   activity?: Array<string>
   history?: string
   note?: string
+  changeCover: (data: any) => void
+  changeThumbnail: (data: any) => void
   submitForm: (data: any) => void
 }
 
 const TalentFormTemplate = ({
   editType = 'register',
+  changeCover,
+  changeThumbnail,
   submitForm,
   ...props
 }: editPorps) => {
@@ -158,9 +162,15 @@ const TalentFormTemplate = ({
     })
   }
 
-  const changeThumbnail = (val: any) => setValue('thumbnailImage', val)
+  const onChangeThumbnail = (val: any) => {
+    setValue('thumbnailImage', val)
+    changeThumbnail(true)
+  }
 
-  const changeCover = (val:any) => setValue('coverImage', val)
+  const onChangeCover = (val:any) => {
+    setValue('coverImage', val)
+    changeCover(true)
+  }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => submitForm(data)
 
@@ -168,7 +178,7 @@ const TalentFormTemplate = ({
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
         <div className={styles['p-account-registration__item']}>
-          <ThumbnailUploader id={props.userId} onChange={changeThumbnail} />
+          <ThumbnailUploader id={props.userId} onChange={onChangeThumbnail} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="名前" label="fullName" required={true} />
@@ -191,7 +201,7 @@ const TalentFormTemplate = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="カバー写真" label="coverImage" required={false} />
-          <CoverImageUploader id="coverImage" thumbnailUrl={props.coverImage} onChange={changeCover} />
+          <CoverImageUploader id="coverImage" thumbnailUrl={props.coverImage} onChange={onChangeCover} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="略歴" label="profile" />
