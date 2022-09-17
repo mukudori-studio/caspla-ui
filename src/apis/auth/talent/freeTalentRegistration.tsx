@@ -1,13 +1,9 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const talentRegistration = async (account: any, data: any, thumbnail?: string) => {
+const freeTalentRegistration = async (data: any, casplaId: string) => {
   try {
 
     const postData = {
-      casplaId: account.casplaId,
-      fullName: account.fullName,
-      email: account.email,
-      password: account.password,
       gender: data.gender,
       profile: data.profile,
       birthYear: parseFloat(data.birthYear),
@@ -37,11 +33,11 @@ const talentRegistration = async (account: any, data: any, thumbnail?: string) =
       activities: data.activity,
     }
 
-    const res = await axiosClient.post('/api/v1/casts/new', postData)
+    const res = await axiosClient.post(`/api/v1/auth/update_free_talent?caspla_id=${casplaId}`, postData)
     return res
   } catch(err) {
     throw err
   }
 }
 
-export default talentRegistration
+export default freeTalentRegistration

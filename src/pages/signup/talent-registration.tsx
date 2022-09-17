@@ -7,7 +7,8 @@ import { registrationState } from '@/stores/Registration'
 import { sessionState, sessionThumbnailState } from '@/stores/Session'
 import updateCover from '@/apis/images/updateCover'
 import updateThumbnail from '@/apis/images/updateThumbnail'
-import talentRegistration from '@/apis/auth/talentRegistration'
+import freeTalentRegistration from '@/apis/auth/talent/freeTalentRegistration'
+import freeTalentUserRegistration from '@/apis/auth/talent/freeTalentUserRegistration'
 import Meta from '@/components/Meta'
 import TalentRegistrationTemplate from '@/components/templates/TalentRegistrationTemplate'
 import Button from '@/components/atoms/Button'
@@ -21,34 +22,42 @@ const TalentRegistration: NextPage = () => {
   const [sessionThumbnail, setThumbnailSession] = useRecoilState(sessionThumbnailState)
   
   const onSubmit = (data:any) => {
-    talentRegistration(registration, data).then((res) => {
-      setSession({
-        userId: Number(res.data.response_message.userId),
-        accessToken: res.data.response_message.accessToken,
-        casplaId: res.data.response_message.casplaId,
-        role: res.data.response_message.role,
-        fullName: res.data.response_message.fullName,
-        companyId: '',
-        companyName: '',
-        isAdmin: false
-      })
-      if (registration.thumbnail) {
-        updateThumbnail(registration.userId, registration.thumbnail).then(res => {
-          setThumbnailSession({ thumbnailImage: res.data.response_message })
+    let userResponse:any
 
-          if (data.coverImage) {
-            updateCover(registration.userId, data.coverImage).then(() => Router.push('/signup/complete'))
-          } else {
-            Router.push('/signup/complete')
-          }
+    freeTalentUserRegistration(registration).then(res => {
+      userResponse = res.data.response_message
+
+      freeTalentRegistration(data, registration.casplaId).then((res: { data: { response_message: { userId: any; accessToken: any; casplaId: any; role: any; fullName: any } } }) => {
+        setSession({
+          userId: Number(res.data.response_message.userId),
+          accessToken: res.data.response_message.accessToken,
+          casplaId: res.data.response_message.casplaId,
+          role: res.data.response_message.role,
+          fullName: res.data.response_message.fullName,
+          companyId: '',
+          companyName: '',
+          isAdmin: false
         })
-      } else {
-        Router.push('/signup/complete')
-      }
+
+        if (registration.thumbnail) {
+          updateThumbnail(registration.userId, registration.thumbnail).then(res => {
+            setThumbnailSession({ thumbnailImage: res.data.response_message })
+  
+            if (data.coverImage) {
+              updateCover(registration.userId, data.coverImage).then(() => Router.push('/signup/complete'))
+            } else {
+              Router.push('/signup/complete')
+            }
+          })
+        } else {
+          Router.push('/signup/complete')
+        }
       })
-      .catch(err => {
-        toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
-      })
+    }).catch(err => {
+      toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
+    })
+    
+      
   }
 
   useEffect(() => {
