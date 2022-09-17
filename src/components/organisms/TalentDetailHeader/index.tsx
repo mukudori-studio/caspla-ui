@@ -85,7 +85,7 @@ const TalentDetailHeader = ({
     <div className={styles['o-talent-detail-header']}>
       <div className={styles['o-talent-detail-header__cover']}>
         {
-          coverImage !== '' ? (
+          (coverImage !== '' || coverImage !== null) ? (
             <div className={styles['o-talent-detail-header__image']}>
               <Image
                 src={coverImage}
