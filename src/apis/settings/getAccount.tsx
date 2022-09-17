@@ -6,6 +6,9 @@ const getAccount = async (casplaId: string, accessToken: string) => {
       params: {
         caspla_id: casplaId,
         loggedUser: accessToken
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       }
     })
     return res

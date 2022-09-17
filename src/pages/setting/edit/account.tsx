@@ -5,9 +5,10 @@ import type { NextPage } from 'next'
 import { useRecoilState, useResetRecoilState } from 'recoil'
 import { sessionState } from '@/stores/Session'
 import { toast } from 'react-toastify'
+import updateThumbnail from '@/apis/images/updateThumbnail'
 import getAccount from '@/apis/settings/getAccount'
+import updateAccount from '@/apis/settings/updateAccount'
 import checkCasplaId from '@/apis/auth/checkCasplaId'
-import fanRegistration from '@/apis/auth/fanRegistration'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import Checkbox from '@/components/atoms/Forms/Checkbox'
@@ -34,9 +35,10 @@ type InputProps = {
 const AccountRegistration: NextPage = () => {
 
   const [roleState, setRole] = useState('FAN_USER')
-  const [checledCasplaIdState, setCheckCasplaId] = useState(false)
+  const [thumbnailState, setThumbnail] = useState('')
+  const [changeThumbnailState, setChangeThumbnail] = useState(false)
+  const [checkedCasplaIdState, setCheckCasplaId] = useState(false)
   const [needForLetterState, setNeedForLetter] = useState(true)
-  const [submitButtonColorState, setSubmitButtonColor] = useState('primary')
   const [session, setSession] = useRecoilState(sessionState)
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
@@ -45,9 +47,11 @@ const AccountRegistration: NextPage = () => {
       Router.replace('/signin')
       toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
     } else if (session.accessToken !== '') {
-      // TODO：API取得
       getAccount(session.casplaId, session.accessToken).then(res => {
-        console.log(res.data)
+        setValue('fullName', res.data.response_message.fullName)
+        setValue('furigana', res.data.response_message.furigana)
+        setValue('casplaId', res.data.response_message.casplaId)
+        setValue('password', res.data.response_message.password)
       })
     }
   }, [])
@@ -62,8 +66,9 @@ const AccountRegistration: NextPage = () => {
   const filteredRole:any = getValues('role') === undefined ? roles[0] : roles.find(data => data.id === getValues('role'))
 
   const onChangeRole = (e:any) => {
-    const changeValue = e.target.value
-    setRole(changeValue)
+    // TODO：権限切り替えを実施するときにはコメントアウト外す
+    // const changeValue = e.target.value
+    // setRole(changeValue)
   }
 
   const onCheckId = async () => {
@@ -83,17 +88,39 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    fanRegistration(data, '').then(() => {
-      setSession({
-        thumbnailImage: data.thumbnailImage,
-        fullName: data.fullName,
-        furigana: data.furigana,
-        email: data.email,
-        casplaId: data.casplaId,
-        password: data.password,
-        role: roleState
-      })
-      toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+    updateAccount(session.casplaId, data, session.accessToken).then(() => {
+      if (changeThumbnailState) {
+        updateThumbnail(session.userId, thumbnailState).then(res => {
+          setSession({
+            userId: session.userId,
+            thumbnailImage: data.thumbnailImage,
+            fullName: data.fullName,
+            furigana: data.furigana,
+            email: data.email,
+            casplaId: data.casplaId,
+            password: data.password,
+            role: roleState,
+            companyId: session.companyId,
+            companyName: session.companyName,
+            isAdmin: session.isAdmin
+          })
+        })
+      } else {
+        setSession({
+          userId: session.userId,
+          thumbnailImage: data.thumbnailImage,
+          fullName: data.fullName,
+          furigana: data.furigana,
+          email: data.email,
+          casplaId: data.casplaId,
+          password: data.password,
+          role: roleState,
+          companyId: session.companyId,
+          companyName: session.companyName,
+          isAdmin: session.isAdmin
+        })
+        toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+      }
     }).catch(() => {
       toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
     })
@@ -141,7 +168,7 @@ const AccountRegistration: NextPage = () => {
               <Checkbox id={'newsLetter'} checked={needForLetterState} label="Caspla のニュースレターを受け取る" onChange={toggleNeedForLetter} />
             </div>
             <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
-              <Button text="変更を保存" color={submitButtonColorState} size="large" type="submit" weight="bold" disabled={!checledCasplaIdState} />
+              <Button text="変更を保存" color='primary' size="large" type="submit" weight="bold" disabled={!checkedCasplaIdState} />
             </div>
           </section>
           <section className={styles['p-account-registration__section']}>

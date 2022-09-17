@@ -126,6 +126,9 @@ const AccountRegistration: NextPage = (props:any) => {
           casplaId: res.data.response_message.casplaId,
           role: res.data.response_message.role,
           fullName: res.data.response_message.fullName,
+          companyId: '',
+          companyName: '',
+          isAdmin: false
         })
 
         if (thumbnailState !== '') {
