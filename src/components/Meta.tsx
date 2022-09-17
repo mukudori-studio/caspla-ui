@@ -10,7 +10,7 @@ type MetaProps = {
 const CommonMeta = ({
   isTop = false,
   title,
-  description = "dummy text"
+  description = "Caspla(キャスプラ)はあなたのキャスティングを手助けするタレントデータベース。好きな条件を入れて検索してみよう!"
 }: MetaProps) => {
 
   const [titleState, setTitle] = useState('Caspla(キャスプラ)')
@@ -24,9 +24,9 @@ const CommonMeta = ({
   return (
     <Head>
       <title>{titleState}</title>
-      { description && <meta property="description" content={description} /> }
+      <meta property="description" content="Caspla(キャスプラ)はあなたのキャスティングを手助けするタレントデータベース。好きな条件を入れて検索してみよう!" />
       <meta property="og:title" content="Caspla(キャスプラ)" />
-      { description && <meta property="og:description" content={description} /> }
+      <meta property="og:description" content="Caspla(キャスプラ)はあなたのキャスティングを手助けするタレントデータベース。好きな条件を入れて検索してみよう!" />
       <meta property="og:image" content={`${process.env.NEXT_PUBLIC_SITE_URL}/ogp.png`} />
       <meta name="twitter:card" content="summary_large_image"/>
       <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
