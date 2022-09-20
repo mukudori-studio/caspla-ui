@@ -48,14 +48,14 @@ const CoverImageUploader = ({
 
       <div className={styles['o-cover-image-upload__content']}>
         {
-          (thumbnailState !== '' && thumbnailUrl !== '' && thumbnailState !== null && thumbnailUrl !== null) && (
+          ((thumbnailState !== '' && thumbnailState !== null) || (thumbnailUrl !== '' && thumbnailUrl !== null)) && (
             <button className={styles['o-cover-image-upload__cancel']} onClick={resetFile}>
               <FontAwesomeIcon icon={faXmark} className={styles['o-cover-image-upload__cancel-icon']} />
             </button>
           )
         }
         {
-          (thumbnailState !== '' && thumbnailUrl !== '' && thumbnailState !== null && thumbnailUrl !== null) ? (
+          ((thumbnailState !== '' && thumbnailState !== null) || (thumbnailUrl !== '' && thumbnailUrl !== null)) ? (
             <img src={thumbnailState || thumbnailUrl} className={styles['o-cover-image-upload__image']}/>
           ) : (
             <FontAwesomeIcon icon={faImages} className={styles['o-cover-image-upload__image-icon']} />
