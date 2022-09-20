@@ -9,7 +9,7 @@ const freeTalentUserRegistration = async (data: any) => {
       email: data.email,
       casplaId: data.casplaId,
       password: data.password,
-      role: 'TALENT'
+      role: 'FREE_TALENT'
     }
 
     const res = await axiosClient.post('/api/v1/auth/save_user', postData)
