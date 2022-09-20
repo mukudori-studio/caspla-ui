@@ -1,6 +1,6 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const getProductionDetail = async (productionId: string | string[] | undefined) => {
+const getProductionDetailTalents = async (productionId: string | string[] | undefined) => {
   try {
 
     const response = await axiosClient.get('/api/v1/production/get_talents_list', {
@@ -15,4 +15,4 @@ const getProductionDetail = async (productionId: string | string[] | undefined) 
   }
 }
 
-export default getProductionDetail
+export default getProductionDetailTalents

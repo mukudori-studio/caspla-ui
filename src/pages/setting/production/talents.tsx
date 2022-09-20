@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import Meta from '@/components/Meta'
+import { toast } from 'react-toastify'
+import { useRecoilState, useResetRecoilState } from 'recoil'
+import { sessionState, sessionThumbnailState } from '@/stores/Session'
+import getProductionDetailTalents from '@/apis/productions/getProductionTalents'
 import LinkButton from '@/components/atoms/LinkButton'
 import TalentItem from '@/components/organisms/Production/TalentItem'
 import styles from '@/styles/ProductionSetting.module.scss'
@@ -8,28 +12,22 @@ import buttonStyles from '@/styles/components/atoms/Button.module.scss'
 
 const BelongTalents: NextPage = () => {
 
-  const [checkedTalentState, setCheckedTalent] = useState<any>([]);
-  // const [talents, setTalent] = useState([])
-  const [talents, setTalent] = useState([
-    {id: 'val1',
-    value: 'val1',
-    label: 'ラベル1',
-    thumbnailImage: '',
-    casplaId: 'testA',
-    fullName: 'aaaa'},
-    {id: 'val2',
-    value: 'val2',
-    label: 'ラベル2',
-    thumbnailImage: '',
-    casplaId: 'testB',
-    fullName: 'ccc'},
-    {id: 'val3',
-    value: 'val3',
-    label: 'ラベル3',
-    thumbnailImage: '',
-    casplaId: 'testC',
-    fullName: 'ccc'}
-  ])
+  const [checkedTalentState, setCheckedTalent] = useState<any>([])
+  const [session, setSession] = useRecoilState(sessionState)
+  const [talents, setTalent] = useState([])
+  
+
+  useEffect(() => {
+    if (session.companyId === undefined) {
+      toast.error('アクセスに失敗しました。ログインし直してください。', { autoClose: 3000, draggable: true})
+    } else {
+      getProductionDetailTalents(session.companyId).then(res => {
+        setTalent(res.response_message)
+      }).catch(() => {
+        toast.error('タレント情報の取得に失敗しました。', { autoClose: 3000, draggable: true})
+      })
+    }
+  }, [])
   
   const toggleTalent = (e: any) => {
     const checkedValue = e.target.id
