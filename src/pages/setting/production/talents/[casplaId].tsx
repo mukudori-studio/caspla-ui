@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import Router, { useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import Meta from '@/components/Meta'
+import { useRecoilState } from 'recoil'
+import { sessionState } from '@/stores/Session'
+import getTalentDetail from '@/apis/settings/production/getTalentDetail'
 import LinkButton from '@/components/atoms/LinkButton'
 import TalentFormTemplate from '@/components/templates/TalentFormTemplate'
 import styles from '@/styles/ProductionSetting.module.scss'
@@ -9,18 +13,23 @@ import styles from '@/styles/ProductionSetting.module.scss'
 
 const TalentEdit: NextPage = () => {
 
-  // const [talents, setTalent] = useState([])
-  const [talentState, setTalent] = useState({
-    thumbnailImage: '',
-    casplaId: 'testA',
-    fullName: 'aaaa',
-    furigana: 'アアアアア'
-  })
+  const router = useRouter()
+  const { casplaId } = router.query
+  const [session, setSession] = useRecoilState(sessionState)
+
+  const [talentState, setTalent] = useState<any>({})
+  
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
   const [changeCoverState, setChangeCover] = useState(false)
 
   const onChangeThumbnail = () => setChangeThumbnail(true)
   const onChangeCover = () => setChangeCover(true)
+
+  useEffect(() => {
+    getTalentDetail(session.casplaId, casplaId).then(res => {
+      setTalent(res.response_message)
+    })
+  })
   
   const onUpdateProfile = (data:any) => {
     
@@ -55,9 +64,9 @@ const TalentEdit: NextPage = () => {
             changeThumbnail={onChangeThumbnail}
             changeCover={onChangeCover}
             submitForm={onUpdateProfile}
-            fullName={talentState.fullName}
-            furigana={talentState.furigana}
-            casplaId={talentState.casplaId}
+            fullName={talentState?.fullName}
+            furigana={talentState?.furigana}
+            casplaId={talentState?.casplaId}
             userId={''}
           />
         </div>
