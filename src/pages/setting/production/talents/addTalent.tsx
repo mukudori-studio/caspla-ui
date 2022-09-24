@@ -49,7 +49,12 @@ const TalentEdit: NextPage = () => {
             furigana=""
             casplaId=""
             userId={''}
-          />
+            changeCover={function (data: any): void {
+              throw new Error('Function not implemented.')
+            } }
+            changeThumbnail={function (data: any): void {
+              throw new Error('Function not implemented.')
+            } }          />
         </div>
       </section>
     </main>
