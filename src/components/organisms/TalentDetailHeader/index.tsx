@@ -6,7 +6,6 @@ import { faImages, faUser, faShareNodes } from '@fortawesome/free-solid-svg-icon
 import { toast } from 'react-toastify'
 import LabelTexts from '@/components/atoms/LabelTexts'
 import SnsLinksArea from '@/components/organisms/SnsLinksArea'
-import activities from '@/utils/activities'
 import styles from '@/styles/components/organisms/TalentDetailHeader.module.scss'
 
 type TalentDetailHeaderProps = {
@@ -47,9 +46,6 @@ const TalentDetailHeader = ({
   ...props
 }: TalentDetailHeaderProps) => {
 
-  // TODO：ループ処理整理
-  const filteredActivity = activities.filter(data => activity.find(val => data.value === val))
-  const formattedActivity = filteredActivity.map(data => data.text)
   const [shareTitleState, setShareTitle] = useState('')
   const [isMobile, setIsMobile] = useState(false)
 
@@ -122,8 +118,8 @@ const TalentDetailHeader = ({
             )
           }
           {
-            activities.length > 0 && (
-              <div className={styles['o-talent-detail-header__activity']}><LabelTexts texts={formattedActivity} color={'purple'} /></div>
+            activity.length > 0 && (
+              <div className={styles['o-talent-detail-header__activity']}><LabelTexts texts={activity} color={'purple'} /></div>
             )
           }
           {/* TODO:bookmarkあとで追加 */}
