@@ -6,9 +6,9 @@ import styles from '@/styles/components/organisms/TalentProfile.module.scss'
 // TODO：あとでNumber型の型推論直す
 type TalentProfileProps = {
   gender?: string
-  birthYear: number
-  birthMonth: number
-  birthDay: number
+  birthYear?: number | null
+  birthMonth?: number | null
+  birthDay?: number | null
   age?: any
   starSign?: string
   birthplace?: string
@@ -25,9 +25,9 @@ type TalentProfileProps = {
 
 const TalentProfile = ({
   gender = '',
-  birthYear,
-  birthMonth,
-  birthDay,
+  birthYear = null,
+  birthMonth = null,
+  birthDay = null,
   age = null,
   starSign = '',
   birthplace = '',
@@ -70,7 +70,9 @@ const TalentProfile = ({
             <>
               <dt className={styles['o-talent-profile__label']}>生年月日</dt>
               <dd className={styles['o-talent-profile__text']}>
-                {`${birthYear && `${birthYear}年`}${birthMonth && `${birthMonth}月`}${birthDay && `${birthDay}日`}`}
+                {birthYear && `${birthYear}年`}
+                {birthMonth && `${birthMonth}月`}
+                {birthDay !== null && `${birthDay}日`}
               </dd>
             </>
           )
