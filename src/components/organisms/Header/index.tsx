@@ -72,7 +72,7 @@ const Header = ({
           </a>
         </Link>
       </div>
-      { showMenuState && <div className={styles['o-header__search']}><SearchKeyword onClick={onSearch} placeholder="タレント検索" /></div> }
+      {/* { showMenuState && <div className={styles['o-header__search']}><SearchKeyword onClick={onSearch} placeholder="タレント検索" /></div> } */}
       {
         logined ? (
           <LoginedHeaderMenu />
