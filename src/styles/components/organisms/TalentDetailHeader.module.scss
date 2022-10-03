@@ -118,7 +118,7 @@
     @include g.flex(end);
     margin-top: -16px;
   }
-  
+
   &__link {
     @include g.flex(center);
     min-width: 120px;
@@ -160,7 +160,7 @@
     position: absolute;
     top: 4px;
     right: 0;
-    color: g.$color-primary;
+    color: g.$color-mono-50;
     font-size: 16px;
     gap: 4px;
     font-weight: bold;
