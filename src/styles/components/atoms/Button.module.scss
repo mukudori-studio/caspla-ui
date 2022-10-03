@@ -9,10 +9,12 @@
   text-align: center;
   cursor: pointer;
   transition: .2s;
+  background: g.$color-mono-10;
+  color: g.$color-mono-0;
 
   &:hover, &:active {
-    background: g.$color-active;
-    color: g.$color-primary;
+    background: g.$color-mono-50;
+    color: g.$color-mono-0;
   }
 
   // Size

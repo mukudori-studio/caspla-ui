@@ -42,7 +42,7 @@ const PaginationWrapper = styled.div`
     justify-content: center;
     width: 65px;
     height: 65px;
-    color: #815296;
+    color: #3f4d5f;
     background: #E6E8EA;
     border-radius: 100%;
     font-weight: bold;
@@ -62,7 +62,7 @@ const PaginationWrapper = styled.div`
 @media (max-width: 600px) {
   & ul {
     gap: 8px;
-  }  
+  }
   & li {
     a {
       width: 32px;
@@ -77,7 +77,7 @@ const PaginationWrapper = styled.div`
       }
     }
   }
-  
+
 }
 `
 
