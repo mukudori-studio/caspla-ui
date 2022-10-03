@@ -127,7 +127,7 @@
     transition: .2s;
 
     &:hover {
-      opacity: .8;
+      opacity: .6;
     }
   }
 
@@ -169,7 +169,7 @@
     cursor: pointer;
 
     &:hover, &:active {
-      opacity: .8;
+      opacity: .6;
     }
 
     @include g.mq-down(tablet--under) {

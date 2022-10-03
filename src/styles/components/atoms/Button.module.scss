@@ -9,8 +9,6 @@
   text-align: center;
   cursor: pointer;
   transition: .2s;
-  background: g.$color-mono-10;
-  color: g.$color-mono-0;
 
   &:hover, &:active {
     background: g.$color-mono-50;

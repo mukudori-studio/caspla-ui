@@ -19,7 +19,7 @@
     transition: .2s;
 
     &:hover {
-      opacity: .8;
+      opacity: .6;
     }
   }
 
@@ -33,6 +33,16 @@
   &__sites {
     @include g.flex(center);
     gap: 16px;
+
+    a {
+      color: g.$color-mono-50;
+      background-color: g.$color-mono-10;
+
+      &:hover, &:active {
+        background: g.$color-mono-50;
+        color: g.$color-mono-0;
+      }
+    }
 
     @include g.mq-down(tablet--under) {
       gap: 10px;
