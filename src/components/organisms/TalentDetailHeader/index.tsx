@@ -59,7 +59,7 @@ const TalentDetailHeader = ({
       setIsMobile(false)
     }
     setShareTitle(`${name} | Caspla(キャスプラ)`)
-    
+
   }, [name])
 
   const copyUrl = () => {
@@ -119,7 +119,7 @@ const TalentDetailHeader = ({
           }
           {
             activity.length > 0 && (
-              <div className={styles['o-talent-detail-header__activity']}><LabelTexts texts={activity} color={'purple'} /></div>
+              <div className={styles['o-talent-detail-header__activity']}><LabelTexts texts={activity} color={'gray'} /></div>
             )
           }
           {/* TODO:bookmarkあとで追加 */}
