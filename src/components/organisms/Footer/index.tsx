@@ -6,13 +6,12 @@ import 'dayjs/locale/ja'
 import styles from '@/styles/components/organisms/Footer.module.scss'
 
 const footerLinks = [
-  { url: '', title: 'CASPLAとは' },
-  { url: '', title: '利用規約' },
-  { url: '', title: 'プライバシーポリシー' },
-  { url: '', title: '情報セキュリティ方針' },
-  { url: '', title: '反社基本方針' },
-  { url: '', title: 'ヘルプ' },
-  { url: '', title: 'お問い合わせ' },
+  { url: 'https://docs.caspla.com/info/tos', title: '利用規約' },
+  { url: 'https://docs.caspla.com/info/privacypolicy', title: 'プライバシーポリシー' },
+  { url: 'https://docs.caspla.com/info/securitypolicy', title: '情報セキュリティ方針' },
+  { url: 'https://docs.caspla.com/info/antisocialist', title: '反社基本方針' },
+  { url: 'https://docs.caspla.com/help', title: 'ヘルプ' },
+  { url: 'https://docs.caspla.com/contact', title: 'お問い合わせ' },
 ]
 
 const Footer = () => {
@@ -20,7 +19,7 @@ const Footer = () => {
   const thisYear: String = dayjs().locale('ja').format('YYYY')
 
   return (
-    <footer className={styles['o-footer']}>
+    <footer className={styles['o-footer']} id="global-footer">
       <div className={styles['o-footer__inner']}>
         <ul className={styles['o-footer__top']}>
           {
@@ -36,7 +35,7 @@ const Footer = () => {
         <div className={styles['o-footer__bottom']}>
           <div className={styles['o-footer__logos']}>
             <Image
-              src='/common/logo.svg'
+              src='/common/logo-footer.svg'
               alt='Caspla Logo'
               className={styles['o-footer__logo']}
               width={118}
@@ -46,21 +45,21 @@ const Footer = () => {
             <p className={styles['o-footer__copy']}>© {thisYear} Caspla</p>
           </div>
           <ul className={styles['o-footer__socials']}>
-            <li>
+            {/* <li>
               <a className={styles['o-footer__social']} href="" target="_blank">
                 <FontAwesomeIcon icon={faFacebookSquare} className={styles['o-footer__icon']} />
               </a>
-            </li>
+            </li> */}
             <li>
               <a className={styles['o-footer__social']} href="" target="_blank">
                 <FontAwesomeIcon icon={faTwitter} className={styles['o-footer__icon']} />
               </a>
             </li>
-            <li>
+            {/* <li>
               <a className={styles['o-footer__social']} href="" target="_blank">
                 <FontAwesomeIcon icon={faInstagram} className={styles['o-footer__icon']} />
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

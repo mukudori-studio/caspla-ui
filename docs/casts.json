@@ -29,6 +29,9 @@
                       "type": "number",
                       "example": 3
                     },
+                    "total_count": {
+                      "type": "number"
+                    },
                     "casts": {
                       "type": "array",
                       "items": {
@@ -73,6 +76,7 @@
                   },
                   "required": [
                     "page",
+                    "total_count",
                     "casts"
                   ]
                 },
@@ -98,6 +102,9 @@
                 }
               }
             }
+          },
+          "": {
+            "description": ""
           }
         },
         "operationId": "get-talents-casplaId",
@@ -122,7 +129,7 @@
           },
           {
             "schema": {
-              "type": "string",
+              "type": "array",
               "example": "man"
             },
             "in": "query",
@@ -131,7 +138,7 @@
           },
           {
             "schema": {
-              "type": "string",
+              "type": "array",
               "example": "30s"
             },
             "in": "query",
@@ -189,6 +196,9 @@
                       "type": "string"
                     },
                     "caspla_id": {
+                      "type": "string"
+                    },
+                    "cover_image_url": {
                       "type": "string"
                     },
                     "thumbnail_url": {
@@ -350,13 +360,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "first_name": {
-                    "type": "string"
-                  },
-                  "last_name": {
+                  "full_name": {
                     "type": "string"
                   },
                   "caspla_id": {
+                    "type": "string"
+                  },
+                  "cover_image": {
                     "type": "string"
                   },
                   "thumbnail": {
@@ -437,16 +447,14 @@
                       },
                       "youtube_id": {
                         "type": "string"
-                      },
-                      "": {
-                        "type": "string"
                       }
                     }
                   }
                 }
               }
             }
-          }
+          },
+          "description": ""
         }
       },
       "delete": {
@@ -493,16 +501,16 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "first_name": {
-                    "type": "string"
-                  },
-                  "last_name": {
+                  "full_name": {
                     "type": "string"
                   },
                   "caspla_id": {
                     "type": "string"
                   },
                   "thumbnail": {
+                    "type": "string"
+                  },
+                  "cover_image": {
                     "type": "string"
                   },
                   "profile": {
@@ -542,9 +550,6 @@
                   "hip": {
                     "type": "number"
                   },
-                  "cup": {
-                    "type": "string"
-                  },
                   "foot_size": {
                     "type": "number"
                   },
@@ -554,10 +559,19 @@
                   "note": {
                     "type": "string"
                   },
+                  "activities": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
                   "links": {
                     "type": "object",
                     "properties": {
                       "site_url": {
+                        "type": "string"
+                      },
+                      "blog_url": {
                         "type": "string"
                       },
                       "twitter_id": {
@@ -572,12 +586,16 @@
                       "facebook_id": {
                         "type": "string"
                       },
-                      "youtuve_id": {
+                      "youtube_id": {
                         "type": "string"
                       }
                     }
                   }
-                }
+                },
+                "required": [
+                  "full_name",
+                  "caspla_id"
+                ]
               },
               "examples": {}
             }

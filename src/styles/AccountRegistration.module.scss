@@ -1,0 +1,166 @@
+@use './global' as g;
+
+.p-account-registration {
+  @include g.page-margin;
+
+  &__content {
+    max-width: 632px;
+    margin: 0 auto;
+
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+    }
+  }
+
+  &__section {
+    margin-bottom: 60px;
+    
+    @include g.mq-down(tablet--under) {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__description {
+    color: g.$color-mono-50;
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 1.8;
+    margin: 28px 0;
+
+    @include g.mq-down(tablet--under) {
+      font-size: 14px;
+    }
+  }
+
+  &__item {
+    margin-top: 30px;
+
+    @include g.mq-down(tablet--under) {
+      margin-top: 20px;
+    }
+
+    &--height-weight {
+      @include g.flex;
+      gap: 50px;
+
+      @include g.mq-down(tablet--under) {
+        gap: 20px;
+      }
+    }
+  }
+
+  &__radio {
+    &:not(:first-of-type) {
+      margin-top: 15px;
+    }
+  }
+
+  &__sizes, &__foot {
+    @include g.flex(start, start);
+    gap: 10px;
+  }
+
+  &__size-input {
+    @include g.flex;
+    gap: 6px;
+    width: 140px;
+  }
+
+  &__foot {
+    margin-top: 10px;
+  }
+
+  &__foot-input {
+    @include g.flex;
+    gap: 6px;
+    width: 220px;
+  }
+
+  &__link {
+    &:not(:last-of-type) {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__button {
+    margin: 10px auto 0;
+
+    @include g.mq-up(tablet) {
+      max-width: 308px;
+    }
+
+    &--submit {
+      margin-top: 60px;
+
+      @include g.mq-down(tablet--under) {
+        margin-top: 30px;
+      }
+    }
+  }
+
+  &__check-ids {
+    @include g.flex(start, start);
+    gap: 10px;
+
+    > div {
+      &:first-of-type {
+        flex: 1;
+      }
+    }
+  }
+
+  &__check-input {
+    max-width: 186px;
+  }
+
+  &__check-id {
+    flex: 120px 0 0;
+    margin-top: 10px;
+  }
+
+  &__zips {
+    @include g.flex(start, start);
+    gap: 10px;
+
+    > div {
+      &:first-of-type {
+        flex: 1;
+      }
+    }
+  }
+
+  &__zip-input {
+    max-width: 186px;
+  }
+
+  &__zip-search {
+    flex: 146px 0 0;
+    margin-top: 10px;
+
+    @include g.mq-down(tablet--under) {
+      width: 120px;
+    }
+  }
+
+  &__ids {
+    @include g.flex(between, start);
+    gap: 10px;
+  }
+
+  &__id-input {
+    width: calc(100% - 146px);
+
+    @include g.mq-down(tablet--under) {
+      width: calc(100% - 120px);
+    }
+  }
+
+  &__id-button {
+    width: 146px;
+    margin-top: 10px;
+
+    @include g.mq-down(tablet--under) {
+      width: 120px;
+    }
+  }
+}

@@ -1,9 +1,13 @@
 @use '../../global' as g;
 
 .o-footer {
-  background: g.$color-primary;
+  background: g.$color-mono-80;
   color: g.$color-mono-0;
   padding: 50px 50px 42px;
+
+  @include g.mq-down(tablet--under) {
+    padding: 30px 20px;
+  }
 
   &__inner {
     max-width: 1120px;
@@ -11,14 +15,28 @@
   }
 
   &__top {
-    @include g.flex;
-    gap: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 70px;
+    
+    @include g.mq-up(tablet) {
+      @include g.flex;
+      flex-wrap: wrap;
+      gap: 16px 30px;
+      margin-bottom: 40px;
+    }
+
+    li {
+      @include g.mq-down(tablet--under) {
+        &:not(:last-of-type) {
+          margin-bottom: 20px;
+        }
+      }
+    }
   }
 
   &__link {
     color: g.$color-mono-0;
     font-size: 14px;
+    letter-spacing: 1px;
     text-decoration: none;
     transition: .2s;
     line-height: 1.1;
@@ -35,16 +53,28 @@
 
   &__bottom {
     @include g.flex(between);
+    
+    @include g.mq-down(tablet--under) {
+      align-items: flex-start;
+    }
   }
 
   &__logos {
-    @include g.flex;
-    gap: 28px;
+    @include g.mq-up(tablet) {
+      @include g.flex;
+      gap: 28px;
+    }
   }
 
   &__copy {
     font-size: 14px;
     line-height: 1.1;
+    letter-spacing: 1px;
+    margin: 0;
+
+    @include g.mq-down(tablet--under) {
+      margin-top: 8px;
+    }
   }
 
   &__socials {

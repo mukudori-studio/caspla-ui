@@ -6,11 +6,17 @@
   -webkit-overflow-scrolling: touch;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   background: g.$color-mono-0;
-  color: g.$color-black;
+  color: g.$color-mono-80;
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-feature-settings: 'palt';
+  margin: 0;
+  padding: 0;
 
   @include g.mq-down(tablet--under) {
     font-size: 3.467vw; // 13px
@@ -48,6 +54,14 @@ button {
   border: 0;
 }
 
+main, section {
+  display: block;
+}
+
 img {
   width: 100%;
+}
+
+#__next {
+  height: 100%;
 }

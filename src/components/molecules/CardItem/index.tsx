@@ -8,10 +8,10 @@ import styles from '@/styles/components/molecules/CardItem.module.scss'
 
 interface CardItemProps {
   type?: 'cast' | 'agient';
-  thumbnail?: string;
-  id: string | number;
+  thumbnail?: any;
+  id?: string | number;
   name: string;
-  displayName?: string;
+  casplaId?: string;
   profile?: string;
   activity?: Array<string>;
   withBookmark?: boolean;
@@ -22,7 +22,7 @@ const CardItem = ({
   id,
   name,
   thumbnail = '',
-  displayName = '',
+  casplaId = '',
   activity = [],
   profile = '',
   type = 'cast',
@@ -30,39 +30,37 @@ const CardItem = ({
   ...props
 }: CardItemProps) => {
   // NOTE:タレントとプロダクションで遷移先を分けておく(ビジネスロジック的に親に持たせる方が良いかも)
-  const linkUrl = type === 'cast' ? `/talents/${id}` : `/agients/${id}`
+  const linkUrl = type === 'cast' ? `/talents/detail/${casplaId}` : `/productions/detail/${id}`
   const toDetail = () => {
     Router.push(linkUrl)
   }
 
   // TODO：ループ処理整理
-  const filteredActivity = activities.filter(data => activity.find(val => data.key === val))
-  const formattedActivity = filteredActivity.map(data => data.textJA)
+  const filteredActivity = activities.filter(data => activity.find(val => data.value === val))
+  const formattedActivity = filteredActivity.map(data => data.text)
 
   // NOTE：Boomark
   const [flag, setFlag] = React.useState(withBookmark)
   const changeBookmark = ((e: any, bool: boolean) => {
     e.stopPropagation()
     setFlag(!flag)
-    console.log(flag)
   })
-
-  // NOTE：テキストフォーマット
 
   return (
     <button type="button" onClick={toDetail} className={styles['m-card-item']}>
       <div className={styles['m-card-item__content']}>
         {
-          thumbnail === '' ? (
+          !thumbnail && thumbnail === '' ? (
             <div className={styles['m-card-item__thumbnail']}></div>
           ) : (
-            <Image
-              src={thumbnail}
-              className={styles['m-card-item__thumbnail']}
-              width={'auto'}
-              height={'auto'}
-              layout="fixed"
-            />
+            // <div className={styles['m-card-item__thumbnail']}>
+            //   <Image
+            //     src={thumbnail}
+            //     objectFit="contain"
+            //     layout="fill"
+            //   />
+            // </div>
+            <img src={thumbnail} className={styles['m-card-item__thumbnail']} />
           )
         }
         <div className={styles['m-card-item__head']}>
@@ -74,12 +72,12 @@ const CardItem = ({
             { withBookmark && (<BookMark changeBookmark={changeBookmark} />)}
           </div>
           {
-            (type === 'cast' && displayName !== '') && (
-              <div className={styles['m-card-item__sub']}>{displayName}</div>
+            (type === 'cast' && casplaId !== '') && (
+              <div className={styles['m-card-item__sub']}>{casplaId}</div>
             )
           }
         </div>
-        <p className={styles['m-card-item__sub']}>{profile}</p>
+        <p className={styles['m-card-item__profile']}>{profile}</p>
       </div>
     </button>
   );

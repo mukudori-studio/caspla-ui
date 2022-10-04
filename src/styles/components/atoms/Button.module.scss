@@ -3,12 +3,23 @@
   width: 100%;
   line-height: 1.3;
   border-radius: 26px;
+  letter-spacing: 1px;
   font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: .2s;
+
+  &:hover, &:active {
+    background: g.$color-mono-50;
+    color: g.$color-mono-0;
+  }
 
   // Size
   &--small {
-    padding: 10px 4px;
+    padding: 6px 4px;
     font-size: 14px;
+    font-weight: normal;
   }
 
   &--medium {
@@ -29,5 +40,31 @@
   &--secondary {
     background: g.$color-secondary;
     color: g.$color-primary;
+  }
+  &--third {
+    background: #6681CC;
+    color: g.$color-mono-0;
+  }
+  &--forth {
+    background: #E0E6F5;
+    color: g.$color-mono-80;
+  }
+  &--default {
+    background: g.$color-mono-10;
+    color: g.$color-mono-80;
+  }
+
+  // Font Weight
+  &--normal {
+    font-weight: normal;
+  }
+  &--bold {
+    font-weight: bold;
+  }
+
+  &:disabled {
+    cursor: inherit;
+    background: g.$color-mono-50;
+    color: g.$color-mono-0;
   }
 }

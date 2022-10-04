@@ -74,3 +74,19 @@ $breakpoints: (
     display: inline-flex;
   }
 }
+
+// 3点リーダー
+@mixin line-clamp($line: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+}
+
+// Default Page Margin
+@mixin page-margin($pcTop: 60px, $pcBottom: 120px, $spTop: 30px, $spBottom: 60px) {
+  padding: $pcTop 0 $pcBottom;
+
+  @include mq-down(tablet--under) {
+    padding: $spTop 0 $spBottom;
+  }
+}

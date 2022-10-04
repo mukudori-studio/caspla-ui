@@ -1,0 +1,72 @@
+@use '../../../global' as g;
+
+.m-input {
+
+  &__input {
+    width: 100%;
+    background: g.$color-mono-5;
+    font-size: 14px;
+    transition: .2s;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    padding: 0 20px;
+    height: 50px;
+
+    @include g.mq-down(tablet--under) {
+      font-size: 16px;
+      padding: 0 14px;
+    }
+
+    &:focus {
+      background: g.$color-mono-0;
+      border-color: g.$color-mono-5;
+      outline: 0;
+    }
+  
+    &:disabled {
+      background: #CFD2D7;
+    }
+  
+    &--error {
+      background: g.$color-error;
+    }
+
+    &--textarea {
+      min-width: 100%;
+      max-width: 100%;
+      min-height: 150px;
+      max-height: 500px;
+      padding: 14px 20px;
+      line-height: 1.8;
+    }
+
+    &--link {
+      flex: 1;
+    }
+  }
+
+  &__link {
+    @include g.flex;
+    gap: 10px;
+
+    &:not(&:last-of-type) {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__link-text {
+    font-size: 14px;
+    flex: 68px 0 0;
+
+    @include g.mq-down(tablet--under) {
+      font-size: 12px;
+      flex: 58px 0 0;
+    }
+  }
+
+  &__link-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}

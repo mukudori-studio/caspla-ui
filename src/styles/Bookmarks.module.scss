@@ -1,0 +1,35 @@
+@use './global' as g;
+
+.p-book-marks {
+  @include g.page-margin;
+  min-height: 100%;
+  max-width: 956px;
+  margin: 0 auto;
+
+  @include g.mq-down(tablet--under) {
+    width: 89vw;
+    padding: 30px 0 0;
+    margin-bottom: 60px;
+  }
+
+  &__content {
+    @include g.mq-up(tablet) {
+      padding: 0 30px;
+    }
+  }
+
+  &__caption {
+    margin: 40px auto 64px;
+    color: #6F7987;
+    font-size: 20px;
+    line-height: 1.1;
+  }
+
+  &__loading{
+    margin-top: 100px;
+  }
+
+  &__list {
+    border-top: 1px solid g.$color-mono-10;
+  }
+}

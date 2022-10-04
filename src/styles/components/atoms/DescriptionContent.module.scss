@@ -1,0 +1,15 @@
+@use '../../global' as g;
+
+.a-description-content {
+  width: 100%;
+  background: g.$color-mono-5;
+  padding: 16px;
+  letter-spacing: 1px;
+  line-height: 1.8;
+  padding: 20px 28px;
+  border-radius: 10px;
+
+  @include g.mq-down(tablet--under) {
+    padding: 10px 16px;
+  }
+}

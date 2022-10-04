@@ -1,0 +1,62 @@
+@use './global' as g;
+
+.p-sign-in {
+  @include g.page-margin;
+  min-height: 100%;
+
+  &__content {
+    max-width: 310px;
+    margin: 0 auto;
+
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+    }
+  }
+
+  &__form {
+    margin-bottom: 30px;
+  }
+
+  &__item {
+    margin-top: 24px;
+
+    &:first-of-type {
+      margin-top: 30px;
+    }
+  }
+
+  &__logo {
+    @include g.flex(center);
+    margin: 0 auto 64px;
+  }
+
+  &__link {
+    @include g.flex(end);
+    text-align: right;
+    text-decoration: none;
+    line-height: 1.1;
+    font-size: 14px;
+    margin-top: 6px;
+    color: g.$color-primary;
+    cursor: pointer;
+    transition: .2s;
+
+    &:hover, &:active {
+      opacity: .8;
+    }
+
+    @include g.mq-down(tablet--under) {
+      font-size: 12px;
+      margin-top: 8px;
+    }
+  }
+
+  &__button {
+    margin-top: 30px;
+  }
+
+  &__sign-up {
+    margin: 30px 0;
+
+  }
+}

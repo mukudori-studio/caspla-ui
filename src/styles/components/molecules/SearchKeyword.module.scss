@@ -1,0 +1,82 @@
+@use '../../global' as g;
+
+.m-search-keyword {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+
+  &__input {
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    background: g.$color-mono-5;
+    outline: none;
+    border: 0;
+    font-size: 16px;
+    transition: .2s;
+    padding: 0 106px 0 54px; // NOTE：アイコン分余白を空けておく
+
+    &:focus {
+      box-shadow: 0 0 2px rgba(10, 10, 10, 0.2);
+    }
+    @include g.mq-down(tablet--under) {
+      height: 40px;
+      padding: 0 62px 0 44px;
+    }
+
+    &--white {
+      background: g.$color-mono-0;
+    }
+  }
+
+  &__search {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 94px;
+
+    @include g.mq-down(tablet--under) {
+      width: 52px;
+    }
+  }
+
+  &__icon-wrap {
+    @include g.flex(center);
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    @include g.mq-down(tablet--under) {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    color: g.$color-mono-80;
+
+    @include g.mq-down(tablet--under) {
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+    }
+  }
+
+  &__button {
+    width: 94px;
+    height: 38px;
+
+    @include g.mq-down(tablet--under) {
+      width: 52px;
+      height: 27px;
+      font-size: 12px;
+    }
+  }
+}

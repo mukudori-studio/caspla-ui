@@ -1,0 +1,79 @@
+@use './global' as g;
+
+.p-top-page {
+  @include g.page-margin;
+  min-height: 100%;
+
+  &__logo {
+    @include g.flex(center);
+    margin: 0 auto 70px;
+    
+    img, span {
+      width: 280px!important;
+      height: 64px!important;
+      object-fit: cover;
+    }
+
+    @include g.mq-down(tablet--under) {
+      margin-bottom: 94px;
+
+      img, span {
+        width: 207px!important;
+        height: 48px!important;
+        object-fit: cover;
+      }
+    } 
+  }
+
+  &__buttons {
+    @include g.flex(center);
+    gap: 16px;
+    width: 308px;
+    margin: 0 auto 30px;
+
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+      gap: 10px;
+    }
+  }
+
+  &__search-area {
+    width: 632px;
+    margin: 0 auto;
+    
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+    }
+  }
+
+  &__note {
+    background: #FED799;
+    color: g.$color-mono-80;
+    margin: 22px auto 0;
+    padding: 18px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.7;
+    letter-spacing: 1px;
+    font-size: 16px;
+    width: 380px;
+    position: relative;
+
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+    }
+
+    &:before {
+      display: block;
+      content: '';
+      border-right: 15px solid transparent;
+      border-bottom: 22px solid #FED799;
+      border-left: 15px solid transparent;
+      position: absolute;
+      left: 50%;
+      top: -22px;
+      transform: translateX(-50%);
+    }
+  }
+}

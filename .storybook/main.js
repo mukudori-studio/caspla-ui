@@ -16,6 +16,7 @@ module.exports = {
       '@/styles': path.resolve(__dirname, '../src/styles'),
       '@/utils': path.resolve(__dirname, '../src/utils'),
       '@/stores': path.resolve(__dirname, '../src/stores'),
+      '@/apis': path.resolve(__dirname, '../src/apis'),
     };
 
     config.module.rules.push({

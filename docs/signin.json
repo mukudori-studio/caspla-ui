@@ -61,7 +61,8 @@
                 ]
               }
             }
-          }
+          },
+          "description": "signin: id(caspla_id or email) & pasoword"
         }
       }
     }
