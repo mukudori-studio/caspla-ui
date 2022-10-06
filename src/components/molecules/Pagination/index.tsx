@@ -106,6 +106,7 @@ const Pagination = ({
         pageRangeDisplayed={pageRangeDisplayed}
         onPageChange={handlePaginate}
         activeClassName="active"
+        forcePage={currentNum - 1}
       />
     </PaginationWrapper>
   )
