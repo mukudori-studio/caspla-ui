@@ -45,13 +45,12 @@ const Talents: NextPage = (props:any) => {
       setTotalCount(Math.ceil(res.data.response_message.totalCount /10))
       setLoading(false)
     })
-  }, [pageState, keywordState, activityState, ageState, genderState])
+  }, [pageState, keywordState, activityState, ageState, genderState, props])
 
   useEffect(()=>{
     router.beforePopState(({ url, as, options }) => {
       if(as.substring(9).split("?")[0]) {
         setPage(as.substring(9).split("?")[0])
-        Router.push(`/talents/${pageState}`, undefined, {shallow: true})
         return true
       }
       Router.push(`/top`);

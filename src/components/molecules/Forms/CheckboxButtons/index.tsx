@@ -20,15 +20,24 @@ const CheckboxButtons = ({
   const changeCheckbox = (e:any | never) => {
     const checkedValue = e.target.value
     let formattedValue:any = checkedItems
+    let array: string[] = []
 
     if (checkedItems.includes(checkedValue)) {
-      formattedValue = checkedItems.filter((data: string) => data !== checkedValue)
+      if(typeof formattedValue === "string") {
+        formattedValue =[]
+      } else {
+        formattedValue = checkedItems.filter((data: string) => data !== checkedValue)
+      }
       setCheckedItem(formattedValue)
     } else {
-      formattedValue.push(checkedValue)
+      if(typeof formattedValue === 'string') {
+        array.push(formattedValue, checkedValue)
+      } else {
+        formattedValue.push(checkedValue)
+      }  
       setCheckedItem(() => [...checkedItemState, checkedValue])
     }
-    onChange(formattedValue)
+    onChange(typeof formattedValue === "object" ? formattedValue: array)
   }
 
   return (
