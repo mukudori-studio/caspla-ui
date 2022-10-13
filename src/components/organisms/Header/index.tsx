@@ -12,7 +12,7 @@ import styles from '@/styles/components/organisms/Header.module.scss'
 
 type HeaderProps = {
   showMenu?: boolean
-  isTop : boolean
+  isTop ?: boolean
 }
 
 const Header = ({
