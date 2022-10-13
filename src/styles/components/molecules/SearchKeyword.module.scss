@@ -6,8 +6,8 @@
   margin: 0 auto;
 
   &__input {
-    width: 100%;
-    height: 50px;
+    width: 82%;
+    height: 42px;
     border-radius: 25px;
     background: g.$color-mono-5;
     outline: none;
@@ -70,8 +70,8 @@
   }
 
   &__button {
-    width: 94px;
-    height: 38px;
+    width: 100px;
+    height: 42px;
 
     @include g.mq-down(tablet--under) {
       width: 52px;
