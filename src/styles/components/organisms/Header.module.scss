@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   background: g.$color-mono-0;
-  border-bottom: 1px solid g.$color-mono-10;
+  // border-bottom: 1px solid g.$color-mono-10;
   z-index: 100;
   padding: 0 16px 0 30px;
 
@@ -42,6 +42,10 @@
     @include g.mq-down(tablet--under) {
       height: 28px;
     }
+  }
+
+  &__logo-hidden { 
+    display: none;
   }
 
   &__search {
@@ -157,5 +161,9 @@
       height: 14px;
       font-size: 14px;
     }
+  }
+
+  &__margin-bottom {
+    border-bottom: 1px solid g.$color-mono-10;
   }
 }

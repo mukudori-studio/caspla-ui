@@ -13,13 +13,14 @@ import Footer from '@/components/organisms/Footer'
 function MyApp({ Component, pageProps }: AppProps) {
 
   const [isShowMenu, setShowMenu] = useState(true)
+  const [isTop, setTop] = useState(false)
 
   useEffect(() => {
-    if(
-      Router.pathname === '/top'
-    ) {
+    if( Router.pathname === "/top" ) {
       setShowMenu(false)
+      setTop(true)
     } else {
+      setTop(false)
       setShowMenu(true)
     }
  })
@@ -29,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <GoogleTagManager
         googleTagManagerId={googleTagManagerId as GoogleTagManagerId}
       />
-      <Header showMenu={isShowMenu} />
+      <Header showMenu={isShowMenu} isTop={isTop}/>
       <div style={{ minHeight: 'calc(100% - 181px)' }} className={'wrapper'} id="root">
         <ToastContainer position="bottom-left" />
         <Component {...pageProps} />
