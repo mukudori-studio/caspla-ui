@@ -29,6 +29,7 @@ const Talents: NextPage = (props:any) => {
   const [activityState, setActivity] = useState(props.query.activity === undefined ? [] : props.query.activity)
   const [ageState, setAge] = useState(props.query.age === undefined ? [] : props.query.age)
   const [genderState, setGender] = useState(props.query.gender === undefined ? [] : props.query.gender)
+  const router = useRouter();
 
   useEffect(() => {
     getTalents({
@@ -44,7 +45,18 @@ const Talents: NextPage = (props:any) => {
       setTotalCount(Math.ceil(res.data.response_message.totalCount /10))
       setLoading(false)
     })
-  }, [pageState, keywordState, activityState, ageState, genderState])
+  }, [props])
+
+  useEffect(()=>{
+    router.beforePopState(({ url, as, options }) => {
+      if(as.substring(9).split("?")[0]) {
+        setPage(as.substring(9).split("?")[0])
+        return true
+      }
+      Router.push(`/top`);
+      return false
+    })
+  },[props.query.page])
 
   const onSearch = async (value:any) => {
 
@@ -73,6 +85,7 @@ const Talents: NextPage = (props:any) => {
     if (props.query.gender !== '' && props.query.gender) queryObject.gender = props.query.gender
     if (props.query.age !== '' && props.query.age) queryObject.age = props.query.age
     if (props.query.activity !== '' && props.query.activity) queryObject.activity = props.query.activity
+    if (props.query.keyword !== '' && props.query.keyword) queryObject.keyword = props.query.keyword
 
     // setTalents([])
     setPage(page + 1)

@@ -12,15 +12,17 @@ import styles from '@/styles/components/organisms/Header.module.scss'
 
 type HeaderProps = {
   showMenu?: boolean
+  isTop ?: boolean
 }
 
 const Header = ({
   showMenu = true,
+  isTop,
   ...props
 }: HeaderProps) => {
 
   const [showMenuState, setShowMenu] = useState(showMenu)
-
+  const [isTopPage, setTopPage] = useState(isTop)
 
   const session = useRecoilValue(sessionState)
   const [logined, setLogined] = useState(false)
@@ -30,12 +32,16 @@ const Header = ({
     setLogined(checkLogined)
   })
 
+  useEffect(()=> {
+    setTopPage(isTop)
+  }, [isTop])
+
   useEffect(() => {
     setShowMenu(showMenu)
   }, [showMenu])
 
-  const logoLinkStyle = styles['o-header__logo'] 
-  const headerStyle = showMenuState ? styles['o-header'] : [styles['o-header'], styles['o-header--no-menu']].join(' ')
+  const logoLinkStyle = isTopPage ? styles['o-header__logo-hidden'] : styles['o-header__logo'] 
+  const headerStyle = showMenuState ? isTopPage ? styles['o-header']: [styles['o-header'], styles['o-header__margin-bottom']].join(' ') : isTopPage ? [styles['o-header'], styles['o-header--no-menu']].join(' ') : [styles['o-header'], styles['o-header--no-menu'], styles['o-header__margin-bottom']].join(' ') 
   const onSearch = (val: string) => {
 
     const path = '/talents/'

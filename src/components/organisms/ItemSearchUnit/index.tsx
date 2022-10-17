@@ -28,6 +28,10 @@ const ItemSearchUnit = ({
     {value: '60歳以上', text: '60歳以上'},
   ]
   
+  const genderValues = [
+    {value: '男性', text: '男性'}, {value: '女性', text: '女性'},
+  ]
+
   const [stateKeyword, setKeyword] = useState('')
   const [stateGender, setGender] = useState<Array<string>>(gender === undefined ? [] : gender)
   const [stateAge, setAge] = useState<Array<string>>(age === undefined ? [] : age)
@@ -72,9 +76,7 @@ const ItemSearchUnit = ({
           <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--gender']].join(' ')}>
             <h3 className={styles['o-item-search-unit__label']}><span>性別</span></h3>
             <div className={styles['o-item-search-unit__check-box']}>
-              <CheckboxButtons checkedItems={stateGender} checkboxes={[
-                {value: '男性', text: '男性'}, {value: '女性', text: '女性'},
-              ]} onChange={onChangeGender} />
+              <CheckboxButtons checkedItems={stateGender} checkboxes={genderValues} onChange={onChangeGender} />
             </div>
           </div>
           <div className={[styles['o-item-search-unit__item'], styles['o-item-search-unit__item--age']].join(' ')}>
