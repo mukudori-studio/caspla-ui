@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Router, {useRouter} from 'next/router'
-import SearchKeyword from '@/components/molecules/SearchKeyword'
 import CheckboxButtons from '@/components/molecules/Forms/CheckboxButtons'
 import activities from '@/utils/activities'
 import styles from '@/styles/components/organisms/ItemSearchUnit.module.scss'
+import SearchBar from '@/components/molecules/SearchBar'
 
 type ItemSearchUnitProps = {
   activity?: Array<string>
@@ -37,7 +37,10 @@ const ItemSearchUnit = ({
   const [stateAge, setAge] = useState<Array<string>>(age === undefined ? [] : age)
   const [stateActivity, setActivity] = useState<Array<string>>(activity === undefined ? [] : activity)
 
-  const onChangeGender = (data: Array<string>) => setGender(data)
+  const onChangeGender = (data: Array<string>) => {
+    console.log(data)
+    setGender(data)
+  }
   const onChangeAge = (data: Array<string>) => setAge(data)
   const onChangeActivity = (data: Array<string>) => setActivity(data)
   
@@ -58,6 +61,31 @@ const ItemSearchUnit = ({
     onClick(queryObject)
   }
   
+  const onClear = () => {
+
+    setGender(typeof stateGender=== 'object' ? stateGender.splice(0, stateGender.length): [])
+    onChangeGender([])
+
+    setAge(typeof stateAge === 'object' ? stateAge.splice(0, stateAge.length): [])
+    onChangeAge([])
+
+    setActivity(typeof stateActivity==='object' ? stateActivity.splice(0, stateActivity.length): [])
+    onChangeActivity([])
+
+    let queryObject:any = {
+      gender: [],
+      age: [],
+      activity: [],
+      keyword: stateKeyword,
+    }
+    console.log(stateGender, stateActivity, stateAge, stateKeyword)
+
+    Router.replace({
+      pathname: '/talents/1',
+      query: queryObject
+    })
+    onClick(queryObject)
+  }
 
   useEffect(() => {
     if (Router.query?.keyword === undefined) return
@@ -92,7 +120,7 @@ const ItemSearchUnit = ({
             </div>
           </div>
         </div>
-        <div className={styles['o-item-search-unit__search']}><SearchKeyword onClick={onSearch} color="white" /></div>
+        <div className={styles['o-item-search-unit__search']}><SearchBar onClick={onSearch} color="white" onClearClick={onClear}/></div>
       </div>
     </div>
   )
