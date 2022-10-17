@@ -37,10 +37,7 @@ const ItemSearchUnit = ({
   const [stateAge, setAge] = useState<Array<string>>(age === undefined ? [] : age)
   const [stateActivity, setActivity] = useState<Array<string>>(activity === undefined ? [] : activity)
 
-  const onChangeGender = (data: Array<string>) => {
-    console.log(data)
-    setGender(data)
-  }
+  const onChangeGender = (data: Array<string>) => setGender(data)
   const onChangeAge = (data: Array<string>) => setAge(data)
   const onChangeActivity = (data: Array<string>) => setActivity(data)
   
@@ -78,7 +75,6 @@ const ItemSearchUnit = ({
       activity: [],
       keyword: stateKeyword,
     }
-    console.log(stateGender, stateActivity, stateAge, stateKeyword)
 
     Router.replace({
       pathname: '/talents/1',
