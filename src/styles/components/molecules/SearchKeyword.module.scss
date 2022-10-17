@@ -74,8 +74,8 @@
     height: 42px;
 
     @include g.mq-down(tablet--under) {
-      width: 52px;
-      height: 27px;
+      width: 58px;
+      height: 40px;
       font-size: 12px;
     }
   }
