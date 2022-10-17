@@ -41,6 +41,10 @@
     background: g.$color-secondary;
     color: g.$color-primary;
   }
+  &--disabled {
+    background: g.$color-disabled;
+    color: g.$color-mono-80;
+  }
   &--third {
     background: #6681CC;
     color: g.$color-mono-0;
