@@ -59,28 +59,9 @@ const ItemSearchUnit = ({
   }
   
   const onClear = () => {
-
-    setGender(typeof stateGender=== 'object' ? stateGender.splice(0, stateGender.length): [])
     onChangeGender([])
-
-    setAge(typeof stateAge === 'object' ? stateAge.splice(0, stateAge.length): [])
     onChangeAge([])
-
-    setActivity(typeof stateActivity==='object' ? stateActivity.splice(0, stateActivity.length): [])
     onChangeActivity([])
-
-    let queryObject:any = {
-      gender: [],
-      age: [],
-      activity: [],
-      keyword: stateKeyword,
-    }
-
-    Router.replace({
-      pathname: '/talents/1',
-      query: queryObject
-    })
-    onClick(queryObject)
   }
 
   useEffect(() => {
