@@ -26,8 +26,11 @@ const SearchBar = ({
   const pressEnter = (e: { key: string }) => e.key === 'Enter' && onSearch()
 
   const onSearch = () => onClick(stateKeyword)
-  const onClear = () => onClearClick()
-
+  const onClear = () => {
+    setKeyword('')
+    onClearClick()
+  }
+  
   useEffect(() => {
     if (Router.query.keyword === undefined) return
     const inputedKeyword:any = Router.query?.keyword
