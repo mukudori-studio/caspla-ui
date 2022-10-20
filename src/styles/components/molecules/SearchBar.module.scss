@@ -104,7 +104,8 @@
     height: 42px;
     font-size: 16px;
     background-color: g.$color-mono-20;
-
+    color: g.$color-mono-80;
+    
     @include g.mq-down(tablet--under) {
       height: 40px;
       font-size: 14px;

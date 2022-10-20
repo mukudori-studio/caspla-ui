@@ -59,7 +59,7 @@ const SearchBar = ({
         <button className={[styles['m-search-keyword__button'], buttonStyles['a-button'], buttonStyles['a-button--primary']].join(' ')} onClick={onSearch}>この条件で再検索</button>
       </div>
       <div className={styles['m-search-keyword__clear']}>
-        <button className={[buttonStyles['a-button'], buttonStyles['a-button--disabled'], styles['m-search-keyword__button--clear']].join(' ')} onClick={onClear}>クリア</button>
+        <button className={[buttonStyles['a-button'], styles['m-search-keyword__button--clear']].join(' ')} onClick={onClear}>クリア</button>
       </div>
     </div>
   )
