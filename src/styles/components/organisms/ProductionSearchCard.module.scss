@@ -24,7 +24,6 @@
   }
 
   &__list{
-    padding: 10px;
     @include g.mq-up(tablet) {
       @include g.flex(start, start);
       gap: 16px;
