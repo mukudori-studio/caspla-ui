@@ -7,7 +7,7 @@ import getProductionList from '@/apis/productions/productionSearch'
 import ProductionSearchCard from '@/components/organisms/ProductionSearchCard'
 import Loading from '@/components/atoms/Loading'
 
-export const getServerSideProps : GetServerSideProps = async(context) => {
+export const getServerSideProps : GetServerSideProps = async() => {
   const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
   const response = await getProductionList(letters).then(res=>{return res.data.response_message})
   console.log('GetServerSideProps')
@@ -59,36 +59,31 @@ const productions: NextPage = ({productions, letters}: any) => {
   
   useEffect(()=>{
     setLoading(true)
-    console.log("useEffect call")
     getProductionList(letterSet)
      .then(res=>{ 
         setResultSet(res.data.response_message)
         setLoading(false)
       })
-
   }, [letterSet])
 
   return (
     <div className={styles.container}>
       <Meta title="プロダクション一覧" />
       <main className={styles['p-production-search']}> 
+        <h1 className={styles['p-production-search__heading']}>プロダクション一覧</h1>
+        <div className={styles['p-production-search__selection']}>
+          <Select options={optionList} required selected={selected.toString()} onChange={changeSelectValue}/>
+        </div>
         {isLoading && <Loading/>}
         { !isLoading && (
-          <>
-            <div className={styles['p-production-search__selection']}>
-              <Select options={optionList} required selected={selected.toString()} onChange={changeSelectValue}/>
-            </div>
-            {/* {JSON.stringify(letterSet)}
-            {JSON.stringify(resultSet)} */}
-            <div className={styles['p-production-search__content']}>
-              { 
-                letterSet.map((letter:string, index:number)=> {
-                  return ( 
-                    <ProductionSearchCard title={letter} productionList={resultSet[index]} />                 
-                  )
-              })}
-            </div>
-          </>
+          <div className={styles['p-production-search__content']}>
+            { 
+              letterSet.map((letter:string, index:number)=> {
+                return ( 
+                  <ProductionSearchCard title={letter} productionList={resultSet[index]} />                 
+                )
+            })}
+          </div>
         )}
       </main>
     </div>
