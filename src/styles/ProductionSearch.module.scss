@@ -1,0 +1,77 @@
+@use './global' as g;
+
+.p-production-search {
+  max-width: 1016px;
+  padding: 100px 30px;
+  // TODO：margin設定全画面で共通化できそうだったらあとで対応
+  margin: 0 auto;
+
+  @include g.mq-down(tablet--under) {
+    width: 89vw;
+    padding: 30px 0 0;
+    margin-bottom: 60px;
+  }
+  
+  &__selection {
+    position: relative;
+    width: 125px;
+    height: 50px;
+  }
+  &__content {
+    column-count: 3;
+
+    @include g.mq-down(narrow-pc--under) {
+      width: 89vw;
+      column-count: 2;
+    }
+    @include g.mq-down(tablet--under) {
+      width: 89vw;
+      column-count: 1;
+    }
+    div {
+      break-inside : avoid-column;
+    }
+  }
+
+  &__description {
+    margin: 30px 0 60px;
+  }
+
+  &__title {
+    font-size: 24px;
+    line-height: 1.1;
+    letter-spacing: 1px;
+    color: g.$color-mono-80;
+    margin: 0 0 30px;
+
+    @include g.mq-down(tablet--under) {
+      margin-bottom: 18px;
+    }
+  }
+
+  &__no-data {
+    @include g.flex(center);
+    text-align: center;
+    line-height: 1.8;
+    margin: 60px 0;
+  }
+
+  &__list {
+    @include g.mq-up(tablet) {
+      @include g.flex(start, start);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+  }
+  &__item {
+    width: calc((100% - 32px) / 3);
+
+    @include g.mq-down(tablet--under) {
+      width: 100%;
+
+      &:not(:last-of-type) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
