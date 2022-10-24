@@ -9,8 +9,7 @@ import Loading from '@/components/atoms/Loading'
 
 export const getServerSideProps : GetServerSideProps = async() => {
   const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-  const response = await getProductionList(letters).then(res=>{return res.data.response_message})
-  console.log('GetServerSideProps')
+  const response = await getProductionList(letters, false).then(res=>{return res.data.response_message})
   return {
     props: {
       productions: response,
@@ -24,6 +23,7 @@ const productions: NextPage = ({productions, letters}: any) => {
   const [letterSet, setLetterSet] = useState<string[]>(letters);
   const [resultSet, setResultSet] = useState(productions)
   const [isLoading, setLoading] = useState(true)
+  const [selectedLetters, setSelectedLetters] = useState<string[]>(letters)
 
   const optionList = [
     {value: 0, text: 'A～Z'},
@@ -42,14 +42,14 @@ const productions: NextPage = ({productions, letters}: any) => {
   const alphabet = [
     ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], 
     ['ア', 'イ', 'ウ', 'エ', 'オ'],
-    ['カ', 'キ', 'ク', 'ケ', 'コ', 'ガ', 'ギ', 'グ', 'ゲ', 'ゴ', 'キャ', 'キュ', 'キョ', 'ギャ', 'キュ', 'キョ'],
-    ['サ', 'シ', 'ス', 'セ', 'ソ', 'ザ', 'ジ', 'ヅ', 'ゼ', 'ゾ', 'シャ', 'シュ', 'ショ', 'ジャ', 'ジュ', 'ジョ'],
-    ['タ', 'チ', 'ツ', 'テ', 'ト', 'ダ', 'ヂ', 'ヅ', 'デ', 'ド', 'チャ', 'チュ', 'チョ', 'ヂャ', 'ヂュ', 'ヂョ'],
-    ['ナ', 'ニ', 'ヌ', 'ネノ', 'ニャ', 'ニュ', 'ニョ'],
-    ['ハ', 'ヒ', 'フ', 'ヘホ', 'バ', 'ビ', 'ブ', 'ベ', 'ボ', 'ヒャ', 'ヒュ', 'ヒョ', 'ビャ', 'ビュ', 'ビョ'],
-    ['マ', 'ミ', 'ム', 'メ', 'モ', 'ミャ', 'ミュ', 'ミョ'],
+    ['カ', 'キ', 'ク', 'ケ', 'コ', 'ガ', 'ギ', 'グ', 'ゲ', 'ゴ'],
+    ['サ', 'シ', 'ス', 'セ', 'ソ', 'ザ', 'ジ', 'ヅ', 'ゼ', 'ゾ'],
+    ['タ', 'チ', 'ツ', 'テ', 'ト', 'ダ', 'ヂ', 'ヅ', 'デ', 'ド'],
+    ['ナ', 'ニ', 'ヌ', 'ネノ'],
+    ['ハ', 'ヒ', 'フ', 'ヘホ', 'バ', 'ビ', 'ブ', 'ベ', 'ボ'],
+    ['マ', 'ミ', 'ム', 'メ', 'モ'],
     ['ヤ', 'ユ', 'ヨ' ],
-    ['ラ', 'リ', 'ル', 'レ', 'ロ',	'リャ', 'リュ', 'リョ' ],
+    ['ラ', 'リ', 'ル', 'レ', 'ロ'],
     ['ワ', 'ヲ', 'ン']
   ]
   const changeSelectValue = (e: any) => {
@@ -59,9 +59,11 @@ const productions: NextPage = ({productions, letters}: any) => {
   
   useEffect(()=>{
     setLoading(true)
-    getProductionList(letterSet)
+    let hasSubLetters = selected==2||selected==3||selected==4||selected==6 ? true : false;
+    getProductionList(letterSet, hasSubLetters)
      .then(res=>{ 
         setResultSet(res.data.response_message)
+        setSelectedLetters(alphabet[selected].slice(0,Math.round((letterSet.length-1)/2)))
         setLoading(false)
       })
   }, [letterSet])
@@ -78,7 +80,7 @@ const productions: NextPage = ({productions, letters}: any) => {
         { !isLoading && (
           <div className={styles['p-production-search__content']}>
             { 
-              letterSet.map((letter:string, index:number)=> {
+              selectedLetters.map((letter:string, index:number)=> {
                 return ( 
                   <ProductionSearchCard title={letter} productionList={resultSet[index]} />                 
                 )
