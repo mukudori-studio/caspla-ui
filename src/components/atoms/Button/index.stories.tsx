@@ -22,7 +22,7 @@ export default {
     color: {
       control: {
         type: 'select',
-        options: ['primary', 'secondary', 'default'],
+        options: ['primary', 'secondary', 'mono-primary', 'mono-secondary', 'default'],
       },
     },
     weight: {
