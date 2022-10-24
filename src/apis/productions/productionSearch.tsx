@@ -1,10 +1,11 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const getProductionList = async (filterValues: string[]) => {
+const getProductionList = async (filterValues: string[], hasSubLetter: boolean) => {
   try {
     const response = await axiosClient.get('/api/v1/open/productions', {
       params: {
-        filter: filterValues
+        filter: filterValues,
+        hasSubLetters : hasSubLetter
       }
     })
 
