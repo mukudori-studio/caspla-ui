@@ -63,7 +63,7 @@ const productions: NextPage = ({productions, letters}: any) => {
     getProductionList(letterSet, hasSubLetters)
      .then(res=>{ 
         setResultSet(res.data.response_message)
-        setSelectedLetters(alphabet[selected].slice(0,Math.round((letterSet.length-1)/2)))
+        setSelectedLetters( hasSubLetters ? alphabet[selected].slice(0,Math.round((letterSet.length-1)/2)) : letterSet)
         setLoading(false)
       })
   }, [letterSet])
