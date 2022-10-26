@@ -9,7 +9,7 @@ import Loading from '@/components/atoms/Loading'
 
 export const getServerSideProps : GetServerSideProps = async() => {
   const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-  const response = await getProductionList(letters, false).then(res=>{return res.data.response_message})
+  const response = await getProductionList(letters, false, false).then(res=>{return res.data.response_message})
   return {
     props: {
       productions: response,
@@ -59,11 +59,12 @@ const productions: NextPage = ({productions, letters}: any) => {
   
   useEffect(()=>{
     setLoading(true)
+    let isJapanese = selected!=0
     let hasSubLetters = selected==2||selected==3||selected==4||selected==6 ? true : false;
-    getProductionList(letterSet, hasSubLetters)
+    getProductionList(letterSet, hasSubLetters, isJapanese)
      .then(res=>{ 
         setResultSet(res.data.response_message)
-        setSelectedLetters( hasSubLetters ? alphabet[selected].slice(0,Math.round((letterSet.length-1)/2)) : letterSet)
+        setSelectedLetters( hasSubLetters ? letterSet.slice(0,Math.round((letterSet.length-1)/2)) : letterSet)
         setLoading(false)
       })
   }, [letterSet])
