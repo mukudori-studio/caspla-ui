@@ -130,9 +130,9 @@ const TalentProfile = ({
             <>
               <dt className={styles['o-talent-profile__label']}>サイズ</dt>
               <dd className={styles['o-talent-profile__text']}>
-                {bust && `B${bust}・`}{waist && `W${waist}`}{hip && `・H${hip}`}{footSize && `(F${footSize})`}
+                {bust && `B${bust} / `}{waist && `W${waist}`}{hip && ` / H${hip}`}{footSize && ` / F${footSize}`}
               </dd>
-            </>   
+            </>
           )
         }
       </dl>
