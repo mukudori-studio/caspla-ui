@@ -17,12 +17,12 @@ const ProductionSearchCard = ({
     },[])
 
   return ( 
-    <div className={styles['c-production-search-header']} key={`${title}-production-list`}>
+    <>
         { productions && productions.length !== 0 && (
-            <h1>{title}</h1>
+            <h1 className={styles['c-production-search-header']}>{title}</h1>
         )}
         { productions && (
-            <ul className={styles['c-production-search__list']}>
+            <ul className={[styles['c-production-search__list'], styles['c-production-search-header']].join(" ")}>
                 {productions.map(prod => {
                     return (
                         <li key={`${title}-${prod.productionId}-${prod.productionName}`}>
@@ -34,7 +34,7 @@ const ProductionSearchCard = ({
                 })}
             </ul>
         )}
-    </div>
+    </>
   )
 }
 
