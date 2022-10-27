@@ -7,23 +7,26 @@ import getProductionList from '@/apis/productions/productionSearch'
 import ProductionSearchCard from '@/components/organisms/ProductionSearchCard'
 import Loading from '@/components/atoms/Loading'
 
-export const getServerSideProps : GetServerSideProps = async() => {
-  const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-  const response = await getProductionList(letters, false, false).then(res=>{return res.data.response_message})
-  return {
-    props: {
-      productions: response,
-      letters: letters, 
-    }
-  }
-}
-
-const productions: NextPage = ({productions, letters}: any) => {
+const productions: NextPage = (props: any) => {
+  
+  const alphabet = [
+    ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], 
+    ['ア', 'イ', 'ウ', 'エ', 'オ'],
+    ['カ', 'キ', 'ク', 'ケ', 'コ', 'ガ', 'ギ', 'グ', 'ゲ', 'ゴ'],
+    ['サ', 'シ', 'ス', 'セ', 'ソ', 'ザ', 'ジ', 'ヅ', 'ゼ', 'ゾ'],
+    ['タ', 'チ', 'ツ', 'テ', 'ト', 'ダ', 'ヂ', 'ヅ', 'デ', 'ド'],
+    ['ナ', 'ニ', 'ヌ', 'ネノ'],
+    ['ハ', 'ヒ', 'フ', 'ヘ', 'ホ', 'バ', 'ビ', 'ブ', 'ベ', 'ボ'],
+    ['マ', 'ミ', 'ム', 'メ', 'モ'],
+    ['ヤ', 'ユ', 'ヨ' ],
+    ['ラ', 'リ', 'ル', 'レ', 'ロ'],
+    ['ワ', 'ヲ', 'ン']
+  ]
   const [selected, setSelected] = useState(0)
-  const [letterSet, setLetterSet] = useState<string[]>(letters);
-  const [resultSet, setResultSet] = useState(productions)
+  const [letterSet, setLetterSet] = useState<string[]>(alphabet[selected]);
+  const [resultSet, setResultSet] = useState([])
   const [isLoading, setLoading] = useState(true)
-  const [selectedLetters, setSelectedLetters] = useState<string[]>(letters)
+  const [selectedLetters, setSelectedLetters] = useState<string[]>(alphabet[selected])
 
   const optionList = [
     {value: 0, text: 'A～Z'},
@@ -39,19 +42,6 @@ const productions: NextPage = ({productions, letters}: any) => {
     {value: 10, text: 'ワ行'},
   ]
 
-  const alphabet = [
-    ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], 
-    ['ア', 'イ', 'ウ', 'エ', 'オ'],
-    ['カ', 'キ', 'ク', 'ケ', 'コ', 'ガ', 'ギ', 'グ', 'ゲ', 'ゴ'],
-    ['サ', 'シ', 'ス', 'セ', 'ソ', 'ザ', 'ジ', 'ヅ', 'ゼ', 'ゾ'],
-    ['タ', 'チ', 'ツ', 'テ', 'ト', 'ダ', 'ヂ', 'ヅ', 'デ', 'ド'],
-    ['ナ', 'ニ', 'ヌ', 'ネノ'],
-    ['ハ', 'ヒ', 'フ', 'ヘ', 'ホ', 'バ', 'ビ', 'ブ', 'ベ', 'ボ'],
-    ['マ', 'ミ', 'ム', 'メ', 'モ'],
-    ['ヤ', 'ユ', 'ヨ' ],
-    ['ラ', 'リ', 'ル', 'レ', 'ロ'],
-    ['ワ', 'ヲ', 'ン']
-  ]
   const changeSelectValue = (e: any) => {
     setSelected(e.target.value)
     setLetterSet(alphabet[e.target.value])
