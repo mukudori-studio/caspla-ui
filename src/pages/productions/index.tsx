@@ -6,9 +6,18 @@ import { useEffect, useState } from 'react'
 import getProductionList from '@/apis/productions/productionSearch'
 import ProductionSearchCard from '@/components/organisms/ProductionSearchCard'
 import Loading from '@/components/atoms/Loading'
+import  Router from 'next/router'
 
-const productions: NextPage = (props: any) => {
-  
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {
+      query: context.query,
+    }
+  }
+}
+
+const productions: NextPage = ({query}: any) => {
+
   const alphabet = [
     ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], 
     ['ア', 'イ', 'ウ', 'エ', 'オ'],
@@ -22,11 +31,6 @@ const productions: NextPage = (props: any) => {
     ['ラ', 'リ', 'ル', 'レ', 'ロ'],
     ['ワ', 'ヲ', 'ン']
   ]
-  const [selected, setSelected] = useState(0)
-  const [letterSet, setLetterSet] = useState<string[]>(alphabet[selected]);
-  const [resultSet, setResultSet] = useState([])
-  const [isLoading, setLoading] = useState(true)
-  const [selectedLetters, setSelectedLetters] = useState<string[]>(alphabet[selected])
 
   const optionList = [
     {value: 0, text: 'A～Z'},
@@ -42,9 +46,24 @@ const productions: NextPage = (props: any) => {
     {value: 10, text: 'ワ行'},
   ]
 
+  const [selectedFilter, setSelectedFilter] = useState(query.filter)
+  const value = optionList.find(item => item.text === selectedFilter)
+  const [selected, setSelected] = useState(value === undefined ? 0 : value.value)
+  const [letterSet, setLetterSet] = useState<string[]>(alphabet[selected])
+  const [resultSet, setResultSet] = useState([])
+  const [isLoading, setLoading] = useState(true)
+  const [selectedLetters, setSelectedLetters] = useState<string[]>(alphabet[selected])
+
+
   const changeSelectValue = (e: any) => {
     setSelected(e.target.value)
     setLetterSet(alphabet[e.target.value])
+    Router.push({
+      pathname: `/productions/`,
+      query: {
+        filter: e.target.options[e.target.value].text
+      }
+    })
   }
   
   useEffect(()=>{
