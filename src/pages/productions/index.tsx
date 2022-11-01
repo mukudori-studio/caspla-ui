@@ -54,10 +54,7 @@ const productions: NextPage = ({query}: any) => {
   const [isLoading, setLoading] = useState(true)
   const [selectedLetters, setSelectedLetters] = useState<string[]>(alphabet[selected])
 
-
   const changeSelectValue = (e: any) => {
-    setSelected(e.target.value)
-    setLetterSet(alphabet[e.target.value])
     Router.push({
       pathname: `/productions/`,
       query: {
@@ -77,6 +74,14 @@ const productions: NextPage = ({query}: any) => {
         setLoading(false)
       })
   }, [letterSet])
+
+  useEffect(()=> {
+    setSelectedFilter(query.filter)
+    let obj = optionList.find(item => item.text === query.filter)
+    let value = obj===undefined?0:obj.value
+    setSelected(value)
+    setLetterSet(alphabet[value])
+  }, [query])
 
   return (
     <div className={styles.container}>
