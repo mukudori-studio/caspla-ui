@@ -16,7 +16,8 @@ import activities from '@/utils/activities'
 import bloodTypes from '@/utils/bloodTypes'
 import starSigns from '@/utils/starSigns'
 import styles from '@/styles/AccountRegistration.module.scss'
-
+import { useRecoilState } from 'recoil'
+import { sessionState } from '@/stores/Session'
 type InputProps = {
   fullName: string
   furigana: string
@@ -93,11 +94,12 @@ const TalentFormTemplate = ({
   submitForm,
   ...props
 }: editPorps) => {
-
+  
   const [activityState, setActivity] = useState<Array<string>>([])
   const [checkedCasplaIdState, setCheckCasplaId] = useState(true)
   const { register, handleSubmit, formState: { errors }, watch, setValue, getValues } = useForm<InputProps>()
-
+  const [session, setSession] = useRecoilState(sessionState)
+  
   // NOTE：casplaIdを変更していた場合は再度CasplaIdをチェックしないと更新できない
   useEffect(() => {
     if (props.casplaId === getValues('casplaId')) {
@@ -153,7 +155,7 @@ const TalentFormTemplate = ({
   }
 
   const onCheckId = async () => {
-    checkCasplaId(getValues('casplaId')).then(res => {
+    checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
       // TODO：APIから該当するユーザーが以内場合は200返してもらう
       setCheckCasplaId(true)
     }).catch(() => {
