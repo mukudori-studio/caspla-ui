@@ -89,7 +89,7 @@ const AccountRegistration: NextPage = (props:any) => {
   }
 
   const onCheckId = async () => {
-    checkCasplaId(getValues('casplaId')).then(res => {
+    checkCasplaId(getValues('casplaId'), session.casplaId ).then(res => {
       // TODO：APIから該当するユーザーが以内場合は200返してもらう
       setCheckCasplaId(true)
     }).catch(() => {
