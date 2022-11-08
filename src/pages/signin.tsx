@@ -14,7 +14,7 @@ import PageTitle from '@/components/atoms/PageTitle'
 import FormLabel from '@/components/atoms/Forms/Label'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import Card from '@/components/molecules/Card'
-import { sessionState } from '@/stores/Session'
+import { sessionAccessToken, sessionState } from '@/stores/Session'
 import styles from '@/styles/Signin.module.scss'
 
 type InputProps = {
@@ -26,6 +26,7 @@ const Signin: NextPage = () => {
 
   const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
   const [session, setSession] = useRecoilState(sessionState)
+  const [accessToken, setAccessToken] = useRecoilState(sessionAccessToken)
 
   const isValid = !!watch().casplaId && !!watch().password
   let isSubmitting = false
@@ -33,10 +34,9 @@ const Signin: NextPage = () => {
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     isSubmitting = true
     signIn(data).then(res => {
-      console.log(res)
       setSession({
+        userId : res.data.userId,
         accessToken: res.data.accessToken,
-        refreshToken: res.data.refreshToken,
         casplaId: res.data.casplaId,
         role: res.data.role,
         fullName: res.data.fullName,
@@ -44,6 +44,9 @@ const Signin: NextPage = () => {
         companyId: res.data.productionId,
         companyName: res.data.productionName,
         isAdmin: res.data.productionAdmin
+      })
+      setAccessToken({
+        accessToken : res.data.accessToken
       })
       Router.push('/dashboard')
     }).catch((err) => {
