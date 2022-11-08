@@ -11,11 +11,7 @@ const updateAccount = async (casplaId: string, data: any, accessToken: string) =
       password: data.password,
     }
 
-    const res = await axiosClient.put(`/api/v1/casts/update_account?casplaId=${casplaId}`, {
-      params: {
-        caspla_id: casplaId,
-        loggedUser: accessToken
-      },
+    const res = await axiosClient.put(`/api/v1/casts/update_account?casplaId=${casplaId}`, postData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       }
