@@ -27,4 +27,12 @@ const sessionThumbnailState = atom({
   effects_UNSTABLE: [persistAtom]
 })
 
-export {sessionState, sessionThumbnailState}
+const sessionAccessToken = atom({
+  key: 'sessionAccessToken',
+  default: {
+    accessToken: ''
+  },
+  effects_UNSTABLE: [persistAtom]
+})
+
+export {sessionState, sessionThumbnailState, sessionAccessToken}
