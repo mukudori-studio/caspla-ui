@@ -24,11 +24,9 @@ const Dashboard: NextPage = () => {
   
 
   useEffect(() => {
-    getProfile(session.casplaId, session.accessToken).then(res => {
+    getProfile(session.casplaId, session.casplaId).then(res => {
       setProfileState(res.data.response_message.castDetails)
-      setTimeout(() => {
-        setLoading(false)
-      })
+      setLoading(false)
     })
   }, [])
 
@@ -37,17 +35,22 @@ const Dashboard: NextPage = () => {
 
   const updateForm = (data: any) => {
 
-    if (changeThumbnailState) updateThumbnail(session.userId, data.thumbnailImage)
+    if (changeThumbnailState) {
+      updateThumbnail(session.userId, data.thumbnailImage)
+        .then((res)=> console.log(res))
+        .catch((error)=> console.log(error))
+    }
+
+    if (changeCoverState) {
+      updateCover(session.userId, data.coverImage).then(() => {
+        toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
     
     updateProfile(session.casplaId, data, session.accessToken).then(res => {
-
-      if (changeCoverState) {
-        updateCover(session.userId, data.coverImage).then(() => {
-          toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-        })
-      } else {
-        toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-      }
+      toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
     }).catch(() => {
       toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
     })

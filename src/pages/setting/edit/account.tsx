@@ -3,7 +3,7 @@ import Router from 'next/router'
 import { useForm, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
 import { useRecoilState, useResetRecoilState } from 'recoil'
-import { sessionState } from '@/stores/Session'
+import { sessionState, sessionAccessToken } from '@/stores/Session'
 import { toast } from 'react-toastify'
 import updateThumbnail from '@/apis/images/updateThumbnail'
 import getAccount from '@/apis/settings/getAccount'
@@ -40,10 +40,11 @@ const AccountRegistration: NextPage = () => {
   const [checkedCasplaIdState, setCheckCasplaId] = useState(false)
   const [needForLetterState, setNeedForLetter] = useState(true)
   const [session, setSession] = useRecoilState(sessionState)
+  const[accessToken, setAccessToken] = useRecoilState(sessionAccessToken)
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
   useEffect(() => {
-    if (session.accessToken === '') {
+    if (session.accessToken === undefined || session.accessToken === '') {
       Router.replace('/signin')
       toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
     } else if (session.accessToken !== '') {
@@ -51,7 +52,8 @@ const AccountRegistration: NextPage = () => {
         setValue('fullName', res.data.response_message.fullName)
         setValue('furigana', res.data.response_message.furigana)
         setValue('casplaId', res.data.response_message.casplaId)
-        setValue('password', res.data.response_message.password)
+        setValue('email', res.data.response_message.email)
+        setThumbnail(res.data.response_message.thumbnailImage)
       })
     }
   }, [])
@@ -72,7 +74,7 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onCheckId = async () => {
-    checkCasplaId(getValues('casplaId')).then(res => {
+    checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
       // TODO：APIから該当するユーザーが以内場合は200返してもらう
       setCheckCasplaId(true)
     }).catch(() => {
@@ -88,8 +90,8 @@ const AccountRegistration: NextPage = () => {
     setChangeThumbnail(true)
   }
 
-  const onSubmit: SubmitHandler<InputProps> = (data) => {
-    
+  const onSubmit: SubmitHandler<InputProps> = (data, e: any) => {
+    e.preventDefault();
     if (changeThumbnailState) {
       updateThumbnail(session.userId, thumbnailState).then(() => {
         updateAccount(session.casplaId, data, session.accessToken).then(() => {
@@ -102,6 +104,7 @@ const AccountRegistration: NextPage = () => {
             casplaId: data.casplaId,
             password: data.password,
             role: roleState,
+            accessToken: accessToken.accessToken,
             companyId: session.companyId,
             companyName: session.companyName,
             isAdmin: session.isAdmin
@@ -122,6 +125,7 @@ const AccountRegistration: NextPage = () => {
           casplaId: res.data.response_message.casplaId,
           password: res.data.response_message.password,
           role: roleState,
+          accessToken: accessToken.accessToken,
           companyId: session.companyId,
           companyName: session.companyName,
           isAdmin: session.isAdmin
