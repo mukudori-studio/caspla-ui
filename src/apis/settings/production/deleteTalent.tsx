@@ -1,9 +1,9 @@
 import { axiosClient } from '@/utils/axiosClient'
 import { useRecoilValue } from 'recoil'
-import { sessionState } from '@/stores/Session'
+import { userAtom } from '@/stores/Session'
 
 const deleteProductionTalents = async (talentCasplaId: string | string[] | undefined) => {
-  const session = useRecoilValue(sessionState)
+  const session = useRecoilValue(userAtom)
   try {
 
     const response = await axiosClient.delete('/api/v1/production_casts/', {
