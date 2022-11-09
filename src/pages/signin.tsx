@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import Router from 'next/router'
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { useForm, Controller, SubmitHandler } from "react-hook-form"
-import { useRecoilState } from 'recoil'
+import { useForm, SubmitHandler } from "react-hook-form"
+import { useSetRecoilState } from 'recoil'
 import signIn from '@/apis/auth/signin'
 import { toast } from 'react-toastify'
 import Meta from '@/components/Meta'
@@ -14,7 +14,7 @@ import PageTitle from '@/components/atoms/PageTitle'
 import FormLabel from '@/components/atoms/Forms/Label'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import Card from '@/components/molecules/Card'
-import { sessionAccessToken, sessionState } from '@/stores/Session'
+import { accessTokenAtom, thumbnailAtom, userAtom } from '@/stores/Session'
 import styles from '@/styles/Signin.module.scss'
 
 type InputProps = {
@@ -25,9 +25,9 @@ type InputProps = {
 const Signin: NextPage = () => {
 
   const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
-  const [session, setSession] = useRecoilState(sessionState)
-  const [accessToken, setAccessToken] = useRecoilState(sessionAccessToken)
-
+  const setSession = useSetRecoilState(userAtom)
+  const setToken = useSetRecoilState(accessTokenAtom)
+  const setThumbnail = useSetRecoilState(thumbnailAtom)
   const isValid = !!watch().casplaId && !!watch().password
   let isSubmitting = false
 
@@ -36,21 +36,19 @@ const Signin: NextPage = () => {
     signIn(data).then(res => {
       setSession({
         userId : res.data.userId,
-        accessToken: res.data.accessToken,
         casplaId: res.data.casplaId,
         role: res.data.role,
         fullName: res.data.fullName,
-        thumbnailImage: res.data.thumbnailImage,
         companyId: res.data.productionId,
         companyName: res.data.productionName,
         isAdmin: res.data.productionAdmin
       })
-      setAccessToken({
-        accessToken : res.data.accessToken
-      })
+      setToken(res.data.accessToken)
+      setThumbnail(res.data.thumbnailImage)
       Router.push('/dashboard')
     }).catch((err) => {
       toast.error('ID、もしくはパスワードが正しくありません。', { autoClose: 3000, draggable: true})
+      console.log(err)
     }).finally(() => {
       isSubmitting = false
     })

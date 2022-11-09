@@ -5,8 +5,7 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilValue } from 'recoil'
-import { sessionState } from '@/stores/Session'
-import SearchKeyword from '@/components/molecules/SearchKeyword'
+import { accessTokenAtom, userAtom } from '@/stores/Session'
 import LoginedHeaderMenu from '@/components/organisms/LoginedHeaderMenu'
 import styles from '@/styles/components/organisms/Header.module.scss'
 
@@ -24,11 +23,11 @@ const Header = ({
   const [showMenuState, setShowMenu] = useState(showMenu)
   const [isTopPage, setTopPage] = useState(isTop)
 
-  const session = useRecoilValue(sessionState)
+  const accessToken = useRecoilValue(accessTokenAtom)
   const [logined, setLogined] = useState(false)
 
   useEffect(() => {
-    const checkLogined = session?.accessToken !== '' ? true : false
+    const checkLogined = accessToken !== '' ? true : false
     setLogined(checkLogined)
   })
 
@@ -78,7 +77,6 @@ const Header = ({
           </a>
         </Link>
       </div>
-      {/* { showMenuState && <div className={styles['o-header__search']}><SearchKeyword onClick={onSearch} placeholder="タレント検索" /></div> } */}
       {
         logined ? (
           <LoginedHeaderMenu />

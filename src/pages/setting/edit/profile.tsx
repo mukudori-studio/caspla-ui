@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
 import Meta from '@/components/Meta'
 import { toast } from 'react-toastify'
-import { useRecoilState, useResetRecoilState } from 'recoil'
-import { sessionState, sessionThumbnailState } from '@/stores/Session'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { userAtom, thumbnailAtom, accessTokenAtom } from '@/stores/Session'
 import updateCover from '@/apis/images/updateCover'
 import updateThumbnail from '@/apis/images/updateThumbnail'
 import getProfile from '@/apis/settings/profile/getProfile'
@@ -17,11 +17,11 @@ const Dashboard: NextPage = () => {
 
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
   const [changeCoverState, setChangeCover] = useState(false)
-  const [session, setSession] = useRecoilState(sessionState)
-  const [sessionThumbnail, setThumbnailSession] = useRecoilState(sessionThumbnailState)
+  const [session, setSession] = useRecoilState(userAtom)
+  const [thumbnail, setThumbnail] = useRecoilState(thumbnailAtom)
   const [loadingState, setLoading] = useState<boolean>(true)
   const [profileState, setProfileState] = useState<any>({})
-  
+  const accessToken = useRecoilValue(accessTokenAtom)
 
   useEffect(() => {
     getProfile(session.casplaId, session.casplaId).then(res => {
@@ -37,7 +37,9 @@ const Dashboard: NextPage = () => {
 
     if (changeThumbnailState) {
       updateThumbnail(session.userId, data.thumbnailImage)
-        .then((res)=> console.log(res))
+        .then(({data : {response_message}})=> {
+          setThumbnail(response_message)
+        })
         .catch((error)=> console.log(error))
     }
 
@@ -49,7 +51,16 @@ const Dashboard: NextPage = () => {
       })
     }
     
-    updateProfile(session.casplaId, data, session.accessToken).then(res => {
+    updateProfile(session.casplaId, data, accessToken).then(({response_message}:any) => {
+      setSession({
+        userId : session.userId,
+        casplaId: response_message.casplaId,
+        role: session.role,
+        fullName: response_message.fullName,
+        companyId: session.productionId,
+        companyName: session.productionName,
+        isAdmin: session.productionAdmin
+      })
       toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
     }).catch(() => {
       toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})

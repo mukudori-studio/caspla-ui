@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import { useForm, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
-import { useRecoilState, useResetRecoilState } from 'recoil'
-import { sessionState, sessionAccessToken } from '@/stores/Session'
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { accessTokenAtom, thumbnailAtom, userAtom } from '@/stores/Session'
 import { toast } from 'react-toastify'
 import updateThumbnail from '@/apis/images/updateThumbnail'
 import getAccount from '@/apis/settings/getAccount'
@@ -39,16 +39,17 @@ const AccountRegistration: NextPage = () => {
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
   const [checkedCasplaIdState, setCheckCasplaId] = useState(false)
   const [needForLetterState, setNeedForLetter] = useState(true)
-  const [session, setSession] = useRecoilState(sessionState)
-  const[accessToken, setAccessToken] = useRecoilState(sessionAccessToken)
+  const [session, setSession] = useRecoilState(userAtom)
+  const accessToken = useRecoilValue(accessTokenAtom)
+  const sessionThumbnail = useSetRecoilState(thumbnailAtom)
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
   useEffect(() => {
-    if (session.accessToken === undefined || session.accessToken === '') {
+    if (accessToken === undefined || accessToken === '') {
       Router.replace('/signin')
       toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
     } else if (session.accessToken !== '') {
-      getAccount(session.casplaId, session.accessToken).then(res => {
+      getAccount(session.casplaId, accessToken).then(res => {
         setValue('fullName', res.data.response_message.fullName)
         setValue('furigana', res.data.response_message.furigana)
         setValue('casplaId', res.data.response_message.casplaId)
@@ -83,7 +84,10 @@ const AccountRegistration: NextPage = () => {
     })
   }
 
-  const toggleNeedForLetter = (e:any) => setValue('needForLetter', e.target.checked)
+  const toggleNeedForLetter = (e:any) => {
+    setNeedForLetter(!needForLetterState)
+    setValue('needForLetter', e.target.checked)
+  }
 
   const changeThumbnail = (val: object) => {
     setThumbnail(val)
@@ -97,18 +101,16 @@ const AccountRegistration: NextPage = () => {
         updateAccount(session.casplaId, data, session.accessToken).then(() => {
           setSession({
             userId: session.userId,
-            thumbnailImage: data.thumbnailImage,
             fullName: data.fullName,
             furigana: data.furigana,
             email: data.email,
             casplaId: data.casplaId,
-            password: data.password,
             role: roleState,
-            accessToken: accessToken.accessToken,
             companyId: session.companyId,
             companyName: session.companyName,
             isAdmin: session.isAdmin
           })
+         sessionThumbnail(data.thumbnailImage)
           toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
         }).catch(() => {
           toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
@@ -130,6 +132,7 @@ const AccountRegistration: NextPage = () => {
           companyName: session.companyName,
           isAdmin: session.isAdmin
         })
+        sessionThumbnail(data.thumbnailImage)
         toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
       }).catch(() => {
         toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})

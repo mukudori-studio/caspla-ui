@@ -2,22 +2,22 @@ import React, { useState } from 'react'
 import Router from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRecoilState, useResetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify'
-import { sessionState, sessionThumbnailState } from '@/stores/Session'
+import { accessTokenAtom, userAtom, thumbnailAtom } from '@/stores/Session'
 import PopOver from '@/components/molecules/Popover'
 import styles from '@/styles/components/organisms/LoginedHeaderMenu.module.scss'
 
 const LoginedHeaderMenu = () => {
 
   const [showMenu, setToggleMenu] = useState(false)
-  const [session, setSession] = useRecoilState(sessionState)
-  const [sessionThumbnail, setThumbnailSession] = useRecoilState(sessionThumbnailState)
-  const resetSession = useResetRecoilState(sessionState)
-  const resetSessionThumbnail = useResetRecoilState(sessionThumbnailState)
-
+  const [session, setSession] = useRecoilState(userAtom)
+  const [sessionThumbnail, setThumbnailSession] = useRecoilState(thumbnailAtom)
+  const resetSession = useResetRecoilState(userAtom)
+  const resetAccessToken = useResetRecoilState(accessTokenAtom)
+  const resetSessionThumbnail = useResetRecoilState(thumbnailAtom)
   const toggleMenu = () => setToggleMenu(!showMenu)
   const hideMenu = () => setToggleMenu(false)
 
@@ -25,6 +25,7 @@ const LoginedHeaderMenu = () => {
     hideMenu()
     resetSession()
     resetSessionThumbnail()
+    resetAccessToken()
     Router.push('/signin')
     toast.success('ログアウトしました', {
       autoClose: 3000,
