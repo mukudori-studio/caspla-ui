@@ -33,8 +33,12 @@ const Signup: NextPage = () => {
         pathname: '/signup/verify-code',
         query: {email: data.email, needForLetter: needForLetter}
       })
-    }).catch(() => {
-      toast.error('メールの送信に失敗しました。', { autoClose: 3000, draggable: true})
+    }).catch(({response}) => {
+      if(response.status===409) {
+        toast.error('このEメールはすでに登録されています。', { autoClose: 3000, draggable: true})
+      } else {
+        toast.error('メールの送信に失敗しました。', { autoClose: 3000, draggable: true})
+      }
     })
   }
 
