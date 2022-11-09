@@ -1,9 +1,9 @@
 import { axiosClient } from '@/utils/axiosClient'
 import { useRecoilValue } from 'recoil'
-import { sessionState } from '@/stores/Session'
+import { userAtom } from '@/stores/Session'
 
 const changeBookmark = async (targetCasplaId: string | string[] | undefined) => {
-  const session = useRecoilValue(sessionState)
+  const session = useRecoilValue(userAtom)
   try {
 
     const response = await axiosClient.post('/api/v1/bookmark/', {
