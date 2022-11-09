@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import Meta from '@/components/Meta'
 import { useRecoilState } from 'recoil'
-import { sessionState } from '@/stores/Session'
+import { userAtom } from '@/stores/Session'
 import getTalentDetail from '@/apis/settings/production/getTalentDetail'
 import LinkButton from '@/components/atoms/LinkButton'
 import TalentFormTemplate from '@/components/templates/TalentFormTemplate'
@@ -15,7 +15,7 @@ const TalentEdit: NextPage = () => {
 
   const router = useRouter()
   const { casplaId } = router.query
-  const [session, setSession] = useRecoilState(sessionState)
+  const [session, setSession] = useRecoilState(userAtom)
 
   const [talentState, setTalent] = useState<any>({})
   
