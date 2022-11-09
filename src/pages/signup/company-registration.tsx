@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import type { NextPage } from 'next'
 import { toast } from 'react-toastify'
-import { useRecoilValue, useRecoilState } from 'recoil'
-import { sessionState, sessionThumbnailState } from '@/stores/Session'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { userAtom, thumbnailAtom, accessTokenAtom } from '@/stores/Session'
 import updateCompanyLogo from '@/apis/images/updateCover'
 import updateThumbnail from '@/apis/images/updateThumbnail'
 import { registrationState } from '@/stores/Registration'
@@ -19,8 +19,9 @@ import styles from '@/styles/AccountRegistration.module.scss'
 const CompanyRegistration: NextPage = () => {
 
   const registration = useRecoilValue(registrationState)
-  const [session, setSession] = useRecoilState(sessionState)
-  const [thumbnailState, setThumbnail] = useRecoilState(sessionThumbnailState)
+  const setUserAtom = useSetRecoilState(userAtom)
+  const setThumbnailImage = useSetRecoilState(thumbnailAtom)
+  const setAccessToken = useSetRecoilState(accessTokenAtom)
 
   useEffect(() => {
     if (registration.fullName === '') {
@@ -32,16 +33,12 @@ const CompanyRegistration: NextPage = () => {
 
   const onSubmit = (data: any) => {
     let userResponse:any
-
-    companyUserRegistration(registration).then(res => {
+    companyUserRegistration(registration).then((res) : any => {
       userResponse = res.data.response_message
-
       companyRegistration(data).then((res) => {
-
-        linkCompanyUser(userResponse.casplaId, data.corpId).then(() => {
-          setSession({
+        linkCompanyUser(userResponse.casplaId, data.corpId).then((response) => {
+          setUserAtom({
             userId: Number(userResponse.userId),
-            accessToken: userResponse.accessToken,
             casplaId: userResponse.casplaId,
             role: userResponse.role,
             fullName: userResponse.fullName,
@@ -49,26 +46,30 @@ const CompanyRegistration: NextPage = () => {
             companyName: res.data.response_message.name,
             isAdmin: true
           })
-
-          if (registration.thumbnail) {
+          setAccessToken(userResponse.accessToken)
+          if (registration.thumbnail!=='') {
             updateThumbnail(registration.userId, registration.thumbnail).then(res => {
-              setThumbnail({ thumbnailImage: res.data.response_message })
-    
+              setThumbnailImage(res.data.response_message)
               if (data.companyImage) {
                 updateCompanyLogo(registration.userId, data.companyImage).then(() => Router.push('/signup/complete'))
               } else {
                 Router.push('/signup/complete')
               }
+            }).catch(()=>{
+              toast.error('画像ファイルのアップロード中にエラーが発生しました。', { autoClose: 3000, draggable: true})
             })
           } else {
             Router.push('/signup/complete')
           }
+        }).catch(()=>{
+          toast.error('会社管理者の作成中にエラーが発生しました。', { autoClose: 3000, draggable: true})
         })
+      }).catch(()=> {
+        toast.error('法人登録でエラーが発生しました。', { autoClose: 3000, draggable: true})
       })
-    }).catch(err => {
+    }).catch(() => {
       toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
     })
-
   }
 
   return (

@@ -17,7 +17,7 @@ import bloodTypes from '@/utils/bloodTypes'
 import starSigns from '@/utils/starSigns'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { useRecoilState } from 'recoil'
-import { sessionState } from '@/stores/Session'
+import { userAtom } from '@/stores/Session'
 type InputProps = {
   fullName: string
   furigana: string
@@ -98,7 +98,7 @@ const TalentFormTemplate = ({
   const [activityState, setActivity] = useState<Array<string>>([])
   const [checkedCasplaIdState, setCheckCasplaId] = useState(true)
   const { register, handleSubmit, formState: { errors }, watch, setValue, getValues } = useForm<InputProps>()
-  const [session, setSession] = useRecoilState(sessionState)
+  const [session, setSession] = useRecoilState(userAtom)
   
   // NOTE：casplaIdを変更していた場合は再度CasplaIdをチェックしないと更新できない
   useEffect(() => {

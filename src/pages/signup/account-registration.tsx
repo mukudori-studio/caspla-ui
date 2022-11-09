@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import { useForm, SubmitHandler } from "react-hook-form"
 import type { GetServerSideProps, NextPage } from 'next'
-import { useRecoilState, useResetRecoilState } from 'recoil'
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { registrationState } from '@/stores/Registration'
-import { sessionState, sessionThumbnailState } from '@/stores/Session'
+import { userAtom, thumbnailAtom } from '@/stores/Session'
 import { toast } from 'react-toastify'
 import checkCasplaId from '@/apis/auth/checkCasplaId'
 import updateThumbnail from '@/apis/images/updateThumbnail'
@@ -49,8 +49,8 @@ const AccountRegistration: NextPage = (props:any) => {
   const [submitTextState, setSubmitText] = useState('この内容で登録する')
   const [registration, setRegistration] = useRecoilState(registrationState)
   const resetRegistrationState = useResetRecoilState(registrationState)
-  const [session, setSession] = useRecoilState(sessionState)
-  const [sessionThumbnail, setThumbnailSession] = useRecoilState(sessionThumbnailState)
+  const [session, setSession] = useRecoilState(userAtom)
+  const setThumbnailSession = useSetRecoilState(thumbnailAtom)
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
   useEffect(() => {
@@ -167,7 +167,7 @@ const AccountRegistration: NextPage = (props:any) => {
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="メールアドレス" label="email" required={true} />
-              <Input id="email" register={register} required={true} type={'email'} disabled={false} note="※メールアドレスは後ほど管理画面で変更が可能です。" />
+              <Input id="email" register={register} required={true} type={'email'} disabled={true} note="※メールアドレスは後ほど管理画面で変更が可能です。" />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="Caspla ID" label="casplaId" required={true} />

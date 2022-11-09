@@ -1,14 +1,12 @@
-import { atom } from 'recoil'
+import { atom, selector } from 'recoil'
 import { recoilPersist } from 'recoil-persist'
 const { persistAtom } = recoilPersist()
 
 // NOTE：ユーザーデータ保存用
-const sessionState = atom({
-  key: 'session',
+export const userAtom = atom({
+  key: 'userDetail',
   default: {
     userId: 0,
-    accessToken: '',
-    refreshToken: '',
     role: '',
     casplaId: '',
     fullName: '',
@@ -19,20 +17,21 @@ const sessionState = atom({
   effects_UNSTABLE: [persistAtom]
 })
 
-const sessionThumbnailState = atom({
+
+export const thumbnailAtom = atom({
   key: 'sessionThumbnail',
-  default: {
-    thumbnailImage: ''
-  },
+  default: '',
   effects_UNSTABLE: [persistAtom]
 })
 
-const sessionAccessToken = atom({
-  key: 'sessionAccessToken',
-  default: {
-    accessToken: ''
-  },
+export const accessTokenAtom = atom({
+  key: 'accessTokenAtom',
+  default: "",
   effects_UNSTABLE: [persistAtom]
 })
 
-export {sessionState, sessionThumbnailState, sessionAccessToken}
+export const refreshTokenAtom = atom({
+  key: 'sessionRefreshToken',
+  default: "",
+  effects_UNSTABLE: [persistAtom]
+})
