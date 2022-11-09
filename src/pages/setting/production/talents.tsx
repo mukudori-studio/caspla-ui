@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import Meta from '@/components/Meta'
 import { toast } from 'react-toastify'
-import { useRecoilState, useResetRecoilState } from 'recoil'
-import { sessionState, sessionThumbnailState } from '@/stores/Session'
+import { useRecoilState } from 'recoil'
+import { userAtom } from '@/stores/Session'
 import getProductionDetailTalents from '@/apis/productions/getProductionTalents'
 import LinkButton from '@/components/atoms/LinkButton'
 import TalentItem from '@/components/organisms/Production/TalentItem'
@@ -13,7 +13,7 @@ import buttonStyles from '@/styles/components/atoms/Button.module.scss'
 const BelongTalents: NextPage = () => {
 
   const [checkedTalentState, setCheckedTalent] = useState<any>([])
-  const [session, setSession] = useRecoilState(sessionState)
+  const [session, setSession] = useRecoilState(userAtom)
   const [talents, setTalent] = useState([])
   
 

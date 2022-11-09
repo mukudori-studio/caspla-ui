@@ -4,7 +4,7 @@ import type { NextPage } from 'next'
 import { toast } from 'react-toastify'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { registrationState } from '@/stores/Registration'
-import { sessionState, sessionThumbnailState } from '@/stores/Session'
+import { userAtom, thumbnailAtom } from '@/stores/Session'
 import updateCover from '@/apis/images/updateCover'
 import updateThumbnail from '@/apis/images/updateThumbnail'
 import freeTalentRegistration from '@/apis/auth/talent/freeTalentRegistration'
@@ -18,8 +18,8 @@ import styles from '@/styles/AccountRegistration.module.scss'
 const TalentRegistration: NextPage = () => {
 
   const registration = useRecoilValue(registrationState)
-  const [session, setSession] = useRecoilState(sessionState)
-  const [sessionThumbnail, setThumbnailSession] = useRecoilState(sessionThumbnailState)
+  const [session, setSession] = useRecoilState(userAtom)
+  const [sessionThumbnail, setThumbnailSession] = useRecoilState(thumbnailAtom)
   
   const onSubmit = (data:any) => {
     let userResponse:any
