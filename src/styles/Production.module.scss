@@ -62,4 +62,33 @@
       }
     }
   }
+  &__contact {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: g.$color-mono-80;
+    color: g.$color-mono-5;
+    font-style: inherit 500;
+    padding: 20px 40px;
+    border-radius: 10px;
+    margin-top: 40px;
+    >:first-child {
+      grid-column: 1 / span 2;
+      >:first-child{
+        font-weight: bold;
+      }
+    }
+    >:nth-child(even) {
+      >:first-child { 
+        font-weight: bold;
+      }
+    }
+    p {
+      margin: 3px;
+    }
+    @include g.mq-down(tablet--under) {
+      display: inline-block;
+      width: 100%;
+      padding : 10px 20px;
+    }
+  }
 }
