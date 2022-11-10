@@ -24,12 +24,13 @@ const productionDetail: NextPage = () => {
     if(productionId === undefined) return
     
     getProductionDetail(productionId).then(res => {
-      setProductionDetail(res.response_message)
-
-      getProductionTalents(productionId).then(res => {
-        setProductionTalent(res.response_message)
-      })
+      console.log(res)
+      const {users, ...other} = res.response_message
+      setProductionDetail(other)
+      setProductionTalent(users)
+      console.log(users)
     }).catch(err => {
+      console.log(err)
       Router.push('/top')
       toast.error('プロダクション情報の取得に失敗しました。', { autoClose: 3000, draggable: true})
     }).finally(() => {
@@ -74,7 +75,7 @@ const productionDetail: NextPage = () => {
                     productionTalentState.map((data: any) => {
                       return (
                         <li className={styles['p-production-detail__item']}>
-                          <TalentLinkCard casplaId={data.casplaId} name={data.fullName} thumbnail={data.thumbnailImage} />
+                          <TalentLinkCard casplaId={data.casplaId} name={data.fullName} thumbnail={data.thumbnailUrl} />
                         </li>
                       )
                     })
@@ -83,6 +84,16 @@ const productionDetail: NextPage = () => {
               ) : (
                 <div className={styles['p-production-detail__no-data']}>在籍しているタレントはいません。</div>
               )}
+              <div className={styles['p-production-detail__contact']}>
+                <div>
+                  <p>住所</p>
+                  <p>{`〒${productionDetailState.zipCode} ${productionDetailState.address1} ${productionDetailState.address2} ${productionDetailState.prefecture}`}</p>
+                </div>
+                <div>
+                  <p>TEL</p>
+                  <p>{productionDetailState.tel}</p >
+                </div>
+              </div>
             </>
           )
         }          
