@@ -2,7 +2,7 @@ import { axiosClient } from '@/utils/axiosClient'
 
 const updateCompanyDetails = async (companyId: string, data : any) => {
   try {
-    console.log(data)
+    
     let requestBody = {
         "id": data.companyId,
         "name": data.companyName,

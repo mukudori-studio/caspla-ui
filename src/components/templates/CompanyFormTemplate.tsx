@@ -107,7 +107,6 @@ const Signup = ({
     setValue('history', props.history)
     setValue('note', props.note)
     setCheckId(true)
-    console.log(props)
   }, [])
 
   const onSearchZipCode = async () => {
