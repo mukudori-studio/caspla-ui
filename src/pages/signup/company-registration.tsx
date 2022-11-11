@@ -79,6 +79,7 @@ const CompanyRegistration: NextPage = () => {
       <section className={styles['p-account-registration__content']}>
         <PageTitle title="会社情報入力" />
         <CompanyFormTemplate
+          corpId=''
           zipCode=""
           prefecture=""
           userType="corp"
