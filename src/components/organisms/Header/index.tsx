@@ -41,25 +41,6 @@ const Header = ({
 
   const logoLinkStyle = isTopPage ? styles['o-header__logo-hidden'] : styles['o-header__logo'] 
   const headerStyle = showMenuState ? isTopPage ? styles['o-header']: [styles['o-header'], styles['o-header__margin-bottom']].join(' ') : isTopPage ? [styles['o-header'], styles['o-header--no-menu']].join(' ') : [styles['o-header'], styles['o-header--no-menu'], styles['o-header__margin-bottom']].join(' ') 
-  const onSearch = (val: string) => {
-
-    const path = '/talents/'
-    const locationPath = location.pathname
-
-    // NOTE：タレント一覧にいる時にrouterで切り替えてもイベント自体は発火しないのでJS側のページ遷移させる
-    if (!locationPath.indexOf(path)) {
-      window.location.href = `/talents/1?keyword=${val}`
-    } else if (val === '') {
-      Router.push({pathname: '/talents/1'})
-    } else {
-      Router.push({
-        pathname: '/talents/1',
-        query: {
-          keyword: val
-        }
-      })
-    }
-  }
 
   return (
     <header className={headerStyle}>

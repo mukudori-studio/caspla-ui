@@ -16,6 +16,8 @@ import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import prefectures from '@/utils/prefectures'
 
 import styles from '@/styles/AccountRegistration.module.scss'
+import { useRecoilValue } from 'recoil'
+import { userAtom } from '@/stores/Session'
 
 type InputProps = {
   companyImage?: any
@@ -44,7 +46,7 @@ type registrationPorps = {
   editType?: 'register' | 'edit'
   companyImage?: any
   companyName?: string
-  corpId?: string
+  corpId: string
   zipCode: string
   prefecture: string
   address1?: string
@@ -70,7 +72,8 @@ const Signup = ({
   submitForm,
   ...props
 }: registrationPorps) => {
-
+  
+  const {companyId} = useRecoilValue(userAtom)
   const { register, handleSubmit, formState: { errors }, watch, setValue, getValues } = useForm<InputProps>()
   const [searchingState, setSearching] = useState(false)
   const [checkedIdState, setCheckId] = useState(false)
@@ -84,9 +87,10 @@ const Signup = ({
 
   useEffect(() => {
     if (editType === 'register') return
+    setValue('corpId', props.corpId)
     setValue('companyImage', props.companyImage)
     setValue('companyName', props?.companyName)
-    setValue('zipCode', props?.zipCode)
+    setValue('zipCode', props.zipCode)
     setValue('prefecture', props.prefecture)
     setPrefecture(props.prefecture)
     setValue('address1', props.address1)
@@ -103,6 +107,7 @@ const Signup = ({
     setValue('history', props.history)
     setValue('note', props.note)
     setCheckId(true)
+    console.log(props)
   }, [])
 
   const onSearchZipCode = async () => {
@@ -136,7 +141,7 @@ const Signup = ({
         setCheckId(false)
       })
     } else {
-      checkCorpId(getValues('corpId')).then(() => {
+      checkCorpId(getValues('corpId'), companyId).then(() => {
         setCheckId(true)
       }).catch(() => {
         setCheckId(false)
