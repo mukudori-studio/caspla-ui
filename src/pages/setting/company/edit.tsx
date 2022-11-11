@@ -21,7 +21,6 @@ const CompanyEdit: NextPage = () => {
     updateCompanyDetails(companyId, data)
     .then((res)=>{
       const {links, ...other} = res.response_message
-      console.log(other)
       setCompanyDetails(other)
       setLinks(links)
       setSession({

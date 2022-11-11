@@ -48,7 +48,6 @@ const Signin: NextPage = () => {
       Router.push('/dashboard')
     }).catch((err) => {
       toast.error('ID、もしくはパスワードが正しくありません。', { autoClose: 3000, draggable: true})
-      console.log(err)
     }).finally(() => {
       isSubmitting = false
     })
