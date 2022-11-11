@@ -48,7 +48,7 @@ const AccountRegistration: NextPage = () => {
     if (accessToken === undefined || accessToken === '') {
       Router.replace('/signin')
       toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
-    } else if (session.accessToken !== '') {
+    } else if (accessToken !== '') {
       getAccount(session.casplaId, accessToken).then(res => {
         setValue('fullName', res.data.response_message.fullName)
         setValue('furigana', res.data.response_message.furigana)
@@ -97,49 +97,27 @@ const AccountRegistration: NextPage = () => {
   const onSubmit: SubmitHandler<InputProps> = (data, e: any) => {
     e.preventDefault();
     if (changeThumbnailState) {
-      updateThumbnail(session.userId, thumbnailState).then(() => {
-        updateAccount(session.casplaId, data, session.accessToken).then(() => {
-          setSession({
-            userId: session.userId,
-            fullName: data.fullName,
-            furigana: data.furigana,
-            email: data.email,
-            casplaId: data.casplaId,
-            role: roleState,
-            companyId: session.companyId,
-            companyName: session.companyName,
-            isAdmin: session.isAdmin
-          })
-         sessionThumbnail(data.thumbnailImage)
-          toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-        }).catch(() => {
-          toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
-        })
-      })
-    } else {
-      updateAccount(session.casplaId, data, session.accessToken).then((res) => {
-        setSession({
-          userId: session.userId,
-          thumbnailImage: res.data.response_message.thumbnailImage,
-          fullName: res.data.response_message.fullName,
-          furigana: res.data.response_message.furigana,
-          email: res.data.response_message.email,
-          casplaId: res.data.response_message.casplaId,
-          password: res.data.response_message.password,
-          role: roleState,
-          accessToken: accessToken.accessToken,
-          companyId: session.companyId,
-          companyName: session.companyName,
-          isAdmin: session.isAdmin
-        })
-        sessionThumbnail(data.thumbnailImage)
-        toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+      updateThumbnail(session.userId, thumbnailState).then((res) => {
+        sessionThumbnail(res.data.response_message)
+        toast.success('サムネイルが正常にアップロードされました。', { autoClose: 3000, draggable: true})
       }).catch(() => {
         toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
       })
     }
-
-    
+    updateAccount(session.casplaId, data, accessToken).then((res) => {
+      setSession({
+        userId: session.userId,
+        role: roleState,
+        casplaId: res.data.response_message.casplaId,
+        fullName: res.data.response_message.fullName,
+        companyId: session.companyId,
+        companyName: session.companyName,
+        isAdmin: session.isAdmin
+      })
+      toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+    }).catch(() => {
+      toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
+    })
   }
 
   return (
