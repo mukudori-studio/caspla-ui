@@ -24,7 +24,6 @@ const productionDetail: NextPage = () => {
     if(productionId === undefined) return
     
     getProductionDetail(productionId).then(res => {
-      console.log(res)
       const {users, ...other} = res.response_message
       setProductionDetail(other)
       setProductionTalent(users)

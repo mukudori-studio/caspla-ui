@@ -134,7 +134,7 @@ const Signup = ({
 
   const onCheckId = () => {
     if (userType === 'production') {
-      checkProductionId(getValues('corpId')).then(() => {
+      checkProductionId(getValues('corpId'), companyId).then(() => {
         setCheckId(true)
       }).catch(() => {
         setCheckId(false)
@@ -159,7 +159,7 @@ const Signup = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="会社名" label="companyName" required={true} />
-          <Input id="companyName" register={register} required={true} error={errors?.companyName?.message} disabled={editType === 'edit'} />
+          <Input id="companyName" register={register} required={true} error={errors?.companyName?.message} disabled={editType !== 'edit'} />
           {editType === 'edit' && <FormNote text={'※会社名を変更したい場合はお問い合わせください。'} />}
         </div>
         <div className={styles['p-account-registration__item']}>
