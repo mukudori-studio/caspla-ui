@@ -4,7 +4,7 @@ import Meta from '@/components/Meta'
 import LinkButton from '@/components/atoms/LinkButton'
 import CompanyFormTemplate from '@/components/templates/CompanyFormTemplate'
 import styles from '@/styles/ProductionSetting.module.scss'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
 import getProductionDetail from '@/apis/productions/getProductionDetail'
 import Loading from '@/components/atoms/Loading'
@@ -21,7 +21,6 @@ const ProductionEdit: NextPage = () => {
   const [productionId, setProductionId] = useState<number>(0)
 
   const updateProduction = (data:any) => {
-    console.log(data)
     updateProductionDetails(data, companyId)
       .then((res)=>{
         const {links, ...other} = res.response_message
@@ -36,21 +35,18 @@ const ProductionEdit: NextPage = () => {
           companyName: other.productionName,
           isAdmin: session.isAdmin
         })
-        console.log(other, links)
         toast.success('詳細が正常に更新されました。', { autoClose: 3000, draggable: true})
       })
       .catch((error)=> {
-        console.error(error)
+        console.log(error)
         toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
       })
-    if(typeof data.companyLogo === 'object') {
-      console.log(data.companyLogo)
-      // updateProductionLogo(productionId, data.companyLogo)
-      //   .then((res)=> {
-      //     console.log(res)
-      //     toast.success('画像が正常にアップロードされました。', { autoClose: 3000, draggable: true})
-      //   })
-      //   .catch((err)=> console.error(err))
+    if(typeof data.companyImage === 'object') {
+      updateProductionLogo(productionId, data.companyImage)
+        .then((res)=> {
+          toast.success('画像が正常にアップロードされました。', { autoClose: 3000, draggable: true})
+        })
+        .catch((err)=> toast.error('ファイルのアップロードでエラーが発生しました', { autoClose: 3000, draggable: true}))
     }
   }
 
@@ -61,9 +57,8 @@ const ProductionEdit: NextPage = () => {
         setProductionId(other.id)
         setLinks(links)
         setProduction(other)
-        console.log(res)
       })
-      .catch((err)=> console.error(err))
+      .catch((err)=> console.log(err))
   },[])
 
   return (
