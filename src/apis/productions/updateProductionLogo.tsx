@@ -9,7 +9,7 @@ const updateProductionLogo = async (productionId: number, image: any) => {
         'content-type': 'multipart/form-data',
       }
     })
-    return res
+    return res.data
   } catch(err) {
     throw err
   }
