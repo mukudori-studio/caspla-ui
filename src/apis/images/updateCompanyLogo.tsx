@@ -1,15 +1,15 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const updateCompanyLogo = async (userId: number, image: any) => {
+const updateCompanyLogo = async (corpId: string, image: any) => {
   try {
-    const res = await axiosClient.post(`/api/v1/company/update_photo?id=${userId}`, {
+    const res = await axiosClient.post(`/api/v1/company/update_photo?corpId=${corpId}`, {
       photo: image
     }, {
       headers: {
         'content-type': 'multipart/form-data',
       }
     })
-    return res
+    return res.data
   } catch(err) {
     throw err
   }
