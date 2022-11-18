@@ -1,7 +1,5 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { toast } from 'react-toastify'
-import updateThumbnail from '@'
 import FormLabel from '@/components/atoms/Forms/Label'
 import { faCamera, faImages, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
 import styles from '@/styles/components/organisms/ThumbnailUploader.module.scss'
