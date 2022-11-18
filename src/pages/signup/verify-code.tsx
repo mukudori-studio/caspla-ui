@@ -3,7 +3,6 @@ import Router, { useRouter } from 'next/router'
 import { useForm, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
 import { useResetRecoilState } from 'recoil'
-import { registrationState } from '@/stores/Registration'
 import { toast } from 'react-toastify'
 import sendEmail from '@/apis/auth/sendEmail'
 import checkVerify from '@/apis/auth/checkVerify'
@@ -24,7 +23,6 @@ const VerifyCode: NextPage = () => {
 
   const router = useRouter()
   const { email, needForLetter } = router.query
-  const resetRegistrationState = useResetRecoilState(registrationState)
 
   const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
 
@@ -32,7 +30,6 @@ const VerifyCode: NextPage = () => {
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     checkVerify(data.code).then(res => {
-      resetRegistrationState()
       Router.push({
         pathname: '/signup/account-registration',
         query: {

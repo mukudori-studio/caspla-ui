@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import type { NextPage } from 'next'
 import { toast } from 'react-toastify'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { userAtom, thumbnailAtom, accessTokenAtom } from '@/stores/Session'
-import updateCompanyLogo from '@/apis/images/updateCover'
-import updateThumbnail from '@/apis/images/updateThumbnail'
-import { registrationState } from '@/stores/Registration'
+import updateCompanyLogo from '@/apis/images/updateCompanyLogo'
 import companyRegistration from '@/apis/auth/company/companyRegistration'
-import companyUserRegistration from '@/apis/auth/company/companyUserRegistration'
 import linkCompanyUser from '@/apis/auth/company/linkCompanyUser'
 import Meta from '@/components/Meta'
 import PageTitle from '@/components/atoms/PageTitle'
@@ -18,13 +15,12 @@ import styles from '@/styles/AccountRegistration.module.scss'
 
 const CompanyRegistration: NextPage = () => {
 
-  const registration = useRecoilValue(registrationState)
-  const setUserAtom = useSetRecoilState(userAtom)
+  const [userSession, setUserSession] = useRecoilState(userAtom)
+  // const setUserAtom = useSetRecoilState(userAtom)
   const setThumbnailImage = useSetRecoilState(thumbnailAtom)
-  const setAccessToken = useSetRecoilState(accessTokenAtom)
 
   useEffect(() => {
-    if (registration.fullName === '') {
+    if (userSession.fullName === '') {
       Router.replace('/signup/')
       toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
     }
@@ -32,44 +28,37 @@ const CompanyRegistration: NextPage = () => {
   }, [])
 
   const onSubmit = (data: any) => {
-    let userResponse:any
-    companyUserRegistration(registration).then((res) : any => {
-      userResponse = res.data.response_message
+    console.log(data)
       companyRegistration(data).then((res) => {
-        linkCompanyUser(userResponse.casplaId, data.corpId).then((response) => {
-          setUserAtom({
-            userId: Number(userResponse.userId),
-            casplaId: userResponse.casplaId,
-            role: userResponse.role,
-            fullName: userResponse.fullName,
+        linkCompanyUser(userSession.casplaId, data.corpId).then((response) => {
+          setUserSession({
+            userId: Number(userSession.userId),
+            casplaId: userSession.casplaId,
+            role: userSession.role,
+            fullName: userSession.fullName,
             companyId: res.data.response_message.id,
             companyName: res.data.response_message.name,
-            isAdmin: true
+            isAdmin: userSession.productionAdmin
           })
-          setAccessToken(userResponse.accessToken)
-          if (registration.thumbnail!=='') {
-            updateThumbnail(registration.userId, registration.thumbnail).then(res => {
-              setThumbnailImage(res.data.response_message)
-              if (data.companyImage) {
-                updateCompanyLogo(registration.userId, data.companyImage).then(() => Router.push('/signup/complete'))
-              } else {
-                Router.push('/signup/complete')
-              }
-            }).catch(()=>{
-              toast.error('画像ファイルのアップロード中にエラーが発生しました。', { autoClose: 3000, draggable: true})
-            })
-          } else {
-            Router.push('/signup/complete')
-          }
         }).catch(()=>{
           toast.error('会社管理者の作成中にエラーが発生しました。', { autoClose: 3000, draggable: true})
         })
+        if(data.companyImage.type) {
+          updateCompanyLogo(res.data.response_message.id, data.companyImage)
+          .then((res) => {
+            console.log(res)
+            setThumbnailImage(res.response_message)
+            toast.success('会社管理者の作成中にエラーが発生しました。', { autoClose: 3000, draggable: true})
+          })
+          .catch((err)=>{
+            console.log(err)
+            toast.error('画像のアップロード中にエラーが発生しました。', { autoClose: 3000, draggable: true})
+          })
+        }
+        Router.push('/signup/complete')
       }).catch(()=> {
         toast.error('法人登録でエラーが発生しました。', { autoClose: 3000, draggable: true})
       })
-    }).catch(() => {
-      toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
-    })
   }
 
   return (

@@ -1,8 +1,8 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const updateCompanyLogo = async (corpId: string, image: any) => {
+const updateUserPhoto = async (userId: number, type: string, image: any) => {
   try {
-    const res = await axiosClient.post(`/api/v1/company/update_photo?corpId=${corpId}`, {
+    const res = await axiosClient.post(`/api/v1/casts/update_photo?user_id=${userId}&type=${type}`, {
       photo: image
     }, {
       headers: {
@@ -15,4 +15,4 @@ const updateCompanyLogo = async (corpId: string, image: any) => {
   }
 }
 
-export default updateCompanyLogo
+export default updateUserPhoto

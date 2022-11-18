@@ -5,7 +5,7 @@ import type { NextPage } from 'next'
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
 import { accessTokenAtom, thumbnailAtom, userAtom } from '@/stores/Session'
 import { toast } from 'react-toastify'
-import updateThumbnail from '@/apis/images/updateThumbnail'
+import updateUserPhoto from '@/apis/images/updateUserPhoto'
 import getAccount from '@/apis/settings/getAccount'
 import updateAccount from '@/apis/settings/updateAccount'
 import checkCasplaId from '@/apis/auth/checkCasplaId'
@@ -97,7 +97,7 @@ const AccountRegistration: NextPage = () => {
   const onSubmit: SubmitHandler<InputProps> = (data, e: any) => {
     e.preventDefault();
     if (changeThumbnailState) {
-      updateThumbnail(session.userId, thumbnailState).then((res) => {
+      updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
         sessionThumbnail(res.data.response_message)
         toast.success('サムネイルが正常にアップロードされました。', { autoClose: 3000, draggable: true})
       }).catch(() => {
