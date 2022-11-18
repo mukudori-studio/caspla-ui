@@ -215,7 +215,7 @@ const TalentFormTemplate = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="生年月日" label="birthday" />
-          <DateSelect onChange={changeBirthday}  />
+          <DateSelect onChange={changeBirthday} date={`${props.birthYear==null?2001:props.birthYear}-${props.birthMonth===null?1:props.birthMonth}-${props.birthDay===null?1:props.birthDay}`} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="星座" label="constellation" />
