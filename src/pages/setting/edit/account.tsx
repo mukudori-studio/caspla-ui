@@ -107,7 +107,7 @@ const AccountRegistration: NextPage = () => {
     updateAccount(session.casplaId, data, accessToken).then((res) => {
       setSession({
         userId: session.userId,
-        role: roleState,
+        role: session.role,
         casplaId: res.data.response_message.casplaId,
         fullName: res.data.response_message.fullName,
         companyId: session.companyId,
@@ -163,17 +163,18 @@ const AccountRegistration: NextPage = () => {
             </div>
             <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
               <Button text="変更を保存" color='primary' size="large" type="submit" weight="bold" disabled={!checkedCasplaIdState} />
+              {!checkedCasplaIdState && (<p style={{color:'red', textAlign: 'center'}}>カスプラ ID の空き状況を確認します。</p>)}
             </div>
           </section>
-          <section className={styles['p-account-registration__section']}>
+          {/* <section className={styles['p-account-registration__section']}>
             <FormLabel text="アカウントタイプ" />
-            {/* <p className={styles['p-account-registration__description']}></p> */}
+            <p className={styles['p-account-registration__description']}></p>
             <div className={styles['p-account-registration__item']}>
               <div className={styles['p-account-registration__radio']}>
                 <RadioButton id={filteredRole.id} name="role" label={filteredRole.label} note={filteredRole.note} onChange={onChangeRole} checked={true} />
               </div>
             </div>
-          </section>
+          </section> */}
         </form>
       </section>
     </main>
