@@ -10,7 +10,7 @@ import getProductionDetail from '@/apis/productions/getProductionDetail'
 import Loading from '@/components/atoms/Loading'
 import updateProductionDetails from '@/apis/productions/updateProductionDetails'
 import { toast } from 'react-toastify'
-import updateProductionLogo from '@/apis/productions/updateProductionLogo'
+import updateProductionLogo from '@/apis/images/updateProductionLogo'
 
 const ProductionEdit: NextPage = () => {
 
@@ -43,10 +43,10 @@ const ProductionEdit: NextPage = () => {
       })
     if(typeof data.companyImage === 'object') {
       updateProductionLogo(productionId, data.companyImage)
-        .then((res)=> {
+        .then(()=> {
           toast.success('画像が正常にアップロードされました。', { autoClose: 3000, draggable: true})
         })
-        .catch((err)=> toast.error('ファイルのアップロードでエラーが発生しました', { autoClose: 3000, draggable: true}))
+        .catch(()=> toast.error('ファイルのアップロードでエラーが発生しました', { autoClose: 3000, draggable: true}))
     }
   }
 
