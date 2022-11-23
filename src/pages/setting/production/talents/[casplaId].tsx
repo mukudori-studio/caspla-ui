@@ -3,20 +3,22 @@ import Router, { useRouter } from 'next/router'
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import Meta from '@/components/Meta'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { accessTokenAtom, userAtom } from '@/stores/Session'
 import getTalentDetail from '@/apis/settings/production/getTalentDetail'
 import LinkButton from '@/components/atoms/LinkButton'
 import TalentFormTemplate from '@/components/templates/TalentFormTemplate'
 import styles from '@/styles/ProductionSetting.module.scss'
 import { toast } from 'react-toastify'
+import putProductionTalent from '@/apis/settings/production/putTalent'
+import updateUserPhoto from '@/apis/images/updateUserPhoto'
 
 
 const TalentEdit: NextPage = () => {
 
   const router = useRouter()
   const { casplaId } = router.query
-  const [session, setSession] = useRecoilState(userAtom)
+  const session = useRecoilValue(userAtom)
   const accessToken = useRecoilValue(accessTokenAtom)
   const [talentState, setTalent] = useState<any>({})
   
@@ -41,7 +43,23 @@ const TalentEdit: NextPage = () => {
   },[talentState])
 
   const onUpdateProfile = (data:any) => {
-    
+      if(changeCoverState) {
+        updateUserPhoto(talentState.userId, "COVER", data.coverImage)
+        .catch((err)=> console.log(err))
+      }
+      if(changeThumbnailState) {
+        updateUserPhoto(talentState.userId, 'THUMBNAIL', data.thumbnailImage)
+        .catch((err)=>console.log(err))
+      }
+      putProductionTalent(talentState.casplaId, data, session.casplaId)
+        .then((res)=>{
+          console.log(res)
+          toast.success('タレントの詳細が正常に更新されました。', { autoClose: 3000, draggable: true})
+        })
+        .catch((err)=> {
+          console.log(err)
+          toast.error('アップデートでエラーが発生しました。 システム管理者に連絡してください', { autoClose: 3000, draggable: true})
+        })
   }
 
   return (
@@ -78,7 +96,7 @@ const TalentEdit: NextPage = () => {
               fullName={talentState.fullName}
               furigana={talentState.furigana}
               casplaId={talentState.casplaId}
-              userId={''}
+              userId={talentState.userId}
               thumbnailImage={talentState.thumbnailImage}
               profile={talentState.profile}
               gender={talentState.gender}
