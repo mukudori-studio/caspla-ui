@@ -1,3 +1,4 @@
+import Router from 'next/router'
 import React, {useState} from 'react'
 import type { NextPage } from 'next'
 import Link from 'next/link'
@@ -5,18 +6,45 @@ import Meta from '@/components/Meta'
 import LinkButton from '@/components/atoms/LinkButton'
 import TalentFormTemplate from '@/components/templates/TalentFormTemplate'
 import styles from '@/styles/ProductionSetting.module.scss'
+import updateUserPhoto from '@/apis/images/updateUserPhoto'
+import createProductionTalent from '@/apis/productions/createProductionTalent'
+import { useRecoilValue } from 'recoil'
+import { userAtom } from '@/stores/Session'
+import { toast } from 'react-toastify'
 
 
 const TalentEdit: NextPage = () => {
 
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
   const [changeCoverState, setChangeCover] = useState(false)
-
+  const session = useRecoilValue(userAtom)
   const onChangeThumbnail = () => setChangeThumbnail(true)
   const onChangeCover = () => setChangeCover(true)
   
   const onSubmitAddTalent = (data:any) => {
-    
+    createProductionTalent(data, session.casplaId)
+      .then(({response_code, response_message})=>{
+        if(response_code==200) {
+          if(changeCoverState) {
+            updateUserPhoto(response_message.userId, "COVER", data.coverImage)
+            .catch((err)=> console.log(err))
+          }
+          if(changeThumbnailState) {
+            updateUserPhoto(response_message.userId, 'THUMBNAIL', data.thumbnailImage)
+            .catch((err)=>console.log(err))
+          }
+          toast.success('新しいキャストが正常に作成されました。', { autoClose: 3000, draggable: true})
+          setTimeout(()=>{
+            Router.push('/setting/production/talents')
+          }, 3000);
+        } else {
+          toast.error(`${response_message}`, { autoClose: 3000, draggable: true})
+        }
+      })
+      .catch((err)=> {
+        toast.error('何かがうまくいかなかった。 システム管理者に連絡してください。', { autoClose: 3000, draggable: true})
+        console.log(err)
+      })
   }
 
   return (
@@ -49,12 +77,9 @@ const TalentEdit: NextPage = () => {
             furigana=""
             casplaId=""
             userId={''}
-            changeCover={function (data: any): void {
-              throw new Error('Function not implemented.')
-            } }
-            changeThumbnail={function (data: any): void {
-              throw new Error('Function not implemented.')
-            } }          />
+            changeCover={onChangeCover}
+            changeThumbnail={onChangeThumbnail}
+            />
         </div>
       </section>
     </main>
