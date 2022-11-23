@@ -16,8 +16,9 @@ import activities from '@/utils/activities'
 import bloodTypes from '@/utils/bloodTypes'
 import starSigns from '@/utils/starSigns'
 import styles from '@/styles/AccountRegistration.module.scss'
-import { useRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
+
 type InputProps = {
   fullName: string
   furigana: string
@@ -94,11 +95,10 @@ const TalentFormTemplate = ({
   submitForm,
   ...props
 }: editPorps) => {
-  
-  const [activityState, setActivity] = useState<Array<string>>([])
+
+  const [activityState, setActivity] = useState<Array<string>>(props.activity?props.activity:[])
   const [checkedCasplaIdState, setCheckCasplaId] = useState(true)
   const { register, handleSubmit, formState: { errors }, watch, setValue, getValues } = useForm<InputProps>()
-  const [session, setSession] = useRecoilState(userAtom)
   
   // NOTE：casplaIdを変更していた場合は再度CasplaIdをチェックしないと更新できない
   useEffect(() => {
@@ -108,7 +108,6 @@ const TalentFormTemplate = ({
       setCheckCasplaId(false)
     }
   }, [getValues('casplaId')])
-
 
   useEffect(() => {
     if (editType === 'register') return
@@ -155,9 +154,9 @@ const TalentFormTemplate = ({
   }
 
   const onCheckId = async () => {
-    checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
-      // TODO：APIから該当するユーザーが以内場合は200返してもらう
+    checkCasplaId(getValues('casplaId'), props.casplaId).then(res => {
       setCheckCasplaId(true)
+      toast.success('カスプラIDが利用可能です', { autoClose: 3000, draggable: true})
     }).catch(() => {
       setCheckCasplaId(false)
       toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
@@ -180,7 +179,7 @@ const TalentFormTemplate = ({
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
         <div className={styles['p-account-registration__item']}>
-          <ThumbnailUploader id={props.userId} onChange={onChangeThumbnail} />
+          <ThumbnailUploader id={props.userId} onChange={onChangeThumbnail} thumbnailUrl={props.thumbnailImage} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="名前" label="fullName" required={true} />
@@ -211,19 +210,19 @@ const TalentFormTemplate = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="性別" label="gender" />
-          <Select options={[{value: 'man', text: '男性'}, {value: 'woman', text: '女性'}]} onChange={changeGender} />
+          <Select options={[{value: '男性', text: '男性'}, {value: '女性', text: '女性'}]} onChange={changeGender} selected={props.gender}/>
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="生年月日" label="birthday" />
-          <DateSelect onChange={changeBirthday} date={`${props.birthYear==null?2001:props.birthYear}-${props.birthMonth===null?1:props.birthMonth}-${props.birthDay===null?1:props.birthDay}`} />
+          <DateSelect onChange={changeBirthday} date={`${props.birthYear}-${props.birthMonth}-${props.birthDay}`} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="星座" label="constellation" />
-          <Select options={starSigns} onChange={changeStarSign} />
+          <Select options={starSigns} onChange={changeStarSign} selected={props.constellation}/>
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="血液型" label="bloodType" />
-          <Select options={bloodTypes} onChange={changeBloodType} />
+          <Select options={bloodTypes} onChange={changeBloodType} selected={props.bloodType}/>
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="出身地" label="birthplace" />
