@@ -52,9 +52,9 @@ const DateSelect = ({
 
   return (
     <div className={styles['m-date-select']}>
-      <div className={styles['m-date-select__item']}><Select required={true} options={yearOptions} selected={'2000'} onChange={onChangeYear} /></div>
-      <div className={styles['m-date-select__item']}><Select required={true} options={monthOptions} selected={'1'} onChange={onChangeMonth} /></div>
-      <div className={styles['m-date-select__item']}><Select required={true} options={dayOptions} selected={'1'} onChange={onChangeDay} /></div>
+      <div className={styles['m-date-select__item']}><Select required={true} options={yearOptions} selected={yearState} onChange={onChangeYear} /></div>
+      <div className={styles['m-date-select__item']}><Select required={true} options={monthOptions} selected={monthState} onChange={onChangeMonth} /></div>
+      <div className={styles['m-date-select__item']}><Select required={true} options={dayOptions} selected={dayState} onChange={onChangeDay} /></div>
     </div>
   )
 }
