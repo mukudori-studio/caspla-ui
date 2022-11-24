@@ -4,11 +4,12 @@ const updateAccount = async (casplaId: string, data: any, accessToken: string) =
   try {
 
     const postData = {
-      fullName: data.fullName,
-      furigana: data.furigana,
-      email: data.email,
-      casplaId: data.casplaId,
-      password: data.password,
+      "casplaId": data.casplaId,
+      "email": data.email,
+      "password":data.password,
+      "fullName": data.fullName ,
+      "furigana": data.furigana,
+      "needForLetter": data.needForLetter
     }
 
     const res = await axiosClient.put(`/api/v1/casts/update_account?casplaId=${casplaId}`, postData, {

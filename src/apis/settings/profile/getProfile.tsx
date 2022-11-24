@@ -8,7 +8,7 @@ const getProfile = async (casplaId: string, loggedUserCasplaId: string) => {
         loggedUser : loggedUserCasplaId
       }
     })
-    return res
+    return res.data
   } catch(err) {
     throw err
   }

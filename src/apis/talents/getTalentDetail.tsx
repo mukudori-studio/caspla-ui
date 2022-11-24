@@ -3,7 +3,6 @@ import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
 
 const getTalentDetail = async (casplaId: string | string[] | undefined) => {
-  // const session = useRecoilValue(userAtom)
   try {
 
     const response = await axiosClient.get('/api/v1/casts/get_user_details', {
