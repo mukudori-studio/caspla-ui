@@ -37,7 +37,7 @@ const AccountRegistration: NextPage = () => {
   const [roleState, setRole] = useState('FAN_USER')
   const [thumbnailState, setThumbnail] = useState<any>('')
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
-  const [checkedCasplaIdState, setCheckCasplaId] = useState(false)
+  const [checkedCasplaIdState, setCheckCasplaId] = useState(true)
   const [needForLetterState, setNeedForLetter] = useState(true)
   const [session, setSession] = useRecoilState(userAtom)
   const accessToken = useRecoilValue(accessTokenAtom)
@@ -76,8 +76,8 @@ const AccountRegistration: NextPage = () => {
 
   const onCheckId = async () => {
     checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
-      // TODO：APIから該当するユーザーが以内場合は200返してもらう
       setCheckCasplaId(true)
+      toast.success('登録可能なcaspla ID', { autoClose: 3000, draggable: true})
     }).catch(() => {
       setCheckCasplaId(false)
       toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
@@ -92,6 +92,10 @@ const AccountRegistration: NextPage = () => {
   const changeThumbnail = (val: object) => {
     setThumbnail(val)
     setChangeThumbnail(true)
+  }
+
+  const changeCasplaId = (e : any) => {
+    setCheckCasplaId(e.target.value===session.casplaId?true:false)
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data, e: any) => {
@@ -151,7 +155,7 @@ const AccountRegistration: NextPage = () => {
               <FormLabel text="Caspla ID" label="casplaId" required={true} />
               <div className={styles['p-account-registration__check-ids']}>
                 <div className={styles['p-account-registration__check-input']}>
-                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" onKeyUp={changeCasplaId}/>
                 </div>
                 <div className={styles['p-account-registration__check-id']}>
                   <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
