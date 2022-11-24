@@ -77,6 +77,7 @@ const TalentEdit: NextPage = () => {
             furigana=""
             casplaId=""
             userId={''}
+            activity={[]}
             changeCover={onChangeCover}
             changeThumbnail={onChangeThumbnail}
             />
