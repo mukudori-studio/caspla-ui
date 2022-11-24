@@ -49,15 +49,25 @@ const AccountRegistration: NextPage = () => {
       Router.replace('/signin')
       toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
     } else if (accessToken !== '') {
-      getAccount(session.casplaId, accessToken).then(res => {
-        setValue('fullName', res.data.response_message.fullName)
-        setValue('furigana', res.data.response_message.furigana)
-        setValue('casplaId', res.data.response_message.casplaId)
-        setValue('email', res.data.response_message.email)
-        setThumbnail(res.data.response_message.thumbnailImage)
+      getAccount(session.casplaId, accessToken).then(({response_message} : any) => {
+        setValue('fullName', response_message.fullName)
+        setValue('furigana', response_message.furigana)
+        setValue('casplaId', response_message.casplaId)
+        setValue('email', response_message.email)
+        setValue('needForLetter', response_message.needForLetter)
+        setThumbnail(response_message.thumbnailImage)
+        setNeedForLetter(response_message.needForLetter)
       })
     }
   }, [])
+
+  useEffect(() => {
+    if (session.casplaId === getValues('casplaId')) {
+      setCheckCasplaId(true)
+    } else {
+      setCheckCasplaId(false)
+    }
+  }, [getValues('casplaId')])
 
   const roles = [
     { id: 'fan', label: 'ファン', note: 'Casplaに参加する最低限の機能だけを持ったアカウントです。ブックマーク機能の利用や公開オーディションへの投票が可能です。' },
@@ -94,12 +104,7 @@ const AccountRegistration: NextPage = () => {
     setChangeThumbnail(true)
   }
 
-  const changeCasplaId = (e : any) => {
-    setCheckCasplaId(e.target.value===session.casplaId?true:false)
-  }
-
-  const onSubmit: SubmitHandler<InputProps> = (data, e: any) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<InputProps> = (data) => {
     if (changeThumbnailState) {
       updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
         sessionThumbnail(res.data.response_message)
@@ -155,7 +160,7 @@ const AccountRegistration: NextPage = () => {
               <FormLabel text="Caspla ID" label="casplaId" required={true} />
               <div className={styles['p-account-registration__check-ids']}>
                 <div className={styles['p-account-registration__check-input']}>
-                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" onKeyUp={changeCasplaId}/>
+                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
                 </div>
                 <div className={styles['p-account-registration__check-id']}>
                   <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
@@ -163,7 +168,7 @@ const AccountRegistration: NextPage = () => {
               </div>
             </div>
             <div className={styles['p-account-registration__item']}>
-              <Checkbox id={'newsLetter'} checked={needForLetterState} label="Caspla のニュースレターを受け取る" onChange={toggleNeedForLetter} />
+              <Checkbox id={'needForLetter'} checked={needForLetterState} label="Caspla のニュースレターを受け取る" onChange={toggleNeedForLetter} />
             </div>
             <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
               <Button text="変更を保存" color='primary' size="large" type="submit" weight="bold" disabled={!checkedCasplaIdState} />
