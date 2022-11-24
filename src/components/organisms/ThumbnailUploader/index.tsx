@@ -8,7 +8,7 @@ type ThumbnailUploaderProps = {
   id: string | undefined
   type?: 'thumbnail' | 'logo'
   thumbnailUrl?: string
-  onChange: (data: any) => void
+  onChange: (data: any, isRemove: boolean) => void
 }
 
 const ThumbnailUploader = ({
@@ -25,13 +25,13 @@ const ThumbnailUploader = ({
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
       setThumbnail(URL.createObjectURL(file))
-      onChange(file)
+      onChange(file, false)
     }
   }
 
   const resetFile = () => {
     setThumbnail('')
-    onChange({})
+    onChange({}, true)
   }
 
   const labelText = type === 'logo' ? '会社ロゴ' : 'プロフィール画像'
@@ -46,7 +46,7 @@ const ThumbnailUploader = ({
 
         {
           thumbnailState !== '' || thumbnailUrl !== '' ? (
-            <button className={[styles['o-thumbnail-upload__button'], styles['o-thumbnail-upload__button--cancel']].join(' ')} onClick={resetFile}>
+            <button className={[styles['o-thumbnail-upload__button'], styles['o-thumbnail-upload__button--cancel']].join(' ')} onClick={resetFile} type='button'>
               <FontAwesomeIcon icon={faXmark} className={styles['o-thumbnail-upload__button-icon']} />
             </button>
           ) : (
