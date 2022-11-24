@@ -37,7 +37,7 @@ const AccountRegistration: NextPage = () => {
   const [roleState, setRole] = useState('FAN_USER')
   const [thumbnailState, setThumbnail] = useState<any>('')
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
-  const [checkedCasplaIdState, setCheckCasplaId] = useState(false)
+  const [checkedCasplaIdState, setCheckCasplaId] = useState(true)
   const [needForLetterState, setNeedForLetter] = useState(true)
   const [session, setSession] = useRecoilState(userAtom)
   const accessToken = useRecoilValue(accessTokenAtom)
@@ -49,15 +49,25 @@ const AccountRegistration: NextPage = () => {
       Router.replace('/signin')
       toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
     } else if (accessToken !== '') {
-      getAccount(session.casplaId, accessToken).then(res => {
-        setValue('fullName', res.data.response_message.fullName)
-        setValue('furigana', res.data.response_message.furigana)
-        setValue('casplaId', res.data.response_message.casplaId)
-        setValue('email', res.data.response_message.email)
-        setThumbnail(res.data.response_message.thumbnailImage)
+      getAccount(session.casplaId, accessToken).then(({response_message} : any) => {
+        setValue('fullName', response_message.fullName)
+        setValue('furigana', response_message.furigana)
+        setValue('casplaId', response_message.casplaId)
+        setValue('email', response_message.email)
+        setValue('needForLetter', response_message.needForLetter)
+        setThumbnail(response_message.thumbnailImage)
+        setNeedForLetter(response_message.needForLetter)
       })
     }
   }, [])
+
+  useEffect(() => {
+    if (session.casplaId === getValues('casplaId')) {
+      setCheckCasplaId(true)
+    } else {
+      setCheckCasplaId(false)
+    }
+  }, [getValues('casplaId')])
 
   const roles = [
     { id: 'fan', label: 'ファン', note: 'Casplaに参加する最低限の機能だけを持ったアカウントです。ブックマーク機能の利用や公開オーディションへの投票が可能です。' },
@@ -76,8 +86,8 @@ const AccountRegistration: NextPage = () => {
 
   const onCheckId = async () => {
     checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
-      // TODO：APIから該当するユーザーが以内場合は200返してもらう
       setCheckCasplaId(true)
+      toast.success('登録可能なcaspla ID', { autoClose: 3000, draggable: true})
     }).catch(() => {
       setCheckCasplaId(false)
       toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
@@ -94,8 +104,7 @@ const AccountRegistration: NextPage = () => {
     setChangeThumbnail(true)
   }
 
-  const onSubmit: SubmitHandler<InputProps> = (data, e: any) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<InputProps> = (data) => {
     if (changeThumbnailState) {
       updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
         sessionThumbnail(res.data.response_message)
@@ -159,7 +168,7 @@ const AccountRegistration: NextPage = () => {
               </div>
             </div>
             <div className={styles['p-account-registration__item']}>
-              <Checkbox id={'newsLetter'} checked={needForLetterState} label="Caspla のニュースレターを受け取る" onChange={toggleNeedForLetter} />
+              <Checkbox id={'needForLetter'} checked={needForLetterState} label="Caspla のニュースレターを受け取る" onChange={toggleNeedForLetter} />
             </div>
             <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
               <Button text="変更を保存" color='primary' size="large" type="submit" weight="bold" disabled={!checkedCasplaIdState} />

@@ -23,8 +23,8 @@ const Dashboard: NextPage = () => {
   const accessToken = useRecoilValue(accessTokenAtom)
 
   useEffect(() => {
-    getProfile(session.casplaId, session.casplaId).then(res => {
-      setProfileState(res.data.response_message.castDetails)
+    getProfile(session.casplaId, session.casplaId).then(({response_message}) => {
+      setProfileState(response_message.castDetails)
       setLoading(false)
     })
   }, [])
@@ -33,7 +33,6 @@ const Dashboard: NextPage = () => {
   const onChangeCover = () => setChangeCover(true)
 
   const updateForm = (data: any) => {
-
     if (changeThumbnailState) {
       updateUserPhoto(session.userId, "THUMBNAIL", data.thumbnailImage)
         .then(({data : {response_message}})=> {
@@ -103,7 +102,7 @@ const Dashboard: NextPage = () => {
                 youtubeId={profileState.youtubeId}
                 instagramId={profileState.instagramId}
                 tiktokId={profileState.tiktokId}
-                activity={profileState.activity}
+                activity={profileState.activities}
                 history={profileState.history}
                 note={profileState.note}
                 userId={session.userId}

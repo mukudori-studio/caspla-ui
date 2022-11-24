@@ -135,9 +135,23 @@ const TalentProfile = ({
             </>
           )
         }
+        {
+          history !== '' && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>出演履歴</dt>
+              <dd className={styles['o-talent-profile__text']}>{`${history}`}</dd>
+            </>
+          )
+        }
+        {
+          note !== '' && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>備考</dt>
+              <dd className={styles['o-talent-profile__text']}>{`${note}`}</dd>
+            </>
+          )
+        }
       </dl>
-      {history !== '' && <p className={styles['o-talent-profile__description']}>出演履歴：{history}</p>}
-      {note !== '' && <p className={styles['o-talent-profile__description']}>備考：{note}</p>}
     </div>
   )
 }

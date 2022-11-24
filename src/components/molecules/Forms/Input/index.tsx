@@ -30,7 +30,7 @@ const Input = ({
   disabled = false,
   error = '',
   note = '',
-  type = 'text'
+  type = 'text',
 }: InputProps) => {
 
   const inputSyle = error !== '' ? [styles['m-input__input'], styles['m-input__input--error']].join(' ') : styles['m-input__input']

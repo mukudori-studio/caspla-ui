@@ -80,7 +80,7 @@ type editPorps = {
   youtubeId?: string
   instagramId?: string
   tiktokId?: string
-  activity?: Array<string>
+  activity: Array<string>
   history?: string
   note?: string
   changeCover: (data: any) => void
@@ -95,11 +95,13 @@ const TalentFormTemplate = ({
   submitForm,
   ...props
 }: editPorps) => {
-
-  const [activityState, setActivity] = useState<Array<string>>(props.activity?props.activity:[])
+  const [coverImage, setCoverImage] = useState(props.coverImage);
+  const [thumbnailImage, setThumbnailImage] = useState(props.thumbnailImage)
+  const [activityState, setActivity] = useState<Array<string>>(props.activity)
   const [checkedCasplaIdState, setCheckCasplaId] = useState(true)
   const { register, handleSubmit, formState: { errors }, watch, setValue, getValues } = useForm<InputProps>()
-  
+  const session = useRecoilValue(userAtom)
+
   // NOTE：casplaIdを変更していた場合は再度CasplaIdをチェックしないと更新できない
   useEffect(() => {
     if (props.casplaId === getValues('casplaId')) {
@@ -163,13 +165,15 @@ const TalentFormTemplate = ({
     })
   }
 
-  const onChangeThumbnail = (val: any) => {
+  const onChangeThumbnail = (val: any, isRemove: boolean) => {
     setValue('thumbnailImage', val)
+    setThumbnailImage(isRemove?'':val)
     changeThumbnail(true)
   }
 
-  const onChangeCover = (val:any) => {
+  const onChangeCover = (val:any, isRemove: boolean) => {
     setValue('coverImage', val)
+    setCoverImage(isRemove?'':val)
     changeCover(true)
   }
 
@@ -179,7 +183,7 @@ const TalentFormTemplate = ({
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
         <div className={styles['p-account-registration__item']}>
-          <ThumbnailUploader id={props.userId} onChange={onChangeThumbnail} thumbnailUrl={props.thumbnailImage} />
+          <ThumbnailUploader id={props.userId} onChange={onChangeThumbnail} thumbnailUrl={thumbnailImage} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="名前" label="fullName" required={true} />
@@ -202,7 +206,7 @@ const TalentFormTemplate = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="カバー写真" label="coverImage" required={false} />
-          <CoverImageUploader id="coverImage" thumbnailUrl={props.coverImage} onChange={onChangeCover} />
+          <CoverImageUploader id="coverImage" thumbnailUrl={coverImage} onChange={onChangeCover} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="略歴" label="profile" />

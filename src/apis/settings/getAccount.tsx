@@ -7,7 +7,7 @@ const getAccount = async (casplaId: string, accessToken: string) => {
         authorization: `Bearer ${accessToken}`,
       }
     })
-    return res
+    return res.data
   } catch(err) {
     throw err
   }
