@@ -8,7 +8,7 @@ export type Ref = HTMLButtonElement;
 
 type BookMarkProps = {
   checked?: boolean
-  changeBookmark?: any
+  changeBookmark: (data : any) => void
 }
 
 const BookMark = React.forwardRef<Ref, BookMarkProps>(({ checked = false, changeBookmark }, ref) => {
