@@ -1,10 +1,16 @@
 @use '../../global' as g;
 
 .a-book-mark {
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
   background: g.$color-mono-0;
+  padding: 5px;
+  
+  @include g.mq-down(tablet--under) {
+    width: 25px;
+  height: 25px;
+  }
 
   &__icon {
     font-size: 24px;
