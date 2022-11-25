@@ -125,6 +125,10 @@
     }
   }
   &__activities {
-    display: none;
+    display: block;
+
+    &-star-mark {
+      float: right;
+    }
   }
 }

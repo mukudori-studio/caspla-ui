@@ -1,14 +1,11 @@
 import { axiosClient } from '@/utils/axiosClient'
-import { useRecoilValue } from 'recoil'
-import { userAtom } from '@/stores/Session'
 
-const getBookmarks = async () => {
-  const session = useRecoilValue(userAtom)
+const getBookmarks = async (casplaId: string, accessToken: string) => {
   try {
 
-    const response = await axiosClient.get('/api/v1/bookmark/', {
-      params: {
-        caspla_id: session.casplaId
+    const response = await axiosClient.get(`/api/v1/bookmark/${casplaId}`, {
+      headers : {
+        Authorization : `Bearer ${accessToken}`
       }
     })
 
