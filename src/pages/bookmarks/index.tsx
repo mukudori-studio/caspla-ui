@@ -23,9 +23,14 @@ const Bookmarks: NextPage = () => {
 
   useEffect(() => {
     getBookmarks(session.casplaId, accessToken)
-      .then(({response_message})=> {
-        setBookmarks(response_message)
-        setLoading(false)
+      .then(({response_code, response_message})=> {
+        if(response_code == 200) {
+          setBookmarks(response_message)
+          setLoading(false)
+        } else {
+          toast.error('何かがうまくいかなかった。 システム管理者に連絡してください', { autoClose: 3000, draggable: true})
+          Router.push('/dashboard')
+        }
       })
       .catch((err)=> console.log(err))
   }, [])

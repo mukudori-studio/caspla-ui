@@ -57,7 +57,7 @@ const CardItem = ({
         })
         .catch((err)=> console.log(err))
     } else {
-      toast.warning('まずログインしてください。', { autoClose: 3000, draggable: true})
+      toast.warning('ログインする必要があります。', { autoClose: 3000, draggable: true})
       Router.push('/signin')
     }
   })

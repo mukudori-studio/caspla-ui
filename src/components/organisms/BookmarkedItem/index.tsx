@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar, faUser } from '@fortawesome/free-solid-svg-icons'
 import styles from '@/styles/components/organisms/BookmarkedItem.module.scss'
+import Router from 'next/router'
 
 type BookmarkedItemProps = {
   casplaId: string
@@ -19,10 +20,14 @@ const BookmarkedItem = (({
 }: BookmarkedItemProps) => {
 
   const deleteBookmark = () => onClick(casplaId)
+  
+  const toTalentProfile = () => {
+    Router.push(`/talents/detail/${casplaId}`)
+  }
 
   return (
-    <li className={styles['o-book-marked-item']}>
-      <div className={styles['o-book-marked-item__content']}>
+    <li className={styles['o-book-marked-item']} >
+      <div className={styles['o-book-marked-item__content']} onClick={toTalentProfile}>
         {
           thumbnailImage !== '' && thumbnailImage !== undefined ?
             (
