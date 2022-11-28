@@ -64,7 +64,15 @@
       display: none;
     }
   }
+  &__bookmark {
+    position: absolute;
+    right: 0; 
+    top: 50px;
 
+    @include g.mq-down(tablet--under) {
+      top: 20px
+    }
+  }
   &__thumbnail {
     @include g.flex(center);
     width: 228px;
