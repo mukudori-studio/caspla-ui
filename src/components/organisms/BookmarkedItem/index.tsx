@@ -26,8 +26,8 @@ const BookmarkedItem = (({
   }
 
   return (
-    <li className={styles['o-book-marked-item']} onClick={toTalentProfile}>
-      <div className={styles['o-book-marked-item__content']}>
+    <li className={styles['o-book-marked-item']} >
+      <div className={styles['o-book-marked-item__content']} onClick={toTalentProfile}>
         {
           thumbnailImage !== '' && thumbnailImage !== undefined ?
             (
