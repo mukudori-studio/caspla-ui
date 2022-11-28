@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { GetServerSidePropsContext } from 'next'
+import Router from 'next/router'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImages, faUser, faShareNodes } from '@fortawesome/free-solid-svg-icons'
@@ -7,6 +7,10 @@ import { toast } from 'react-toastify'
 import LabelTexts from '@/components/atoms/LabelTexts'
 import SnsLinksArea from '@/components/organisms/SnsLinksArea'
 import styles from '@/styles/components/organisms/TalentDetailHeader.module.scss'
+import BookMark from '@/components/atoms/BookMark';
+import changeBookmark from './../../../apis/bookmarks/changeBookmark';
+import { useRecoilValue } from 'recoil';
+import { userAtom, accessTokenAtom } from './../../../stores/Session/index';
 
 type TalentDetailHeaderProps = {
   coverImage?: string
@@ -48,6 +52,9 @@ const TalentDetailHeader = ({
 
   const [shareTitleState, setShareTitle] = useState('')
   const [isMobile, setIsMobile] = useState(false)
+  const [isBookmarked, setBookmarked] = useState(withBookmark)
+  const session = useRecoilValue(userAtom)
+  const accessToken = useRecoilValue(accessTokenAtom)
 
   useEffect(() => {
     const ua = window.navigator.userAgent.toLowerCase()
@@ -74,6 +81,24 @@ const TalentDetailHeader = ({
     } else {
       navigator.clipboard.writeText(copyUrl)
       toast.success('クリップボードにコピーしました。', { autoClose: 3000, draggable: true})
+    }
+  }
+
+  const onClickBookmark = (e : any) => {
+    e.stopPropagation()
+    if(accessToken==='') {
+      toast.warning('ログインする必要があります。', { autoClose: 3000, draggable: true})
+      Router.push('/signin')
+    } else {
+      changeBookmark(casplaId, session.casplaId, accessToken)
+        .then(({response_code, response_message}) => {
+          if(response_code == 200) setBookmarked(response_message)
+          else console.log(response_code, response_message)
+        })
+        .catch((err) => {
+          console.log(err)
+          toast.error('何かがうまくいかなかった。 システム管理者に連絡してください', { autoClose: 3000, draggable: true})
+        })
     }
   }
 
@@ -122,7 +147,9 @@ const TalentDetailHeader = ({
               <div className={styles['o-talent-detail-header__activity']}><LabelTexts texts={activity} color={'gray'} /></div>
             )
           }
-          {/* TODO:bookmarkあとで追加 */}
+          <div className={styles[`o-talent-detail-header__bookmark`]}>
+            <BookMark checked={isBookmarked} changeBookmark={onClickBookmark}/>
+          </div>
         </div>
         <div className={styles['o-talent-detail-header__bottom']}>
           <h1 className={styles['o-talent-detail-header__name']}>{name}</h1>
