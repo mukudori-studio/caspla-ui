@@ -24,7 +24,7 @@ const companyRegistration = async (data: any) => {
     }
 
     const res = await axiosClient.post(`/api/v1/company/create`, postData)
-    return res
+    return res.data
   } catch(err) {
     throw err
   }

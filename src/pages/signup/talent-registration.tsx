@@ -17,14 +17,13 @@ const TalentRegistration: NextPage = () => {
   const session = useRecoilValue(userAtom)
   
   const onSubmit = (data:any) => {
-    console.log(data)
     freeTalentRegistration(data, session.casplaId)
       .then(() => {
         if (data.coverImage.type) {
           updateUserPhoto(session.user_id, "COVER", data.coverImage)
             .catch((err)=> console.log(err))
         }
-        toast.success('タレントの詳細が正常に更新されました。', { autoClose: 3000, draggable: true})
+        toast.success('正常に登録されました。', { autoClose: 3000, draggable: true})
         Router.push('/signup/complete')
       })
       .catch(err => {
