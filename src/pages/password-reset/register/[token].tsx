@@ -32,9 +32,13 @@ const PasswordReset: NextPage = () => {
   }, [])
 
   const onSubmit: SubmitHandler<InputProps> = (data:any) => {
-    resetPassword(token, data.password, data.rePassword).then(() => {
-      toast.success('パスワードの再設定が完了しました。')
-      Router.push('/signin')
+    resetPassword(token, data.password, data.rePassword).then(({response_code}) => {
+      if(response_code == 200) {
+        toast.success('パスワードの再設定が完了しました。')
+        Router.push('/signin')
+      } else {
+        toast.error('何かがうまくいかなかった。')
+      }
     }).catch(() => {
       toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
     })
