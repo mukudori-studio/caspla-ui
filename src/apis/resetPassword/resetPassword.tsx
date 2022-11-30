@@ -10,7 +10,7 @@ const sendEmail = async (token: any, password: string, rePassword: string) => {
     }
 
     const res = await axiosClient.post(`/api/v1/reset_password/`, postData)
-    return res
+    return res.data
   } catch(err:any) {
     return err.response
   }
