@@ -140,9 +140,13 @@ const Signup = ({
         setCheckId(false)
       })
     } else {
-      checkCorpId(getValues('corpId'), companyId).then(() => {
+      checkCorpId(getValues('corpId'), companyId).then((res) => {
+        if(res.response_code==200) {
         setCheckId(true)
-        toast.success('ID登録可能です。', { autoClose: 3000, draggable: true})
+          toast.success('ID登録可能です。', { autoClose: 3000, draggable: true})
+        } else {
+          setCheckId(false)
+        }
       }).catch(() => {
         setCheckId(false)
         toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
@@ -161,8 +165,7 @@ const Signup = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="会社名" label="companyName" required={true} />
-          <Input id="companyName" register={register} required={true} error={errors?.companyName?.message} disabled={editType === 'edit'} />
-          {editType === 'edit' && <FormNote text={'※会社名を変更したい場合はお問い合わせください。'} />}
+          <Input id="companyName" register={register} required={true} error={errors?.companyName?.message} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text={userType === 'production' ? 'プロダクションID' : '企業ID'} label="corpId" required={true} />
