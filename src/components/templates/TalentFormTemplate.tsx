@@ -158,7 +158,7 @@ const TalentFormTemplate = ({
   const onCheckId = async () => {
     checkCasplaId(getValues('casplaId'), props.casplaId).then(res => {
       setCheckCasplaId(true)
-      toast.success('カスプラIDが利用可能です', { autoClose: 3000, draggable: true})
+      toast.success('Caspla IDが利用可能です', { autoClose: 3000, draggable: true})
     }).catch(() => {
       setCheckCasplaId(false)
       toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
@@ -286,6 +286,7 @@ const TalentFormTemplate = ({
         </div>
         <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
           <Button text={editType === 'edit' ? '変更を保存' : 'この内容で追加'} color="primary" size="large" type="submit" disabled={!checkedCasplaIdState} />
+          {!checkedCasplaIdState && (<p className={[styles['p-account-registration__description'], styles['p-account-registration__warn']].join(' ')}>Caspla IDの空き状況をご確認ください</p>)}
         </div>
       </form>
     </div>

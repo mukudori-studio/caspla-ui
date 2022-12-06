@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Router from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -20,7 +20,7 @@ const LoginedHeaderMenu = () => {
   const resetSessionThumbnail = useResetRecoilState(thumbnailAtom)
   const toggleMenu = () => setToggleMenu(!showMenu)
   const hideMenu = () => setToggleMenu(false)
-
+  const [belong, setBelong] = useState('')
   const signOut = () => {
     hideMenu()
     resetSession()
@@ -35,6 +35,20 @@ const LoginedHeaderMenu = () => {
       draggable: true,
     })
   }
+  
+  useEffect(()=> {
+    if(session.role==='COMPANY_ADMIN'||session.role==='PRODUCTION_ADMIN'){
+      setBelong(session.companyName)
+    } else if (session.role==='TALENT') {
+      if(session.companyId!=='') {
+        setBelong('会社の才能')
+      }
+      setBelong('無所属')
+    } else if(session.role==='FAN_USER') {
+      setBelong('ゲストユーザー')
+    }
+  },[])
+
   const popOverStyle = showMenu ? [styles['m-logined-header-menu__popover'], styles['m-logined-header-menu__popover--show']].join(' ') : styles['m-logined-header-menu__popover']
   const menuStyle = styles['m-logined-header-menu__item']
 
@@ -42,7 +56,7 @@ const LoginedHeaderMenu = () => {
     <div className={styles['m-logined-header-menu']}>
       <button className={styles['m-logined-header-menu__button']} onClick={toggleMenu}>
         <div className={styles['m-logined-header-menu__name']}><span>{session.fullName}</span></div>
-        <div className={styles['m-logined-header-menu__belong']}><span>{session.companyName === '' ? '無所属' : session.companyName}</span></div>
+        <div className={styles['m-logined-header-menu__belong']}><span>{belong}</span></div>
         {
           sessionThumbnail && sessionThumbnail !== '' ? (
             <div className={styles['m-logined-header-menu__thumbnail']}>

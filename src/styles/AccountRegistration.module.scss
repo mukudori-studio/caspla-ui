@@ -163,4 +163,9 @@
       width: 120px;
     }
   }
+
+  &__warn {
+    text-align: center;
+    color: g.$color-alert;
+  }
 }

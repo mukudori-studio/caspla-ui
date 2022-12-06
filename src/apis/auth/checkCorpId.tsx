@@ -8,7 +8,7 @@ const checkCorpId = async (corpId: string, sessionCorpId: string) => {
         sessionCorpId: sessionCorpId
       }
     })
-    return res
+    return res.data
   } catch(err) {
     throw err
   }
