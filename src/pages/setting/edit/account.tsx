@@ -109,9 +109,7 @@ const AccountRegistration: NextPage = () => {
       updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
         sessionThumbnail(res.data.response_message)
         toast.success('サムネイルが正常にアップロードされました。', { autoClose: 3000, draggable: true})
-      }).catch(() => {
-        toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
-      })
+      }).catch((err) => console.log(err))
     }
     updateAccount(session.casplaId, data, accessToken).then((res) => {
       setSession({
@@ -124,7 +122,8 @@ const AccountRegistration: NextPage = () => {
         isAdmin: session.isAdmin
       })
       toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-    }).catch(() => {
+    }).catch((err) => {
+      console.log(err)
       toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
     })
   }
