@@ -9,6 +9,7 @@ import styles from '@/styles/ProductionSetting.module.scss'
 import { toast } from 'react-toastify'
 import getCompanyDetails from '@/apis/companies/getCompanyDetails'
 import updateCompanyDetails from '@/apis/companies/updateCompanyDetails'
+import updateCompanyLogo from '@/apis/images/updateCompanyLogo';
 
 const CompanyEdit: NextPage = () => {
 
@@ -18,6 +19,11 @@ const CompanyEdit: NextPage = () => {
   const [session, setSession] = useRecoilState(userAtom)
 
   const updateCompany = (data:any) => {
+    if(data.companyImage.type) {
+      updateCompanyLogo(companyId, data.companyImage)
+        .then((res)=>console.log(res))
+        .catch((err)=> console.log(err))
+    }
     updateCompanyDetails(companyId, data)
     .then((res)=>{
       const {links, ...other} = res.response_message
@@ -34,7 +40,8 @@ const CompanyEdit: NextPage = () => {
       })
       toast.success('会社情報が正常に更新されました。', { autoClose: 3000, draggable: true})
     })
-    .catch(()=> {
+    .catch((err)=> {
+      console.log(err)
       toast.error('何かがうまくいかなかった。', { autoClose: 3000, draggable: true})
     })
   }
