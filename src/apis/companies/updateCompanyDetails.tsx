@@ -4,10 +4,10 @@ const updateCompanyDetails = async (companyId: string, data : any) => {
   try {
     
     let requestBody = {
-        "id": data.companyId,
+        "id": data.corpId,
         "name": data.companyName,
         "description": data.profile,
-        "zipCode": data.zipcode,
+        "zipCode": data.zipCode,
         "prefecture": data.prefecture,
         "address1": data.address1,
         "address2": data.address2,
