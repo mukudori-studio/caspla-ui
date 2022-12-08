@@ -37,15 +37,12 @@ const CompanyRegistration: NextPage = () => {
       })
       linkCompanyUser(userSession.casplaId, data.corpId)
         .then((res)=> console.log(res))
-        .catch(()=>toast.error('会社管理者の作成中にエラーが発生しました。', { autoClose: 3000, draggable: true}))
+        .catch((err)=>console.log(err))
 
       if(data.companyImage.type) {
         updateCompanyLogo(response_message.id, data.companyImage)
-        .then(() => toast.success('会社のロゴが正常にアップロードされました', { autoClose: 3000, draggable: true}))
-        .catch((err)=>{
-          console.log(err)
-          toast.error('画像のアップロード中にエラーが発生しました。', { autoClose: 3000, draggable: true})
-        })
+        .then((res) => console.log(res))
+        .catch((err)=> console.log(err))
       }
       Router.push('/signup/complete')
     }).catch((err)=> {
