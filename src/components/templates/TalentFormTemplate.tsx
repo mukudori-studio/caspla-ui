@@ -140,6 +140,9 @@ const TalentFormTemplate = ({
     setValue('history', props.history)
     setValue('note', props.note)
     setValue('coverImage', props.coverImage)
+    setValue('birthYear', props.birthYear)
+    setValue('birthMonth', props.birthMonth)
+    setValue('birthDay', props.birthDay)
   }, [])
 
   const changeBirthday = (year: string, month: string, day: string) => {
