@@ -121,7 +121,7 @@ const TalentFormTemplate = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="生年月日" label="birthday" />
-          <DateSelect onChange={changeBirthday}  />
+          <DateSelect onChange={changeBirthday} date={''}  />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="星座" label="starSign" />
