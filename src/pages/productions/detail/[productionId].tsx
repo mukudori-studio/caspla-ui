@@ -27,7 +27,6 @@ const productionDetail: NextPage = () => {
       const {users, ...other} = res.response_message
       setProductionDetail(other)
       setProductionTalent(users)
-      console.log(users)
     }).catch(err => {
       console.log(err)
       Router.push('/top')
@@ -84,14 +83,18 @@ const productionDetail: NextPage = () => {
                 <div className={styles['p-production-detail__no-data']}>在籍しているタレントはいません。</div>
               )}
               <div className={styles['p-production-detail__contact']}>
-                <div>
-                  <p>住所</p>
-                  <p>{`〒${productionDetailState.zipCode} ${productionDetailState.address1} ${productionDetailState.address2} ${productionDetailState.prefecture}`}</p>
-                </div>
-                <div>
-                  <p>TEL</p>
-                  <p>{productionDetailState.tel}</p >
-                </div>
+                { productionDetailState.zipCode !== '' || productionDetailState.address1 !== '' || productionDetailState.address2 !== '' || productionDetailState.prefecture !== '' || (
+                  <div>
+                    <p>住所</p>
+                    <p>{`〒${productionDetailState.zipCode} ${productionDetailState.address1} ${productionDetailState.address2} ${productionDetailState.prefecture}`}</p>
+                  </div>
+                )}
+                { productionDetailState.tel && (
+                  <div>
+                    <p>TEL</p>
+                    <p>{productionDetailState.tel}</p >
+                  </div>
+                )}
               </div>
             </>
           )
