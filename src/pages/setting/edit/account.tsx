@@ -87,10 +87,10 @@ const AccountRegistration: NextPage = () => {
   const onCheckId = async () => {
     checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
       setCheckCasplaId(true)
-      toast.success('登録可能なcaspla ID', { autoClose: 3000, draggable: true})
+      toast.success('登録可能なCaspla ID', { autoClose: 3000, draggable: true})
     }).catch(() => {
       setCheckCasplaId(false)
-      toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
+      toast.error('Caspla IDは既に使用されています。', { autoClose: 3000, draggable: true})
     })
   }
 
@@ -124,7 +124,7 @@ const AccountRegistration: NextPage = () => {
       toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
     }).catch((err) => {
       console.log(err)
-      toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
+      toast.error('何かがうまくいかなかった。 システム管理者に連絡してください。', { autoClose: 3000, draggable: true})
     })
   }
 
