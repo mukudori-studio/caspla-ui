@@ -24,7 +24,7 @@ const TalentEdit: NextPage = () => {
   const onSubmitAddTalent = (data:any) => {
     createProductionTalent(data, session.casplaId)
       .then(({response_code, response_message})=>{
-        if(response_code==200) {
+        if(response_code==201) {
           if(changeCoverState) {
             updateUserPhoto(response_message.userId, "COVER", data.coverImage)
             .catch((err)=> console.log(err))
@@ -37,8 +37,10 @@ const TalentEdit: NextPage = () => {
           setTimeout(()=>{
             Router.push('/setting/production/talents')
           }, 3000);
+        } else if(response_code==409) {
+          toast.error('ユーザーを登録できません。他のキCaspla IDをご利用ください', { autoClose: 3000, draggable: true})
         } else {
-          toast.error(`${response_message}`, { autoClose: 3000, draggable: true})
+          toast.error('何かがうまくいかなかった。 システム管理者に連絡してください。', { autoClose: 3000, draggable: true})
         }
       })
       .catch((err)=> {
