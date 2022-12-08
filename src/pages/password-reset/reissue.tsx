@@ -22,11 +22,13 @@ const PasswordReissue: NextPage = () => {
   const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    sendEmail(data.email).then((res) => {
-      if (res.data !== undefined) Router.push('/password-reset/sent-email')
-      else toast.error('入力いただいたメールアドレスは存在しません。', { autoClose: 3000, draggable: true})
+    sendEmail(data.email).then(({response_code}) => {
+      if (response_code==200) Router.push('/password-reset/sent-email')
+      else if(response_code==404) toast.error('入力いただいたメールアドレスは存在しません。', { autoClose: 3000, draggable: true})
+      else toast.error('何かがうまくいかなかった。 システム管理者に連絡してください。', { autoClose: 3000, draggable: true})
     }).catch((err) => {
-      toast.error('入力いただいたメールアドレスは存在しません。', { autoClose: 3000, draggable: true})
+      console.log(err)
+      toast.error('何かがうまくいかなかった。 システム管理者に連絡してください。', { autoClose: 3000, draggable: true})
     })
   }
 

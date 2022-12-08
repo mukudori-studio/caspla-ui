@@ -28,7 +28,7 @@ const Signup: NextPage = () => {
   const isValid = !watch().email
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    sendEmail(data.email, needForLetter).then(() => {
+    sendEmail(data.email, needForLetter, false).then(() => {
       Router.push({
         pathname: '/signup/verify-code',
         query: {email: data.email, needForLetter: needForLetter}
