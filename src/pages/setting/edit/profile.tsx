@@ -44,9 +44,7 @@ const Dashboard: NextPage = () => {
     if (changeCoverState) {
       updateUserPhoto(session.userId, "COVER", data.coverImage).then(() => {
         toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-      }).catch((error) => {
-        console.log(error)
-      })
+      }).catch((error) => console.log(error))
     }
     
     updateProfile(session.casplaId, data, accessToken).then(({response_message}:any) => {
@@ -61,7 +59,7 @@ const Dashboard: NextPage = () => {
       })
       toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
     }).catch(() => {
-      toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
+      toast.error('変更に失敗しました。', { autoClose: 3000, draggable: true})
     })
   }
 

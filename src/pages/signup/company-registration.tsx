@@ -25,32 +25,35 @@ const CompanyRegistration: NextPage = () => {
   }, [])
 
   const onSubmit = (data: any) => {
-    companyRegistration(data).then(({response_message}) => {
-      setUserSession({
-        userId: Number(userSession.userId),
-        casplaId: userSession.casplaId,
-        role: userSession.role,
-        fullName: userSession.fullName,
-        companyId: response_message.id,
-        companyName: response_message.name,
-        isAdmin: userSession.productionAdmin
-      })
-      linkCompanyUser(userSession.casplaId, data.corpId)
-        .then((res)=> console.log(res))
-        .catch(()=>toast.error('会社管理者の作成中にエラーが発生しました。', { autoClose: 3000, draggable: true}))
-
-      if(data.companyImage.type) {
-        updateCompanyLogo(response_message.id, data.companyImage)
-        .then(() => toast.success('会社のロゴが正常にアップロードされました', { autoClose: 3000, draggable: true}))
-        .catch((err)=>{
-          console.log(err)
-          toast.error('画像のアップロード中にエラーが発生しました。', { autoClose: 3000, draggable: true})
+    companyRegistration(data).then(({response_code, response_message}) => {
+      if(response_code==201) {
+        setUserSession({
+          userId: Number(userSession.userId),
+          casplaId: userSession.casplaId,
+          role: userSession.role,
+          fullName: userSession.fullName,
+          companyId: response_message.id,
+          companyName: response_message.name,
+          isAdmin: userSession.productionAdmin
         })
+        linkCompanyUser(userSession.casplaId, data.corpId)
+          .then((res)=> console.log(res))
+          .catch((err)=>console.log(err))
+  
+        if(data.companyImage) {
+          updateCompanyLogo(response_message.id, data.companyImage)
+          .then((res) => console.log(res))
+          .catch((err)=> console.log(err))
+        }
+        Router.push('/signup/complete')
       }
-      Router.push('/signup/complete')
     }).catch((err)=> {
-      console.log(err)
-      toast.error('法人登録でエラーが発生しました。', { autoClose: 3000, draggable: true})
+      if(err.response?.status==400) {
+        toast.error('指定された Company ID は使用できません', { autoClose: 3000, draggable: true})
+      } else {
+        console.log(err)
+        toast.error('法人登録でエラーが発生しました。', { autoClose: 3000, draggable: true})
+      }
     })
   }
 

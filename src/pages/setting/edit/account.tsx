@@ -108,7 +108,6 @@ const AccountRegistration: NextPage = () => {
     if (changeThumbnailState) {
       updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
         sessionThumbnail(res.data.response_message)
-        toast.success('サムネイルが正常にアップロードされました。', { autoClose: 3000, draggable: true})
       }).catch((err) => console.log(err))
     }
     updateAccount(session.casplaId, data, accessToken).then((res) => {
