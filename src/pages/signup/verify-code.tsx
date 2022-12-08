@@ -43,7 +43,7 @@ const VerifyCode: NextPage = () => {
   }
 
   const reSendCode = () => {
-    sendEmail(email, needForLetter).then(res => {
+    sendEmail(email, needForLetter, true).then(res => {
       toast.success('確認コードを送信しました。', { autoClose: 3000, draggable: true})
     }).catch(() => {
       toast.error('メールの送信に失敗しました。', { autoClose: 3000, draggable: true})
