@@ -19,7 +19,7 @@ const TalentRegistration: NextPage = () => {
   const onSubmit = (data:any) => {
     freeTalentRegistration(data, session.casplaId)
       .then(() => {
-        if (data.coverImage.type) {
+        if (data.coverImage) {
           updateUserPhoto(session.userId, "COVER", data.coverImage)
             .catch((err)=> console.log(err))
         }
