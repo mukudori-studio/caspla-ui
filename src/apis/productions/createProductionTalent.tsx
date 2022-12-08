@@ -2,6 +2,9 @@ import { axiosClient } from '@/utils/axiosClient'
 
 const createProductionTalent = async (data : any ,sessionCasplaId: string ) => {
   try {
+    let birthdate : number = data.birthDay==='Invalid Date' ? 0: parseInt(data.birthDay);
+    let birthMonth : number = data.birthMonth==='Invalid Date' ? 0: parseInt(data.birthMonth);
+    let birthYear : number = data.birthYear==='Invalid Date' ? 0: parseInt(data.birthYear);
      let requestBody = {
         "casplaId": data.casplaId,
         "fullName": data.fullName,
@@ -9,9 +12,9 @@ const createProductionTalent = async (data : any ,sessionCasplaId: string ) => {
         "password": data.password,
         "gender": data.gender,
         "profile": data.profile,
-        "birthYear": data.birthYear,
-        "birthMonth": data.birthMonth,
-        "birthDay": data.birthDay,
+        "birthYear": birthYear,
+        "birthMonth": birthMonth,
+        "birthDay": birthdate,
         "starSign": data.constellation,
         "birthplace": data.birthplace,
         "bloodType": data.bloodType,
