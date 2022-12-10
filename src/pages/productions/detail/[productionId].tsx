@@ -82,20 +82,22 @@ const productionDetail: NextPage = () => {
               ) : (
                 <div className={styles['p-production-detail__no-data']}>在籍しているタレントはいません。</div>
               )}
-              <div className={styles['p-production-detail__contact']}>
-                { productionDetailState.zipCode !== '' || productionDetailState.address1 !== '' || productionDetailState.address2 !== '' || productionDetailState.prefecture !== '' || (
-                  <div>
-                    <p>住所</p>
-                    <p>{`〒${productionDetailState.zipCode} ${productionDetailState.address1} ${productionDetailState.address2} ${productionDetailState.prefecture}`}</p>
-                  </div>
-                )}
-                { productionDetailState.tel && (
-                  <div>
-                    <p>TEL</p>
-                    <p>{productionDetailState.tel}</p >
-                  </div>
-                )}
-              </div>
+              { (productionDetailState.address1 !== '' || productionDetailState.tel !== '') && (
+                <div className={styles['p-production-detail__contact']}>
+                  {productionDetailState.address1!=='' && (
+                    <div>
+                      <p>住所</p>
+                      <p>{ `〒${productionDetailState.zipCode} ${productionDetailState.address1} ${productionDetailState.address2} ${productionDetailState.prefecture}`}</p>
+                    </div>
+                  )}
+                  { productionDetailState.tel!=='' && (
+                    <div>
+                      <p>TEL</p>
+                      <p>{productionDetailState.tel}</p >
+                    </div>
+                  )}
+                </div>
+              )}
             </>
           )
         }          
