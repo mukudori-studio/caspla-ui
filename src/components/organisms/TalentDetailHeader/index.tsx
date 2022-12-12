@@ -128,7 +128,7 @@ const TalentDetailHeader = ({
       <div className={styles['o-talent-detail-header__wrapper']}>
         <div className={styles['o-talent-detail-header__top']}>
           {
-            thumbnailImage !== '' ? (
+            thumbnailImage && thumbnailImage !== '' ? (
               <div className={styles['o-talent-detail-header__thumbnail']}>
                 <Image
                   src={thumbnailImage}
