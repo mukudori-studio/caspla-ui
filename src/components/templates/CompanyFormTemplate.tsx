@@ -136,8 +136,10 @@ const Signup = ({
     if (userType === 'production') {
       checkProductionId(getValues('corpId'), companyId).then(() => {
         setCheckId(true)
+        toast.success('Production IDが利用可能です', { autoClose: 3000, draggable: true})
       }).catch(() => {
         setCheckId(false)
+        toast.error('Production ID は利用できません', { autoClose: 3000, draggable: true})
       })
     } else {
       checkCorpId(getValues('corpId'), companyId).then((res) => {
