@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImages, faXmark } from '@fortawesome/free-solid-svg-icons'
 import styles from '@/styles/components/organisms/CoverImageUploader.module.scss'
@@ -16,6 +16,7 @@ const CoverImageUploader = ({
 }: CoverImageUploaderProps) => {
 
   const [thumbnailState, setThumbnail] = React.useState('')
+  const [coverUrl, setCoverUrl] = useState(thumbnailUrl)
   const inputRef = React.useRef(null)
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +28,9 @@ const CoverImageUploader = ({
   }
 
   const resetFile = () => {
+    setCoverUrl('')
     setThumbnail('')
-    onChange({}, true)
+    onChange('', true)
   }
   
   return (
@@ -48,15 +50,15 @@ const CoverImageUploader = ({
 
       <div className={styles['o-cover-image-upload__content']}>
         {
-          ((thumbnailState !== '' && thumbnailState !== null) || (thumbnailUrl !== '' && thumbnailUrl !== null)) && (
+          ((thumbnailState !== '' && thumbnailState !== null) || (coverUrl !== '' && coverUrl !== null)) && (
             <button className={styles['o-cover-image-upload__cancel']} onClick={resetFile} type='button'>
               <FontAwesomeIcon icon={faXmark} className={styles['o-cover-image-upload__cancel-icon']} />
             </button>
           )
         }
         {
-          ((thumbnailState !== '' && thumbnailState !== null) || (thumbnailUrl !== '' && thumbnailUrl !== null)) ? (
-            <img src={thumbnailState || thumbnailUrl} className={styles['o-cover-image-upload__image']}/>
+          ((thumbnailState !== '' && thumbnailState !== null) || (coverUrl !== '' && coverUrl !== null)) ? (
+            <img src={thumbnailState || coverUrl} className={styles['o-cover-image-upload__image']}/>
           ) : (
             <FontAwesomeIcon icon={faImages} className={styles['o-cover-image-upload__image-icon']} />
           )
