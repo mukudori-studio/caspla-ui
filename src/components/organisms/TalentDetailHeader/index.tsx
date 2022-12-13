@@ -55,6 +55,7 @@ const TalentDetailHeader = ({
   const [isBookmarked, setBookmarked] = useState(withBookmark)
   const session = useRecoilValue(userAtom)
   const accessToken = useRecoilValue(accessTokenAtom)
+  const [thumbnail, setThumbnail] = useState(thumbnailImage)
 
   useEffect(() => {
     const ua = window.navigator.userAgent.toLowerCase()
@@ -128,10 +129,12 @@ const TalentDetailHeader = ({
       <div className={styles['o-talent-detail-header__wrapper']}>
         <div className={styles['o-talent-detail-header__top']}>
           {
-            thumbnailImage && thumbnailImage !== '' ? (
+            thumbnail && thumbnail !== '' ? (
               <div className={styles['o-talent-detail-header__thumbnail']}>
                 <Image
-                  src={thumbnailImage}
+                  src={thumbnail}
+                  alt={thumbnail}
+                  onError={()=>setThumbnail('')}
                   objectFit="contain"
                   layout="fill"
                 />

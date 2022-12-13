@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import FormLabel from '@/components/atoms/Forms/Label'
 import { faCamera, faImages, faUser, faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -19,6 +19,7 @@ const ThumbnailUploader = ({
 }: ThumbnailUploaderProps) => {
 
   const [thumbnailState, setThumbnail] = React.useState('')
+  const [thumbnailImage, setThumbnailImage] = useState<string>(thumbnailUrl)
   const inputRef = React.useRef(null)
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,8 +31,9 @@ const ThumbnailUploader = ({
   }
 
   const resetFile = () => {
+    setThumbnailImage('')
     setThumbnail('')
-    onChange({}, true)
+    onChange('', true)
   }
 
   const labelText = type === 'logo' ? '会社ロゴ' : 'プロフィール画像'
@@ -43,9 +45,8 @@ const ThumbnailUploader = ({
       </div>
 
       <div className={styles['o-thumbnail-upload__content']}>
-
         {
-          thumbnailState !== '' || thumbnailUrl !== '' ? (
+          thumbnailState !== '' || thumbnailImage !== '' ? (
             <button className={[styles['o-thumbnail-upload__button'], styles['o-thumbnail-upload__button--cancel']].join(' ')} onClick={resetFile} type='button'>
               <FontAwesomeIcon icon={faXmark} className={styles['o-thumbnail-upload__button-icon']} />
             </button>
@@ -58,8 +59,8 @@ const ThumbnailUploader = ({
 
         <label htmlFor={id} className={styles['o-thumbnail-upload__label']}>
           {
-            thumbnailState !== '' || thumbnailUrl !== '' ? (
-              <img src={thumbnailUrl || thumbnailState} className={styles['o-thumbnail-upload__image']} />
+            thumbnailState !== '' || thumbnailImage !== '' ? (
+              <img src={thumbnailImage || thumbnailState} className={styles['o-thumbnail-upload__image']} />
             ) : (
               <div className={[styles['o-thumbnail-upload__image'], styles['o-thumbnail-upload__image--empty']].join(' ')}>
                 {
