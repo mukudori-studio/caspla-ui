@@ -60,6 +60,7 @@ const TalentDetail: NextPage = (props) => {
               tiktok={talentDetailState?.links?.tiktokId}
               youtube={talentDetailState?.links?.youtubeId}
               withBookmark={talentDetailState.bookmarked}
+              furigana={talentDetailState.furigana}
             />
             <div className={styles['p-talent-detail__content']}>
               <div className={styles['p-talent-detail__description']}>
