@@ -11,6 +11,7 @@ import BookMark from '@/components/atoms/BookMark';
 import changeBookmark from './../../../apis/bookmarks/changeBookmark';
 import { useRecoilValue } from 'recoil';
 import { userAtom, accessTokenAtom } from './../../../stores/Session/index';
+import { somethingWentWrong } from './../../../stores/messageAlerts/index';
 
 type TalentDetailHeaderProps = {
   coverImage?: string
@@ -98,7 +99,7 @@ const TalentDetailHeader = ({
         })
         .catch((err) => {
           console.log(err)
-          toast.error('何かがうまくいかなかった。 システム管理者に連絡してください', { autoClose: 3000, draggable: true})
+          toast.error(somethingWentWrong, { autoClose: 3000, draggable: true})
         })
     }
   }

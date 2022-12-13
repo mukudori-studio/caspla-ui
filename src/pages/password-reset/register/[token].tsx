@@ -13,6 +13,7 @@ import Card from '@/components/molecules/Card'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import RePasswordInput from '@/components/molecules/Forms/RePasswordInput'
 import styles from '@/styles/PasswordReset.module.scss'
+import { somethingWentWrong } from './../../../stores/messageAlerts/index';
 
 type InputProps = {
   password: string
@@ -34,10 +35,10 @@ const PasswordReset: NextPage = () => {
   const onSubmit: SubmitHandler<InputProps> = (data:any) => {
     resetPassword(token, data.password, data.rePassword).then(({response_code}) => {
       if(response_code == 200) {
-        toast.success('パスワードの再設定が完了しました。')
+        toast.success('パスワードの再設定が完了しました。', { autoClose: 3000, draggable: true})
         Router.push('/signin')
       } else {
-        toast.error('何かがうまくいかなかった。')
+        toast.error(somethingWentWrong,{ autoClose: 3000, draggable: true})
       }
     }).catch(() => {
       toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
