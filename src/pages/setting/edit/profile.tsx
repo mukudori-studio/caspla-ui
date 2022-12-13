@@ -35,7 +35,7 @@ const Dashboard: NextPage = () => {
   const updateForm = (data: any) => {
     if (changeThumbnailState) {
       updateUserPhoto(session.userId, "THUMBNAIL", data.thumbnailImage)
-        .then(({data : {response_message}})=> {
+        .then(({response_message})=> {
           setThumbnail(response_message)
         })
         .catch((error)=> console.log(error))
