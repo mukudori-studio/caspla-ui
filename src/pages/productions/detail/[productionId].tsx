@@ -58,6 +58,7 @@ const productionDetail: NextPage = () => {
                 instagram={productionDetailState.links?.instagramId}
                 tiktok={productionDetailState.links?.tiktokId}
                 youtube={productionDetailState.links?.youtubeId}
+                furigana={productionDetailState.furigana}
               />
               
               <div className={styles['p-production-detail__description']}>
