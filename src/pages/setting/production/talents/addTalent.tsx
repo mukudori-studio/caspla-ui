@@ -11,7 +11,7 @@ import createProductionTalent from '@/apis/productions/createProductionTalent'
 import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
 import { toast } from 'react-toastify'
-import { somethingWentWrong } from './../../../../stores/messageAlerts/index';
+import {SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN} from './../../../../stores/messageAlerts/index';
 
 
 const TalentEdit: NextPage = () => {
@@ -42,12 +42,12 @@ const TalentEdit: NextPage = () => {
           toast.error('ユーザーを登録できません。他のキCaspla IDをご利用ください', { autoClose: 3000, draggable: true})
         } else {
           console.log(response_message)
-          toast.error(somethingWentWrong, { autoClose: 3000, draggable: true})
+          toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
         }
       })
       .catch((err)=> {
         console.log(err)
-        toast.error(somethingWentWrong, { autoClose: 3000, draggable: true})
+        toast.error(SOMETHING_WENT_WRONG + CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
       })
   }
 

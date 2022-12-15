@@ -19,6 +19,7 @@ import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
 import createUser from '@/apis/auth/talent/createUser'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
+import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
 
 type InputProps = {
   fullName: string
@@ -116,7 +117,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
       })
       .catch((err) => {
         console.log(err)
-        toast.error('エラーが発生しました。 詳細については、システム管理者にお問い合わせください。', { autoClose: 5000, draggable: true})
+        toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 5000, draggable: true})
       })
   }
 

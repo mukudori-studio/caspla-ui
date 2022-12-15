@@ -11,6 +11,7 @@ import Loading from '@/components/atoms/Loading'
 import PageTitle from '@/components/atoms/PageTitle'
 import TalentFormTemplate from '@/components/templates/TalentFormTemplate'
 import styles from '@/styles/AccountRegistration.module.scss'
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN } from './../../../stores/messageAlerts/index';
 
 const Dashboard: NextPage = () => {
 
@@ -35,16 +36,13 @@ const Dashboard: NextPage = () => {
   const updateForm = (data: any) => {
     if (changeThumbnailState) {
       updateUserPhoto(session.userId, "THUMBNAIL", data.thumbnailImage)
-        .then(({response_message})=> {
-          setThumbnail(response_message)
-        })
+        .then(({response_message})=>setThumbnail(response_message))
         .catch((error)=> console.log(error))
     }
 
     if (changeCoverState) {
-      updateUserPhoto(session.userId, "COVER", data.coverImage).then(() => {
-        toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-      }).catch((error) => console.log(error))
+      updateUserPhoto(session.userId, "COVER", data.coverImage)
+        .catch((error) => console.log(error))
     }
     
     updateProfile(session.casplaId, data, accessToken).then(({response_message}:any) => {
@@ -59,7 +57,7 @@ const Dashboard: NextPage = () => {
       })
       toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
     }).catch(() => {
-      toast.error('変更に失敗しました。', { autoClose: 3000, draggable: true})
+      toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
     })
   }
 
