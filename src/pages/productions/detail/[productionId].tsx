@@ -93,7 +93,7 @@ const productionDetail: NextPage = () => {
                   )}
                   { productionDetailState.tel!=='' && (
                     <div>
-                      <p>TEL</p>
+                      <p>お問い合わせ先</p>
                       <p>{productionDetailState.tel}</p >
                     </div>
                   )}
