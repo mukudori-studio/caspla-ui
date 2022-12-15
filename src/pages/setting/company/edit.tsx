@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 import getCompanyDetails from '@/apis/companies/getCompanyDetails'
 import updateCompanyDetails from '@/apis/companies/updateCompanyDetails'
 import updateCompanyLogo from '@/apis/images/updateCompanyLogo';
-import { somethingWentWrong } from './../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN } from './../../../stores/messageAlerts/index';
 
 const CompanyEdit: NextPage = () => {
 
@@ -43,7 +43,7 @@ const CompanyEdit: NextPage = () => {
     })
     .catch((err)=> {
       console.log(err)
-      toast.error(somethingWentWrong, { autoClose: 3000, draggable: true})
+      toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
     })
   }
 

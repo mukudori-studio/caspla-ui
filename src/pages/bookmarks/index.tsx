@@ -14,7 +14,7 @@ import { userAtom, accessTokenAtom } from './../../stores/Session/index';
 const Modal = dynamic(() => import('@/components/molecules/Modal'), { ssr: false })
 import changeBookmark from './../../apis/bookmarks/changeBookmark';
 import { toast } from 'react-toastify'
-import { somethingWentWrong } from './../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
 
 const Bookmarks: NextPage = () => {
   const [loadingState, setLoading] = useState<boolean>(true)
@@ -29,7 +29,7 @@ const Bookmarks: NextPage = () => {
           setBookmarks(response_message)
           setLoading(false)
         } else {
-          toast.error(somethingWentWrong, { autoClose: 3000, draggable: true})
+          toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
           Router.push('/dashboard')
         }
       })
@@ -43,7 +43,7 @@ const Bookmarks: NextPage = () => {
           setBookmarks(bookmarksState.filter((bookmark : any) => bookmark.casplaId !== id));
           toast.success('ブックマークが正常に削除されました。', { autoClose: 3000, draggable: true})
         } else {
-          toast.error(somethingWentWrong, { autoClose: 3000, draggable: true})
+          toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
         }
       })
       .catch((err)=> console.log(err))

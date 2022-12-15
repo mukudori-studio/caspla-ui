@@ -11,6 +11,7 @@ import Button from '@/components/atoms/Button'
 import PageTitle from '@/components/atoms/PageTitle'
 import styles from '@/styles/AccountRegistration.module.scss'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
+import { SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
 
 const TalentRegistration: NextPage = () => {
 
@@ -28,7 +29,7 @@ const TalentRegistration: NextPage = () => {
       })
       .catch(err => {
         console.log(err)
-        toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
+        toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
       })
   }
 

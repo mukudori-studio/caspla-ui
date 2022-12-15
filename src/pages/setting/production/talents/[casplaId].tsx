@@ -12,6 +12,7 @@ import styles from '@/styles/ProductionSetting.module.scss'
 import { toast } from 'react-toastify'
 import putProductionTalent from '@/apis/settings/production/putTalent'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
+import { SOMETHING_WENT_WRONG } from './../../../../stores/messageAlerts/index';
 
 
 const TalentEdit: NextPage = () => {
@@ -53,12 +54,11 @@ const TalentEdit: NextPage = () => {
       }
       putProductionTalent(talentState.casplaId, data, session.casplaId)
         .then((res)=>{
-          console.log(res)
           toast.success('タレントの詳細が正常に更新されました。', { autoClose: 3000, draggable: true})
         })
         .catch((err)=> {
           console.log(err)
-          toast.error('アップデートでエラーが発生しました。 システム管理者に連絡してください', { autoClose: 3000, draggable: true})
+          toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
         })
   }
 

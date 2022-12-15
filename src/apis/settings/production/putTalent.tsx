@@ -2,15 +2,19 @@ import { axiosClient } from '@/utils/axiosClient'
 
 const putProductionTalent = async (talentCasplaId: string | string[] | undefined, data: any, sessionCasplaId : string) => {
   try {
+    const year = data.birthYear===''||data.birthYear==='null'? 0: data.birthYear
+    const month = data.birthMonth===''||data.birthMonth==='null'? 0: data.birthMonth
+    const date = data.birthDay===''||data.birthDay==='null'? 0: data.birthDay
+
     let body = {
       "casplaId": data.casplaId,
       "fullName": data.fullName,
       "password": data.password,
       "gender": data.gender,
       "profile": data.profile,
-      "birthYear": parseInt(data.birthYear),
-      "birthMonth": parseInt(data.birthMonth),
-      "birthDay": parseInt(data.birthDay),
+      "birthYear": year,
+      "birthMonth": month,
+      "birthDay": date,
       "constellation": data.constellation,
       "birthplace": data.birthplace,
       "bloodType": data.bloodType,

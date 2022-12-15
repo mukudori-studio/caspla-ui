@@ -11,6 +11,7 @@ import styles from '@/styles/Talent.module.scss'
 import { useRecoilValue } from 'recoil';
 import { userAtom } from './../../../stores/Session/index';
 import Loading from '@/components/atoms/Loading'
+import { SOMETHING_WENT_WRONG } from './../../../stores/messageAlerts/index';
 
 
 const TalentDetail: NextPage = (props) => {
@@ -28,7 +29,7 @@ const TalentDetail: NextPage = (props) => {
       setTalentDetail(response_message.castDetails)
     }).catch(() => {
       Router.push('/talents/1')
-      toast.error('タレント情報の取得に失敗しました。', { autoClose: 3000, draggable: true})
+      toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
     })
   }, [casplaId])
 
