@@ -19,6 +19,7 @@ import RadioButton from '@/components/atoms/Forms/RadioButton'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
+import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG } from './../../../stores/messageAlerts/index';
 
 type InputProps = {
   thumbnailImage?: object
@@ -123,7 +124,7 @@ const AccountRegistration: NextPage = () => {
       toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
     }).catch((err) => {
       console.log(err)
-      toast.error('何かがうまくいかなかった。 システム管理者に連絡してください。', { autoClose: 3000, draggable: true})
+      toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
     })
   }
 
