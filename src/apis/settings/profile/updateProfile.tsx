@@ -2,18 +2,14 @@ import { axiosClient } from '@/utils/axiosClient'
 
 const updateAccount = async (casplaId: string, data: any, accessToken: string) => {
   try {
-    const year = data.birthYear===''||data.birthYear==='null'? 0: data.birthYear
-    const month = data.birthMonth===''||data.birthMonth==='null'? 0: data.birthMonth
-    const date = data.birthDay===''||data.birthDay==='null'? 0: data.birthDay
-
     const postData = {
       casplaId: data.casplaId,
       fullName: data.fullName,
       gender: data.gender,
       profile: data.profile,
-      birthYear: year,
-      birthMonth: month,
-      birthDay: date,
+      birthYear: parseFloat(data.birthYear),
+      birthMonth: parseFloat(data.birthMonth),
+      birthDay: parseFloat(data.birthDay),
       birthplace: data.birthplace,
       bloodType: data.bloodType,
       height: parseFloat(data.height),
