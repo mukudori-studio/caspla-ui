@@ -18,6 +18,7 @@ import starSigns from '@/utils/starSigns'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
+import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE } from '@/stores/messageAlerts/index'
 
 type InputProps = {
   fullName: string
@@ -161,10 +162,10 @@ const TalentFormTemplate = ({
   const onCheckId = async () => {
     checkCasplaId(getValues('casplaId'), props.casplaId).then(res => {
       setCheckCasplaId(true)
-      toast.success('Caspla IDが利用可能です', { autoClose: 3000, draggable: true})
+      toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
     }).catch(() => {
       setCheckCasplaId(false)
-      toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
+      toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
     })
   }
 
@@ -186,7 +187,7 @@ const TalentFormTemplate = ({
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
         <div className={styles['p-account-registration__item']}>
-          <ThumbnailUploader id={props.userId} onChange={onChangeThumbnail} thumbnailUrl={thumbnailImage} />
+          <ThumbnailUploader id='thumbnailImage' onChange={onChangeThumbnail} thumbnailUrl={thumbnailImage} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="名前" label="fullName" required={true} />
