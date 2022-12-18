@@ -23,6 +23,7 @@ const ThumbnailUploader = ({
   const inputRef = React.useRef(null)
 
   const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    resetFile() 
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0]
       setThumbnail(URL.createObjectURL(file))
