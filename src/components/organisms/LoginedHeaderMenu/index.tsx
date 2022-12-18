@@ -64,7 +64,7 @@ const LoginedHeaderMenu = () => {
               <Image
                 src={sessionThumbnail}
                 layout="fill"
-                objectFit="contain"
+                objectFit="cover"
               />
             </div>
           ) : (
