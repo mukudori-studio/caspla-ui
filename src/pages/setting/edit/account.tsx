@@ -20,6 +20,7 @@ import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG } from './../../../stores/messageAlerts/index';
+import Loading from '@/components/atoms/Loading'
 
 type InputProps = {
   thumbnailImage?: object
@@ -40,6 +41,7 @@ const AccountRegistration: NextPage = () => {
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
   const [checkedCasplaIdState, setCheckCasplaId] = useState(true)
   const [needForLetterState, setNeedForLetter] = useState(true)
+  const [loading, setLoading] = useState(true)
   const [session, setSession] = useRecoilState(userAtom)
   const accessToken = useRecoilValue(accessTokenAtom)
   const sessionThumbnail = useSetRecoilState(thumbnailAtom)
@@ -58,6 +60,7 @@ const AccountRegistration: NextPage = () => {
         setValue('needForLetter', response_message.needForLetter)
         setThumbnail(response_message.thumbnailImage)
         setNeedForLetter(response_message.needForLetter)
+        setLoading(false)
       })
     }
   }, [])
@@ -131,60 +134,64 @@ const AccountRegistration: NextPage = () => {
   return (
     <main className={styles['p-account-registration']}>
       <Meta title="アカウント管理" />
-
-      <section className={styles['p-account-registration__content']}>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
-          <section className={styles['p-account-registration__section']}>
-            <PageTitle title="アカウント管理" />
-            <div className={styles['p-account-registration__item']}>
-              <ThumbnailUploader id="thumbnail" onChange={changeThumbnail} thumbnailUrl={thumbnailState} />
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <FormLabel text="名前" label="fullName" required={true} />
-              <Input id="fullName" register={register} required={true} error={errors?.fullName?.message} type={'text'} note="※プロダクション・企業・団体でこのアカウントをご登録の場合は、ご担当者様のお名前を入力してください。" />
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <FormLabel text="フリガナ" label="furigana" required={false} />
-              <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} />
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <FormLabel text="メールアドレス" label="email" required={true} />
-              <Input id="email" register={register} required={true} type="email" disabled={false} />
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <FormLabel text="パスワード" label="password" required={true} />
-              <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数字で入力してください。" />
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <FormLabel text="Caspla ID" label="casplaId" required={true} />
-              <div className={styles['p-account-registration__check-ids']}>
-                <div className={styles['p-account-registration__check-input']}>
-                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+      {loading ? 
+        <Loading /> : 
+        (
+          <section className={styles['p-account-registration__content']}>
+            <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
+              <section className={styles['p-account-registration__section']}>
+                <PageTitle title="アカウント管理" />
+                <div className={styles['p-account-registration__item']}>
+                  <ThumbnailUploader id="thumbnail" onChange={changeThumbnail} thumbnailUrl={thumbnailState} />
                 </div>
-                <div className={styles['p-account-registration__check-id']}>
-                  <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
+                <div className={styles['p-account-registration__item']}>
+                  <FormLabel text="名前" label="fullName" required={true} />
+                  <Input id="fullName" register={register} required={true} error={errors?.fullName?.message} type={'text'} note="※プロダクション・企業・団体でこのアカウントをご登録の場合は、ご担当者様のお名前を入力してください。" />
                 </div>
-              </div>
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <Checkbox id={'needForLetter'} checked={needForLetterState} label="Caspla のニュースレターを受け取る" onChange={toggleNeedForLetter} />
-            </div>
-            <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
-              <Button text="変更を保存" color='primary' size="large" type="submit" weight="bold" disabled={!checkedCasplaIdState} />
-              {!checkedCasplaIdState && (<p style={{color:'red', textAlign: 'center'}}>Caspla ID の空き状況を確認します。</p>)}
-            </div>
+                <div className={styles['p-account-registration__item']}>
+                  <FormLabel text="フリガナ" label="furigana" required={false} />
+                  <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} />
+                </div>
+                <div className={styles['p-account-registration__item']}>
+                  <FormLabel text="メールアドレス" label="email" required={true} />
+                  <Input id="email" register={register} required={true} type="email" disabled={false} />
+                </div>
+                <div className={styles['p-account-registration__item']}>
+                  <FormLabel text="パスワード" label="password" required={true} />
+                  <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数字で入力してください。" />
+                </div>
+                <div className={styles['p-account-registration__item']}>
+                  <FormLabel text="Caspla ID" label="casplaId" required={true} />
+                  <div className={styles['p-account-registration__check-ids']}>
+                    <div className={styles['p-account-registration__check-input']}>
+                      <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+                    </div>
+                    <div className={styles['p-account-registration__check-id']}>
+                      <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
+                    </div>
+                  </div>
+                </div>
+                <div className={styles['p-account-registration__item']}>
+                  <Checkbox id={'needForLetter'} checked={needForLetterState} label="Caspla のニュースレターを受け取る" onChange={toggleNeedForLetter} />
+                </div>
+                <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
+                  <Button text="変更を保存" color='primary' size="large" type="submit" weight="bold" disabled={!checkedCasplaIdState} />
+                  {!checkedCasplaIdState && (<p style={{color:'red', textAlign: 'center'}}>Caspla ID の空き状況を確認します。</p>)}
+                </div>
+              </section>
+              {/* <section className={styles['p-account-registration__section']}>
+                <FormLabel text="アカウントタイプ" />
+                <p className={styles['p-account-registration__description']}></p>
+                <div className={styles['p-account-registration__item']}>
+                  <div className={styles['p-account-registration__radio']}>
+                    <RadioButton id={filteredRole.id} name="role" label={filteredRole.label} note={filteredRole.note} onChange={onChangeRole} checked={true} />
+                  </div>
+                </div>
+              </section> */}
+            </form>
           </section>
-          {/* <section className={styles['p-account-registration__section']}>
-            <FormLabel text="アカウントタイプ" />
-            <p className={styles['p-account-registration__description']}></p>
-            <div className={styles['p-account-registration__item']}>
-              <div className={styles['p-account-registration__radio']}>
-                <RadioButton id={filteredRole.id} name="role" label={filteredRole.label} note={filteredRole.note} onChange={onChangeRole} checked={true} />
-              </div>
-            </div>
-          </section> */}
-        </form>
-      </section>
+        )
+      }
     </main>
   )
 }
