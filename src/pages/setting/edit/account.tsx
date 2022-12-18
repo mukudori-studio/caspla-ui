@@ -111,7 +111,7 @@ const AccountRegistration: NextPage = () => {
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     if (changeThumbnailState) {
       updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
-        sessionThumbnail(res.data.response_message)
+        sessionThumbnail(res.response_message)
       }).catch((err) => console.log(err))
     }
     updateAccount(session.casplaId, data, accessToken).then((res) => {
