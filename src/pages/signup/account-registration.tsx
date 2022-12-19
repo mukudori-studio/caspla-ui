@@ -121,6 +121,10 @@ const AccountRegistration: NextPage = ({query}:any) => {
       })
   }
 
+  const validatePassword = (data: string) =>{
+    return getValues('password') === data
+  }
+  
   return (
     <main className={styles['p-account-registration']}>
       <Meta title="アカウント情報登録" />
@@ -161,7 +165,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="パスワード(確認用)" label="rePassword" required={true} />
-              <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} />
+              <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} validate={validatePassword}/>
             </div>
           </section>
           <section className={styles['p-account-registration__section']}>
