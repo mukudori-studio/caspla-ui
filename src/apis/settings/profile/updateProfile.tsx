@@ -21,7 +21,7 @@ const updateAccount = async (casplaId: string, data: any, accessToken: string) =
       history: data.history,
       note: data.note,
       furigana: data.furigana,
-      constellation: data.starSign,
+      constellation: data.constellation,
       links: {
         twitterId: data.twitterId,
         facebookId: data.facebookId,
