@@ -135,7 +135,7 @@ const TalentFormTemplate = ({
     setValue('twitterId', props.twitterId)
     setValue('facebookId', props.facebookId)
     setValue('youtubeId', props.youtubeId)
-    setValue('instagramId', props.blogUrl)
+    setValue('instagramId', props.instagramId)
     setValue('tiktokId', props.tiktokId)
     setValue('activity', props.activity)
     setValue('history', props.history)
