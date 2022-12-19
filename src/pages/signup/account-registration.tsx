@@ -20,6 +20,7 @@ import styles from '@/styles/AccountRegistration.module.scss'
 import createUser from '@/apis/auth/talent/createUser'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
 import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
+import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE } from '@/stores/messageAlerts/index';
 
 type InputProps = {
   fullName: string
@@ -79,10 +80,10 @@ const AccountRegistration: NextPage = ({query}:any) => {
   const onCheckId = async () => {
     checkCasplaId(getValues('casplaId'), session.casplaId ).then(res => {
       setCheckCasplaId(true)
-      toast.success('ID登録可能です。', { autoClose: 3000, draggable: true})
+      toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
     }).catch(() => {
       setCheckCasplaId(false)
-      toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
+      toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
     })
   }
 
