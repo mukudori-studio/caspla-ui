@@ -45,6 +45,10 @@ const PasswordReset: NextPage = () => {
     })
   }
 
+  const validatePassword = (data: string) =>{
+    return getValues('password') === data
+  }
+
   return (
     <div className={styles['p-password-reset']}>
       <Meta title="パスワードの再設定" />
@@ -61,7 +65,7 @@ const PasswordReset: NextPage = () => {
               </div>
               <div className={styles['p-password-reset__item']}>
                 <FormLabel text="パスワード(確認用)" label="rePassword" />
-                <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} />
+                <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} validate={validatePassword}/>
               </div>
               <div className={styles['p-password-reset__button']}>
                 <Button text="送信" color="primary" size="large" type="submit" />
