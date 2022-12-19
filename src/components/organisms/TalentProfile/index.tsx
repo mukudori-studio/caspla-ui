@@ -66,7 +66,7 @@ const TalentProfile = ({
           )
         }
         {
-          (birthYear || birthMonth || birthDay) && (
+          ((birthYear || birthMonth || birthDay) && (birthYear!==0 || birthMonth!==0 || birthDay!==0)) && (
             <>
               <dt className={styles['o-talent-profile__label']}>生年月日</dt>
               <dd className={styles['o-talent-profile__text']}>
