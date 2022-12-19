@@ -33,6 +33,7 @@
     width: calc(100% - 138px);
     margin-left: 0;
     letter-spacing: 2px;
+    white-space: pre-line;
     @include g.mq-down(tablet--under) {
       width: calc(100% - 102px);
     }

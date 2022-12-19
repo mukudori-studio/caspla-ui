@@ -137,7 +137,7 @@ const TalentDetailHeader = ({
                   src={thumbnail}
                   alt={thumbnail}
                   onError={()=>setThumbnail('')}
-                  objectFit="contain"
+                  objectFit="cover"
                   layout="fill"
                 />
               </div>
