@@ -241,7 +241,7 @@ const TalentFormTemplate = ({
             <FormLabel text="身長" label="birthplace" />
             <div className={styles['p-account-registration__sizes']}>
               <div className={styles['p-account-registration__size-input']}>
-                <Input id="height" register={register} type="number" steps="0.1" />cm
+                <Input id="height" register={register} type="number" steps="1" />cm
               </div>
             </div>
           </div>
@@ -262,7 +262,7 @@ const TalentFormTemplate = ({
             <div className={styles['p-account-registration__size-input']}><Input id="hip" register={register} placeholder="H(ヒップ)" type="number" steps="0.1" /></div>
           </div>
           <div className={styles['p-account-registration__foot']}>
-            <div className={styles['p-account-registration__foot-input']}><Input id="footSize" register={register} placeholder="F(足のサイズ)" steps="0.1" />cm</div>
+            <div className={styles['p-account-registration__foot-input']}><Input id="footSize" register={register} type='number' placeholder="F(足のサイズ)" steps="1" />cm</div>
           </div>
         </div>
         {/* TODO：後で他ページでも使用するのでコンポーネントできりだせるようにする */}

@@ -10,7 +10,7 @@ type RePasswordInputProps = {
   placeholder?: string
   error: any
   password?: any
-  validate: (data: string) => {} 
+  validate: (data: string) => boolean 
 };
 
 const RePasswordInput = ({
