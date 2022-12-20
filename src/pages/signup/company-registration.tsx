@@ -11,7 +11,7 @@ import Meta from '@/components/Meta'
 import PageTitle from '@/components/atoms/PageTitle'
 import CompanyFormTemplate from '@/components/templates/CompanyFormTemplate'
 import styles from '@/styles/AccountRegistration.module.scss'
-import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
+import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, REGISTERED_SUCCESSFULLY } from './../../stores/messageAlerts/index';
 
 
 const CompanyRegistration: NextPage = () => {
@@ -46,6 +46,7 @@ const CompanyRegistration: NextPage = () => {
           .then((res) => console.log(res))
           .catch((err)=> console.log(err))
         }
+        toast.success(REGISTERED_SUCCESSFULLY, { autoClose: 3000, draggable: true})
         Router.push('/signup/complete')
       }
     }).catch((err)=> {

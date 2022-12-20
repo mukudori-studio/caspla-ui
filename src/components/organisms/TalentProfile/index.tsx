@@ -66,13 +66,14 @@ const TalentProfile = ({
           )
         }
         {
-          ((birthYear || birthMonth || birthDay) && (birthYear!==0 || birthMonth!==0 || birthDay!==0)) && (
+          ((birthYear !==null || birthMonth !==null || birthDay !=null ) && (birthYear!==0 || birthMonth!==0 || birthDay!==0)) && 
+          (
             <>
               <dt className={styles['o-talent-profile__label']}>生年月日</dt>
               <dd className={styles['o-talent-profile__text']}>
-                {birthYear && `${birthYear}年`}
-                {birthMonth && `${birthMonth}月`}
-                {birthDay !== null && `${birthDay}日`}
+                {birthYear !== null && birthYear!==0 && `${birthYear}年`}
+                {birthMonth !== null && birthMonth!==0 && `${birthMonth}月`}
+                {birthDay !== null && birthDay!==0 && `${birthDay}日`}
               </dd>
             </>
           )
