@@ -11,7 +11,7 @@ import Button from '@/components/atoms/Button'
 import PageTitle from '@/components/atoms/PageTitle'
 import styles from '@/styles/AccountRegistration.module.scss'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
+import { REGISTERED_SUCCESSFULLY, SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
 
 const TalentRegistration: NextPage = () => {
 
@@ -24,7 +24,7 @@ const TalentRegistration: NextPage = () => {
           updateUserPhoto(session.userId, "COVER", data.coverImage)
             .catch((err)=> console.log(err))
         }
-        toast.success('正常に登録されました。', { autoClose: 3000, draggable: true})
+        toast.success(REGISTERED_SUCCESSFULLY, { autoClose: 3000, draggable: true})
         Router.push('/signup/complete')
       })
       .catch(err => {

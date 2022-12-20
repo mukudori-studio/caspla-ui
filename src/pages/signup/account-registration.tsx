@@ -19,7 +19,7 @@ import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
 import createUser from '@/apis/auth/talent/createUser'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
+import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, REGISTERED_SUCCESSFULLY } from './../../stores/messageAlerts/index';
 import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE } from '@/stores/messageAlerts/index';
 
 type InputProps = {
@@ -114,7 +114,10 @@ const AccountRegistration: NextPage = ({query}:any) => {
 
         if (roleState === 'TALENT') Router.push('/signup/talent-registration')
         if (roleState === 'COMPANY_ADMIN') Router.push('/signup/company-registration')
-        if (roleState === 'FAN_USER') Router.push('/signup/complete')
+        if (roleState === 'FAN_USER') {
+          toast.success(REGISTERED_SUCCESSFULLY, { autoClose: 3000, draggable: true})
+          Router.push('/signup/complete')
+        } 
       })
       .catch((err) => {
         console.log(err)
