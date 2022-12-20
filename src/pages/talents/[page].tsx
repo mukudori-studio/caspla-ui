@@ -12,6 +12,8 @@ import styles from '@/styles/Talent.module.scss'
 import dynamic from 'next/dynamic'
 import { useRecoilValue } from 'recoil';
 import { userAtom } from './../../stores/Session/index';
+import { toast } from 'react-toastify';
+import { SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
@@ -48,6 +50,11 @@ const Talents: NextPage = (props:any) => {
       setPage(response_message.page)
       setTotalCount(Math.ceil(response_message.totalCount /10))
       setLoading(false)
+    })
+    .catch((err)=> {
+      console.log(err)
+      toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
+      Router.push('/top')
     })
   }, [props])
 
