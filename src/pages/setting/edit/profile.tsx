@@ -11,7 +11,7 @@ import Loading from '@/components/atoms/Loading'
 import PageTitle from '@/components/atoms/PageTitle'
 import TalentFormTemplate from '@/components/templates/TalentFormTemplate'
 import styles from '@/styles/AccountRegistration.module.scss'
-import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN } from './../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, SAVED_CHANGES } from './../../../stores/messageAlerts/index';
 
 const Dashboard: NextPage = () => {
 
@@ -45,7 +45,7 @@ const Dashboard: NextPage = () => {
         .catch((error) => console.log(error))
     }
     
-    updateProfile(session.casplaId, data, accessToken).then(({response_message}:any) => {
+    updateProfile(session.casplaId, data).then(({response_message}:any) => {
       setSession({
         userId : session.userId,
         casplaId: response_message.casplaId,
@@ -55,7 +55,7 @@ const Dashboard: NextPage = () => {
         companyName: session.productionName,
         isAdmin: session.productionAdmin
       })
-      toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+      toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
     }).catch(() => {
       toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
     })
