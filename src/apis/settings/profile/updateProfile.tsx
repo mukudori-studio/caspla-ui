@@ -11,7 +11,7 @@ const updateAccount = async (casplaId: string, data: any) => {
       birthMonth: parseFloat(data.birthMonth),
       birthDay: parseFloat(data.birthDay),
       birthplace: data.birthplace,
-      bloodType: data.bloodType,
+      bloodType: data.bloodType===''?null:data.bloodType,
       height: parseFloat(data.height),
       weight: parseFloat(data.weight),
       bust: parseFloat(data.bust),
