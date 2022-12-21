@@ -12,6 +12,7 @@ import PageTitle from '@/components/atoms/PageTitle'
 import CompanyFormTemplate from '@/components/templates/CompanyFormTemplate'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, REGISTERED_SUCCESSFULLY } from './../../stores/messageAlerts/index';
+import { COMPANY_ID_NOT_AVAILABLE } from '@/stores/messageAlerts/index';
 
 
 const CompanyRegistration: NextPage = () => {
@@ -51,7 +52,7 @@ const CompanyRegistration: NextPage = () => {
       }
     }).catch((err)=> {
       if(err.response?.status==400) {
-        toast.error('指定された Company ID は使用できません', { autoClose: 3000, draggable: true})
+        toast.error(COMPANY_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
       } else {
         console.log(err)
         toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})

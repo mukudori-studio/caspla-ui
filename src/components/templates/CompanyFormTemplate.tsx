@@ -18,6 +18,7 @@ import prefectures from '@/utils/prefectures'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
+import { PRODUCTION_ID_AVAILABLE, PRODUCTION_ID_NOT_AVAILABLE, COMPANY_ID_AVAILABLE, COMPANY_ID_NOT_AVAILABLE } from '@/stores/messageAlerts/index'
 
 type InputProps = {
   companyImage?: any
@@ -136,22 +137,18 @@ const Signup = ({
     if (userType === 'production') {
       checkProductionId(getValues('corpId'), companyId).then(() => {
         setCheckId(true)
-        toast.success('Production IDが利用可能です', { autoClose: 3000, draggable: true})
+        toast.success(PRODUCTION_ID_AVAILABLE, { autoClose: 3000, draggable: true})
       }).catch(() => {
         setCheckId(false)
-        toast.error('Production ID は利用できません', { autoClose: 3000, draggable: true})
+        toast.error(PRODUCTION_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
       })
     } else {
       checkCorpId(getValues('corpId'), companyId).then((res) => {
-        if(res.response_code==200) {
         setCheckId(true)
-          toast.success('ID登録可能です。', { autoClose: 3000, draggable: true})
-        } else {
-          setCheckId(false)
-        }
+        toast.success(COMPANY_ID_AVAILABLE, { autoClose: 3000, draggable: true})
       }).catch(() => {
         setCheckId(false)
-        toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
+        toast.error(COMPANY_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
       })
     }
   }
