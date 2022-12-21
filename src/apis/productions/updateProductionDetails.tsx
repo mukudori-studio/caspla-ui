@@ -7,7 +7,7 @@ const updateProductionDetails = async (data: any, productionId : string ) => {
         "productionId": data.corpId,
         "productionName": data.companyName,
         "description": data.profile,
-        "zipCode": data.zipcode,
+        "zipCode": data.zipCode,
         "prefecture": data.prefecture,
         "address1": data.address1,
         "address2": data.address2,
@@ -18,7 +18,7 @@ const updateProductionDetails = async (data: any, productionId : string ) => {
             "instagramId": data.instagramId,
             "youtubeId": data.youtubeId,
             "tiktokId": data.tiktokId,
-            "blogUrl": data.blogurl,
+            "blogUrl": data.blogUrl,
             "siteUrl": data.siteUrl
         }
     }

@@ -102,7 +102,7 @@ const Signup = ({
     setValue('twitterId', props.twitterId)
     setValue('facebookId', props.facebookId)
     setValue('youtubeId', props.youtubeId)
-    setValue('instagramId', props.blogUrl)
+    setValue('instagramId', props.instagramId)
     setValue('tiktokId', props.tiktokId)
     setValue('history', props.history)
     setValue('note', props.note)
