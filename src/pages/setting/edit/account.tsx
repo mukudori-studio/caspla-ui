@@ -19,7 +19,7 @@ import RadioButton from '@/components/atoms/Forms/RadioButton'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
-import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG } from './../../../stores/messageAlerts/index';
+import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG } from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
 
 type InputProps = {
@@ -90,13 +90,18 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onCheckId = async () => {
-    checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
-      setCheckCasplaId(true)
-      toast.success('登録可能なCaspla ID', { autoClose: 3000, draggable: true})
-    }).catch(() => {
+    if(getValues('casplaId').length<16 && getValues('casplaId').length>4) {
+      checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
+        setCheckCasplaId(true)
+        toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+      }).catch(() => {
+        setCheckCasplaId(false)
+        toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+      })
+    } else {
       setCheckCasplaId(false)
-      toast.error('Caspla IDは既に使用されています。', { autoClose: 3000, draggable: true})
-    })
+      toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
+    }
   }
 
   const toggleNeedForLetter = (e:any) => {

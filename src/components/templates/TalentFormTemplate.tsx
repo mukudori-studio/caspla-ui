@@ -18,7 +18,7 @@ import starSigns from '@/utils/starSigns'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
-import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE } from '@/stores/messageAlerts/index'
+import { CASPLA_ID_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CASPLA_ID_NOT_AVAILABLE } from '@/stores/messageAlerts/index'
 
 type InputProps = {
   fullName: string
@@ -160,13 +160,18 @@ const TalentFormTemplate = ({
   }
 
   const onCheckId = async () => {
-    checkCasplaId(getValues('casplaId'), props.casplaId).then(res => {
-      setCheckCasplaId(true)
-      toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
-    }).catch(() => {
+    if(getValues('casplaId').length<16 && getValues('casplaId').length>4) {
+      checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
+        setCheckCasplaId(true)
+        toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+      }).catch(() => {
+        setCheckCasplaId(false)
+        toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+      })
+    } else {
       setCheckCasplaId(false)
-      toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
-    })
+      toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
+    }
   }
 
   const onChangeThumbnail = (val: any, isRemove: boolean) => {
