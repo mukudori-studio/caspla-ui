@@ -40,11 +40,7 @@ const LoginedHeaderMenu = () => {
     if(session.role==='COMPANY_ADMIN'||session.role==='PRODUCTION_ADMIN'){
       setBelong(session.companyName)
     } else if (session.role==='TALENT') {
-      if(session.companyId!=='') {
-        setBelong('会社の才能')
-      } else {
         setBelong('無所属')
-      }
     } else if(session.role==='FAN_USER') {
       setBelong('ゲストユーザー')
     }
