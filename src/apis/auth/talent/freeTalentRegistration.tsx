@@ -10,7 +10,7 @@ const freeTalentRegistration = async (data: any, casplaId: string) => {
       birthDate: parseFloat(data.birthDay),
       constellation: data.starSign,
       bloodGroup: data.bloodType===''?null:data.bloodType,
-      birthplace: data.birthplace,
+      birthPlace: data.birthplace,
       height: parseFloat(data.height),
       weight: parseFloat(data.weight),
       bust: parseFloat(data.bust),
