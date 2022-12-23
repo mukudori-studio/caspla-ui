@@ -156,7 +156,7 @@ const TalentFormTemplate = ({
   const changeBloodType = (e:any) => setValue('bloodType', e.target.value)
   const checkActivity = (data: Array<string>) => {
     setActivity(data)
-    setValue('activity', activityState)
+    setValue('activity', data)
   }
 
   const onCheckId = async () => {
