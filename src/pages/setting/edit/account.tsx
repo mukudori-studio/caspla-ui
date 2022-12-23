@@ -52,16 +52,17 @@ const AccountRegistration: NextPage = () => {
       Router.replace('/signin')
       toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
     } else if (accessToken !== '') {
-      getAccount(session.casplaId, accessToken).then(({response_message} : any) => {
-        setValue('fullName', response_message.fullName)
-        setValue('furigana', response_message.furigana)
-        setValue('casplaId', response_message.casplaId)
-        setValue('email', response_message.email)
-        setValue('needForLetter', response_message.needForLetter)
-        setThumbnail(response_message.thumbnailImage)
-        setNeedForLetter(response_message.needForLetter)
-        setLoading(false)
-      })
+      getAccount(session.casplaId)
+        .then(({response_message} : any) => {
+          setValue('fullName', response_message.fullName)
+          setValue('furigana', response_message.furigana)
+          setValue('casplaId', response_message.casplaId)
+          setValue('email', response_message.email)
+          setValue('needForLetter', response_message.needForLetter)
+          setThumbnail(response_message.thumbnailImage)
+          setNeedForLetter(response_message.needForLetter)
+          setLoading(false)
+        })
     }
   }, [])
 
@@ -114,21 +115,22 @@ const AccountRegistration: NextPage = () => {
         sessionThumbnail(res.response_message)
       }).catch((err) => console.log(err))
     }
-    updateAccount(session.casplaId, data, accessToken).then((res) => {
-      setSession({
-        userId: session.userId,
-        role: session.role,
-        casplaId: res.data.response_message.casplaId,
-        fullName: res.data.response_message.fullName,
-        companyId: session.companyId,
-        companyName: session.companyName,
-        isAdmin: session.isAdmin
+    updateAccount(session.casplaId, data)
+      .then((res) => {
+        setSession({
+          userId: session.userId,
+          role: session.role,
+          casplaId: res.data.response_message.casplaId,
+          fullName: res.data.response_message.fullName,
+          companyId: session.companyId,
+          companyName: session.companyName,
+          isAdmin: session.isAdmin
+        })
+        toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+      }).catch((err) => {
+        console.log(err)
+        toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
       })
-      toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-    }).catch((err) => {
-      console.log(err)
-      toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
-    })
   }
 
   return (
