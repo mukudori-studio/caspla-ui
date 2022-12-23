@@ -1,6 +1,6 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const updateAccount = async (casplaId: string, data: any, accessToken: string) => {
+const updateAccount = async (casplaId: string, data: any) => {
   try {
 
     const postData = {
@@ -12,11 +12,7 @@ const updateAccount = async (casplaId: string, data: any, accessToken: string) =
       "needForLetter": data.needForLetter
     }
 
-    const res = await axiosClient.put(`/api/v1/casts/update_account?casplaId=${casplaId}`, postData, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      }
-    })
+    const res = await axiosClient.put(`/api/v1/casts/update_account?casplaId=${casplaId}`, postData)
     return res
   } catch(err) {
     throw err
