@@ -171,6 +171,7 @@ const TalentFormTemplate = ({
           toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
         })
       } else {
+        setCheckCasplaId(false)
         toast.error(CASPLA_ID_VALIDATE_ERROR, { autoClose: 3000, draggable: true})
       }
     } else {
