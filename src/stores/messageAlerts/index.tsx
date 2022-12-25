@@ -1,6 +1,7 @@
 export const CASPLA_ID_AVAILABLE = 'Caspla IDが利用可能です'
 export const CASPLA_ID_LENGTH_REQUIRED = '4～16文字以内で入力してください。'
 export const CASPLA_ID_NOT_AVAILABLE = 'Caspla IDは既に使用されています。'
+export const CASPLA_ID_VALIDATE_ERROR = 'Caspla ID must consist of one-byte alphabetic characters and one-byte numbers.'
 export const COMPANY_ID_AVAILABLE = 'Company IDが利用可能です'
 export const COMPANY_ID_NOT_AVAILABLE = 'Company ID は利用できません'
 export const CONTACT_SYS_ADMIN = 'システム管理者に連絡してください。'

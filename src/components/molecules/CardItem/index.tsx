@@ -51,7 +51,7 @@ const CardItem = ({
   const changeBookmarkStatus = ((e: any) => {
     e.stopPropagation()
     if(accessToken!=='') {
-      changeBookmark(casplaId, session.casplaId, accessToken)
+      changeBookmark(casplaId, session.casplaId)
         .then(({response_message})=> {
           setFlag(response_message)
         })

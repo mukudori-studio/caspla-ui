@@ -1,13 +1,9 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const getBookmarks = async (casplaId: string, accessToken: string) => {
+const getBookmarks = async (casplaId: string) => {
   try {
 
-    const response = await axiosClient.get(`/api/v1/bookmark/${casplaId}`, {
-      headers : {
-        Authorization : `Bearer ${accessToken}`
-      }
-    })
+    const response = await axiosClient.get(`/api/v1/bookmark/${casplaId}`)
 
     return response.data
   } catch(err:any) {
