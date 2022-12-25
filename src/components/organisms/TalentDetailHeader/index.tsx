@@ -12,6 +12,8 @@ import changeBookmark from './../../../apis/bookmarks/changeBookmark';
 import { useRecoilValue } from 'recoil';
 import { userAtom, accessTokenAtom } from './../../../stores/Session/index';
 import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN } from './../../../stores/messageAlerts/index';
+import PopOver from '@/components/molecules/Popover';
+import Link from 'next/link'
 
 type TalentDetailHeaderProps = {
   coverImage?: string
@@ -58,6 +60,11 @@ const TalentDetailHeader = ({
   const session = useRecoilValue(userAtom)
   const accessToken = useRecoilValue(accessTokenAtom)
   const [thumbnail, setThumbnail] = useState(thumbnailImage)
+  const [showMenu, setShowMenu] = useState(false)
+  
+  const toggleMenu = () => setShowMenu(!showMenu)
+  const popOverStyle = showMenu ? [styles['o-talent-detail-header__bookmark-popover'], styles['o-talent-detail-header__bookmark-popover--show']].join(' ') : styles['o-talent-detail-header__bookmark-popover']
+  const hideMenu = () => setShowMenu(false)
 
   useEffect(() => {
     const ua = window.navigator.userAgent.toLowerCase()
@@ -152,8 +159,18 @@ const TalentDetailHeader = ({
               <div className={styles['o-talent-detail-header__activity']}><LabelTexts texts={activity} color={'gray'} /></div>
             )
           }
-          <div className={styles[`o-talent-detail-header__bookmark`]}>
+          <div className={styles[`o-talent-detail-header__bookmark`]} onMouseEnter={toggleMenu}>
             <BookMark checked={isBookmarked} changeBookmark={onClickBookmark}/>
+            { accessToken !== '' && (
+              <div className={popOverStyle}>
+                <PopOver>
+                  <div className={styles['o-talent-detail-header__list']}>
+                    <h4 style={{margin:0}}>ブックマークに登録しました！</h4>
+                    <Link href="/bookmarks" ><a onClick={hideMenu} className={styles['o-talent-detail-header__list--button']}>ブックマークを見る</a></Link>
+                  </div>
+                </PopOver>
+              </div>
+            )}
           </div>
         </div>
         <div className={styles['o-talent-detail-header__bottom']}>
