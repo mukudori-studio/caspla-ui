@@ -161,14 +161,16 @@ const TalentDetailHeader = ({
           }
           <div className={styles[`o-talent-detail-header__bookmark`]} onMouseEnter={toggleMenu}>
             <BookMark checked={isBookmarked} changeBookmark={onClickBookmark}/>
-            <div className={popOverStyle}>
-              <PopOver>
-                <div className={styles['o-talent-detail-header__list']}>
-                  <h4 style={{margin:0}}>ブックマークに登録しました！</h4>
-                  <Link href="/bookmarks" ><a onClick={hideMenu} className={styles['o-talent-detail-header__list--button']}>ブックマークを見る</a></Link>
-                </div>
-              </PopOver>
-            </div>
+            { accessToken !== '' && (
+              <div className={popOverStyle}>
+                <PopOver>
+                  <div className={styles['o-talent-detail-header__list']}>
+                    <h4 style={{margin:0}}>ブックマークに登録しました！</h4>
+                    <Link href="/bookmarks" ><a onClick={hideMenu} className={styles['o-talent-detail-header__list--button']}>ブックマークを見る</a></Link>
+                  </div>
+                </PopOver>
+              </div>
+            )}
           </div>
         </div>
         <div className={styles['o-talent-detail-header__bottom']}>
