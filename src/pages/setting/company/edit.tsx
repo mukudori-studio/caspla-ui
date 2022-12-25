@@ -20,7 +20,7 @@ const CompanyEdit: NextPage = () => {
   const [session, setSession] = useRecoilState(userAtom)
 
   const updateCompany = (data:any) => {
-    if(data.companyImage.type) {
+    if(data.companyImage.type || data.companyImage === '') {
       updateCompanyLogo(companyId, data.companyImage)
         .then((res)=>console.log(res))
         .catch((err)=> console.log(err))
