@@ -18,7 +18,7 @@ import starSigns from '@/utils/starSigns'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
-import { CASPLA_ID_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CASPLA_ID_NOT_AVAILABLE } from '@/stores/messageAlerts/index'
+import { CASPLA_ID_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_VALIDATE_ERROR } from '@/stores/messageAlerts/index'
 
 type InputProps = {
   fullName: string
@@ -161,13 +161,18 @@ const TalentFormTemplate = ({
 
   const onCheckId = async () => {
     if(getValues('casplaId').length<16 && getValues('casplaId').length>4) {
-      checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
-        setCheckCasplaId(true)
-        toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
-      }).catch(() => {
-        setCheckCasplaId(false)
-        toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
-      })
+      const strongCasplaId = new RegExp('(?=.*[a-zA-Z])(?=.*[0-9])')
+      if(strongCasplaId.test(getValues('casplaId'))) {
+        checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
+          setCheckCasplaId(true)
+          toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+        }).catch(() => {
+          setCheckCasplaId(false)
+          toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+        })
+      } else {
+        toast.error(CASPLA_ID_VALIDATE_ERROR, { autoClose: 3000, draggable: true})
+      }
     } else {
       setCheckCasplaId(false)
       toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
@@ -290,7 +295,7 @@ const TalentFormTemplate = ({
           <Textarea id="history" register={register} error={errors?.history?.message} />
         </div>
         <div className={styles['p-account-registration__item']}>
-          <FormLabel text="その他" label="history" />
+          <FormLabel text="その他" label="note" />
           <Textarea id="note" register={register} error={errors?.note?.message} />
         </div>
         <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
