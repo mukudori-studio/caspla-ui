@@ -93,9 +93,9 @@ const TalentDetailHeader = ({
       toast.warning('ログインする必要があります。', { autoClose: 3000, draggable: true})
       Router.push('/signin')
     } else {
-      changeBookmark(casplaId, session.casplaId, accessToken)
-        .then(({response_code, response_message}) => {
-          if(response_code == 200) setBookmarked(response_message)
+      changeBookmark(casplaId, session.casplaId)
+      .then(({response_code, response_message}) => {
+        if(response_code == 200) setBookmarked(response_message)
           else console.log(response_code, response_message)
         })
         .catch((err) => {
