@@ -23,7 +23,7 @@ const Bookmarks: NextPage = () => {
   const accessToken = useRecoilValue(accessTokenAtom)
 
   useEffect(() => {
-    getBookmarks(session.casplaId, accessToken)
+    getBookmarks(session.casplaId)
       .then(({response_code, response_message})=> {
         if(response_code == 200) {
           setBookmarks(response_message)
@@ -37,7 +37,7 @@ const Bookmarks: NextPage = () => {
   }, [])
 
   const onDeleteBookmark = (id: string) => {
-    changeBookmark(id, session.casplaId, accessToken)
+    changeBookmark(id, session.casplaId)
       .then(({response_code}) => {
         if(response_code == 200) {
           setBookmarks(bookmarksState.filter((bookmark : any) => bookmark.casplaId !== id));
