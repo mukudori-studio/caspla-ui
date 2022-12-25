@@ -19,13 +19,13 @@ const ProductionEdit: NextPage = () => {
   const [production, setProduction] = useState<any>({})
   const [links, setLinks] = useState<any>({})
   const [session, setSession] = useRecoilState(userAtom)
-  const [productionId, setProductionId] = useState<number>(0)
+  const [productionId, setProductionId] = useState<string>('')
   
   useEffect(()=>{
     getProductionDetail(companyId)
       .then((res)=> {
         const {links, ...other} = res.response_message
-        setProductionId(other.id)
+        setProductionId(other.productionId)
         setLinks(links)
         setProduction(other)
       })
@@ -53,7 +53,7 @@ const ProductionEdit: NextPage = () => {
         console.log(error)
         toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
       })
-    if(typeof data.companyImage === 'object') {
+    if(typeof data.companyImage === 'object' || data.companyImage==='') {
       updateProductionLogo(productionId, data.companyImage)
         .catch((error)=> console.log(error))
     }
