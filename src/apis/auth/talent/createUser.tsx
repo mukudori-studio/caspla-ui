@@ -1,22 +1,21 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const freeTalentUserRegistration = async (data: any) => {
+const createUser = async (data: any, role: string) => {
   try {
 
     const postData = {
-      fullName: data.fullName,
-      furigana: data.furigana,
-      email: data.email,
       casplaId: data.casplaId,
+      fullName: data.fullName,
+      email: data.email,
       password: data.password,
-      role: 'FREE_TALENT'
+      furigana: data.furigana,
+      role: role
     }
-
     const res = await axiosClient.post('/api/v1/auth/save_user', postData)
-    return res
+    return res.data
   } catch(err) {
     throw err
   }
 }
 
-export default freeTalentUserRegistration
+export default createUser

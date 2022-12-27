@@ -48,6 +48,8 @@
     grid-area: thumbnail;
     position: relative;
     overflow: hidden;
+    top:50%;
+    transform: translate(0%, -50%);
 
     @include g.mq-down(tablet--under) {
       width: 60px;
@@ -119,12 +121,17 @@
     text-align: left;
     margin: 0;
     overflow: hidden;
+    white-space: pre-line;
 
     @include g.mq-down(tablet--under) {
       display: none;
     }
   }
   &__activities {
-    display: none;
+    display: block;
+
+    &-star-mark {
+      float: right;
+    }
   }
 }

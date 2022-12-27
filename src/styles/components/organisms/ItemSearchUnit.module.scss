@@ -50,7 +50,7 @@
   &__content {
     border-radius: 10px;
     position: relative;
-    margin: 0 auto 30px;
+    margin: 0 auto;
 
     @include g.mq-up(tablet) {
       @include g.flex(start, start);
@@ -113,7 +113,7 @@
       position: realtive;
       z-index: 1;
     }
-    
+
     &:after {
       content: "";
       display: block;
@@ -134,5 +134,5 @@
     max-width: 632px;
     margin: 0 auto;
   }
-  
+
 }

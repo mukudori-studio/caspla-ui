@@ -2,33 +2,31 @@ import React, { useState, useEffect } from 'react'
 import type { NextPage } from 'next'
 import Meta from '@/components/Meta'
 import { toast } from 'react-toastify'
-import { useRecoilState, useResetRecoilState } from 'recoil'
-import { sessionState, sessionThumbnailState } from '@/stores/Session'
-import updateCover from '@/apis/images/updateCover'
-import updateThumbnail from '@/apis/images/updateThumbnail'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import { userAtom, thumbnailAtom, accessTokenAtom } from '@/stores/Session'
+import updateUserPhoto from '@/apis/images/updateUserPhoto'
 import getProfile from '@/apis/settings/profile/getProfile'
 import updateProfile from '@/apis/settings/profile/updateProfile'
 import Loading from '@/components/atoms/Loading'
 import PageTitle from '@/components/atoms/PageTitle'
 import TalentFormTemplate from '@/components/templates/TalentFormTemplate'
 import styles from '@/styles/AccountRegistration.module.scss'
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, SAVED_CHANGES } from './../../../stores/messageAlerts/index';
 
 const Dashboard: NextPage = () => {
 
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
   const [changeCoverState, setChangeCover] = useState(false)
-  const [session, setSession] = useRecoilState(sessionState)
-  const [sessionThumbnail, setThumbnailSession] = useRecoilState(sessionThumbnailState)
+  const [session, setSession] = useRecoilState(userAtom)
+  const [thumbnail, setThumbnail] = useRecoilState(thumbnailAtom)
   const [loadingState, setLoading] = useState<boolean>(true)
   const [profileState, setProfileState] = useState<any>({})
-  
+  const accessToken = useRecoilValue(accessTokenAtom)
 
   useEffect(() => {
-    getProfile(session.casplaId, session.accessToken).then(res => {
-      setProfileState(res.data.response_message.castDetails)
-      setTimeout(() => {
-        setLoading(false)
-      })
+    getProfile(session.casplaId, session.casplaId).then(({response_message}) => {
+      setProfileState(response_message.castDetails)
+      setLoading(false)
     })
   }, [])
 
@@ -36,20 +34,30 @@ const Dashboard: NextPage = () => {
   const onChangeCover = () => setChangeCover(true)
 
   const updateForm = (data: any) => {
+    if (changeThumbnailState) {
+      updateUserPhoto(session.userId, "THUMBNAIL", data.thumbnailImage)
+        .then(({response_message})=>setThumbnail(response_message))
+        .catch((error)=> console.log(error))
+    }
 
-    if (changeThumbnailState) updateThumbnail(session.userId, data.thumbnailImage)
+    if (changeCoverState) {
+      updateUserPhoto(session.userId, "COVER", data.coverImage)
+        .catch((error) => console.log(error))
+    }
     
-    updateProfile(session.casplaId, data, session.accessToken).then(res => {
-
-      if (changeCoverState) {
-        updateCover(session.userId, data.coverImage).then(() => {
-          toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-        })
-      } else {
-        toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-      }
+    updateProfile(session.casplaId, data).then(({response_message}:any) => {
+      setSession({
+        userId : session.userId,
+        casplaId: response_message.casplaId,
+        role: session.role,
+        fullName: response_message.fullName,
+        companyId: session.productionId,
+        companyName: session.productionName,
+        isAdmin: session.productionAdmin
+      })
+      toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
     }).catch(() => {
-      toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
+      toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
     })
   }
 
@@ -83,14 +91,14 @@ const Dashboard: NextPage = () => {
                 waist={profileState.waist}
                 hip={profileState.hip}
                 footSize={profileState.footSize}
-                siteUrl={profileState.siteUrl}
-                blogUrl={profileState.blogUrl}
-                twitterId={profileState.twitterId}
-                facebookId={profileState.facebookId}
-                youtubeId={profileState.youtubeId}
-                instagramId={profileState.instagramId}
-                tiktokId={profileState.tiktokId}
-                activity={profileState.activity}
+                siteUrl={profileState.links.siteUrl}
+                blogUrl={profileState.links.blogUrl}
+                twitterId={profileState.links.twitterId}
+                facebookId={profileState.links.facebookId}
+                youtubeId={profileState.links.youtubeId}
+                instagramId={profileState.links.instagramId}
+                tiktokId={profileState.links.tiktokId}
+                activity={profileState.activities}
                 history={profileState.history}
                 note={profileState.note}
                 userId={session.userId}

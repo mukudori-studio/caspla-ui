@@ -8,7 +8,7 @@ const sendEmail = async (email: string) => {
         email: email
       }
     })
-    return res
+    return res.data
   } catch(err:any) {
     return err.response
   }

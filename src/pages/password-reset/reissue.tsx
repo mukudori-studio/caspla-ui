@@ -12,6 +12,7 @@ import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
 
 import styles from '@/styles/PasswordReset.module.scss'
+import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
 
 type InputProps = {
   email: string
@@ -22,11 +23,13 @@ const PasswordReissue: NextPage = () => {
   const { register, watch, handleSubmit, formState: { errors } } = useForm<InputProps>()
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    sendEmail(data.email).then((res) => {
-      if (res.data !== undefined) Router.push('/password-reset/sent-email')
-      else toast.error('入力いただいたメールアドレスは存在しません。', { autoClose: 3000, draggable: true})
+    sendEmail(data.email).then(({response_code}) => {
+      if (response_code==200) Router.push('/password-reset/sent-email')
+      else if(response_code==404) toast.error('入力いただいたメールアドレスは存在しません。', { autoClose: 3000, draggable: true})
+      else toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
     }).catch((err) => {
-      toast.error('入力いただいたメールアドレスは存在しません。', { autoClose: 3000, draggable: true})
+      console.log(err)
+      toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
     })
   }
 

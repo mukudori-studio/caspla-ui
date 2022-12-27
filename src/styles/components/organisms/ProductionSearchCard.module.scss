@@ -1,0 +1,44 @@
+@use '../../global/' as g;
+
+.c-production-search {
+  max-width: 1016px;
+  padding: 100px 30px;
+  // TODO：margin設定全画面で共通化できそうだったらあとで対応
+  margin: 0 auto;
+
+  @include g.mq-down(tablet--under) {
+    // width: 89vw;
+    // padding: 30px 0 0;
+    margin-bottom: 60px;
+  }
+  &-header {
+    width: 100%;
+    height: auto;
+
+    @include g.mq-down(tablet--under) {
+        h1{
+            font-size: large;
+        }
+        font-size: small;
+    }
+  }
+
+  &__list{
+    padding: 10px;
+    @include g.mq-up(tablet) {
+      @include g.flex(start, start);
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    li {
+        width: 100%;
+        list-style: disc outside;
+    }
+  }
+  
+  &__link {
+    text-decoration: none;
+    color: g.$color-mono-80;
+    font: inherit;
+  }
+}

@@ -10,6 +10,7 @@ type RePasswordInputProps = {
   placeholder?: string
   error: any
   password?: any
+  validate: (data: string) => boolean 
 };
 
 const RePasswordInput = ({
@@ -17,7 +18,8 @@ const RePasswordInput = ({
   register,
   placeholder = '',
   error = undefined,
-  password
+  password,
+  validate
 }: RePasswordInputProps) => {
 
   const [typeState, setInputType] = useState('password')
@@ -31,7 +33,7 @@ const RePasswordInput = ({
           type={typeState}
           placeholder={placeholder}
           id={id}
-          {...register(id, { required: '入力必須項目です。', validate: (value: string) => value === password})}
+          {...register(id, { required: '入力必須項目です。', validate: (value: string) => validate(value)})}
         />
         {/* TODO：パスワードの表示、非表示切り替えを行う */}
       </div>

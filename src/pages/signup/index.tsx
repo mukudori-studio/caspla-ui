@@ -13,6 +13,7 @@ import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
 
 import styles from '@/styles/Signup.module.scss'
+import { SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
 
 type InputProps = {
   email: string
@@ -28,13 +29,17 @@ const Signup: NextPage = () => {
   const isValid = !watch().email
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    sendEmail(data.email, needForLetter).then(() => {
+    sendEmail(data.email, needForLetter, false).then(() => {
       Router.push({
         pathname: '/signup/verify-code',
         query: {email: data.email, needForLetter: needForLetter}
       })
-    }).catch(() => {
-      toast.error('メールの送信に失敗しました。', { autoClose: 3000, draggable: true})
+    }).catch(({response}) => {
+      if(response.status===409) {
+        toast.error('このEメールはすでに登録されています。', { autoClose: 3000, draggable: true})
+      } else {
+        toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
+      }
     })
   }
 

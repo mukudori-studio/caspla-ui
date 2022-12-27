@@ -5,12 +5,12 @@ const freeTalentRegistration = async (data: any, casplaId: string) => {
 
     const postData = {
       gender: data.gender,
-      profile: data.profile,
-      birthYear: parseFloat(data.birthYear),
-      birthMonth: parseFloat(data.birthMonth),
-      birthDay: parseFloat(data.birthDay),
-      birthplace: data.birthplace,
-      bloodType: data.bloodType,
+      birthYear: parseInt(data.birthYear),
+      birthMonth: parseInt(data.birthMonth),
+      birthDate: parseInt(data.birthDay),
+      constellation: data.starSign,
+      bloodGroup: data.bloodType===''?null:data.bloodType,
+      birthPlace: data.birthplace,
       height: parseFloat(data.height),
       weight: parseFloat(data.weight),
       bust: parseFloat(data.bust),
@@ -19,8 +19,8 @@ const freeTalentRegistration = async (data: any, casplaId: string) => {
       footSize: parseFloat(data.footSize),
       history: data.history,
       note: data.note,
+      profile: data.profile,
       furigana: data.furigana,
-      constellation: data.starSign,
       links: {
         twitterId: data.twitterId,
         facebookId: data.facebookId,

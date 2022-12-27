@@ -30,7 +30,7 @@ const Input = ({
   disabled = false,
   error = '',
   note = '',
-  type = 'text'
+  type = 'text',
 }: InputProps) => {
 
   const inputSyle = error !== '' ? [styles['m-input__input'], styles['m-input__input--error']].join(' ') : styles['m-input__input']
@@ -38,7 +38,7 @@ const Input = ({
   return (
     <div className={styles['m-input']}>
       <div className={styles['m-input__content']}>
-        <input className={inputSyle} type={type} id={id} disabled={disabled} placeholder={placeholder} step={steps} {...register(id, {
+        <input className={inputSyle} type={type} id={id} disabled={disabled} placeholder={placeholder} step={steps} min={0} {...register(id, {
           required: required && '入力必須項目です。',
           minLength: { value: min, message: `${min}文字以上で入力してください。` },
           maxLength: { value: max, message: `${max}文字以内で入力してください。` },

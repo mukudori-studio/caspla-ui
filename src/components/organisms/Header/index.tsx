@@ -5,8 +5,7 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { useRecoilValue } from 'recoil'
-import { sessionState } from '@/stores/Session'
-import SearchKeyword from '@/components/molecules/SearchKeyword'
+import { accessTokenAtom, userAtom } from '@/stores/Session'
 import LoginedHeaderMenu from '@/components/organisms/LoginedHeaderMenu'
 import styles from '@/styles/components/organisms/Header.module.scss'
 
@@ -24,11 +23,11 @@ const Header = ({
   const [showMenuState, setShowMenu] = useState(showMenu)
   const [isTopPage, setTopPage] = useState(isTop)
 
-  const session = useRecoilValue(sessionState)
+  const accessToken = useRecoilValue(accessTokenAtom)
   const [logined, setLogined] = useState(false)
 
   useEffect(() => {
-    const checkLogined = session?.accessToken !== '' ? true : false
+    const checkLogined = accessToken !== '' ? true : false
     setLogined(checkLogined)
   })
 
@@ -42,25 +41,6 @@ const Header = ({
 
   const logoLinkStyle = isTopPage ? styles['o-header__logo-hidden'] : styles['o-header__logo'] 
   const headerStyle = showMenuState ? isTopPage ? styles['o-header']: [styles['o-header'], styles['o-header__margin-bottom']].join(' ') : isTopPage ? [styles['o-header'], styles['o-header--no-menu']].join(' ') : [styles['o-header'], styles['o-header--no-menu'], styles['o-header__margin-bottom']].join(' ') 
-  const onSearch = (val: string) => {
-
-    const path = '/talents/'
-    const locationPath = location.pathname
-
-    // NOTE：タレント一覧にいる時にrouterで切り替えてもイベント自体は発火しないのでJS側のページ遷移させる
-    if (!locationPath.indexOf(path)) {
-      window.location.href = `/talents/1?keyword=${val}`
-    } else if (val === '') {
-      Router.push({pathname: '/talents/1'})
-    } else {
-      Router.push({
-        pathname: '/talents/1',
-        query: {
-          keyword: val
-        }
-      })
-    }
-  }
 
   return (
     <header className={headerStyle}>
@@ -78,7 +58,6 @@ const Header = ({
           </a>
         </Link>
       </div>
-      {/* { showMenuState && <div className={styles['o-header__search']}><SearchKeyword onClick={onSearch} placeholder="タレント検索" /></div> } */}
       {
         logined ? (
           <LoginedHeaderMenu />

@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState }from 'react'
 import Router from 'next/router'
 import Image from 'next/image'
 import BookMark from '@/components/atoms/BookMark'
 import LabelTexts from '@/components/atoms/LabelTexts'
 import activities from '@/utils/activities'
 import styles from '@/styles/components/molecules/CardItem.module.scss'
+import { accessTokenAtom } from '@/stores/Session';
+import { useRecoilValue } from 'recoil';
+import { toast } from 'react-toastify'
+import changeBookmark from './../../../apis/bookmarks/changeBookmark';
+import { userAtom } from './../../../stores/Session/index';
 
 interface CardItemProps {
   type?: 'cast' | 'agient';
@@ -34,16 +39,27 @@ const CardItem = ({
   const toDetail = () => {
     Router.push(linkUrl)
   }
-
+  const session = useRecoilValue(userAtom)
+  const accessToken = useRecoilValue(accessTokenAtom)
   // TODO：ループ処理整理
   const filteredActivity = activities.filter(data => activity.find(val => data.value === val))
   const formattedActivity = filteredActivity.map(data => data.text)
 
   // NOTE：Boomark
   const [flag, setFlag] = React.useState(withBookmark)
-  const changeBookmark = ((e: any, bool: boolean) => {
+  
+  const changeBookmarkStatus = ((e: any) => {
     e.stopPropagation()
-    setFlag(!flag)
+    if(accessToken!=='') {
+      changeBookmark(casplaId, session.casplaId)
+        .then(({response_message})=> {
+          setFlag(response_message)
+        })
+        .catch((err)=> console.log(err))
+    } else {
+      toast.warning('ログインする必要があります。', { autoClose: 3000, draggable: true})
+      Router.push('/signin')
+    }
   })
 
   return (
@@ -65,11 +81,11 @@ const CardItem = ({
         }
         <div className={styles['m-card-item__head']}>
           <h1 className={styles['m-card-item__name']}>{name}</h1>
-          <div className={styles['m-card-item__activities']}>
-            {
+          <div className={styles['m-card-item__activities-star-mark']}>
+            {/* {
               activity.length > 0 && (<LabelTexts texts={formattedActivity} />)
-            }
-            { withBookmark && (<BookMark changeBookmark={changeBookmark} />)}
+            } */}
+            <BookMark checked={flag} changeBookmark={changeBookmarkStatus} />
           </div>
           {
             (type === 'cast' && casplaId !== '') && (

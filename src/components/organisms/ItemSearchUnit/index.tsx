@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Router, {useRouter} from 'next/router'
-import SearchKeyword from '@/components/molecules/SearchKeyword'
 import CheckboxButtons from '@/components/molecules/Forms/CheckboxButtons'
 import activities from '@/utils/activities'
 import styles from '@/styles/components/organisms/ItemSearchUnit.module.scss'
+import SearchBar from '@/components/molecules/SearchBar'
 
 type ItemSearchUnitProps = {
   activity?: Array<string>
@@ -58,6 +58,11 @@ const ItemSearchUnit = ({
     onClick(queryObject)
   }
   
+  const onClear = () => {
+    onChangeGender([])
+    onChangeAge([])
+    onChangeActivity([])
+  }
 
   useEffect(() => {
     if (Router.query?.keyword === undefined) return
@@ -92,7 +97,7 @@ const ItemSearchUnit = ({
             </div>
           </div>
         </div>
-        <div className={styles['o-item-search-unit__search']}><SearchKeyword onClick={onSearch} color="white" /></div>
+        <div className={styles['o-item-search-unit__search']}><SearchBar onClick={onSearch} color="white" onClearClick={onClear}/></div>
       </div>
     </div>
   )

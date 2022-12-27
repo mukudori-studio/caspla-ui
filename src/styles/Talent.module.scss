@@ -15,6 +15,15 @@
       margin-bottom: 12px;
     }
   }
+
+  &__loading {
+    margin-top: 55px;
+  }
+
+  &__search-results {
+    color: g.$color-mono-20;
+    margin: 10px 0;
+  }
 }
 
 .p-talent-detail {
@@ -36,5 +45,6 @@
 
   &__description {
     margin: 30px 0;
+    white-space: pre-line;
   }
 }

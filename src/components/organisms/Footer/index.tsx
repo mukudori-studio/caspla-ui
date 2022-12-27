@@ -31,6 +31,9 @@ const Footer = () => {
               )
             })
           }
+          <li>
+            <a href='/productions?filter=A~Z' className={[styles['o-footer__link'], styles['o-footer__production-search']].join(' ')}>プロダクション一覧</a>
+          </li>
         </ul>
         <div className={styles['o-footer__bottom']}>
           <div className={styles['o-footer__logos']}>

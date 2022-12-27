@@ -22,7 +22,7 @@ const Select = ({
 
   return (
     <div className={styles['a-form-select']}>
-      <select onChange={onChange} defaultValue={selected} className={styles['a-form-select__pulldown']} disabled={disabled}>
+      <select onChange={onChange} defaultValue={selected} className={styles['a-form-select__pulldown']} disabled={disabled} >
         {
           !required && <option value="">{placeholder}</option>
         }

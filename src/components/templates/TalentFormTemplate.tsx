@@ -16,6 +16,9 @@ import activities from '@/utils/activities'
 import bloodTypes from '@/utils/bloodTypes'
 import starSigns from '@/utils/starSigns'
 import styles from '@/styles/AccountRegistration.module.scss'
+import { useRecoilValue } from 'recoil'
+import { userAtom } from '@/stores/Session'
+import { CASPLA_ID_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_VALIDATE_ERROR } from '@/stores/messageAlerts/index'
 
 type InputProps = {
   fullName: string
@@ -78,7 +81,7 @@ type editPorps = {
   youtubeId?: string
   instagramId?: string
   tiktokId?: string
-  activity?: Array<string>
+  activity: Array<string>
   history?: string
   note?: string
   changeCover: (data: any) => void
@@ -93,10 +96,12 @@ const TalentFormTemplate = ({
   submitForm,
   ...props
 }: editPorps) => {
-
-  const [activityState, setActivity] = useState<Array<string>>([])
+  const [coverImage, setCoverImage] = useState(props.coverImage);
+  const [thumbnailImage, setThumbnailImage] = useState(props.thumbnailImage)
+  const [activityState, setActivity] = useState<Array<string>>(props.activity)
   const [checkedCasplaIdState, setCheckCasplaId] = useState(true)
   const { register, handleSubmit, formState: { errors }, watch, setValue, getValues } = useForm<InputProps>()
+  const session = useRecoilValue(userAtom)
 
   // NOTE：casplaIdを変更していた場合は再度CasplaIdをチェックしないと更新できない
   useEffect(() => {
@@ -106,7 +111,6 @@ const TalentFormTemplate = ({
       setCheckCasplaId(false)
     }
   }, [getValues('casplaId')])
-
 
   useEffect(() => {
     if (editType === 'register') return
@@ -131,12 +135,15 @@ const TalentFormTemplate = ({
     setValue('twitterId', props.twitterId)
     setValue('facebookId', props.facebookId)
     setValue('youtubeId', props.youtubeId)
-    setValue('instagramId', props.blogUrl)
+    setValue('instagramId', props.instagramId)
     setValue('tiktokId', props.tiktokId)
     setValue('activity', props.activity)
     setValue('history', props.history)
     setValue('note', props.note)
     setValue('coverImage', props.coverImage)
+    setValue('birthYear', props.birthYear)
+    setValue('birthMonth', props.birthMonth)
+    setValue('birthDay', props.birthDay)
   }, [])
 
   const changeBirthday = (year: string, month: string, day: string) => {
@@ -149,26 +156,39 @@ const TalentFormTemplate = ({
   const changeBloodType = (e:any) => setValue('bloodType', e.target.value)
   const checkActivity = (data: Array<string>) => {
     setActivity(data)
-    setValue('activity', activityState)
+    setValue('activity', data)
   }
 
   const onCheckId = async () => {
-    checkCasplaId(getValues('casplaId')).then(res => {
-      // TODO：APIから該当するユーザーが以内場合は200返してもらう
-      setCheckCasplaId(true)
-    }).catch(() => {
+    if(getValues('casplaId').length<16 && getValues('casplaId').length>4) {
+      const strongCasplaId = new RegExp('(?=.*[a-zA-Z])(?=.*[0-9])')
+      if(strongCasplaId.test(getValues('casplaId'))) {
+        checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
+          setCheckCasplaId(true)
+          toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+        }).catch(() => {
+          setCheckCasplaId(false)
+          toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+        })
+      } else {
+        setCheckCasplaId(false)
+        toast.error(CASPLA_ID_VALIDATE_ERROR, { autoClose: 3000, draggable: true})
+      }
+    } else {
       setCheckCasplaId(false)
-      toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
-    })
+      toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
+    }
   }
 
-  const onChangeThumbnail = (val: any) => {
+  const onChangeThumbnail = (val: any, isRemove: boolean) => {
     setValue('thumbnailImage', val)
+    setThumbnailImage(isRemove?'':val)
     changeThumbnail(true)
   }
 
-  const onChangeCover = (val:any) => {
+  const onChangeCover = (val:any, isRemove: boolean) => {
     setValue('coverImage', val)
+    setCoverImage(isRemove?'':val)
     changeCover(true)
   }
 
@@ -178,7 +198,7 @@ const TalentFormTemplate = ({
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
         <div className={styles['p-account-registration__item']}>
-          <ThumbnailUploader id={props.userId} onChange={onChangeThumbnail} />
+          <ThumbnailUploader id='thumbnailImage' onChange={onChangeThumbnail} thumbnailUrl={thumbnailImage} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="名前" label="fullName" required={true} />
@@ -201,7 +221,7 @@ const TalentFormTemplate = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="カバー写真" label="coverImage" required={false} />
-          <CoverImageUploader id="coverImage" thumbnailUrl={props.coverImage} onChange={onChangeCover} />
+          <CoverImageUploader id="coverImage" thumbnailUrl={coverImage} onChange={onChangeCover} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="略歴" label="profile" />
@@ -209,19 +229,19 @@ const TalentFormTemplate = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="性別" label="gender" />
-          <Select options={[{value: 'man', text: '男性'}, {value: 'woman', text: '女性'}]} onChange={changeGender} />
+          <Select options={[{value: '男性', text: '男性'}, {value: '女性', text: '女性'}]} onChange={changeGender} selected={props.gender}/>
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="生年月日" label="birthday" />
-          <DateSelect onChange={changeBirthday}  />
+          <DateSelect onChange={changeBirthday} date={`${props.birthYear}-${props.birthMonth}-${props.birthDay}`} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="星座" label="constellation" />
-          <Select options={starSigns} onChange={changeStarSign} />
+          <Select options={starSigns} onChange={changeStarSign} selected={props.constellation}/>
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="血液型" label="bloodType" />
-          <Select options={bloodTypes} onChange={changeBloodType} />
+          <Select options={bloodTypes} onChange={changeBloodType} selected={props.bloodType}/>
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="出身地" label="birthplace" />
@@ -253,7 +273,7 @@ const TalentFormTemplate = ({
             <div className={styles['p-account-registration__size-input']}><Input id="hip" register={register} placeholder="H(ヒップ)" type="number" steps="0.1" /></div>
           </div>
           <div className={styles['p-account-registration__foot']}>
-            <div className={styles['p-account-registration__foot-input']}><Input id="footSize" register={register} placeholder="F(足のサイズ)" steps="0.1" />cm</div>
+            <div className={styles['p-account-registration__foot-input']}><Input id="footSize" register={register} type='number' placeholder="F(足のサイズ)" steps="0.1" />cm</div>
           </div>
         </div>
         {/* TODO：後で他ページでも使用するのでコンポーネントできりだせるようにする */}
@@ -276,11 +296,12 @@ const TalentFormTemplate = ({
           <Textarea id="history" register={register} error={errors?.history?.message} />
         </div>
         <div className={styles['p-account-registration__item']}>
-          <FormLabel text="その他" label="history" />
+          <FormLabel text="その他" label="note" />
           <Textarea id="note" register={register} error={errors?.note?.message} />
         </div>
         <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
           <Button text={editType === 'edit' ? '変更を保存' : 'この内容で追加'} color="primary" size="large" type="submit" disabled={!checkedCasplaIdState} />
+          {!checkedCasplaIdState && (<p className={[styles['p-account-registration__description'], styles['p-account-registration__warn']].join(' ')}>Caspla IDの空き状況をご確認ください</p>)}
         </div>
       </form>
     </div>

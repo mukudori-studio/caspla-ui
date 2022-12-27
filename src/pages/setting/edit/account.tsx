@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import { useForm, SubmitHandler } from "react-hook-form"
 import type { NextPage } from 'next'
-import { useRecoilState, useResetRecoilState } from 'recoil'
-import { sessionState } from '@/stores/Session'
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { accessTokenAtom, thumbnailAtom, userAtom } from '@/stores/Session'
 import { toast } from 'react-toastify'
-import updateThumbnail from '@/apis/images/updateThumbnail'
+import updateUserPhoto from '@/apis/images/updateUserPhoto'
 import getAccount from '@/apis/settings/getAccount'
 import updateAccount from '@/apis/settings/updateAccount'
 import checkCasplaId from '@/apis/auth/checkCasplaId'
@@ -19,6 +19,8 @@ import RadioButton from '@/components/atoms/Forms/RadioButton'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
+import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, CASPLA_ID_VALIDATE_ERROR } from '@/stores/messageAlerts/index';
+import Loading from '@/components/atoms/Loading'
 
 type InputProps = {
   thumbnailImage?: object
@@ -37,24 +39,40 @@ const AccountRegistration: NextPage = () => {
   const [roleState, setRole] = useState('FAN_USER')
   const [thumbnailState, setThumbnail] = useState<any>('')
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
-  const [checkedCasplaIdState, setCheckCasplaId] = useState(false)
+  const [checkedCasplaIdState, setCheckCasplaId] = useState(true)
   const [needForLetterState, setNeedForLetter] = useState(true)
-  const [session, setSession] = useRecoilState(sessionState)
+  const [loading, setLoading] = useState(true)
+  const [session, setSession] = useRecoilState(userAtom)
+  const accessToken = useRecoilValue(accessTokenAtom)
+  const sessionThumbnail = useSetRecoilState(thumbnailAtom)
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
   useEffect(() => {
-    if (session.accessToken === '') {
+    if (accessToken === undefined || accessToken === '') {
       Router.replace('/signin')
       toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
-    } else if (session.accessToken !== '') {
-      getAccount(session.casplaId, session.accessToken).then(res => {
-        setValue('fullName', res.data.response_message.fullName)
-        setValue('furigana', res.data.response_message.furigana)
-        setValue('casplaId', res.data.response_message.casplaId)
-        setValue('password', res.data.response_message.password)
-      })
+    } else if (accessToken !== '') {
+      getAccount(session.casplaId)
+        .then(({response_message} : any) => {
+          setValue('fullName', response_message.fullName)
+          setValue('furigana', response_message.furigana)
+          setValue('casplaId', response_message.casplaId)
+          setValue('email', response_message.email)
+          setValue('needForLetter', response_message.needForLetter)
+          setThumbnail(response_message.thumbnailImage)
+          setNeedForLetter(response_message.needForLetter)
+          setLoading(false)
+        })
     }
   }, [])
+
+  useEffect(() => {
+    if (session.casplaId === getValues('casplaId')) {
+      setCheckCasplaId(true)
+    } else {
+      setCheckCasplaId(false)
+    }
+  }, [getValues('casplaId')])
 
   const roles = [
     { id: 'fan', label: 'ファン', note: 'Casplaに参加する最低限の機能だけを持ったアカウントです。ブックマーク機能の利用や公開オーディションへの投票が可能です。' },
@@ -72,16 +90,30 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onCheckId = async () => {
-    checkCasplaId(getValues('casplaId')).then(res => {
-      // TODO：APIから該当するユーザーが以内場合は200返してもらう
-      setCheckCasplaId(true)
-    }).catch(() => {
+    if(getValues('casplaId').length<16 && getValues('casplaId').length>4) {
+      const strongCasplaId = new RegExp('(?=.*[a-zA-Z])(?=.*[0-9])')
+      if(strongCasplaId.test(getValues('casplaId'))) {
+        checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
+          setCheckCasplaId(true)
+          toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+        }).catch(() => {
+          setCheckCasplaId(false)
+          toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+        })
+      } else {
+        setCheckCasplaId(false)
+        toast.error(CASPLA_ID_VALIDATE_ERROR, { autoClose: 3000, draggable: true})
+      }
+    } else {
       setCheckCasplaId(false)
-      toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
-    })
+      toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
+    }
   }
 
-  const toggleNeedForLetter = (e:any) => setValue('needForLetter', e.target.checked)
+  const toggleNeedForLetter = (e:any) => {
+    setNeedForLetter(!needForLetterState)
+    setValue('needForLetter', e.target.checked)
+  }
 
   const changeThumbnail = (val: object) => {
     setThumbnail(val)
@@ -89,108 +121,90 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    
     if (changeThumbnailState) {
-      updateThumbnail(session.userId, thumbnailState).then(() => {
-        updateAccount(session.casplaId, data, session.accessToken).then(() => {
-          setSession({
-            userId: session.userId,
-            thumbnailImage: data.thumbnailImage,
-            fullName: data.fullName,
-            furigana: data.furigana,
-            email: data.email,
-            casplaId: data.casplaId,
-            password: data.password,
-            role: roleState,
-            companyId: session.companyId,
-            companyName: session.companyName,
-            isAdmin: session.isAdmin
-          })
-          toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-        }).catch(() => {
-          toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
-        })
-      })
-    } else {
-      updateAccount(session.casplaId, data, session.accessToken).then((res) => {
+      updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
+        sessionThumbnail(res.response_message)
+      }).catch((err) => console.log(err))
+    }
+    updateAccount(session.casplaId, data)
+      .then((res) => {
         setSession({
           userId: session.userId,
-          thumbnailImage: res.data.response_message.thumbnailImage,
-          fullName: res.data.response_message.fullName,
-          furigana: res.data.response_message.furigana,
-          email: res.data.response_message.email,
+          role: session.role,
           casplaId: res.data.response_message.casplaId,
-          password: res.data.response_message.password,
-          role: roleState,
+          fullName: res.data.response_message.fullName,
           companyId: session.companyId,
           companyName: session.companyName,
           isAdmin: session.isAdmin
         })
         toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-      }).catch(() => {
-        toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
+      }).catch((err) => {
+        console.log(err)
+        toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
       })
-    }
-
-    
   }
 
   return (
     <main className={styles['p-account-registration']}>
       <Meta title="アカウント管理" />
-
-      <section className={styles['p-account-registration__content']}>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
-          <section className={styles['p-account-registration__section']}>
-            <PageTitle title="アカウント管理" />
-            <div className={styles['p-account-registration__item']}>
-              <ThumbnailUploader id="thumbnail" onChange={changeThumbnail} thumbnailUrl={thumbnailState} />
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <FormLabel text="名前" label="fullName" required={true} />
-              <Input id="fullName" register={register} required={true} error={errors?.fullName?.message} type={'text'} note="※プロダクション・企業・団体でこのアカウントをご登録の場合は、ご担当者様のお名前を入力してください。" />
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <FormLabel text="フリガナ" label="furigana" required={false} />
-              <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} />
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <FormLabel text="メールアドレス" label="email" required={true} />
-              <Input id="email" register={register} required={true} type="email" disabled={false} />
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <FormLabel text="パスワード" label="password" required={true} />
-              <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数字で入力してください。" />
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <FormLabel text="Caspla ID" label="casplaId" required={true} />
-              <div className={styles['p-account-registration__check-ids']}>
-                <div className={styles['p-account-registration__check-input']}>
-                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+      {loading ? 
+        <Loading /> : 
+        (
+          <section className={styles['p-account-registration__content']}>
+            <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
+              <section className={styles['p-account-registration__section']}>
+                <PageTitle title="アカウント管理" />
+                <div className={styles['p-account-registration__item']}>
+                  <ThumbnailUploader id="thumbnail" onChange={changeThumbnail} thumbnailUrl={thumbnailState} />
                 </div>
-                <div className={styles['p-account-registration__check-id']}>
-                  <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
+                <div className={styles['p-account-registration__item']}>
+                  <FormLabel text="名前" label="fullName" required={true} />
+                  <Input id="fullName" register={register} required={true} error={errors?.fullName?.message} type={'text'} note="※プロダクション・企業・団体でこのアカウントをご登録の場合は、ご担当者様のお名前を入力してください。" />
                 </div>
-              </div>
-            </div>
-            <div className={styles['p-account-registration__item']}>
-              <Checkbox id={'newsLetter'} checked={needForLetterState} label="Caspla のニュースレターを受け取る" onChange={toggleNeedForLetter} />
-            </div>
-            <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
-              <Button text="変更を保存" color='primary' size="large" type="submit" weight="bold" disabled={!checkedCasplaIdState} />
-            </div>
+                <div className={styles['p-account-registration__item']}>
+                  <FormLabel text="フリガナ" label="furigana" required={false} />
+                  <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} />
+                </div>
+                <div className={styles['p-account-registration__item']}>
+                  <FormLabel text="メールアドレス" label="email" required={true} />
+                  <Input id="email" register={register} required={true} type="email" disabled={false} />
+                </div>
+                <div className={styles['p-account-registration__item']}>
+                  <FormLabel text="パスワード" label="password" required={true} />
+                  <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数字で入力してください。" />
+                </div>
+                <div className={styles['p-account-registration__item']}>
+                  <FormLabel text="Caspla ID" label="casplaId" required={true} />
+                  <div className={styles['p-account-registration__check-ids']}>
+                    <div className={styles['p-account-registration__check-input']}>
+                      <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+                    </div>
+                    <div className={styles['p-account-registration__check-id']}>
+                      <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
+                    </div>
+                  </div>
+                </div>
+                <div className={styles['p-account-registration__item']}>
+                  <Checkbox id={'needForLetter'} checked={needForLetterState} label="Caspla のニュースレターを受け取る" onChange={toggleNeedForLetter} />
+                </div>
+                <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
+                  <Button text="変更を保存" color='primary' size="large" type="submit" weight="bold" disabled={!checkedCasplaIdState} />
+                  {!checkedCasplaIdState && (<p style={{color:'red', textAlign: 'center'}}>Caspla ID の空き状況を確認します。</p>)}
+                </div>
+              </section>
+              {/* <section className={styles['p-account-registration__section']}>
+                <FormLabel text="アカウントタイプ" />
+                <p className={styles['p-account-registration__description']}></p>
+                <div className={styles['p-account-registration__item']}>
+                  <div className={styles['p-account-registration__radio']}>
+                    <RadioButton id={filteredRole.id} name="role" label={filteredRole.label} note={filteredRole.note} onChange={onChangeRole} checked={true} />
+                  </div>
+                </div>
+              </section> */}
+            </form>
           </section>
-          <section className={styles['p-account-registration__section']}>
-            <FormLabel text="アカウントタイプ" />
-            {/* <p className={styles['p-account-registration__description']}></p> */}
-            <div className={styles['p-account-registration__item']}>
-              <div className={styles['p-account-registration__radio']}>
-                <RadioButton id={filteredRole.id} name="role" label={filteredRole.label} note={filteredRole.note} onChange={onChangeRole} checked={true} />
-              </div>
-            </div>
-          </section>
-        </form>
-      </section>
+        )
+      }
     </main>
   )
 }

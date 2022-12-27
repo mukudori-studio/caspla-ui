@@ -10,6 +10,10 @@ import Pagination from '@/components/molecules/Pagination'
 const ItemSearchUnit = dynamic(() => import('@/components/organisms/ItemSearchUnit'), { ssr: false })
 import styles from '@/styles/Talent.module.scss'
 import dynamic from 'next/dynamic'
+import { useRecoilValue } from 'recoil';
+import { userAtom } from './../../stores/Session/index';
+import { toast } from 'react-toastify';
+import { SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
@@ -30,6 +34,7 @@ const Talents: NextPage = (props:any) => {
   const [ageState, setAge] = useState(props.query.age === undefined ? [] : props.query.age)
   const [genderState, setGender] = useState(props.query.gender === undefined ? [] : props.query.gender)
   const router = useRouter();
+  const session = useRecoilValue(userAtom)
 
   useEffect(() => {
     getTalents({
@@ -37,13 +42,19 @@ const Talents: NextPage = (props:any) => {
       keyword: keywordState,
       activity: activityState,
       age: ageState,
-      gender: genderState
+      gender: genderState,
+      casplaId: session.casplaId
     })
-    .then(res => {
-      setTalents(res.data.response_message.casts)
-      setPage(res.data.response_message.page)
-      setTotalCount(Math.ceil(res.data.response_message.totalCount /10))
+    .then(({response_message}) => {
+      setTalents(response_message.casts)
+      setPage(response_message.page)
+      setTotalCount(Math.ceil(response_message.totalCount /10))
       setLoading(false)
+    })
+    .catch((err)=> {
+      console.log(err)
+      toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
+      Router.push('/top')
     })
   }, [props])
 
@@ -87,7 +98,6 @@ const Talents: NextPage = (props:any) => {
     if (props.query.activity !== '' && props.query.activity) queryObject.activity = props.query.activity
     if (props.query.keyword !== '' && props.query.keyword) queryObject.keyword = props.query.keyword
 
-    // setTalents([])
     setPage(page + 1)
     Router.push({
       pathname: `/talents/${page + 1}`,
@@ -108,6 +118,7 @@ const Talents: NextPage = (props:any) => {
         { !loadingState && talentsState.length > 0 && (
             <>
               <div className={styles['p-talents__items']}>
+                <h4 className={styles['p-talents__search-results']}>{`${totalCountState}件中${pageState}ページ目を表示`}</h4>
                 {
                   talentsState.map((talent: any) => {
                     return (
@@ -119,6 +130,7 @@ const Talents: NextPage = (props:any) => {
                           profile={talent.profile}
                           thumbnail={talent.thumbnailUrl}
                           activity={talent.activities}
+                          withBookmark={talent.bookMarked}
                         />
                       </div>
                     )

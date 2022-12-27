@@ -66,13 +66,14 @@ const TalentProfile = ({
           )
         }
         {
-          (birthYear || birthMonth || birthDay) && (
+          ((birthYear !==null || birthMonth !==null || birthDay !=null ) && (birthYear!==0 || birthMonth!==0 || birthDay!==0)) && 
+          (
             <>
               <dt className={styles['o-talent-profile__label']}>生年月日</dt>
               <dd className={styles['o-talent-profile__text']}>
-                {birthYear && `${birthYear}年`}
-                {birthMonth && `${birthMonth}月`}
-                {birthDay !== null && `${birthDay}日`}
+                {birthYear !== null && birthYear!==0 && `${birthYear}年`}
+                {birthMonth !== null && birthMonth!==0 && `${birthMonth}月`}
+                {birthDay !== null && birthDay!==0 && `${birthDay}日`}
               </dd>
             </>
           )
@@ -130,14 +131,28 @@ const TalentProfile = ({
             <>
               <dt className={styles['o-talent-profile__label']}>サイズ</dt>
               <dd className={styles['o-talent-profile__text']}>
-                {bust && `B${bust}・`}{waist && `W${waist}`}{hip && `・H${hip}`}{footSize && `(F${footSize})`}
+                {bust && `B${bust}`}{waist && (bust ? ` / W${waist}`: `W${waist}`)}{hip && (bust || waist ? ` / H${hip}`: `H${hip}`)}{footSize && (bust||waist||hip ? ` / F${footSize}`: `F${footSize}`)}
               </dd>
-            </>   
+            </>
+          )
+        }
+        {
+          history !== '' && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>出演履歴</dt>
+              <dd className={styles['o-talent-profile__text']}>{`${history}`}</dd>
+            </>
+          )
+        }
+        {
+          note !== '' && (
+            <>
+              <dt className={styles['o-talent-profile__label']}>備考</dt>
+              <dd className={styles['o-talent-profile__text']}>{`${note}`}</dd>
+            </>
           )
         }
       </dl>
-      {history !== '' && <p className={styles['o-talent-profile__description']}>出演履歴：{history}</p>}
-      {note !== '' && <p className={styles['o-talent-profile__description']}>備考：{note}</p>}
     </div>
   )
 }

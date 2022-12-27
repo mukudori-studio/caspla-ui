@@ -13,6 +13,7 @@ import Card from '@/components/molecules/Card'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import RePasswordInput from '@/components/molecules/Forms/RePasswordInput'
 import styles from '@/styles/PasswordReset.module.scss'
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN } from './../../../stores/messageAlerts/index';
 
 type InputProps = {
   password: string
@@ -32,12 +33,20 @@ const PasswordReset: NextPage = () => {
   }, [])
 
   const onSubmit: SubmitHandler<InputProps> = (data:any) => {
-    resetPassword(token, data.password, data.rePassword).then(() => {
-      toast.success('パスワードの再設定が完了しました。')
-      Router.push('/signin')
+    resetPassword(token, data.password, data.rePassword).then(({response_code}) => {
+      if(response_code == 200) {
+        toast.success('パスワードの再設定が完了しました。', { autoClose: 3000, draggable: true})
+        Router.push('/signin')
+      } else {
+        toast.error(SOMETHING_WENT_WRONG,{ autoClose: 3000, draggable: true})
+      }
     }).catch(() => {
-      toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
+      toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
     })
+  }
+
+  const validatePassword = (data: string) =>{
+    return getValues('password') === data
   }
 
   return (
@@ -56,7 +65,7 @@ const PasswordReset: NextPage = () => {
               </div>
               <div className={styles['p-password-reset__item']}>
                 <FormLabel text="パスワード(確認用)" label="rePassword" />
-                <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} />
+                <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} validate={validatePassword}/>
               </div>
               <div className={styles['p-password-reset__button']}>
                 <Button text="送信" color="primary" size="large" type="submit" />

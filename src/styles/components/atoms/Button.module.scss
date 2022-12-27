@@ -11,8 +11,8 @@
   transition: .2s;
 
   &:hover, &:active {
-    background: g.$color-mono-50;
-    color: g.$color-mono-0;
+    background: g.$color-mono-20;
+    color: g.$color-mono-80;
   }
 
   // Size
@@ -40,6 +40,20 @@
   &--secondary {
     background: g.$color-secondary;
     color: g.$color-primary;
+  }
+  &--mono {
+    &-primary {
+      background: g.$color-mono-60;
+      color: g.$color-mono-0;
+    }
+    &-secondary {
+      background: g.$color-secondary;
+      color: g.$color-primary;
+    }
+  }
+  &--disabled {
+    background: g.$color-disabled;
+    color: g.$color-mono-80;
   }
   &--third {
     background: #6681CC;

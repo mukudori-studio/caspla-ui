@@ -24,12 +24,11 @@ const productionDetail: NextPage = () => {
     if(productionId === undefined) return
     
     getProductionDetail(productionId).then(res => {
-      setProductionDetail(res.response_message)
-
-      getProductionTalents(productionId).then(res => {
-        setProductionTalent(res.response_message)
-      })
+      const {users, ...other} = res.response_message
+      setProductionDetail(other)
+      setProductionTalent(users)
     }).catch(err => {
+      console.log(err)
       Router.push('/top')
       toast.error('プロダクション情報の取得に失敗しました。', { autoClose: 3000, draggable: true})
     }).finally(() => {
@@ -59,6 +58,7 @@ const productionDetail: NextPage = () => {
                 instagram={productionDetailState.links?.instagramId}
                 tiktok={productionDetailState.links?.tiktokId}
                 youtube={productionDetailState.links?.youtubeId}
+                furigana={productionDetailState.furigana}
               />
               
               <div className={styles['p-production-detail__description']}>
@@ -74,7 +74,7 @@ const productionDetail: NextPage = () => {
                     productionTalentState.map((data: any) => {
                       return (
                         <li className={styles['p-production-detail__item']}>
-                          <TalentLinkCard casplaId={data.casplaId} name={data.fullName} thumbnail={data.thumbnailImage} />
+                          <TalentLinkCard casplaId={data.casplaId} name={data.fullName} thumbnail={data.thumbnailUrl} />
                         </li>
                       )
                     })
@@ -82,6 +82,22 @@ const productionDetail: NextPage = () => {
                 </ul>
               ) : (
                 <div className={styles['p-production-detail__no-data']}>在籍しているタレントはいません。</div>
+              )}
+              { (productionDetailState.address1 !== '' || productionDetailState.tel !== '') && (
+                <div className={styles['p-production-detail__contact']}>
+                  {productionDetailState.address1!=='' && (
+                    <div>
+                      <p>住所</p>
+                      <p>{ `〒${productionDetailState.zipCode} ${productionDetailState.address1} ${productionDetailState.address2} ${productionDetailState.prefecture}`}</p>
+                    </div>
+                  )}
+                  { productionDetailState.tel!=='' && (
+                    <div>
+                      <p>お問い合わせ先</p>
+                      <p>{productionDetailState.tel}</p >
+                    </div>
+                  )}
+                </div>
               )}
             </>
           )

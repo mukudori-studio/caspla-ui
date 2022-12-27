@@ -1,13 +1,14 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const checkCorpId = async (corpId: string) => {
+const checkCorpId = async (corpId: string, sessionCorpId: string) => {
   try {
     const res = await axiosClient.get(`/api/v1/company/check_company_id`, {
       params: {
-        companyId: corpId
+        companyId: corpId,
+        sessionCorpId: sessionCorpId
       }
     })
-    return res
+    return res.data
   } catch(err) {
     throw err
   }

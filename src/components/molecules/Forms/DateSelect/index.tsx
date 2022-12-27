@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import dayjs from 'dayjs'
-import 'dayjs/locale/ja'
 import Select from '@/components/atoms/Forms/Select'
 import styles from '@/styles/components/molecules/Forms/DateSelect.module.scss'
 
@@ -14,14 +12,13 @@ const DateSelect = ({
   onChange,
   ...props
 }: DateSelectProps) => {
-
-  const [yearState, setYear] = useState(dayjs(date).locale('ja').format('YYYY'))
+  const [year, month, day] = date.split('-')
+  const [yearState, setYear] = useState(year)
   useEffect(() => {onChange(yearState, monthState, dayState)}, [yearState])
-  const [monthState, setMonth] = useState(dayjs(date).locale('ja').format('M'))
+  const [monthState, setMonth] = useState(month)
   useEffect(() => {onChange(yearState, monthState, dayState)}, [monthState])
-  const [dayState, setDay] = useState(dayjs(date).locale('ja').format('D'))
+  const [dayState, setDay] = useState(day)
   useEffect(() => {onChange(yearState, monthState, dayState)}, [dayState])
-
 
   let yearOptions = [{value: '', text: '未選択'}]
   let monthOptions = [{value: '', text: '未選択'}]
@@ -52,9 +49,9 @@ const DateSelect = ({
 
   return (
     <div className={styles['m-date-select']}>
-      <div className={styles['m-date-select__item']}><Select required={true} options={yearOptions} selected={'2000'} onChange={onChangeYear} /></div>
-      <div className={styles['m-date-select__item']}><Select required={true} options={monthOptions} selected={'1'} onChange={onChangeMonth} /></div>
-      <div className={styles['m-date-select__item']}><Select required={true} options={dayOptions} selected={'1'} onChange={onChangeDay} /></div>
+      <div className={styles['m-date-select__item']}><Select required={true} options={yearOptions} selected={yearState} onChange={onChangeYear} /></div>
+      <div className={styles['m-date-select__item']}><Select required={true} options={monthOptions} selected={monthState} onChange={onChangeMonth} /></div>
+      <div className={styles['m-date-select__item']}><Select required={true} options={dayOptions} selected={dayState} onChange={onChangeDay} /></div>
     </div>
   )
 }

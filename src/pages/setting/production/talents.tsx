@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import Meta from '@/components/Meta'
 import { toast } from 'react-toastify'
-import { useRecoilState, useResetRecoilState } from 'recoil'
-import { sessionState, sessionThumbnailState } from '@/stores/Session'
+import { useRecoilValue } from 'recoil'
+import { userAtom } from '@/stores/Session'
 import getProductionDetailTalents from '@/apis/productions/getProductionTalents'
 import LinkButton from '@/components/atoms/LinkButton'
 import TalentItem from '@/components/organisms/Production/TalentItem'
 import styles from '@/styles/ProductionSetting.module.scss'
 import buttonStyles from '@/styles/components/atoms/Button.module.scss'
+import removeProductionTalents from '@/apis/productions/removeProductionTalents'
 
 const BelongTalents: NextPage = () => {
 
   const [checkedTalentState, setCheckedTalent] = useState<any>([])
-  const [session, setSession] = useRecoilState(sessionState)
+  const session = useRecoilValue(userAtom)
   const [talents, setTalent] = useState([])
   
 
@@ -45,7 +46,16 @@ const BelongTalents: NextPage = () => {
   }
 
   const deleteTalent = () => {
-    // TODO：削除APIを投げる
+    removeProductionTalents(checkedTalentState, session.casplaId)
+      .then((res)=> {
+        if(res.response_code==200) {
+          checkedTalentState.forEach((element: string) => {
+            setTalent(talent => talent.filter((tal: any) => tal.casplaId !== element))
+          });
+          toast.success('選択したユーザーをプロダクションから削除しました。', { autoClose: 3000, draggable: true})
+        }
+      })
+      .catch((err)=>console.log(err))
   }
 
   const headMenuStyle = [buttonStyles['a-button'], buttonStyles['a-button--small'], buttonStyles['a-button--secondary'], buttonStyles['a-button--bold'], styles['p-production-setting__button']].join(' ')

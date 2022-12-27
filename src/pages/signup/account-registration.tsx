@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react'
 import Router from 'next/router'
 import { useForm, SubmitHandler } from "react-hook-form"
 import type { GetServerSideProps, NextPage } from 'next'
-import { useRecoilState, useResetRecoilState } from 'recoil'
-import { registrationState } from '@/stores/Registration'
-import { sessionState, sessionThumbnailState } from '@/stores/Session'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { userAtom, thumbnailAtom, accessTokenAtom } from '@/stores/Session'
 import { toast } from 'react-toastify'
 import checkCasplaId from '@/apis/auth/checkCasplaId'
-import updateThumbnail from '@/apis/images/updateThumbnail'
-import fanRegistration from '@/apis/auth/fanRegistration'
 import Meta from '@/components/Meta'
 import Button from '@/components/atoms/Button'
 import FormLabel from '@/components/atoms/Forms/Label'
@@ -20,6 +17,10 @@ import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import RePasswordInput from '@/components/molecules/Forms/RePasswordInput'
 import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
+import createUser from '@/apis/auth/talent/createUser'
+import updateUserPhoto from '@/apis/images/updateUserPhoto'
+import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, REGISTERED_SUCCESSFULLY } from './../../stores/messageAlerts/index';
+import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CASPLA_ID_VALIDATE_ERROR } from '@/stores/messageAlerts/index';
 
 type InputProps = {
   fullName: string
@@ -39,49 +40,37 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-const AccountRegistration: NextPage = (props:any) => {
+const AccountRegistration: NextPage = ({query}:any) => {
 
-  const [roleState, setRole] = useState('FAN')
+  const [roleState, setRole] = useState('FAN_USER')
   const [userIdState, setUserId] = useState(0)
   const [thumbnailState, setThumbnail] = useState('')
   const [checledCasplaIdState, setCheckCasplaId] = useState(false)
   const [submitButtonColorState, setSubmitButtonColor] = useState('primary')
   const [submitTextState, setSubmitText] = useState('この内容で登録する')
-  const [registration, setRegistration] = useRecoilState(registrationState)
-  const resetRegistrationState = useResetRecoilState(registrationState)
-  const [session, setSession] = useRecoilState(sessionState)
-  const [sessionThumbnail, setThumbnailSession] = useRecoilState(sessionThumbnailState)
+  const [session, setSession] = useRecoilState(userAtom)
+  const setAccessToken = useSetRecoilState(accessTokenAtom)
+  const setThumbnailImage = useSetRecoilState(thumbnailAtom)
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
   useEffect(() => {
-    setValue('email', props.query.email)
-    setUserId(Number(props.query.userId))
-    if (registration.fullName !== '') {
-      setValue('fullName', registration.fullName)
-      setValue('furigana', registration.furigana)
-      setValue('casplaId', registration.casplaId)
-      setValue('password', registration.password)
-      setValue('rePassword', registration.password)
-      setValue('role', registration.role)
-      setRole(registration.role)
-      setSubmitButton(registration.role)
-      resetRegistrationState()
-    }
+    setValue('email', query.email)
+    setUserId(Number(query.userId))
   }, [])
 
   const roles = [
-    { id: 'FAN', label: 'ファン', note: 'Casplaに参加する最低限の機能だけを持ったアカウントです。ブックマーク機能の利用や公開オーディションへの投票が可能です。' },
-    // { id: 'PRODUCTION', label: 'プロダクション', note: '芸能プロフダクション向けの機能を持ったアカウントです。企業情報ページを設置できるほかタレントアカウントの一括管理が可能です。' },
-    { id: 'COMPANY', label: '企業・団体（制作会社向け）', note: '制作会社や団体向けのアカウントです。オーディション機能を利用できます（Coming Soon）' },
+    { id: 'FAN_USER', label: 'ファン', note: 'Casplaに参加する最低限の機能だけを持ったアカウントです。ブックマーク機能の利用や公開オーディションへの投票が可能です。' },
+    { id: 'COMPANY_ADMIN', label: '企業・団体（制作会社向け）', note: '制作会社や団体向けのアカウントです。オーディション機能を利用できます（Coming Soon）' },
     { id: 'TALENT', label: 'タレント(フリー)', note: '無所属、もしくは個人で活動されているタレント様向けのアカウントです。プロフィール機能や各種SNSとの連携が可能です。' },
   ]
 
   const setSubmitButton = (role: string) => {
-    role === 'FAN' ? setSubmitButtonColor('primary') : setSubmitButtonColor('secondary')
-    if (role === 'PRODUCTION' || role === 'COMPANY') setSubmitText('会社情報の入力へ')
+    role === 'FAN_USER' ? setSubmitButtonColor('primary') : setSubmitButtonColor('secondary')
+    if (role === 'COMPANY_ADMIN') setSubmitText('会社情報の入力へ')
     else if (role === 'TALENT') setSubmitText('タレントプロフィールの入力へ')
     else setSubmitText('この内容で登録する')
   }
+
   const onChangeRole = (e:any) => {
     const changeValue = e.target.value
     setRole(changeValue)
@@ -89,63 +78,68 @@ const AccountRegistration: NextPage = (props:any) => {
   }
 
   const onCheckId = async () => {
-    checkCasplaId(getValues('casplaId')).then(res => {
-      // TODO：APIから該当するユーザーが以内場合は200返してもらう
-      setCheckCasplaId(true)
-    }).catch(() => {
+    if(getValues('casplaId').length<16 && getValues('casplaId').length>4) {
+      const strongCasplaId = new RegExp('(?=.*[a-zA-Z])(?=.*[0-9])')
+      if(strongCasplaId.test(getValues('casplaId'))) {
+        checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
+          setCheckCasplaId(true)
+          toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+        }).catch(() => {
+          setCheckCasplaId(false)
+          toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+        })
+      } else {
+        setCheckCasplaId(false)
+        toast.error(CASPLA_ID_VALIDATE_ERROR, { autoClose: 3000, draggable: true})
+      }
+    } else {
       setCheckCasplaId(false)
-      toast.error('すでに使用されているIDです。', { autoClose: 3000, draggable: true})
-    })
+      toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
+    }
   }
 
   const changeThumbnail = (val: any) => setThumbnail(val)
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-
-    if (roleState !== 'FAN') {
-      setRegistration({
-        userId: Number(userIdState),
-        thumbnail: thumbnailState,
-        fullName: data.fullName,
-        furigana: data.furigana,
-        email: data.email,
-        casplaId: data.casplaId,
-        password: data.password,
-        role: roleState
-      })
-
-      if (roleState === 'PRODUCTION') Router.push('/signup/production-registration')
-      if (roleState === 'COMPANY') Router.push('/signup/company-registration')
-      if (roleState === 'TALENT') Router.push('/signup/talent-registration')
-
-    } else {
-      fanRegistration(data).then((res: any) => {
+    createUser(data, roleState)
+      .then(({response_message})=> {
         setSession({
-          userId: Number(res.data.response_message.userId),
-          accessToken: res.data.response_message.accessToken,
-          casplaId: res.data.response_message.casplaId,
-          role: res.data.response_message.role,
-          fullName: res.data.response_message.fullName,
-          companyId: '',
-          companyName: '',
-          isAdmin: false
+          userId: response_message.userId,
+          role: response_message.role,
+          casplaId: response_message.casplaId,
+          fullName: response_message.fullName,
+          companyId: response_message.productionId,
+          companyName: response_message.productionName,
+          isAdmin: response_message.productionAdmin
         })
+        setAccessToken(response_message.accessToken)
+        setThumbnailImage(response_message.thumbnailImage)
 
         if (thumbnailState !== '') {
-          updateThumbnail(userIdState, thumbnailState).then(res => {
-            setThumbnailSession({ thumbnailImage: res.data.response_message })
-
-            Router.push('/signup/complete')
+          updateUserPhoto(userIdState,"THUMBNAIL", thumbnailState).then(res => {
+            setThumbnailImage(res.response_message)
+          }).catch((err)=>{
+            console.log(err)
           })
-        } else {
-          Router.push('/signup/complete')
         }
-      }).catch(() => {
-        toast.error('登録に失敗しました。', { autoClose: 3000, draggable: true})
+
+        if (roleState === 'TALENT') Router.push('/signup/talent-registration')
+        if (roleState === 'COMPANY_ADMIN') Router.push('/signup/company-registration')
+        if (roleState === 'FAN_USER') {
+          toast.success(REGISTERED_SUCCESSFULLY, { autoClose: 3000, draggable: true})
+          Router.push('/signup/complete')
+        } 
       })
-    }
+      .catch((err) => {
+        console.log(err)
+        toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 5000, draggable: true})
+      })
   }
 
+  const validatePassword = (data: string) =>{
+    return getValues('password') === data
+  }
+  
   return (
     <main className={styles['p-account-registration']}>
       <Meta title="アカウント情報登録" />
@@ -167,7 +161,7 @@ const AccountRegistration: NextPage = (props:any) => {
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="メールアドレス" label="email" required={true} />
-              <Input id="email" register={register} required={true} type={'email'} disabled={false} note="※メールアドレスは後ほど管理画面で変更が可能です。" />
+              <Input id="email" register={register} required={true} type={'email'} disabled={true} note="※メールアドレスは後ほど管理画面で変更が可能です。" />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="Caspla ID" label="casplaId" required={true} />
@@ -186,7 +180,7 @@ const AccountRegistration: NextPage = (props:any) => {
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="パスワード(確認用)" label="rePassword" required={true} />
-              <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} />
+              <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} validate={validatePassword}/>
             </div>
           </section>
           <section className={styles['p-account-registration__section']}>

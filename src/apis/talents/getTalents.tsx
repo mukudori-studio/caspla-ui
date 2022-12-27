@@ -5,7 +5,8 @@ type getTalentsProps = {
   activity?: any
   age?: any
   gender?: any
-  keyword?: string | string[]
+  keyword?: string | string[],
+  casplaId : string
 }
 
 const getTalents = async ({
@@ -13,7 +14,8 @@ const getTalents = async ({
   activity,
   age,
   gender,
-  keyword = ''
+  keyword = '',
+  casplaId
 }:getTalentsProps) => {
   try {
 
@@ -23,12 +25,12 @@ const getTalents = async ({
     if (gender !== undefined) filterParams.gender = gender
     if (age !== undefined) filterParams.age = age
     if (activity !== undefined) filterParams.activity = activity
-
+    filterParams.user = casplaId
     const response = await axiosClient.get('/api/v1/open/casts', {
       params: filterParams
     })
 
-    return response
+    return response.data
   } catch(err) {
     throw err
   }

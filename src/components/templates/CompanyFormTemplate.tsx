@@ -16,6 +16,9 @@ import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import prefectures from '@/utils/prefectures'
 
 import styles from '@/styles/AccountRegistration.module.scss'
+import { useRecoilValue } from 'recoil'
+import { userAtom } from '@/stores/Session'
+import { PRODUCTION_ID_AVAILABLE, PRODUCTION_ID_NOT_AVAILABLE, COMPANY_ID_AVAILABLE, COMPANY_ID_NOT_AVAILABLE } from '@/stores/messageAlerts/index'
 
 type InputProps = {
   companyImage?: any
@@ -44,7 +47,7 @@ type registrationPorps = {
   editType?: 'register' | 'edit'
   companyImage?: any
   companyName?: string
-  corpId?: string
+  corpId: string
   zipCode: string
   prefecture: string
   address1?: string
@@ -70,7 +73,8 @@ const Signup = ({
   submitForm,
   ...props
 }: registrationPorps) => {
-
+  
+  const {companyId} = useRecoilValue(userAtom)
   const { register, handleSubmit, formState: { errors }, watch, setValue, getValues } = useForm<InputProps>()
   const [searchingState, setSearching] = useState(false)
   const [checkedIdState, setCheckId] = useState(false)
@@ -84,9 +88,10 @@ const Signup = ({
 
   useEffect(() => {
     if (editType === 'register') return
+    setValue('corpId', props.corpId)
     setValue('companyImage', props.companyImage)
     setValue('companyName', props?.companyName)
-    setValue('zipCode', props?.zipCode)
+    setValue('zipCode', props.zipCode)
     setValue('prefecture', props.prefecture)
     setPrefecture(props.prefecture)
     setValue('address1', props.address1)
@@ -98,7 +103,7 @@ const Signup = ({
     setValue('twitterId', props.twitterId)
     setValue('facebookId', props.facebookId)
     setValue('youtubeId', props.youtubeId)
-    setValue('instagramId', props.blogUrl)
+    setValue('instagramId', props.instagramId)
     setValue('tiktokId', props.tiktokId)
     setValue('history', props.history)
     setValue('note', props.note)
@@ -130,16 +135,20 @@ const Signup = ({
 
   const onCheckId = () => {
     if (userType === 'production') {
-      checkProductionId(getValues('corpId')).then(() => {
+      checkProductionId(getValues('corpId'), companyId).then(() => {
         setCheckId(true)
+        toast.success(PRODUCTION_ID_AVAILABLE, { autoClose: 3000, draggable: true})
       }).catch(() => {
         setCheckId(false)
+        toast.error(PRODUCTION_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
       })
     } else {
-      checkCorpId(getValues('corpId')).then(() => {
+      checkCorpId(getValues('corpId'), companyId).then((res) => {
         setCheckId(true)
+        toast.success(COMPANY_ID_AVAILABLE, { autoClose: 3000, draggable: true})
       }).catch(() => {
         setCheckId(false)
+        toast.error(COMPANY_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
       })
     }
   }
@@ -155,8 +164,7 @@ const Signup = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="会社名" label="companyName" required={true} />
-          <Input id="companyName" register={register} required={true} error={errors?.companyName?.message} disabled={editType === 'edit'} />
-          {editType === 'edit' && <FormNote text={'※会社名を変更したい場合はお問い合わせください。'} />}
+          <Input id="companyName" register={register} required={true} error={errors?.companyName?.message} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text={userType === 'production' ? 'プロダクションID' : '企業ID'} label="corpId" required={true} />
