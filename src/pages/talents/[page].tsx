@@ -118,7 +118,7 @@ const Talents: NextPage = (props:any) => {
         { !loadingState && talentsState.length > 0 && (
             <>
               <div className={styles['p-talents__items']}>
-                <h4 className={styles['p-talents__search-results']}>{`${totalCountState}件中${pageState}ページ目を表示`}</h4>
+                <h4 className={styles['p-talents__search-results']}>{`${totalCountState.toLocaleString('en-US')}件中${pageState.toLocaleString('en-US')}ページ目を表示`}</h4>
                 {
                   talentsState.map((talent: any) => {
                     return (
