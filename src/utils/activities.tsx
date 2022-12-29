@@ -1,7 +1,6 @@
 const activities = [
   { value: '子役', text: '子役' },
-  { value: '俳優', text: '俳優' },
-  // { value: '女優', text: '女優' },
+  { value: '俳優・女優', text: '俳優・女優' },
   { value: 'タレント', text: 'タレント' },
   { value: '芸人など', text: '芸人など' },
   { value: 'アーティスト', text: 'アーティスト' },
