@@ -18,7 +18,7 @@ import prefectures from '@/utils/prefectures'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
-import { PRODUCTION_ID_AVAILABLE, PRODUCTION_ID_NOT_AVAILABLE, COMPANY_ID_AVAILABLE, COMPANY_ID_NOT_AVAILABLE } from '@/stores/messageAlerts/index'
+import { PRODUCTION_ID_AVAILABLE, PRODUCTION_ID_NOT_AVAILABLE, COMPANY_ID_AVAILABLE, COMPANY_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED } from '@/stores/messageAlerts/index'
 
 type InputProps = {
   companyImage?: any
@@ -135,21 +135,43 @@ const Signup = ({
 
   const onCheckId = () => {
     if (userType === 'production') {
-      checkProductionId(getValues('corpId'), companyId).then(() => {
-        setCheckId(true)
-        toast.success(PRODUCTION_ID_AVAILABLE, { autoClose: 3000, draggable: true})
-      }).catch(() => {
+      if(getValues('corpId').length<16 && getValues('corpId').length>=4) {
+        const strongCasplaId = new RegExp('(?=.*[a-zA-Z])(?=.*[0-9])')
+        if(strongCasplaId.test(getValues('corpId')) && getValues('corpId').search(/[\W]/g)===-1) {
+          checkProductionId(getValues('corpId'), companyId).then(() => {
+            setCheckId(true)
+            toast.success(PRODUCTION_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+          }).catch(() => {
+            setCheckId(false)
+            toast.error(PRODUCTION_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+          })
+        } else {
+          setCheckId(false)
+          toast.error(PRODUCTION_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+        }
+      } else {
         setCheckId(false)
-        toast.error(PRODUCTION_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
-      })
+        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
+      }
     } else {
-      checkCorpId(getValues('corpId'), companyId).then((res) => {
-        setCheckId(true)
-        toast.success(COMPANY_ID_AVAILABLE, { autoClose: 3000, draggable: true})
-      }).catch(() => {
+      if(getValues('corpId').length<16 && getValues('corpId').length>=4) {
+        const strongCasplaId = new RegExp('(?=.*[a-zA-Z])(?=.*[0-9])')
+        if(strongCasplaId.test(getValues('corpId')) && getValues('corpId').search(/[\W]/g)===-1) {
+          checkCorpId(getValues('corpId'), companyId).then((res) => {
+            setCheckId(true)
+            toast.success(COMPANY_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+          }).catch(() => {
+            setCheckId(false)
+            toast.error(COMPANY_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+          })
+        } else {
+          setCheckId(false)
+          toast.error(COMPANY_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+        }
+      } else {
         setCheckId(false)
-        toast.error(COMPANY_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
-      })
+        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
+      }
     }
   }
   
