@@ -90,7 +90,7 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onCheckId = async () => {
-    if(getValues('casplaId').length<16 && getValues('casplaId').length>4) {
+    if(getValues('casplaId').length<16 && getValues('casplaId').length>=4) {
       const strongCasplaId = new RegExp('(?=.*[a-zA-Z])(?=.*[0-9])')
       if(strongCasplaId.test(getValues('casplaId')) && getValues('casplaId').search(/[\W]/g)===-1) {
         checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
