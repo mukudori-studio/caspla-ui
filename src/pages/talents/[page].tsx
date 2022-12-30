@@ -128,7 +128,7 @@ const Talents: NextPage = (props:any) => {
                     <p>とても多くの検索結果が見つかりました。<br/>的確な結果を表示するためには絞り込み検索を活用してください。</p>
                   </div>
                 )}
-                <h4 className={styles['p-talents__search-results']}>{`${displayString}${totalPageCountState.toLocaleString('en-US')}ページ目を表示`}</h4>
+                <h4 className={styles['p-talents__search-results']}>{`${displayString}${pageState.toLocaleString('en-US')}ページ目を表示`}</h4>
                 {
                   talentsState.map((talent: any) => {
                     return (
