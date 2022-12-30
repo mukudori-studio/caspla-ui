@@ -19,7 +19,7 @@ import RadioButton from '@/components/atoms/Forms/RadioButton'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
-import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, CASPLA_ID_VALIDATE_ERROR } from '@/stores/messageAlerts/index';
+import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, CASPLA_ID_VALIDATE_ERROR, EMAIL_ALREADY_EXIST } from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
 
 type InputProps = {
@@ -139,8 +139,14 @@ const AccountRegistration: NextPage = () => {
         })
         toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
       }).catch((err) => {
-        console.log(err)
-        toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
+        if(err.response.data){
+          if(err.response.data.response_code == 400) {
+            toast.error(EMAIL_ALREADY_EXIST, { autoClose: 3000, draggable: true})
+          }
+        } else {
+          console.log(err)
+          toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
+        }
       })
   }
 
