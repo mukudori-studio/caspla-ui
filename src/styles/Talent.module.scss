@@ -24,6 +24,20 @@
     color: g.$color-mono-20;
     margin: 10px 0;
   }
+
+  &__alertbox {
+    background-color: g.$color-secondary;
+    color: g.$color-primary;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 0;
+
+    p{
+      margin: 0;
+      letter-spacing: 1px;
+    }
+  }
 }
 
 .p-talent-detail {

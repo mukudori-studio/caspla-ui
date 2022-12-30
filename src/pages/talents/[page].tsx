@@ -29,12 +29,14 @@ const Talents: NextPage = (props:any) => {
   const [talentsState, setTalents] = useState([])
   const [pageState, setPage] = useState(props.query.page)
   const [keywordState, setKeyword] = useState(props.query.keyword === undefined ? '' : props.query.keyword)
-  const [totalCountState, setTotalCount] = useState(0)
+  const [totalPageCountState, setTotalPageCount] = useState(0)
+  const [totalResults, setTotalResults] = useState(0)
   const [activityState, setActivity] = useState(props.query.activity === undefined ? [] : props.query.activity)
   const [ageState, setAge] = useState(props.query.age === undefined ? [] : props.query.age)
   const [genderState, setGender] = useState(props.query.gender === undefined ? [] : props.query.gender)
   const router = useRouter();
   const session = useRecoilValue(userAtom)
+  const [displayString, setDisplayString] = useState('');
 
   useEffect(() => {
     getTalents({
@@ -46,10 +48,13 @@ const Talents: NextPage = (props:any) => {
       casplaId: session.casplaId
     })
     .then(({response_message}) => {
+      let count = Math.ceil(response_message.totalCount)
       setTalents(response_message.casts)
       setPage(response_message.page)
-      setTotalCount(Math.ceil(response_message.totalCount /10))
+      setTotalPageCount(Math.ceil(response_message.totalCount / 10))
+      setTotalResults(count)
       setLoading(false)
+      setDisplayString(count===10000?`${count.toLocaleString('en-US')}件以上`:`${count.toLocaleString('en-US')}件中`)
     })
     .catch((err)=> {
       console.log(err)
@@ -118,7 +123,12 @@ const Talents: NextPage = (props:any) => {
         { !loadingState && talentsState.length > 0 && (
             <>
               <div className={styles['p-talents__items']}>
-                <h4 className={styles['p-talents__search-results']}>{`${totalCountState.toLocaleString('en-US')}件中${pageState.toLocaleString('en-US')}ページ目を表示`}</h4>
+                {totalResults === 10000 && (
+                  <div className={styles['p-talents__alertbox']}>
+                    <p>とても多くの検索結果が見つかりました。<br/>的確な結果を表示するためには絞り込み検索を活用してください。</p>
+                  </div>
+                )}
+                <h4 className={styles['p-talents__search-results']}>{`${displayString}${totalPageCountState.toLocaleString('en-US')}ページ目を表示`}</h4>
                 {
                   talentsState.map((talent: any) => {
                     return (
@@ -137,7 +147,7 @@ const Talents: NextPage = (props:any) => {
                   })
                 }
               </div>
-              {totalCountState > 1 && <Pagination totalCount={totalCountState} currentNum={pageState} onChangePagination={onChangePagination} />}
+              {totalPageCountState > 1 && <Pagination totalCount={totalPageCountState} currentNum={pageState} onChangePagination={onChangePagination} />}
             </>
           )
         }

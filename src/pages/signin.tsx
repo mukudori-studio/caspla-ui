@@ -72,7 +72,7 @@ const Signin: NextPage = () => {
                 <Button text="ログイン" color="primary" size="large" type="submit" weight="bold" disabled={!isValid || isSubmitting} />
               </div>
               <Link href="/password-reset/reissue">
-                <a className={styles['p-sign-in__link']}>ノくスワードを忘れた場合 </a>
+                <a className={styles['p-sign-in__link']}>パスワードを忘れた場合</a>
               </Link>
             </form>
             <div className={styles['p-sign-in__sign-up']}>
