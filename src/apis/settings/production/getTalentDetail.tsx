@@ -1,6 +1,6 @@
 import { axiosClient } from '@/utils/axiosClient'
 
-const getProductionTalents = async (managerId: string, talentCasplaId: string | string[] | undefined, accessToken: string) => {
+const getProductionTalents = async (managerId: string, talentCasplaId: string | string[] | undefined) => {
   
   try {
     if(typeof talentCasplaId==='undefined'){
@@ -10,9 +10,6 @@ const getProductionTalents = async (managerId: string, talentCasplaId: string | 
       params: {
         manager_caspla_id: managerId,
         user_caspla_id: talentCasplaId
-      }, 
-      headers : {
-        Authorization: `Bearer ${accessToken}`
       }
     })
 

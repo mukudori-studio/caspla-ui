@@ -10,7 +10,9 @@ import { toast } from 'react-toastify'
 import getCompanyDetails from '@/apis/companies/getCompanyDetails'
 import updateCompanyDetails from '@/apis/companies/updateCompanyDetails'
 import updateCompanyLogo from '@/apis/images/updateCompanyLogo';
-import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN } from './../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, ACCESS_TOKEN_INACTIVE } from './../../../stores/messageAlerts/index';
+import { accessTokenAtom } from './../../../stores/Session/index';
+import Router from 'next/router';
 
 const CompanyEdit: NextPage = () => {
 
@@ -18,6 +20,7 @@ const CompanyEdit: NextPage = () => {
   const [companyDetails, setCompanyDetails] = useState<any>({})
   const [link, setLinks] =  useState<any>({})
   const [session, setSession] = useRecoilState(userAtom)
+  const accessToken = useRecoilValue(accessTokenAtom)
 
   const updateCompany = (data:any) => {
     if(data.companyImage.type || data.companyImage === '') {
@@ -48,17 +51,22 @@ const CompanyEdit: NextPage = () => {
   }
 
   useEffect(()=> {
-    getCompanyDetails(companyId)
-      .then(({response_message}: any) => {
-        const {links , ...other} = response_message
-        setCompanyDetails(other)
-        setLinks(links)
-      })
-      .catch((res)=> {
-        if(res.response_code == 404) {
-          toast.error('会社が見つかりません。', { autoClose: 3000, draggable: true})
-        }
-      })
+    if (accessToken!==undefined||accessToken!=='') {
+      getCompanyDetails(companyId)
+        .then(({response_message}: any) => {
+          const {links , ...other} = response_message
+          setCompanyDetails(other)
+          setLinks(links)
+        })
+        .catch((res)=> {
+          if(res.response_code == 404) {
+            toast.error('会社が見つかりません。', { autoClose: 3000, draggable: true})
+          }
+        })
+    } else {
+      toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
+      Router.push('/signin')
+    }
   }, [])
 
   return (

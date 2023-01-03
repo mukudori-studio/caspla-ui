@@ -11,7 +11,8 @@ import Loading from '@/components/atoms/Loading'
 import PageTitle from '@/components/atoms/PageTitle'
 import TalentFormTemplate from '@/components/templates/TalentFormTemplate'
 import styles from '@/styles/AccountRegistration.module.scss'
-import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, SAVED_CHANGES } from './../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, SAVED_CHANGES, ACCESS_TOKEN_INACTIVE } from './../../../stores/messageAlerts/index';
+import Router from 'next/router'
 
 const Dashboard: NextPage = () => {
 
@@ -24,10 +25,15 @@ const Dashboard: NextPage = () => {
   const accessToken = useRecoilValue(accessTokenAtom)
 
   useEffect(() => {
-    getProfile(session.casplaId, session.casplaId).then(({response_message}) => {
-      setProfileState(response_message.castDetails)
-      setLoading(false)
-    })
+    if(accessToken!==undefined||accessToken!=='') {
+      getProfile(session.casplaId, session.casplaId).then(({response_message}) => {
+        setProfileState(response_message.castDetails)
+        setLoading(false)
+      })
+    } else {
+      toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
+      Router.push('/signin')
+    }
   }, [])
 
   const onChangeThumbnail = () => setChangeThumbnail(true)

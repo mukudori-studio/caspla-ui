@@ -11,7 +11,9 @@ import Loading from '@/components/atoms/Loading'
 import updateProductionDetails from '@/apis/productions/updateProductionDetails'
 import { toast } from 'react-toastify'
 import updateProductionLogo from '@/apis/images/updateProductionLogo'
-import { SAVED_CHANGES, SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN } from './../../../stores/messageAlerts/index';
+import { SAVED_CHANGES, SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, ACCESS_TOKEN_INACTIVE } from './../../../stores/messageAlerts/index';
+import { accessTokenAtom } from './../../../stores/Session/index';
+import Router from 'next/router'
 
 const ProductionEdit: NextPage = () => {
 
@@ -20,16 +22,22 @@ const ProductionEdit: NextPage = () => {
   const [links, setLinks] = useState<any>({})
   const [session, setSession] = useRecoilState(userAtom)
   const [productionId, setProductionId] = useState<string>('')
-  
+  const accessToken = useRecoilValue(accessTokenAtom)
+
   useEffect(()=>{
-    getProductionDetail(companyId)
-      .then((res)=> {
-        const {links, ...other} = res.response_message
-        setProductionId(other.productionId)
-        setLinks(links)
-        setProduction(other)
-      })
-      .catch((err)=> console.log(err))
+    if(accessToken!==undefined||accessToken!=='') {
+      getProductionDetail(companyId)
+        .then((res)=> {
+          const {links, ...other} = res.response_message
+          setProductionId(other.productionId)
+          setLinks(links)
+          setProduction(other)
+        })
+        .catch((err)=> console.log(err))
+    } else {
+      toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
+      Router.push('/signin')
+    }
   },[])
 
   const updateProduction = (data:any) => {
