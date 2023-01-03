@@ -1,3 +1,4 @@
+export const ACCESS_TOKEN_INACTIVE = 'セッションが切れました。ログインし直してください。'
 export const CASPLA_ID_AVAILABLE = 'Caspla IDが利用可能です'
 export const CASPLA_ID_LENGTH_REQUIRED = '4～16文字以内で入力してください。'
 export const CASPLA_ID_NOT_AVAILABLE = 'Caspla IDは既に使用されています。'

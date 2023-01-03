@@ -14,7 +14,7 @@ import { userAtom, accessTokenAtom } from './../../stores/Session/index';
 const Modal = dynamic(() => import('@/components/molecules/Modal'), { ssr: false })
 import changeBookmark from './../../apis/bookmarks/changeBookmark';
 import { toast } from 'react-toastify'
-import { SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
+import { ACCESS_TOKEN_INACTIVE, SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
 
 const Bookmarks: NextPage = () => {
   const [loadingState, setLoading] = useState<boolean>(true)
@@ -23,17 +23,22 @@ const Bookmarks: NextPage = () => {
   const accessToken = useRecoilValue(accessTokenAtom)
 
   useEffect(() => {
-    getBookmarks(session.casplaId)
-      .then(({response_code, response_message})=> {
-        if(response_code == 200) {
-          setBookmarks(response_message)
-          setLoading(false)
-        } else {
-          toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
-          Router.push('/dashboard')
-        }
-      })
-      .catch((err)=> console.log(err))
+    if(accessToken!==undefined||accessToken!=='') {
+      getBookmarks(session.casplaId)
+        .then(({response_code, response_message})=> {
+          if(response_code == 200) {
+            setBookmarks(response_message)
+            setLoading(false)
+          } else {
+            toast.error(response_message, { autoClose: 3000, draggable: true})
+            Router.push('/dashboard')
+          }
+        })
+        .catch((err)=> console.log(err))
+      } else {
+        toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
+        Router.push('/signin')
+      }
   }, [])
 
   const onDeleteBookmark = (id: string) => {

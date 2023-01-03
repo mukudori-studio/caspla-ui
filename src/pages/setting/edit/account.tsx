@@ -21,6 +21,7 @@ import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, CASPLA_ID_VALIDATE_ERROR, EMAIL_ALREADY_EXIST } from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
+import { ACCESS_TOKEN_INACTIVE } from './../../../stores/messageAlerts/index';
 
 type InputProps = {
   thumbnailImage?: object
@@ -50,7 +51,7 @@ const AccountRegistration: NextPage = () => {
   useEffect(() => {
     if (accessToken === undefined || accessToken === '') {
       Router.replace('/signin')
-      toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
+      toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
     } else if (accessToken !== '') {
       getAccount(session.casplaId)
         .then(({response_message} : any) => {
