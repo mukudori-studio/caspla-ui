@@ -75,7 +75,7 @@ const LoginedHeaderMenu = () => {
           <ul className={styles['m-logined-header-menu__list']}>
             <li><Link href="/dashboard"><a className={menuStyle} onClick={hideMenu}>ダッシュボード</a></Link></li>
             <li><Link href="/bookmarks"><a className={menuStyle} onClick={hideMenu}>ブックマーク管理</a></Link></li>
-            { (session.role === 'COMPANY_ADMIN' || session.role === 'FAN_USER' || session.role === 'PRODUCTION_ADMIN') &&<li><Link href="/setting/edit/account"><a className={menuStyle} onClick={hideMenu}>アカウント設定</a></Link></li>}
+            { (session.role === 'COMPANY_ADMIN' || session.role === 'FAN_USER' || session.role === 'PRODUCTION_ADMIN' || session.role === 'TALENT') &&<li><Link href="/setting/edit/account"><a className={menuStyle} onClick={hideMenu}>アカウント設定</a></Link></li>}
             { (session.role === 'TALENT' || session.role === 'PRODUCTION_TALENT') && <li><Link href="/setting/edit/profile"><a className={menuStyle} onClick={hideMenu}>プロフィール編集</a></Link></li> }
             { session.role === 'PRODUCTION_ADMIN' && <li><Link href="/setting/production/edit"><a className={menuStyle} onClick={hideMenu}>プロダクション管理</a></Link></li>}
             { session.role === 'COMPANY_ADMIN' && <li><Link href="/setting/company/edit"><a className={menuStyle} onClick={hideMenu}>組織管理</a></Link></li> }

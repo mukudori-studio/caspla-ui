@@ -47,7 +47,8 @@ const CardItem = ({
 
   // NOTE：Boomark
   const [flag, setFlag] = React.useState(withBookmark)
-  
+  const [thumbnailImage, setThumbnailImage] = React.useState(thumbnail);
+
   const changeBookmarkStatus = ((e: any) => {
     e.stopPropagation()
     if(accessToken!=='') {
@@ -66,7 +67,7 @@ const CardItem = ({
     <button type="button" onClick={toDetail} className={styles['m-card-item']}>
       <div className={styles['m-card-item__content']}>
         {
-          !thumbnail && thumbnail === '' ? (
+          !thumbnailImage && thumbnailImage === '' ? (
             <div className={styles['m-card-item__thumbnail']}></div>
           ) : (
             // <div className={styles['m-card-item__thumbnail']}>
@@ -76,7 +77,7 @@ const CardItem = ({
             //     layout="fill"
             //   />
             // </div>
-            <img src={thumbnail} className={styles['m-card-item__thumbnail']} />
+            <img src={thumbnailImage} className={styles['m-card-item__thumbnail']} onError={()=>setThumbnailImage('')}/>
           )
         }
         <div className={styles['m-card-item__head']}>

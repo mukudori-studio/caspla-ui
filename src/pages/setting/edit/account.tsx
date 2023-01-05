@@ -19,8 +19,9 @@ import RadioButton from '@/components/atoms/Forms/RadioButton'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
-import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, CASPLA_ID_VALIDATE_ERROR } from '@/stores/messageAlerts/index';
+import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, CASPLA_ID_VALIDATE_ERROR, EMAIL_ALREADY_EXIST } from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
+import { ACCESS_TOKEN_INACTIVE } from './../../../stores/messageAlerts/index';
 
 type InputProps = {
   thumbnailImage?: object
@@ -50,7 +51,7 @@ const AccountRegistration: NextPage = () => {
   useEffect(() => {
     if (accessToken === undefined || accessToken === '') {
       Router.replace('/signin')
-      toast.error('セッションが切れました。ログインし直してください。', { autoClose: 3000, draggable: true})
+      toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
     } else if (accessToken !== '') {
       getAccount(session.casplaId)
         .then(({response_message} : any) => {
@@ -90,9 +91,9 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onCheckId = async () => {
-    if(getValues('casplaId').length<16 && getValues('casplaId').length>4) {
+    if(getValues('casplaId').length<16 && getValues('casplaId').length>=4) {
       const strongCasplaId = new RegExp('(?=.*[a-zA-Z])(?=.*[0-9])')
-      if(strongCasplaId.test(getValues('casplaId'))) {
+      if(strongCasplaId.test(getValues('casplaId')) && getValues('casplaId').search(/[\W]/g)===-1) {
         checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
           setCheckCasplaId(true)
           toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
@@ -139,8 +140,14 @@ const AccountRegistration: NextPage = () => {
         })
         toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
       }).catch((err) => {
-        console.log(err)
-        toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
+        if(err.response.data){
+          if(err.response.data.response_code == 400) {
+            toast.error(EMAIL_ALREADY_EXIST, { autoClose: 3000, draggable: true})
+          }
+        } else {
+          console.log(err)
+          toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
+        }
       })
   }
 

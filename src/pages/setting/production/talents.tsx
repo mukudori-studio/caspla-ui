@@ -10,6 +10,8 @@ import TalentItem from '@/components/organisms/Production/TalentItem'
 import styles from '@/styles/ProductionSetting.module.scss'
 import buttonStyles from '@/styles/components/atoms/Button.module.scss'
 import removeProductionTalents from '@/apis/productions/removeProductionTalents'
+import { SOMETHING_WENT_WRONG } from './../../../stores/messageAlerts/index';
+import Router from 'next/router'
 
 const BelongTalents: NextPage = () => {
 
@@ -25,7 +27,8 @@ const BelongTalents: NextPage = () => {
       getProductionDetailTalents(session.companyId).then(res => {
         setTalent(res.response_message)
       }).catch(() => {
-        toast.error('タレント情報の取得に失敗しました。', { autoClose: 3000, draggable: true})
+        toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
+        Router.back()
       })
     }
   }, [])

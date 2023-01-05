@@ -63,22 +63,18 @@ const Signin: NextPage = () => {
             <PageTitle title="ログイン" />
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-sign-in__form']}>
               <div className={styles['p-sign-in__item']}>
-                <FormLabel text="Caspla ID" label="casplaId" />
-                <Input id="casplaId" register={register} required={true} />
+                <Input id="casplaId" register={register} required={true} placeholder='メールアドレスまたはCaspla ID'/>
               </div>
               <div className={styles['p-sign-in__item']}>
-                <FormLabel text="パスワード" label="password" />
-                <PasswordInput id="password" register={register} min={4} />
+                <PasswordInput id="password" register={register} min={4} placeholder='パスワード'/>
               </div>
-              <Link href="/password-reset/reissue">
-                <a className={styles['p-sign-in__link']}>パスワードを忘れた方はこちら</a>
-              </Link>
               <div className={styles['p-sign-in__button']}>
                 <Button text="ログイン" color="primary" size="large" type="submit" weight="bold" disabled={!isValid || isSubmitting} />
               </div>
+              <Link href="/password-reset/reissue">
+                <a className={styles['p-sign-in__link']}>パスワードを忘れた場合</a>
+              </Link>
             </form>
-
-            <PageTitle title="新規登録" />
             <div className={styles['p-sign-in__sign-up']}>
               <LinkButton href="/signup/" text="新規で会員登録する" size="large" weight="bold" />
             </div>

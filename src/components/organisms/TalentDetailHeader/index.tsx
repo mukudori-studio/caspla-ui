@@ -60,11 +60,11 @@ const TalentDetailHeader = ({
   const session = useRecoilValue(userAtom)
   const accessToken = useRecoilValue(accessTokenAtom)
   const [thumbnail, setThumbnail] = useState(thumbnailImage)
-  const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(withBookmark)
   
-  const toggleMenu = () => setShowMenu(!showMenu)
+  const openBookmarkMenu = () => setShowMenu(true)
   const popOverStyle = showMenu ? [styles['o-talent-detail-header__bookmark-popover'], styles['o-talent-detail-header__bookmark-popover--show']].join(' ') : styles['o-talent-detail-header__bookmark-popover']
-  const hideMenu = () => setShowMenu(false)
+  const hideBookmarkMenu = () => setShowMenu(false)
 
   useEffect(() => {
     const ua = window.navigator.userAgent.toLowerCase()
@@ -102,8 +102,15 @@ const TalentDetailHeader = ({
     } else {
       changeBookmark(casplaId, session.casplaId)
       .then(({response_code, response_message}) => {
-        if(response_code == 200) setBookmarked(response_message)
-          else console.log(response_code, response_message)
+        if(response_code == 200) {
+          setBookmarked(response_message)
+          if(response_message) {
+            openBookmarkMenu()
+          } else {
+            hideBookmarkMenu()
+          }
+        } 
+        else console.log(response_code, response_message)
         })
         .catch((err) => {
           console.log(err)
@@ -159,14 +166,14 @@ const TalentDetailHeader = ({
               <div className={styles['o-talent-detail-header__activity']}><LabelTexts texts={activity} color={'gray'} /></div>
             )
           }
-          <div className={styles[`o-talent-detail-header__bookmark`]} onMouseEnter={toggleMenu}>
+          <div className={styles[`o-talent-detail-header__bookmark`]} >
             <BookMark checked={isBookmarked} changeBookmark={onClickBookmark}/>
             { accessToken !== '' && (
               <div className={popOverStyle}>
                 <PopOver>
                   <div className={styles['o-talent-detail-header__list']}>
                     <h4 style={{margin:0}}>ブックマークに登録しました！</h4>
-                    <Link href="/bookmarks" ><a onClick={hideMenu} className={styles['o-talent-detail-header__list--button']}>ブックマークを見る</a></Link>
+                    <Link href="/bookmarks" ><a onClick={hideBookmarkMenu} className={styles['o-talent-detail-header__list--button']}>ブックマークを見る</a></Link>
                   </div>
                 </PopOver>
               </div>

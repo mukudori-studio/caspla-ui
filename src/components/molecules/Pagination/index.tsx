@@ -99,7 +99,6 @@ const Pagination = ({
     <PaginationWrapper>
       <ReactPaginate
         pageCount={totalCount}
-        initialPage={currentNum - 1}
         previousLabel="<"
         nextLabel=">"
         marginPagesDisplayed={marginPagesDisplayed}

@@ -5,7 +5,7 @@
   min-height: 100%;
 
   &__content {
-    max-width: 310px;
+    max-width: 632px;
     margin: 0 auto;
 
     @include g.mq-down(tablet--under) {
@@ -15,6 +15,8 @@
 
   &__form {
     margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(129, 82, 150, 0.2);
   }
 
   &__item {
@@ -31,12 +33,11 @@
   }
 
   &__link {
-    @include g.flex(end);
-    text-align: right;
+    text-align: center;
+    font-weight: bold;
     text-decoration: none;
     line-height: 1.1;
     font-size: 14px;
-    margin-top: 6px;
     color: g.$color-primary;
     cursor: pointer;
     transition: .2s;
@@ -52,11 +53,13 @@
   }
 
   &__button {
-    margin-top: 30px;
+    margin: auto;
+    max-width: 310px;
+    padding: 20px 20px;
   }
 
   &__sign-up {
-    margin: 30px 0;
-
+    margin: auto;
+    max-width: 310px;
   }
 }

@@ -32,7 +32,7 @@ const PasswordInput = ({
           type={typeState}
           placeholder={placeholder}
           id={id}
-          {...register(id, { required: "必須項目です", minLength: { value: min, message: `${min}文字以上で入力してください。` }})}
+          {...register(id, { required: "必須項目です", minLength: { value: min, message: `${min}文字以上で入力してください。`}, validate : (value: string)=> !value.includes(" ") && value.search(/[\W]/g)===-1 || '不正な文字が含まれています。'})}
         />
         {/* TODO：パスワードの表示、非表示切り替えを行う */}
       </div>

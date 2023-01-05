@@ -1,3 +1,4 @@
+export const ACCESS_TOKEN_INACTIVE = 'セッションが切れました。ログインし直してください。'
 export const CASPLA_ID_AVAILABLE = 'Caspla IDが利用可能です'
 export const CASPLA_ID_LENGTH_REQUIRED = '4～16文字以内で入力してください。'
 export const CASPLA_ID_NOT_AVAILABLE = 'Caspla IDは既に使用されています。'
@@ -5,6 +6,7 @@ export const CASPLA_ID_VALIDATE_ERROR = '英字と数字を1文字以上の組�
 export const COMPANY_ID_AVAILABLE = 'Company IDが利用可能です'
 export const COMPANY_ID_NOT_AVAILABLE = 'Company ID は利用できません'
 export const CONTACT_SYS_ADMIN = 'システム管理者に連絡してください。'
+export const EMAIL_ALREADY_EXIST = 'メールアドレスは既に存在します。'
 export const PRODUCTION_ID_AVAILABLE = 'Production IDが利用可能です'
 export const PRODUCTION_ID_NOT_AVAILABLE = 'Production ID は利用できません'
 export const REGISTERED_SUCCESSFULLY = '正常に登録されました。'

@@ -1,5 +1,5 @@
 import Router from 'next/router'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import Meta from '@/components/Meta'
@@ -11,7 +11,8 @@ import createProductionTalent from '@/apis/productions/createProductionTalent'
 import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
 import { toast } from 'react-toastify'
-import {SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN} from './../../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, ACCESS_TOKEN_INACTIVE } from './../../../../stores/messageAlerts/index';
+import { accessTokenAtom } from './../../../../stores/Session/index';
 
 
 const TalentEdit: NextPage = () => {
@@ -19,8 +20,16 @@ const TalentEdit: NextPage = () => {
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
   const [changeCoverState, setChangeCover] = useState(false)
   const session = useRecoilValue(userAtom)
+  const accessToken = useRecoilValue(accessTokenAtom)
   const onChangeThumbnail = () => setChangeThumbnail(true)
   const onChangeCover = () => setChangeCover(true)
+  
+  useEffect(()=> {
+    if(accessToken===undefined||accessToken==='') {
+      toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
+      Router.push('/signin')
+    }
+  }, [])
   
   const onSubmitAddTalent = (data:any) => {
     createProductionTalent(data, session.casplaId)

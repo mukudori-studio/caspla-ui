@@ -12,7 +12,7 @@ import styles from '@/styles/ProductionSetting.module.scss'
 import { toast } from 'react-toastify'
 import putProductionTalent from '@/apis/settings/production/putTalent'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { SOMETHING_WENT_WRONG } from './../../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, ACCESS_TOKEN_INACTIVE } from './../../../../stores/messageAlerts/index';
 
 
 const TalentEdit: NextPage = () => {
@@ -30,10 +30,15 @@ const TalentEdit: NextPage = () => {
   const onChangeCover = () => setChangeCover(true)
 
   useEffect(() => {
-    getTalentDetail(session.casplaId, casplaId, accessToken).then(res => {
-      setTalent(res.response_message.castDetails)
-    })
-    .catch((err)=> console.log(err))
+    if(accessToken!==undefined||accessToken!=='') {
+      getTalentDetail(session.casplaId, casplaId).then(res => {
+        setTalent(res.response_message.castDetails)
+      })
+      .catch((err)=> console.log(err))
+    } else {
+      toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
+      Router.push('/signin')
+    }
   }, [casplaId])
   
   useEffect(()=> {
