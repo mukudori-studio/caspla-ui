@@ -38,6 +38,28 @@
       letter-spacing: 1px;
     }
   }
+
+  &__pagination {
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__redirect {
+    border-radius: 50%;
+    background-color: g.$color-mono-10;
+    width: 65px;
+    height: 65px;
+    margin: 0px 10px;
+    position: relative;
+
+    p{
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 18px;
+      text-align: center;
+    }
+  }
 }
 
 .p-talent-detail {
