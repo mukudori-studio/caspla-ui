@@ -64,8 +64,8 @@ const PaginationWrapper = styled.div`
   }
   & li {
     a {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       font-size: 14px;
     }
     &.active {
