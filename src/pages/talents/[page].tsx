@@ -112,6 +112,9 @@ const Talents: NextPage = (props:any) => {
     setLoading(false)
   }
 
+  const traversePage = (value:number) => {
+    onChangePagination(value!==1?totalPageCountState-1:0)
+  }
 
   return (
     <div className={styles['p-talents']}>
@@ -147,7 +150,22 @@ const Talents: NextPage = (props:any) => {
                   })
                 }
               </div>
-              {totalPageCountState > 1 && <Pagination totalCount={totalPageCountState} currentNum={pageState} onChangePagination={onChangePagination} />}
+              {totalPageCountState > 1 && (
+                <div className={styles['p-talents__pagination']}>
+                  { pageState !== 1 && totalPageCountState > 6 && (
+                    <div className={styles['p-talents__redirect']} onClick={()=>traversePage(1)}>
+                      <p>{'<<'}</p> 
+                    </div>
+                  )}
+                  <Pagination totalCount={totalPageCountState} currentNum={pageState} onChangePagination={onChangePagination} />
+                  {totalPageCountState> 6 && pageState!==totalPageCountState && (
+                    <div className={styles['p-talents__redirect']} onClick={()=>traversePage(2)} >
+                      <p>{'>>'}</p> 
+                    </div>
+                  )}
+                </div>
+              )}
+
             </>
           )
         }

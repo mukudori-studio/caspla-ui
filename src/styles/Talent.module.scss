@@ -38,6 +38,45 @@
       letter-spacing: 1px;
     }
   }
+
+  &__pagination {
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__redirect {
+    border-radius: 50%;
+    background-color: g.$color-mono-10;
+    width: 65px;
+    height: 65px;
+    margin: 0px 10px;
+    position: relative;
+    
+    p{
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 18px;
+      text-align: center;
+    }
+    
+    @media (min-width: 1024px) {
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      margin: 0px 8px;
+      width: 30px;
+      height: 30px;
+      p{
+        font-size: 14px;
+        font-weight: 600;
+        margin-top: 3px;
+      }
+    }
+  }
 }
 
 .p-talent-detail {

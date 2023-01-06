@@ -19,7 +19,6 @@ const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 14px;
-  margin-top: 80px;
 }
 & li {
   list-style-type: none;
@@ -65,8 +64,8 @@ const PaginationWrapper = styled.div`
   }
   & li {
     a {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       font-size: 14px;
     }
     &.active {
