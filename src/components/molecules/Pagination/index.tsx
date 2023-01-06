@@ -83,7 +83,7 @@ const PaginationWrapper = styled.div`
 const Pagination = ({
   rootPath = '/',
   listLimit = 10,
-  pageRangeDisplayed = 6,
+  pageRangeDisplayed = 5,
   marginPagesDisplayed = 0,
   totalCount,
   currentNum,
