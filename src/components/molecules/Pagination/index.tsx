@@ -19,7 +19,6 @@ const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 14px;
-  margin-top: 80px;
 }
 & li {
   list-style-type: none;
@@ -65,8 +64,8 @@ const PaginationWrapper = styled.div`
   }
   & li {
     a {
-      width: 32px;
-      height: 32px;
+      width: 25px;
+      height: 25px;
       font-size: 14px;
     }
     &.active {
@@ -84,7 +83,7 @@ const PaginationWrapper = styled.div`
 const Pagination = ({
   rootPath = '/',
   listLimit = 10,
-  pageRangeDisplayed = 6,
+  pageRangeDisplayed = 5,
   marginPagesDisplayed = 0,
   totalCount,
   currentNum,
