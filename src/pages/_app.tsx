@@ -30,6 +30,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <GoogleTagManager
         googleTagManagerId={googleTagManagerId as GoogleTagManagerId}
       />
+      <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K3M3PBR" height="0" width="0" style={{"display":"none","visibility":"hidden"}}></iframe>
+      </noscript>
       <Header showMenu={isShowMenu} isTop={isTop}/>
       <div style={{ minHeight: 'calc(100% - 181px)' }} className={'wrapper'} id="root">
         <ToastContainer position="bottom-left" />
