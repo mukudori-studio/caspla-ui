@@ -176,7 +176,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="パスワード" label="password" required={true} />
-              <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数字で入力してください。" />
+              <PasswordInput id="password" register={register} error={errors?.password?.message} note="※8文字以上の半角英数字で入力してください。" />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="パスワード(確認用)" label="rePassword" required={true} />
