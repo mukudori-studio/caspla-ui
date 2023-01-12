@@ -178,13 +178,13 @@ const AccountRegistration: NextPage = () => {
                 </div>
                 <div className={styles['p-account-registration__item']}>
                   <FormLabel text="パスワード" label="password" required={true} />
-                  <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数字で入力してください。" />
+                  <PasswordInput id="password" register={register} error={errors?.password?.message} note="※8文字以上の半角英数字で入力してください。" />
                 </div>
                 <div className={styles['p-account-registration__item']}>
                   <FormLabel text="Caspla ID" label="casplaId" required={true} />
                   <div className={styles['p-account-registration__check-ids']}>
                     <div className={styles['p-account-registration__check-input']}>
-                      <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+                      <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="半角英大文字と半角数字とアンダースコアが使用できます。(4文字以上16文字以下)" />
                     </div>
                     <div className={styles['p-account-registration__check-id']}>
                       <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
