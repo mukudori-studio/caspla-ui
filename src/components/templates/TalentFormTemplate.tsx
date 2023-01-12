@@ -18,7 +18,11 @@ import starSigns from '@/utils/starSigns'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
-import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_VALIDATE_ERROR, CASPLA_ID_VERIFICATION_ERROR } from '@/stores/messageAlerts/index'
+import { 
+  CASPLA_ID_AVAILABLE, 
+  CASPLA_ID_NOT_AVAILABLE, 
+  CASPLA_ID_VERIFICATION_ERROR, 
+  CASPLA_ID_LENGTH_REQUIRED } from '@/stores/messageAlerts/index'
 import { validateCasplaId } from './../../utils/validations';
 
 type InputProps = {
@@ -164,12 +168,12 @@ const TalentFormTemplate = ({
     switch (validateCasplaId(getValues('casplaId'))) {
       case 1:
         setCheckCasplaId(false)
-        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true})  
+        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})  
         break;
-      // case 2: 
-      //   setCheckCasplaId(false)
-      //   toast.error(CASPLA_ID_VALIDATE_ERROR, { autoClose: 3000, draggable: true})
-      //   break;
+      case 2: 
+        setCheckCasplaId(false)
+        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true})
+        break;
       case 3:
         checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
           setCheckCasplaId(true)
