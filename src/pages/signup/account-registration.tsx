@@ -19,8 +19,15 @@ import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
 import createUser from '@/apis/auth/talent/createUser'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, REGISTERED_SUCCESSFULLY } from './../../stores/messageAlerts/index';
-import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CASPLA_ID_VALIDATE_ERROR } from '@/stores/messageAlerts/index';
+import { 
+  CONTACT_SYS_ADMIN, 
+  SOMETHING_WENT_WRONG, 
+  REGISTERED_SUCCESSFULLY, 
+  CASPLA_ID_AVAILABLE, 
+  CASPLA_ID_NOT_AVAILABLE, 
+  CASPLA_ID_LENGTH_REQUIRED, 
+  CASPLA_ID_VERIFICATION_ERROR} from './../../stores/messageAlerts/index';
+import { validateCasplaId } from './../../utils/validations';
 
 type InputProps = {
   fullName: string
@@ -78,9 +85,16 @@ const AccountRegistration: NextPage = ({query}:any) => {
   }
 
   const onCheckId = async () => {
-    if(getValues('casplaId').length<16 && getValues('casplaId').length>=4) {
-      const strongCasplaId = new RegExp('(?=.*[a-zA-Z])(?=.*[0-9])')
-      if(strongCasplaId.test(getValues('casplaId')) && getValues('casplaId').search(/[\W]/g)===-1) {
+    switch (validateCasplaId(getValues('casplaId'))) {
+      case 1:
+        setCheckCasplaId(false)
+        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})  
+        break;
+      case 2: 
+        setCheckCasplaId(false)
+        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true})
+        break;
+      case 3:
         checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
           setCheckCasplaId(true)
           toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
@@ -88,13 +102,9 @@ const AccountRegistration: NextPage = ({query}:any) => {
           setCheckCasplaId(false)
           toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
         })
-      } else {
-        setCheckCasplaId(false)
-        toast.error(CASPLA_ID_VALIDATE_ERROR, { autoClose: 3000, draggable: true})
-      }
-    } else {
-      setCheckCasplaId(false)
-      toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
+        break;
+      default:
+        break;
     }
   }
 
@@ -167,7 +177,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
               <FormLabel text="Caspla ID" label="casplaId" required={true} />
               <div className={styles['p-account-registration__check-ids']}>
                 <div className={styles['p-account-registration__check-input']}>
-                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} type="text" min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+                  <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} type="text" min={4} max={16} note="半角英大文字と半角数字とアンダースコアが使用できます。(4文字以上16文字以下)" />
                 </div>
                 <div className={styles['p-account-registration__check-id']}>
                   <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
@@ -176,7 +186,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="パスワード" label="password" required={true} />
-              <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数字で入力してください。" />
+              <PasswordInput id="password" register={register} error={errors?.password?.message} note="※8文字以上の半角英数字で入力してください。" />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="パスワード(確認用)" label="rePassword" required={true} />

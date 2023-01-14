@@ -88,7 +88,7 @@ const productionDetail: NextPage = () => {
                   {productionDetailState.address1!=='' && (
                     <div>
                       <p>住所</p>
-                      <p>{ `〒${productionDetailState.zipCode} ${productionDetailState.address1} ${productionDetailState.address2} ${productionDetailState.prefecture}`}</p>
+                      <p>{ `〒${productionDetailState.zipCode} ${productionDetailState.prefecture} ${productionDetailState.address1} ${productionDetailState.address2}`}</p>
                     </div>
                   )}
                   { productionDetailState.tel!=='' && (

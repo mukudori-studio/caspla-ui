@@ -19,9 +19,16 @@ import RadioButton from '@/components/atoms/Forms/RadioButton'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
-import { CASPLA_ID_AVAILABLE, CASPLA_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, CASPLA_ID_VALIDATE_ERROR, EMAIL_ALREADY_EXIST } from '@/stores/messageAlerts/index';
+import { CASPLA_ID_AVAILABLE, 
+  CASPLA_ID_NOT_AVAILABLE, 
+  CONTACT_SYS_ADMIN, 
+  SOMETHING_WENT_WRONG, 
+  EMAIL_ALREADY_EXIST, 
+  CASPLA_ID_VERIFICATION_ERROR, 
+  ACCESS_TOKEN_INACTIVE, 
+  CASPLA_ID_LENGTH_REQUIRED } from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
-import { ACCESS_TOKEN_INACTIVE } from './../../../stores/messageAlerts/index';
+import { validateCasplaId } from './../../../utils/validations';
 
 type InputProps = {
   thumbnailImage?: object
@@ -91,9 +98,16 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onCheckId = async () => {
-    if(getValues('casplaId').length<16 && getValues('casplaId').length>=4) {
-      const strongCasplaId = new RegExp('(?=.*[a-zA-Z])(?=.*[0-9])')
-      if(strongCasplaId.test(getValues('casplaId')) && getValues('casplaId').search(/[\W]/g)===-1) {
+    switch (validateCasplaId(getValues('casplaId'))) {
+      case 1:
+        setCheckCasplaId(false)
+        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})  
+        break;
+      case 2: 
+        setCheckCasplaId(false)
+        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true})
+        break;
+      case 3:
         checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
           setCheckCasplaId(true)
           toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
@@ -101,13 +115,9 @@ const AccountRegistration: NextPage = () => {
           setCheckCasplaId(false)
           toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
         })
-      } else {
-        setCheckCasplaId(false)
-        toast.error(CASPLA_ID_VALIDATE_ERROR, { autoClose: 3000, draggable: true})
-      }
-    } else {
-      setCheckCasplaId(false)
-      toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
+        break;
+      default:
+        break;
     }
   }
 
@@ -178,13 +188,13 @@ const AccountRegistration: NextPage = () => {
                 </div>
                 <div className={styles['p-account-registration__item']}>
                   <FormLabel text="パスワード" label="password" required={true} />
-                  <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数字で入力してください。" />
+                  <PasswordInput id="password" register={register} error={errors?.password?.message} note="※8文字以上の半角英数字で入力してください。" />
                 </div>
                 <div className={styles['p-account-registration__item']}>
                   <FormLabel text="Caspla ID" label="casplaId" required={true} />
                   <div className={styles['p-account-registration__check-ids']}>
                     <div className={styles['p-account-registration__check-input']}>
-                      <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="※半角英数字で入力してください。(4文字以上16文字以下)" />
+                      <Input id="casplaId" register={register} required={true} error={errors?.casplaId?.message} min={4} max={16} note="半角英大文字と半角数字とアンダースコアが使用できます。(4文字以上16文字以下)" />
                     </div>
                     <div className={styles['p-account-registration__check-id']}>
                       <Button text="IDをチェック" color="primary" size="small" weight="bold" onClick={onCheckId} disabled={watch('casplaId') === ''} />
