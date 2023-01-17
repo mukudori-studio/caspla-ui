@@ -204,7 +204,6 @@ const TalentFormTemplate = ({
 
   return (
     <div>
-      {JSON.stringify("sample")}
       <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
         <div className={styles['p-account-registration__item']}>
           <ThumbnailUploader id='thumbnailImage' onChange={onChangeThumbnail} thumbnailUrl={thumbnailImage} />
