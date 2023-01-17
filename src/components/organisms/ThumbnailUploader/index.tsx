@@ -61,7 +61,7 @@ const ThumbnailUploader = ({
         <label htmlFor={id} className={styles['o-thumbnail-upload__label']}>
           {
             thumbnailState !== '' || thumbnailImage !== '' ? (
-              <img src={thumbnailImage || thumbnailState} className={styles['o-thumbnail-upload__image']} />
+              <img src={thumbnailImage || thumbnailState} className={styles['o-thumbnail-upload__image']} onError={resetFile}/>
             ) : (
               <div className={[styles['o-thumbnail-upload__image'], styles['o-thumbnail-upload__image--empty']].join(' ')}>
                 {
