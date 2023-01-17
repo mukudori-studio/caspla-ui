@@ -36,7 +36,7 @@ const nextConfig = {
     ]
   },
   images: {
-    domains: ['caspla-files.s3.ap-northeast-1.amazonaws.com', 'caspla-demo.s3.ap-northeast-1.amazonaws.com']
+    domains: ['caspla-files.s3.ap-northeast-1.amazonaws.com', 'caspla-live.s3.ap-northeast-1.amazonaws.com']
   }
 };
 
