@@ -191,13 +191,13 @@ const TalentFormTemplate = ({
   const onChangeThumbnail = (val: any, isRemove: boolean) => {
     setValue('thumbnailImage', val)
     setThumbnailImage(isRemove?'':val)
-    changeThumbnail(true)
+    changeThumbnail(isRemove?false:true)
   }
 
   const onChangeCover = (val:any, isRemove: boolean) => {
     setValue('coverImage', val)
     setCoverImage(isRemove?'':val)
-    changeCover(true)
+    changeCover(isRemove?false:true)
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => submitForm(data)
