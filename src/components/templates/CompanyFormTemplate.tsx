@@ -23,6 +23,7 @@ import { PRODUCTION_ID_AVAILABLE, PRODUCTION_ID_NOT_AVAILABLE, COMPANY_ID_AVAILA
 type InputProps = {
   companyImage?: any
   companyName: string | undefined
+  furigana: string| undefined
   corpId: string
   zipCode: string
   prefecture: string | undefined
@@ -47,6 +48,7 @@ type registrationPorps = {
   editType?: 'register' | 'edit'
   companyImage?: any
   companyName?: string
+  furigana?: string
   corpId: string
   zipCode: string
   prefecture: string
@@ -91,6 +93,7 @@ const Signup = ({
     setValue('corpId', props.corpId)
     setValue('companyImage', props.companyImage)
     setValue('companyName', props?.companyName)
+    setValue('furigana', props?.furigana)
     setValue('zipCode', props.zipCode)
     setValue('prefecture', props.prefecture)
     setPrefecture(props.prefecture)
@@ -187,6 +190,10 @@ const Signup = ({
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="会社名" label="companyName" required={true} />
           <Input id="companyName" register={register} required={true} error={errors?.companyName?.message} />
+        </div>
+        <div className={styles['p-account-registration__item']}>
+          <FormLabel text="フリガナ" label="furigana" required={false} />
+          <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text={userType === 'production' ? 'プロダクションID' : '企業ID'} label="corpId" required={true} />

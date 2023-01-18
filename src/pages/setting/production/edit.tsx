@@ -94,6 +94,7 @@ const ProductionEdit: NextPage = () => {
               corpId={production.productionId}
               companyImage={production.companyLogo}
               companyName={production.productionName}
+              furigana={production.furigana}
               zipCode={production.zipCode}
               prefecture={production.prefecture}
               address1={production.address1}
