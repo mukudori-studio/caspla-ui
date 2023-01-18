@@ -6,6 +6,7 @@ const updateProductionDetails = async (data: any, productionId : string ) => {
     const requestBody = {
         "productionId": data.corpId,
         "productionName": data.companyName,
+        "furigana": data.furigana,
         "description": data.profile,
         "zipCode": data.zipCode,
         "prefecture": data.prefecture,
