@@ -26,8 +26,8 @@ const BookmarkedItem = (({
   }
 
   return (
-    <li className={styles['o-book-marked-item']} >
-      <div className={styles['o-book-marked-item__content']} onClick={toTalentProfile}>
+    <li className={styles['o-book-marked-item']} key={`${casplaId}`} >
+      <div className={styles['o-book-marked-item__content']} onClick={toTalentProfile} key={`${casplaId}-div`} >
         {
           thumbnailImage !== '' && thumbnailImage !== undefined ?
             (
@@ -49,7 +49,7 @@ const BookmarkedItem = (({
           <h3 className={styles['o-book-marked-item__caspla-id']}>{casplaId}</h3>
         </div>
       </div>
-      <button onClick={deleteBookmark} className={styles['o-book-marked-item__button']}>
+      <button onClick={deleteBookmark} className={styles['o-book-marked-item__button']} key={`${casplaId}-button`} >
         <FontAwesomeIcon icon={faStar} className={[styles['o-book-marked-item__star']].join(' ')} />
       </button>
     </li>
