@@ -15,7 +15,7 @@ const createProductionTalent = async (data : any ,sessionCasplaId: string ) => {
         "birthYear": birthYear,
         "birthMonth": birthMonth,
         "birthDay": birthdate,
-        "starSign": data.constellation,
+        "constellation": data.constellation,
         "birthplace": data.birthplace,
         "bloodType": data.bloodType,
         "height": data.height,

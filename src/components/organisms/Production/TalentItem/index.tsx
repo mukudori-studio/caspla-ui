@@ -34,7 +34,7 @@ const TalentItem = (({
                 <Image
                   src={thumbnailImage}
                   className={styles['o-production-talent-item__thumbnail']}
-                  objectFit="contain"
+                  objectFit="cover"
                   layout="fill"
                 />
               </div>
