@@ -153,6 +153,7 @@ const TalentDetailHeader = ({
                   onError={()=>setThumbnail('')}
                   objectFit="cover"
                   layout="fill"
+                  priority={true}
                 />
               </div>
             ) : (
