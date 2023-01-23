@@ -37,16 +37,22 @@ const TalentEdit: NextPage = () => {
         if(response_code==201) {
           if(changeCoverState) {
             updateUserPhoto(response_message.userId, "COVER", data.coverImage)
+            .then(()=>{
+              if(changeThumbnailState) {
+                updateUserPhoto(response_message.userId, 'THUMBNAIL', data.thumbnailImage)
+                .catch((err)=>console.log(err))
+              }
+            })
             .catch((err)=> console.log(err))
-          }
-          if(changeThumbnailState) {
+          } 
+          if(!changeCoverState && changeThumbnailState) {
             updateUserPhoto(response_message.userId, 'THUMBNAIL', data.thumbnailImage)
             .catch((err)=>console.log(err))
           }
           toast.success('新しいキャストが正常に作成されました。', { autoClose: 3000, draggable: true})
           setTimeout(()=>{
             Router.push('/setting/production/talents')
-          }, 3000);
+          }, 5000)
         } else if(response_code==409) {
           toast.error('ユーザーを登録できません。他のキCaspla IDをご利用ください', { autoClose: 3000, draggable: true})
         } else {
