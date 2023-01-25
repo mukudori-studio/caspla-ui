@@ -184,10 +184,12 @@ const Signup = ({
           <FormLabel text="会社名" label="companyName" required={true} />
           <Input id="companyName" register={register} required={true} error={errors?.companyName?.message} />
         </div>
-        <div className={styles['p-account-registration__item']}>
-          <FormLabel text="フリガナ" label="furigana" required={false} />
-          <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} />
-        </div>
+        { userType === 'production' && (
+          <div className={styles['p-account-registration__item']}>
+            <FormLabel text="フリガナ" label="furigana" required={false} />
+            <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} />
+          </div>
+        )}
         <div className={styles['p-account-registration__item']}>
           <FormLabel text={userType === 'production' ? 'プロダクションID' : '企業ID'} label="corpId" required={true} />
           <div className={styles['p-account-registration__ids']}>

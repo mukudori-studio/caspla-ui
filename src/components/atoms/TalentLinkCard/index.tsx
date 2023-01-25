@@ -21,7 +21,7 @@ const TalentLinkCard = ({
           <div className={styles['a-talent-link-card__thumbnail']}>
             <Image
               src={thumbnail}
-              objectFit="contain"
+              objectFit="cover"
               layout="fill"
             />
           </div>

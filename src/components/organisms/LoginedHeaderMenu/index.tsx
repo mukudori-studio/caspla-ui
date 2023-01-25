@@ -61,6 +61,8 @@ const LoginedHeaderMenu = () => {
                 src={sessionThumbnail}
                 layout="fill"
                 objectFit="cover"
+                priority={true}
+                quality={10}
               />
             </div>
           ) : (
