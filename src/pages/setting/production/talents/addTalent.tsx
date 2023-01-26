@@ -44,15 +44,16 @@ const TalentEdit: NextPage = () => {
               }
             })
             .catch((err)=> console.log(err))
+          } else {
+            if(changeThumbnailState) {
+              updateUserPhoto(response_message.userId, 'THUMBNAIL', data.thumbnailImage)
+              .catch((err)=>console.log(err))
+            }
           } 
-          if(!changeCoverState && changeThumbnailState) {
-            updateUserPhoto(response_message.userId, 'THUMBNAIL', data.thumbnailImage)
-            .catch((err)=>console.log(err))
-          }
-          toast.success('新しいキャストが正常に作成されました。', { autoClose: 3000, draggable: true})
           setTimeout(()=>{
+            toast.success('新しいキャストが正常に作成されました。', { autoClose: 3000, draggable: true})
             Router.push('/setting/production/talents')
-          }, 5000)
+          }, 10000)
         } else if(response_code==409) {
           toast.error('ユーザーを登録できません。他のキCaspla IDをご利用ください', { autoClose: 3000, draggable: true})
         } else {
