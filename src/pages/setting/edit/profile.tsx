@@ -40,17 +40,6 @@ const Dashboard: NextPage = () => {
   const onChangeCover = () => setChangeCover(true)
 
   const updateForm = (data: any) => {
-    if (changeThumbnailState) {
-      updateUserPhoto(session.userId, "THUMBNAIL", data.thumbnailImage)
-        .then(({response_message})=>setThumbnail(response_message))
-        .catch((error)=> console.log(error))
-    }
-
-    if (changeCoverState) {
-      updateUserPhoto(session.userId, "COVER", data.coverImage)
-        .catch((error) => console.log(error))
-    }
-    
     updateProfile(session.casplaId, data).then(({response_message}:any) => {
       setSession({
         userId : session.userId,
@@ -61,7 +50,24 @@ const Dashboard: NextPage = () => {
         companyName: session.productionName,
         isAdmin: session.productionAdmin
       })
-      toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
+      if (changeThumbnailState) {
+        updateUserPhoto(session.userId, "THUMBNAIL", data.thumbnailImage)
+          .then(({response_message})=>{ 
+            setThumbnail(data.thumbnailImage.type?response_message:'')
+            if (changeCoverState) {
+              updateUserPhoto(session.userId, "COVER", data.coverImage)
+                .then(()=>toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true}))
+                .catch((error) => console.log(error))
+            } else toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
+          })
+          .catch((error)=> console.log(error))
+      } else {
+        if (changeCoverState) {
+          updateUserPhoto(session.userId, "COVER", data.coverImage)
+            .then(()=>toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true}))
+            .catch((error) => console.log(error))
+        } else toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
+      }
     }).catch(() => {
       toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
     })
