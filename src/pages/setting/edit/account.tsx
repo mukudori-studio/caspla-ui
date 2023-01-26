@@ -52,7 +52,7 @@ const AccountRegistration: NextPage = () => {
   const [loading, setLoading] = useState(true)
   const [session, setSession] = useRecoilState(userAtom)
   const accessToken = useRecoilValue(accessTokenAtom)
-  const sessionThumbnail = useSetRecoilState(thumbnailAtom)
+  const setSessionThumbnail = useSetRecoilState(thumbnailAtom)
   const { register, watch, handleSubmit, formState: { errors }, getValues, setValue } = useForm<InputProps>()
 
   useEffect(() => {
@@ -132,33 +132,35 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    if (changeThumbnailState) {
-      updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
-        sessionThumbnail(res.response_message)
-      }).catch((err) => console.log(err))
-    }
     updateAccount(session.casplaId, data)
-      .then((res) => {
-        setSession({
-          userId: session.userId,
-          role: session.role,
-          casplaId: res.data.response_message.casplaId,
-          fullName: res.data.response_message.fullName,
-          companyId: session.companyId,
-          companyName: session.companyName,
-          isAdmin: session.isAdmin
-        })
-        toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-      }).catch((err) => {
-        if(err.response.data){
-          if(err.response.data.response_code == 400) {
-            toast.error(EMAIL_ALREADY_EXIST, { autoClose: 3000, draggable: true})
-          }
-        } else {
-          console.log(err)
-          toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
-        }
+    .then((res) => {
+      setSession({
+        userId: session.userId,
+        role: session.role,
+        casplaId: res.data.response_message.casplaId,
+        fullName: res.data.response_message.fullName,
+        companyId: session.companyId,
+        companyName: session.companyName,
+        isAdmin: session.isAdmin
       })
+      if (changeThumbnailState) {
+        updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
+          setSessionThumbnail(thumbnailState.type?res.response_message:'')
+          toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+        }).catch((err) => console.log(err))
+      } else {
+        toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+      }
+    }).catch((err) => {
+      if(err.response.data){
+        if(err.response.data.response_code == 400) {
+          toast.error(EMAIL_ALREADY_EXIST, { autoClose: 3000, draggable: true})
+        }
+      } else {
+        console.log(err)
+        toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
+      }
+    })
   }
 
   return (
