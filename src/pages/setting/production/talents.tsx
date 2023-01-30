@@ -12,13 +12,14 @@ import buttonStyles from '@/styles/components/atoms/Button.module.scss'
 import removeProductionTalents from '@/apis/productions/removeProductionTalents'
 import { SOMETHING_WENT_WRONG } from './../../../stores/messageAlerts/index';
 import Router from 'next/router'
+import Loading from '@/components/atoms/Loading'
 
 const BelongTalents: NextPage = () => {
 
   const [checkedTalentState, setCheckedTalent] = useState<any>([])
   const session = useRecoilValue(userAtom)
   const [talents, setTalent] = useState([])
-  
+  const [loading, setLoading ] = useState(true)
 
   useEffect(() => {
     if (session.companyId === undefined) {
@@ -26,6 +27,7 @@ const BelongTalents: NextPage = () => {
     } else {
       getProductionDetailTalents(session.companyId).then(res => {
         setTalent(res.response_message)
+        setLoading(false);
       }).catch(() => {
         toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
         Router.back()
@@ -88,8 +90,9 @@ const BelongTalents: NextPage = () => {
           </div>
         </div>
         <div className={styles['p-production-setting__talents']}>
+          { loading && <Loading /> }
           {
-            talents.length > 0 ? (
+            talents.length > 0 && !loading ? (
               <>
                 {
                   talents.map((talent: any) => {
@@ -97,7 +100,7 @@ const BelongTalents: NextPage = () => {
                   })
                 }
               </>
-            ) : (
+            ) :  !loading && (
               <div className={styles['p-production-setting__no-talent']}>所属するタレントはいません。<br />「タレント追加」から所属するタレントを追加しましょう。</div>
             )
           }

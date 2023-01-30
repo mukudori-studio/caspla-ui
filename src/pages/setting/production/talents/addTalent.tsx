@@ -35,25 +35,23 @@ const TalentEdit: NextPage = () => {
     createProductionTalent(data, session.casplaId)
       .then(({response_code, response_message})=>{
         if(response_code==201) {
-          if(changeCoverState) {
-            updateUserPhoto(response_message.userId, "COVER", data.coverImage)
+          if(changeThumbnailState) {
+            updateUserPhoto(response_message.userId, 'THUMBNAIL', data.thumbnailImage)
             .then(()=>{
-              if(changeThumbnailState) {
-                updateUserPhoto(response_message.userId, 'THUMBNAIL', data.thumbnailImage)
-                .catch((err)=>console.log(err))
+              if(changeCoverState) {
+                updateUserPhoto(response_message.userId, "COVER", data.coverImage)
+                .catch((err)=> console.log(err))
               }
             })
-            .catch((err)=> console.log(err))
+            .catch((err)=>console.log(err))
           } else {
-            if(changeThumbnailState) {
-              updateUserPhoto(response_message.userId, 'THUMBNAIL', data.thumbnailImage)
-              .catch((err)=>console.log(err))
+            if(changeCoverState) {
+              updateUserPhoto(response_message.userId, "COVER", data.coverImage)
+              .catch((err)=> console.log(err))
             }
-          } 
-          setTimeout(()=>{
-            toast.success('新しいキャストが正常に作成されました。', { autoClose: 3000, draggable: true})
-            Router.push('/setting/production/talents')
-          }, 10000)
+          }
+          toast.success('新しいキャストが正常に作成されました。', { autoClose: 3000, draggable: true})
+          Router.push('/setting/production/talents')
         } else if(response_code==409) {
           toast.error('ユーザーを登録できません。他のキCaspla IDをご利用ください', { autoClose: 3000, draggable: true})
         } else {
