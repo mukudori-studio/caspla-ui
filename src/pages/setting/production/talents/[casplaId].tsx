@@ -12,7 +12,8 @@ import styles from '@/styles/ProductionSetting.module.scss'
 import { toast } from 'react-toastify'
 import putProductionTalent from '@/apis/settings/production/putTalent'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { SOMETHING_WENT_WRONG, ACCESS_TOKEN_INACTIVE } from './../../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, ACCESS_TOKEN_INACTIVE, NOT_ALLOWED_TO_UPDATE_TALENT, SAVED_CHANGES } from './../../../../stores/messageAlerts/index';
+import Loading from '@/components/atoms/Loading'
 
 
 const TalentEdit: NextPage = () => {
@@ -34,7 +35,15 @@ const TalentEdit: NextPage = () => {
       getTalentDetail(session.casplaId, casplaId).then(res => {
         setTalent(res.response_message.castDetails)
       })
-      .catch((err)=> console.log(err))
+      .catch((err)=> {
+        if(err.response) {
+          if(err.response.status === 403) {
+            toast.error(NOT_ALLOWED_TO_UPDATE_TALENT, { autoClose: 3000, draggable: true}) 
+            setTimeout(()=>Router.back(),2500)
+          }
+        }
+        console.log(err)
+      })
     } else {
       toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
       Router.push('/signin')
@@ -49,28 +58,37 @@ const TalentEdit: NextPage = () => {
   },[talentState])
 
   const onUpdateProfile = (data:any) => {
-      if(changeCoverState) {
-        updateUserPhoto(talentState.userId, "COVER", data.coverImage)
-        .catch((err)=> console.log(err))
-      }
+    putProductionTalent(talentState.casplaId, data, session.casplaId)
+    .then(()=>{
       if(changeThumbnailState) {
         updateUserPhoto(talentState.userId, 'THUMBNAIL', data.thumbnailImage)
+        .then(() => {
+          if(changeCoverState) {
+            updateUserPhoto(talentState.userId, "COVER", data.coverImage)
+            .catch((err)=> console.log(err))
+          }
+        })
         .catch((err)=>console.log(err))
+      } else {
+        if(changeCoverState) {
+          updateUserPhoto(talentState.userId, "COVER", data.coverImage)
+          .catch((err)=> console.log(err))
+        }
       }
-      putProductionTalent(talentState.casplaId, data, session.casplaId)
-        .then((res)=>{
-          toast.success('タレントの詳細が正常に更新されました。', { autoClose: 3000, draggable: true})
-        })
-        .catch((err)=> {
-          console.log(err)
-          toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
-        })
+      setTimeout(()=>toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true}),4000) 
+    })
+    .catch((err)=> {
+      console.log(err)
+      toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
+    })
   }
 
   return (
     <>
+    <main className={styles['p-production-setting']}>
+    { !talentState.casplaId && <Loading />}
     {talentState.casplaId && talentState !== false && (
-      <main className={styles['p-production-setting']}>
+      <>
         <Meta title="プロダクション管理" />
         <section className={styles['p-production-setting__content']}>
           <header className={styles['p-production-setting__head']}>
@@ -130,8 +148,9 @@ const TalentEdit: NextPage = () => {
             />
           </div>
         </section>
-      </main>
+      </>
     )}
+    </main>
     </>
   )
 }
