@@ -54,7 +54,7 @@ const Footer = () => {
               </a>
             </li> */}
             <li>
-              <a className={styles['o-footer__social']} href="" target="_blank">
+              <a className={styles['o-footer__social']} href="https://twitter.com/FindAuditions" target="_blank">
                 <FontAwesomeIcon icon={faTwitter} className={styles['o-footer__icon']} />
               </a>
             </li>
