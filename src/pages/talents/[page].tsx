@@ -40,7 +40,7 @@ const Talents: NextPage = (props:any) => {
 
   useEffect(() => {
     getTalents({
-      pageId: pageState,
+      pageId: props.query.page,
       keyword: keywordState,
       activity: activityState,
       age: ageState,
@@ -63,21 +63,8 @@ const Talents: NextPage = (props:any) => {
     })
   }, [props])
 
-  useEffect(()=>{
-    router.beforePopState(({ url, as, options }) => {
-      if(as.substring(9).split("?")[0]) {
-        setPage(as.substring(9).split("?")[0])
-        return true
-      }
-      Router.push(`/top`);
-      return false
-    })
-  },[props.query.page])
-
   const onSearch = async (value:any) => {
-
     setLoading(true)
-
     setPage(1)
     setKeyword(value.keyword)
     setActivity(value.activity)
@@ -113,7 +100,7 @@ const Talents: NextPage = (props:any) => {
   }
 
   const traversePage = (value:number) => {
-    onChangePagination(value!==1?totalPageCountState-1:0)
+    onChangePagination(value)
   }
 
   return (
@@ -153,13 +140,13 @@ const Talents: NextPage = (props:any) => {
               {totalPageCountState > 1 && (
                 <div className={styles['p-talents__pagination']}>
                   { pageState !== 1 && totalPageCountState > 5 && (
-                    <div className={styles['p-talents__redirect']} onClick={()=>traversePage(1)}>
+                    <div className={styles['p-talents__redirect']} onClick={()=>traversePage(0)}>
                       <p>{'<<'}</p> 
                     </div>
                   )}
                   <Pagination totalCount={totalPageCountState} currentNum={pageState} onChangePagination={onChangePagination} />
                   {totalPageCountState > 5 && pageState!==totalPageCountState && (
-                    <div className={styles['p-talents__redirect']} onClick={()=>traversePage(2)} >
+                    <div className={styles['p-talents__redirect']} onClick={()=>traversePage(totalPageCountState-1)} >
                       <p>{'>>'}</p> 
                     </div>
                   )}
