@@ -13,9 +13,7 @@ type BookMarkProps = {
 
 const BookMark = React.forwardRef<Ref, BookMarkProps>(({ checked = false, changeBookmark }, ref) => {
   return (
-    <button
-      type='button'
-      ref={ref}
+    <a
       className={styles['a-book-mark']}
       onClick={changeBookmark}
     >
@@ -26,7 +24,7 @@ const BookMark = React.forwardRef<Ref, BookMarkProps>(({ checked = false, change
           <FontAwesomeIcon icon={faRegularStar} className={styles['a-book-mark__icon']} />
         )
       }
-    </button>
+    </a>
   );
 });
 
