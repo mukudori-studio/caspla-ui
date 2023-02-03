@@ -25,9 +25,9 @@ const TalentDetail: NextPage = (props) => {
 
     if(casplaId === undefined) return
     
-    getTalentDetail(casplaId, session.casplaId).then(({response_message}) => {
-      setTalentDetail(response_message.castDetails)
-    }).catch(() => {
+    getTalentDetail(casplaId, session.casplaId)
+    .then(({response_message}) =>  setTalentDetail(response_message.castDetails))
+    .catch(() => {
       Router.push('/talents/1')
       toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
     })
