@@ -23,7 +23,7 @@ const CommonMeta = ({
 
   return (
     <Head>
-      {/* <title>{titleState}</title>
+      <title>{titleState}</title>
       <meta property="description" content="Caspla(キャスプラ)はあなたのキャスティングを手助けするタレントデータベース。好きな条件を入れて検索してみよう!" />
       <meta property="og:title" content="Caspla(キャスプラ)" />
       <meta property="og:description" content="Caspla(キャスプラ)はあなたのキャスティングを手助けするタレントデータベース。好きな条件を入れて検索してみよう!" />
@@ -33,7 +33,7 @@ const CommonMeta = ({
       <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
       <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
       <link rel="manifest" href="/favicon/site.webmanifest" />
-      <meta name="google-site-verification" content="dgc1qCNM773YTQltr6Hw7MkTRlu00kmGXaV5AjBLT2Y" /> */}
+      <meta name="google-site-verification" content="dgc1qCNM773YTQltr6Hw7MkTRlu00kmGXaV5AjBLT2Y" />
     </Head>
   )
 }
