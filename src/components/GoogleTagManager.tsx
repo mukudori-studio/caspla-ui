@@ -11,7 +11,7 @@ const GoogleTagManager = ({ googleTagManagerId }: tagManagerProps) => {
   return (
     <Script
       id="gtm"
-      strategy="beforeInteractive"
+      strategy="afterInteractive"
       dangerouslySetInnerHTML={{
         __html: `
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
