@@ -45,7 +45,7 @@ const Header = ({
   return (
     <header className={headerStyle}>
       <div className={styles['o-header__left']}>
-        <Link href={'/top'}>
+        <Link href={'/'}>
           <a className={logoLinkStyle}>
             <Image
               src='/common/logo.svg'

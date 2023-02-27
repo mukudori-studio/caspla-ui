@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [isTop, setTop] = useState(false)
 
   useEffect(() => {
-    if( Router.pathname === "/top" ) {
+    if( Router.pathname === "/" ) {
       setShowMenu(false)
       setTop(true)
     } else {
