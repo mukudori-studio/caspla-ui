@@ -24,6 +24,11 @@ const nextConfig = {
       }
     ] : [
       {
+        source: '/top',
+        destination: '/',
+        permanent: true,
+      },
+      {
         source: '/talents',
         destination: '/talents/1',
         permanent: true,
