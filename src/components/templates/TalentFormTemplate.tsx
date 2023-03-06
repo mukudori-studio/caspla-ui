@@ -134,7 +134,6 @@ const TalentFormTemplate = ({
     setValue('waist', props.waist)
     setValue('hip', props.hip)
     setValue('footSize', props.footSize)
-    setValue('profile', props.profile)
     setValue('siteUrl', props.siteUrl)
     setValue('blogUrl', props.blogUrl)
     setValue('twitterId', props.twitterId)
@@ -304,7 +303,7 @@ const TalentFormTemplate = ({
           <Textarea id="history" register={register} error={errors?.history?.message} />
         </div>
         <div className={styles['p-account-registration__item']}>
-          <FormLabel text="その他" label="note" />
+          <FormLabel text="備考" label="note" />
           <Textarea id="note" register={register} error={errors?.note?.message} />
         </div>
         <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>

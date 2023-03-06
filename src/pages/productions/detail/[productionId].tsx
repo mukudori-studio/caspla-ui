@@ -29,7 +29,7 @@ const productionDetail: NextPage = () => {
       setProductionTalent(users)
     }).catch(err => {
       console.log(err)
-      Router.push('/top')
+      Router.push('/')
       toast.error('プロダクション情報の取得に失敗しました。', { autoClose: 3000, draggable: true})
     }).finally(() => {
       setLoading(false)

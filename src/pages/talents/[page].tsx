@@ -59,7 +59,7 @@ const Talents: NextPage = (props:any) => {
     .catch((err)=> {
       console.log(err)
       toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
-      Router.push('/top')
+      Router.push('/')
     })
   }, [props])
 

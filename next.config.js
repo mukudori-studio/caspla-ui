@@ -24,8 +24,8 @@ const nextConfig = {
       }
     ] : [
       {
-        source: '/',
-        destination: '/top',
+        source: '/top',
+        destination: '/',
         permanent: true,
       },
       {

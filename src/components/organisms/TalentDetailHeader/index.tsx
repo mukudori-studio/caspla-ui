@@ -66,6 +66,14 @@ const TalentDetailHeader = ({
   const popOverStyle = showMenu ? [styles['o-talent-detail-header__bookmark-popover'], styles['o-talent-detail-header__bookmark-popover--show']].join(' ') : styles['o-talent-detail-header__bookmark-popover']
   const hideBookmarkMenu = () => setShowMenu(false)
 
+  useEffect(()=> {
+    if(showMenu) {
+      setTimeout(()=>{
+        hideBookmarkMenu();
+      },3000)
+    }
+  },[showMenu])
+
   useEffect(() => {
     const ua = window.navigator.userAgent.toLowerCase()
     if(!ua || ua === '') {
