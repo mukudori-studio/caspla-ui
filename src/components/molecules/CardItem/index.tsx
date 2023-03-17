@@ -1,4 +1,4 @@
-import React, { useState }from 'react'
+import React, { useEffect }from 'react'
 import Router from 'next/router'
 import Image from 'next/image'
 import BookMark from '@/components/atoms/BookMark'
@@ -54,6 +54,11 @@ const CardItem = ({
   const [showMenu, setShowMenu] = React.useState(withBookmark)
   const openBookmarkMenu = () => setShowMenu(true)
   const hideBookmarkMenu = () => setShowMenu(false)
+  useEffect(() => {
+    if(showMenu) {
+      setTimeout(() => hideBookmarkMenu(), 3000)
+    }
+  }, [showMenu]);
   const popOverStyle = showMenu ? [styles['m-card-item__bookmark-popover'], styles['m-card-item__bookmark-popover--show']].join(' ') : styles['m-card-item__bookmark-popover']
 
   const changeBookmarkStatus = ((e: any) => {
