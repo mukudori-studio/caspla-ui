@@ -51,7 +51,7 @@ const CardItem = ({
   const [flag, setFlag] = React.useState(withBookmark)
   const [thumbnailImage, setThumbnailImage] = React.useState(thumbnail);
 
-  const [showMenu, setShowMenu] = React.useState(withBookmark)
+  const [showMenu, setShowMenu] = React.useState(false)
   const openBookmarkMenu = () => setShowMenu(true)
   const hideBookmarkMenu = () => setShowMenu(false)
   useEffect(() => {
