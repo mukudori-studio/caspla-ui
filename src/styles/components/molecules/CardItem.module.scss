@@ -1,137 +1,146 @@
 @use '../../global' as g;
-
 .m-card-item {
-  width: 100%;
-  background: transparent;
-  outline: 0;
-  transition: .2s;
-  cursor: pointer;
-
-  &:active {
-    opacity: .8;
-  }
-
-  @include g.mq-up(tablet-pc) {
-    &:hover {
-      opacity: .8;
-    }
-  }
-
-  &__content {
-    display: grid;
-    grid-template:
-      "thumbnail . ." 4px
-      "thumbnail . head" auto
-      "thumbnail . ." 20px
-      "thumbnail . profile" auto
-      "thumbnail . ." auto/ 146px 30px auto;
-    background: g.$color-mono-5;
-    border-radius: 10px;
-    padding: 20px 30px;
-    position: relative;
-
-    @include g.mq-down(tablet--under) {
-      padding: 10px 16px;
-      grid-template:
-        "thumbnail . head" auto/ 60px 10px 1fr;
-      align-items: center;
-    }
-  }
-
-  &__thumbnail {
-    width: 146px;
-    height: 146px;
-    object-fit: cover;
-    display: block;
-    background: #CFD2D7;
-    border-radius: 100%;
-    grid-area: thumbnail;
-    position: relative;
-    overflow: hidden;
-    top:50%;
-    transform: translate(0%, -50%);
-
-    @include g.mq-down(tablet--under) {
-      width: 60px;
-      height: 60px;
-    }
-  }
-
-  &__head {
-    flex: 1 0 0;
-    position: relative;
-    grid-area: head;
-  }
-
-  &__bookmark {
-    position: relative;
-    z-index: 10;
+    width: 100%;
+    background: transparent;
+    outline: 0;
     transition: .2s;
-
+    cursor: pointer;
     &:active {
-      transform: scale(.98);
-    }
-
-    @include g.mq-up(tablet-pc) {
-      &:hover {
         opacity: .8;
-      }
     }
-  }
-
-  &__name {
-    @include g.line-clamp(1);
-    overflow: hidden;
-    font-size: 24px;
-    color: g.$color-mono-80;
-    letter-spacing: 2.4px;
-    line-height: 1.1;
-    margin: 0;
-    text-align: left;
-
-    @include g.mq-down(tablet--under) {
-      font-size: 18px;
-      letter-spacing: 1.8px;
+    @include g.mq-up(tablet-pc) {
+        &:hover {
+            opacity: .8;
+        }
     }
-  }
-
-  &__sub {
-    @include g.line-clamp(1);
-    overflow: hidden;
-    margin-top: 12px;
-    text-align: left;
-    font-size: 16px;
-    letter-spacing: 1.6px;
-    color: rgba(16, 33, 56, 0.5);
-    line-height: 1.1;
-
-    @include g.mq-down(tablet--under) {
-      font-size: 14px;
-      letter-spacing: 1.4px;
-      margin-top: 6px;
+    &__content {
+        display: grid;
+        grid-template: "thumbnail . ." 4px "thumbnail . head" auto "thumbnail . ." 20px "thumbnail . profile" auto "thumbnail . ." auto/ 146px 30px auto;
+        background: g.$color-mono-5;
+        border-radius: 10px;
+        padding: 20px 30px;
+        position: relative;
+        @include g.mq-down(tablet--under) {
+            padding: 10px 16px;
+            grid-template: "thumbnail . head" auto/ 60px 10px 1fr;
+            align-items: center;
+        }
     }
-  }
-
-  &__profile {
-    grid-area: profile;
-    @include g.line-clamp(3);
-    font-size: 14px;
-    letter-spacing: 1px;
-    line-height: 1.6;
-    text-align: left;
-    margin: 0;
-    overflow: hidden;
-    white-space: pre-line;
-
-    @include g.mq-down(tablet--under) {
-      display: none;
+    &__thumbnail {
+        width: 146px;
+        height: 146px;
+        object-fit: cover;
+        display: block;
+        background: #CFD2D7;
+        border-radius: 100%;
+        grid-area: thumbnail;
+        position: relative;
+        overflow: hidden;
+        top: 50%;
+        transform: translate(0%, -50%);
+        @include g.mq-down(tablet--under) {
+            width: 60px;
+            height: 60px;
+        }
     }
-  }
-  &__activities {
-    display: block;
-
-    &-star-mark {
-      float: right;
+    &__head {
+        flex: 1 0 0;
+        position: relative;
+        grid-area: head;
     }
-  }
+    &__bookmark {
+        position: relative;
+        z-index: 10;
+        transition: .2s;
+        &:active {
+            transform: scale(.98);
+        }
+        @include g.mq-up(tablet-pc) {
+            &:hover {
+                opacity: .8;
+            }
+        }
+    }
+    &__name {
+        @include g.line-clamp(1);
+        overflow: hidden;
+        font-size: 24px;
+        color: g.$color-mono-80;
+        letter-spacing: 2.4px;
+        line-height: 1.1;
+        margin: 0;
+        text-align: left;
+        @include g.mq-down(tablet--under) {
+            font-size: 18px;
+            letter-spacing: 1.8px;
+        }
+    }
+    &__sub {
+        @include g.line-clamp(1);
+        overflow: hidden;
+        margin-top: 12px;
+        text-align: left;
+        font-size: 16px;
+        letter-spacing: 1.6px;
+        color: rgba(16, 33, 56, 0.5);
+        line-height: 1.1;
+        @include g.mq-down(tablet--under) {
+            font-size: 14px;
+            letter-spacing: 1.4px;
+            margin-top: 6px;
+        }
+    }
+    &__profile {
+        grid-area: profile;
+        @include g.line-clamp(3);
+        font-size: 14px;
+        letter-spacing: 1px;
+        line-height: 1.6;
+        text-align: left;
+        margin: 0;
+        overflow: hidden;
+        white-space: pre-line;
+        @include g.mq-down(tablet--under) {
+            display: none;
+        }
+    }
+    &__activities {
+        display: block;
+        &-star-mark {
+            float: right;
+        }
+    }
+    &__bookmark-popover {
+        opacity: 0;
+        visibility: hidden;
+        transition: .2s;
+        width: 300px;
+        position: absolute;
+        right: -8px;
+        top: 100%;
+        &--show {
+            opacity: 1;
+            visibility: visible;
+        }
+        @include g.mq-down(tablet) {
+            width: 220px;
+        }
+    }
+    &__list {
+        text-align: center;
+        padding: 10px 10px;
+        li {
+            &:not(:first-of-type) {
+                margin-top: 15px;
+            }
+        }
+        &--button {
+            padding: 5px 0;
+            background-color: g.$color-mono-60;
+            color: g.$color-mono-0;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 20px;
+        }
+    }
 }
