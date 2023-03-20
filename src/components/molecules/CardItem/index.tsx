@@ -79,6 +79,12 @@ const CardItem = ({
     }
   })
 
+  const gotoBookmarks = (e: any) => {
+    e.stopPropagation();
+    hideBookmarkMenu();
+    Router.push('/bookmarks')
+  }
+
   return (
     <button type="button" onClick={toDetail} className={styles['m-card-item']}>
       <div className={styles['m-card-item__content']}>
@@ -108,7 +114,7 @@ const CardItem = ({
                 <PopOver>
                   <div className={styles['m-card-item__list']}>
                     <h4 style={{margin:0}}>ブックマークに登録しました！</h4>
-                    <Link href="/bookmarks" ><a onClick={hideBookmarkMenu} className={styles['m-card-item__list--button']}>ブックマークを見る</a></Link>
+                    <button onClick={gotoBookmarks} className={styles['m-card-item__list--button']}>ブックマークを見る</button>
                   </div>
                 </PopOver>
               </div>
