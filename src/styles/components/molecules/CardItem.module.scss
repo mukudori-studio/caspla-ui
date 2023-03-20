@@ -135,12 +135,15 @@
             }
         }
         &--button {
+            width: 100%;
             padding: 5px 0;
             background-color: g.$color-mono-60;
             color: g.$color-mono-0;
             font-weight: bold;
             text-decoration: none;
             border-radius: 20px;
+            margin: auto;
+            cursor: pointer;
         }
     }
 }
