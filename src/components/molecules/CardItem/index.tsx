@@ -1,4 +1,4 @@
-import React, { useState }from 'react'
+import React, { useEffect }from 'react'
 import Router from 'next/router'
 import Image from 'next/image'
 import BookMark from '@/components/atoms/BookMark'
@@ -10,6 +10,8 @@ import { useRecoilValue } from 'recoil';
 import { toast } from 'react-toastify'
 import changeBookmark from './../../../apis/bookmarks/changeBookmark';
 import { userAtom } from './../../../stores/Session/index';
+import PopOver from '@/components/molecules/Popover';
+import Link from 'next/link'
 
 interface CardItemProps {
   type?: 'cast' | 'agient';
@@ -49,11 +51,25 @@ const CardItem = ({
   const [flag, setFlag] = React.useState(withBookmark)
   const [thumbnailImage, setThumbnailImage] = React.useState(thumbnail);
 
+  const [showMenu, setShowMenu] = React.useState(false)
+  const openBookmarkMenu = () => setShowMenu(true)
+  const hideBookmarkMenu = () => setShowMenu(false)
+  useEffect(() => {
+    if(showMenu) {
+      setTimeout(() => hideBookmarkMenu(), 3000)
+    }
+  }, [showMenu]);
+  const popOverStyle = showMenu ? [styles['m-card-item__bookmark-popover'], styles['m-card-item__bookmark-popover--show']].join(' ') : styles['m-card-item__bookmark-popover']
+
   const changeBookmarkStatus = ((e: any) => {
     e.stopPropagation()
     if(accessToken!=='') {
       changeBookmark(casplaId, session.casplaId)
         .then(({response_message})=> {
+          if(response_message){
+            openBookmarkMenu()
+            setTimeout(() => hideBookmarkMenu(), 3000)
+          }
           setFlag(response_message)
         })
         .catch((err)=> console.log(err))
@@ -62,6 +78,12 @@ const CardItem = ({
       Router.push('/signin')
     }
   })
+
+  const gotoBookmarks = (e: any) => {
+    e.stopPropagation();
+    hideBookmarkMenu();
+    Router.push('/bookmarks')
+  }
 
   return (
     <button type="button" onClick={toDetail} className={styles['m-card-item']}>
@@ -87,6 +109,16 @@ const CardItem = ({
               activity.length > 0 && (<LabelTexts texts={formattedActivity} />)
             } */}
             <BookMark checked={flag} changeBookmark={changeBookmarkStatus} />
+            { accessToken !== '' && showMenu && (
+              <div className={popOverStyle}>
+                <PopOver>
+                  <div className={styles['m-card-item__list']}>
+                    <h4 style={{margin:0}}>ブックマークに登録しました！</h4>
+                    <button onClick={gotoBookmarks} className={styles['m-card-item__list--button']}>ブックマークを見る</button>
+                  </div>
+                </PopOver>
+              </div>
+            )}
           </div>
           {
             (type === 'cast' && casplaId !== '') && (
