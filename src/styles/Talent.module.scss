@@ -21,7 +21,7 @@
   }
 
   &__search-results {
-    color: g.$color-mono-20;
+    color: g.$color-mono-30;
     margin: 10px 0;
   }
 
@@ -30,7 +30,7 @@
     color: g.$color-mono-100;
     border: 1px solid g.$color-mono-30;
     font-weight: bold;
-    padding: 10px 15px;
+    padding: 10px 20px;
     border-radius: 5px;
     margin: 0 0 30px;
 
@@ -47,34 +47,39 @@
   }
 
   &__redirect {
+    display: block;
     border-radius: 50%;
-    background-color: g.$color-mono-10;
+    background: g.$color-mono-0;
+    border: 1px solid g.$color-mono-100;
     width: 65px;
     height: 65px;
-    margin: 0px 10px;
+    margin: 0px 15px;
+    padding: 18px 10px;
+    text-align: center;
     position: relative;
+    cursor: pointer;
 
-    p{
-      cursor: pointer;
+    p {
+      display: inline;
       font-weight: bold;
-      margin-top: 18px;
-      text-align: center;
+      font-size: 24px;
+      line-height: 1;
     }
 
-    @media (min-width: 1024px) {
-      &:hover {
-        opacity: 0.8;
-      }
+    &:hover {
+      opacity: .75;
     }
 
-    @media (max-width: 600px) {
+    @include g.mq-down(tablet--under) {
       margin: 0px 8px;
+      padding: 1px 8px;
       width: 25px;
       height: 25px;
-      p{
+
+      p {
         font-size: 14px;
-        font-weight: 600;
-        margin-top: 1px;
+        // font-weight: 600;
+        // margin-top: 1px;
       }
     }
   }
