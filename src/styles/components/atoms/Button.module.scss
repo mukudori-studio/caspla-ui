@@ -8,7 +8,7 @@
   text-decoration: none;
   text-align: center;
   cursor: pointer;
-  transition: .2s;
+  transition: .3s;
 
   &:hover, &:active {
     background: g.$color-mono-20;
@@ -17,8 +17,8 @@
 
   // Size
   &--small {
-    padding: 6px 4px;
-    font-size: 14px;
+    padding: 8px 4px;
+    font-size: 12px;
     font-weight: normal;
   }
 
@@ -40,6 +40,31 @@
   &--secondary {
     background: g.$color-secondary;
     color: g.$color-primary;
+  }
+  &--outline {
+    &-primary {
+      background: g.$color-secondary;
+      color: g.$color-primary;
+      border: 1px solid g.$color-primary;
+      &:hover,
+      &:active {
+        background: g.$color-secondary;
+        color: g.$color-primary;
+        opacity: .75;
+      }
+    }
+    &-mono {
+      background: g.$color-mono-10;
+      color: g.$color-mono-100;
+      border: 1px solid g.$color-mono-100;
+
+      &:hover,
+      &:active {
+        background: g.$color-mono-10;
+        color: g.$color-mono-100;
+        opacity: .75;
+      }
+    }
   }
   &--mono {
     &-primary {

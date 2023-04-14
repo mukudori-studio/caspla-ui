@@ -18,9 +18,9 @@ const SearchBar = ({
   onClick,
   onClearClick
 }:SearchBarProps) => {
-  
+
   const [stateKeyword, setKeyword] = useState('')
-  
+
   const handleInputKeyoword = (e: any) => setKeyword(e.target.value)
 
   const pressEnter = (e: { key: string }) => e.key === 'Enter' && onSearch()
@@ -30,14 +30,14 @@ const SearchBar = ({
     setKeyword('')
     onClearClick()
   }
-  
+
   useEffect(() => {
     if (Router.query.keyword === undefined) return
     const inputedKeyword:any = Router.query?.keyword
     setKeyword(inputedKeyword)
   }, [])
 
-  const inputColor = color === 'white' ? [styles['m-search-keyword__input'], styles['m-search-keyword__input--white']].join(' ') : styles['m-search-keyword__input']
+  const inputColor = color === 'white' ? styles['m-search-keyword__input'] : styles['m-search-keyword__input']
 
   return (
     <div className={styles['m-search-keyword']}>
@@ -53,7 +53,7 @@ const SearchBar = ({
             placeholder={placeholder}
             onKeyPress={pressEnter}
             onChange={(e) => handleInputKeyoword(e)}
-        /> 
+        />
       </div>
       <div className={styles['m-search-keyword__search']}>
         <button className={[styles['m-search-keyword__button'], buttonStyles['a-button'], buttonStyles['a-button--primary']].join(' ')} onClick={onSearch}>この条件で再検索</button>
