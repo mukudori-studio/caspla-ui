@@ -7,7 +7,7 @@
   &__logo {
     @include g.flex(center);
     margin: 0 auto 70px;
-    
+
     img, span {
       width: 280px!important;
       height: 64px!important;
@@ -22,7 +22,7 @@
         height: 48px!important;
         object-fit: cover;
       }
-    } 
+    }
   }
 
   &__buttons {
@@ -40,15 +40,16 @@
   &__search-area {
     width: 632px;
     margin: 0 auto;
-    
+
     @include g.mq-down(tablet--under) {
       width: 89vw;
     }
   }
 
   &__note {
-    background: #FED799;
-    color: g.$color-mono-80;
+    background: g.$color-mono-0;
+    border: 1px solid g.$color-mono-30;
+    color: g.$color-mono-100;
     margin: 22px auto 0;
     padding: 18px 20px;
     border-radius: 10px;
@@ -64,16 +65,21 @@
       width: 89vw;
     }
 
-    &:before {
+    &:before,
+    &:after {
       display: block;
       content: '';
       border-right: 15px solid transparent;
-      border-bottom: 22px solid #FED799;
+      border-bottom: 22px solid g.$color-mono-30;
       border-left: 15px solid transparent;
       position: absolute;
       left: 50%;
       top: -22px;
       transform: translateX(-50%);
+    }
+    &:after {
+      top: calc(1px - 22px);
+      border-bottom: solid 1.5em g.$color-mono-0;
     }
   }
 }
