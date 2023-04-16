@@ -11,13 +11,14 @@
   transition: .3s;
 
   &:hover, &:active {
-    background: g.$color-mono-20;
-    color: g.$color-mono-80;
+    // background: g.$color-mono-20;
+    // color: g.$color-mono-80;
+    opacity: .75;
   }
 
   // Size
   &--small {
-    padding: 8px 4px;
+    padding: 6px 4px;
     font-size: 12px;
     font-weight: normal;
   }
@@ -50,20 +51,31 @@
       &:active {
         background: g.$color-secondary;
         color: g.$color-primary;
-        opacity: .75;
+        opacity: .6;
       }
     }
     &-mono {
-      background: g.$color-mono-10;
+      background: g.$color-mono-0;
       color: g.$color-mono-100;
       border: 1px solid g.$color-mono-100;
 
       &:hover,
       &:active {
-        background: g.$color-mono-10;
+        background: g.$color-mono-0;
         color: g.$color-mono-100;
-        opacity: .75;
+        opacity: .6;
       }
+    }
+  }
+  &--black {
+    background: g.$color-mono-100;
+    color: g.$color-mono-0;
+
+    &:hover,
+    &:active {
+      // background: g.$color-mono-0;
+      // color: g.$color-mono-100;
+      opacity: .6;
     }
   }
   &--mono {
@@ -101,9 +113,24 @@
     font-weight: bold;
   }
 
+  &--links {
+    background: g.$color-mono-0;
+    color: g.$color-blue;
+    border: 1px solid g.$color-blue;
+
+    &:hover,
+    &:active {
+      opacity: .6;
+    }
+  }
+
   &:disabled {
     cursor: inherit;
-    background: g.$color-mono-50;
+    background: g.$color-mono-20;
     color: g.$color-mono-0;
+
+    &:hover, &:active {
+      opacity: 1;
+    }
   }
 }

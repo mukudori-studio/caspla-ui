@@ -65,8 +65,8 @@
   &__contact {
     display: grid;
     grid-template-columns: auto auto auto;
-    background-color: g.$color-mono-80;
-    color: g.$color-mono-5;
+    background-color: g.$color-mono-5;
+    color: g.$color-mono-80;
     font-style: inherit 500;
     font-size: 16px;
     padding: 20px 40px;
@@ -79,7 +79,7 @@
       }
     }
     >:nth-child(even) {
-      >:first-child { 
+      >:first-child {
         font-weight: bold;
       }
     }

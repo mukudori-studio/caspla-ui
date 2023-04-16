@@ -16,6 +16,7 @@ import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import Card from '@/components/molecules/Card'
 import { accessTokenAtom, thumbnailAtom, userAtom } from '@/stores/Session'
 import styles from '@/styles/Signin.module.scss'
+import buttonStyles from '@/styles/components/atoms/Button.module.scss'
 
 type InputProps = {
   casplaId: string
@@ -52,7 +53,7 @@ const Signin: NextPage = () => {
       isSubmitting = false
     })
   }
-  
+
   return (
     <div className={styles['p-sign-in']}>
       <Meta title="ログイン" />
@@ -71,12 +72,12 @@ const Signin: NextPage = () => {
               <div className={styles['p-sign-in__button']}>
                 <Button text="ログイン" color="primary" size="large" type="submit" weight="bold" disabled={!isValid || isSubmitting} />
               </div>
-              <Link href="/password-reset/reissue">
-                <a className={styles['p-sign-in__link']}>パスワードを忘れた場合</a>
-              </Link>
+              <div className={styles['p-sign-in__password']}>
+                <LinkButton href="/password-reset/reissue" text="パスワードを忘れた場合" size="large" color="outline-mono" weight="bold" />
+              </div>
             </form>
             <div className={styles['p-sign-in__sign-up']}>
-              <LinkButton href="/signup/" text="新規で会員登録する" size="large" weight="bold" />
+              <LinkButton href="/signup/" text="新規で会員登録する" size="large" color="black" weight="bold" />
             </div>
           </>
         </Card>
