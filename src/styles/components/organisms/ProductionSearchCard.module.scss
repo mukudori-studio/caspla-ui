@@ -35,10 +35,17 @@
         list-style: disc outside;
     }
   }
-  
+
   &__link {
     text-decoration: none;
-    color: g.$color-mono-80;
+    color: g.$color-blue;
+    text-decoration: underline;
     font: inherit;
+    transition: .2s;
+
+    &:hover,
+    &:active {
+      opacity: .6;
+    }
   }
 }
