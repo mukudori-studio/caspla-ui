@@ -11,8 +11,9 @@
   transition: .3s;
 
   &:hover, &:active {
-    background: g.$color-mono-20;
-    color: g.$color-mono-80;
+    // background: g.$color-mono-20;
+    // color: g.$color-mono-80;
+    opacity: .75;
   }
 
   // Size
@@ -54,16 +55,27 @@
       }
     }
     &-mono {
-      background: g.$color-mono-10;
+      background: g.$color-mono-0;
       color: g.$color-mono-100;
       border: 1px solid g.$color-mono-100;
 
       &:hover,
       &:active {
-        background: g.$color-mono-10;
+        background: g.$color-mono-0;
         color: g.$color-mono-100;
         opacity: .75;
       }
+    }
+  }
+  &--black {
+    background: g.$color-mono-100;
+    color: g.$color-mono-0;
+
+    &:hover,
+    &:active {
+      // background: g.$color-mono-0;
+      // color: g.$color-mono-100;
+      opacity: .75;
     }
   }
   &--mono {
@@ -103,7 +115,11 @@
 
   &:disabled {
     cursor: inherit;
-    background: g.$color-mono-50;
+    background: g.$color-mono-20;
     color: g.$color-mono-0;
+
+    &:hover, &:active {
+      opacity: 1;
+    }
   }
 }
