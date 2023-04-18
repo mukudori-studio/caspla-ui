@@ -23,14 +23,14 @@ const TalentEdit: NextPage = () => {
   const accessToken = useRecoilValue(accessTokenAtom)
   const onChangeThumbnail = () => setChangeThumbnail(true)
   const onChangeCover = () => setChangeCover(true)
-  
+
   useEffect(()=> {
     if(accessToken===undefined||accessToken==='') {
       toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
       Router.push('/signin')
     }
   }, [])
-  
+
   const onSubmitAddTalent = (data:any) => {
     createProductionTalent(data, session.casplaId)
       .then(({response_code, response_message})=>{
@@ -91,10 +91,10 @@ const TalentEdit: NextPage = () => {
           <h1 className={styles['p-production-setting__title']}>プロダクション管理</h1>
           <div className={styles['p-production-setting__buttons']}>
             <div className={styles['p-production-setting__button']}>
-              <LinkButton href="/setting/production/talents" color="primary" size="small" weight="bold" text="タレント一覧" />
+              <LinkButton href="/setting/production/talents" color="black" size="small" weight="bold" text="タレント一覧" />
             </div>
             <div className={styles['p-production-setting__button']}>
-              <LinkButton href="/setting/production/edit" color="secondary" size="small" weight="bold" text="事務所情報" />
+              <LinkButton href="/setting/production/edit" color="outline-mono" size="small" weight="bold" text="事務所情報" />
             </div>
           </div>
         </header>
@@ -103,7 +103,7 @@ const TalentEdit: NextPage = () => {
           <div className={styles['p-production-setting__menus']}>
             <Link href="/setting/production/talents">
               <a className={styles['p-production-setting__text-link']}>タレント一覧に戻る</a>
-            </Link>       
+            </Link>
           </div>
         </div>
         <div className={styles['p-production-setting__edit']}>

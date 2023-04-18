@@ -78,10 +78,10 @@ const ProductionEdit: NextPage = () => {
             <h1 className={styles['p-production-setting__title']}>プロダクション管理</h1>
             <div className={styles['p-production-setting__buttons']}>
               <div className={styles['p-production-setting__button']}>
-                <LinkButton href="/setting/production/talents" color="secondary" size="small" weight="bold" text="タレント一覧" />
+                <LinkButton href="/setting/production/talents" color="black" size="small" weight="bold" text="タレント一覧" />
               </div>
               <div className={styles['p-production-setting__button']}>
-                <LinkButton href={`/productions/detail/${companyId}`} color="primary" size="small" weight="bold" text="事務所情報" />
+                <LinkButton href={`/productions/detail/${companyId}`} color="outline-mono" size="small" weight="bold" text="事務所情報" />
               </div>
             </div>
           </header>
@@ -113,7 +113,7 @@ const ProductionEdit: NextPage = () => {
               submitForm={updateProduction}
             />
           </div>
-          
+
         </section>
       </>
     )}
