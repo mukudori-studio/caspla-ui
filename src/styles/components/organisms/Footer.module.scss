@@ -45,15 +45,17 @@
       opacity: .8;
     }
   }
-  &__production-search{
+
+  &__production-search {
     border-radius: 25px;
-    background-color: g.$color-mono-100;
+    color: g.$color-mono-100;
+    background: g.$color-mono-0;
     padding: 6px 20px;
     &:hover {
-      background-color: g.$color-mono-50;
-      opacity: .8;
+      opacity: .6;
     }
   }
+
   &__icon {
     width: 24px;
     color: g.$color-mono-0;
