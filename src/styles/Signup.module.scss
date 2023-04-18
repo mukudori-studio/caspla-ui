@@ -80,7 +80,7 @@
     text-decoration: none;
     line-height: 1.1;
     font-size: 14px;
-    color: g.$color-primary;
+    color: g.$color-blue;
     background: transparent;
     cursor: pointer;
     transition: .2s;
@@ -97,7 +97,7 @@
 
 // NOTE:登録完了画面
 .p-sign-up-complete {
-  
+
   &__content {
     max-width: 632px;
     width: 100%;
@@ -128,7 +128,7 @@
     line-height: 1.8;
     margin: 28px 0 30px;
   }
-  
+
   &__buttons {
     @include g.mq-up(tablet) {
       @include g.flex(center);

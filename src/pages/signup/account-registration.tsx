@@ -19,13 +19,13 @@ import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
 import createUser from '@/apis/auth/talent/createUser'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { 
-  CONTACT_SYS_ADMIN, 
-  SOMETHING_WENT_WRONG, 
-  REGISTERED_SUCCESSFULLY, 
-  CASPLA_ID_AVAILABLE, 
-  CASPLA_ID_NOT_AVAILABLE, 
-  CASPLA_ID_LENGTH_REQUIRED, 
+import {
+  CONTACT_SYS_ADMIN,
+  SOMETHING_WENT_WRONG,
+  REGISTERED_SUCCESSFULLY,
+  CASPLA_ID_AVAILABLE,
+  CASPLA_ID_NOT_AVAILABLE,
+  CASPLA_ID_LENGTH_REQUIRED,
   CASPLA_ID_VERIFICATION_ERROR} from './../../stores/messageAlerts/index';
 import { validateCasplaId } from './../../utils/validations';
 
@@ -72,7 +72,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
   ]
 
   const setSubmitButton = (role: string) => {
-    role === 'FAN_USER' ? setSubmitButtonColor('primary') : setSubmitButtonColor('secondary')
+    role === 'FAN_USER' ? setSubmitButtonColor('primary') : setSubmitButtonColor('primary')
     if (role === 'COMPANY_ADMIN') setSubmitText('会社情報の入力へ')
     else if (role === 'TALENT') setSubmitText('タレントプロフィールの入力へ')
     else setSubmitText('この内容で登録する')
@@ -88,9 +88,9 @@ const AccountRegistration: NextPage = ({query}:any) => {
     switch (validateCasplaId(getValues('casplaId'))) {
       case 1:
         setCheckCasplaId(false)
-        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})  
+        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
         break;
-      case 2: 
+      case 2:
         setCheckCasplaId(false)
         toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true})
         break;
@@ -138,7 +138,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
         if (roleState === 'FAN_USER') {
           toast.success(REGISTERED_SUCCESSFULLY, { autoClose: 3000, draggable: true})
           Router.push('/signup/complete')
-        } 
+        }
       })
       .catch((err) => {
         console.log(err)
@@ -149,7 +149,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
   const validatePassword = (data: string) =>{
     return getValues('password') === data
   }
-  
+
   return (
     <main className={styles['p-account-registration']}>
       <Meta title="アカウント情報登録" />

@@ -31,7 +31,7 @@
   &__title {
     font-size: 24px;
     letter-spacing: 2.4px;
-    color: g.$color-primary;
+    color: g.$color-mono-100;
     line-height: 1.1;
     margin: 0 20px 0 0;
   }
@@ -86,7 +86,7 @@
   }
 
   &__text-link {
-    color: g.$color-primary;
+    color: g.$color-mono-100;
     text-decoration: underline;
     background: transparent;
     cursor: pointer;
