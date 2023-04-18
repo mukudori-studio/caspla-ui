@@ -27,8 +27,8 @@ import {
   CASPLA_ID_NOT_AVAILABLE, 
   CASPLA_ID_LENGTH_REQUIRED, 
   CASPLA_ID_VERIFICATION_ERROR,
-  IMAGE_SIZE_EXCEEDED} from './../../stores/messageAlerts/index';
-import { validateCasplaId } from './../../utils/validations';
+  IMAGE_SIZE_EXCEEDED} from '@/stores/messageAlerts/index';
+import { validateCasplaId } from '@/utils/validations';
 
 type InputProps = {
   fullName: string

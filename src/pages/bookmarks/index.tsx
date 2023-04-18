@@ -14,7 +14,7 @@ import { userAtom, accessTokenAtom } from './../../stores/Session/index';
 const Modal = dynamic(() => import('@/components/molecules/Modal'), { ssr: false })
 import changeBookmark from './../../apis/bookmarks/changeBookmark';
 import { toast } from 'react-toastify'
-import { ACCESS_TOKEN_INACTIVE, SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
+import { DELETE_BOOKMARK, ACCESS_TOKEN_INACTIVE, BOOKMARK_DELETED_SUCCESSFULLY, SOMETHING_WENT_WRONG} from '@/stores/messageAlerts/index';
 
 const Bookmarks: NextPage = () => {
   const [loadingState, setLoading] = useState<boolean>(true)
@@ -42,12 +42,12 @@ const Bookmarks: NextPage = () => {
   }, [])
 
   const onDeleteBookmark = (id: string) => {
-    if(window.confirm('ブックマークを削除します')) {
+    if(window.confirm(DELETE_BOOKMARK)) {
       changeBookmark(id, session.casplaId)
         .then(({response_code}) => {
           if(response_code == 200) {
             setBookmarks(bookmarksState.filter((bookmark : any) => bookmark.casplaId !== id));
-            toast.success('ブックマークが正常に削除されました。', { autoClose: 3000, draggable: true})
+            toast.success(BOOKMARK_DELETED_SUCCESSFULLY, { autoClose: 3000, draggable: true})
           } else {
             toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
           }

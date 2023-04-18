@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import changeBookmark from './../../../apis/bookmarks/changeBookmark';
 import { userAtom } from './../../../stores/Session/index';
 import PopOver from '@/components/molecules/Popover';
-import { DELETE_BOOKMARK } from '@/stores/messageAlerts/index'
+import { DELETE_BOOKMARK, USER_MUST_BE_LOGGED_IN } from '@/stores/messageAlerts/index'
 
 interface CardItemProps {
   type?: 'cast' | 'agient';
@@ -84,7 +84,7 @@ const CardItem = ({
         callBookmarkAPI(casplaId, session.casplaId);
       }
     } else {
-      toast.warning('ログインする必要があります。', { autoClose: 3000, draggable: true })
+      toast.warning(USER_MUST_BE_LOGGED_IN, { autoClose: 3000, draggable: true })
       Router.push('/signin')
     }
   })

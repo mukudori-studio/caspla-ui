@@ -10,7 +10,7 @@ import TalentItem from '@/components/organisms/Production/TalentItem'
 import styles from '@/styles/ProductionSetting.module.scss'
 import buttonStyles from '@/styles/components/atoms/Button.module.scss'
 import removeProductionTalents from '@/apis/productions/removeProductionTalents'
-import { SOMETHING_WENT_WRONG } from './../../../stores/messageAlerts/index';
+import { PLEASE_LOGIN, SOMETHING_WENT_WRONG, USERS_REMOVED_FROM_PRODUCTION } from '@/stores/messageAlerts/index';
 import Router from 'next/router'
 import Loading from '@/components/atoms/Loading'
 
@@ -23,7 +23,7 @@ const BelongTalents: NextPage = () => {
 
   useEffect(() => {
     if (session.companyId === undefined) {
-      toast.error('アクセスに失敗しました。ログインし直してください。', { autoClose: 3000, draggable: true})
+      toast.error(PLEASE_LOGIN, { autoClose: 3000, draggable: true})
     } else {
       getProductionDetailTalents(session.companyId).then(res => {
         setTalent(res.response_message)
@@ -57,7 +57,7 @@ const BelongTalents: NextPage = () => {
           checkedTalentState.forEach((element: string) => {
             setTalent(talent => talent.filter((tal: any) => tal.casplaId !== element))
           });
-          toast.success('選択したユーザーをプロダクションから削除しました。', { autoClose: 3000, draggable: true})
+          toast.success(USERS_REMOVED_FROM_PRODUCTION, { autoClose: 3000, draggable: true})
         }
       })
       .catch((err)=>console.log(err))

@@ -12,7 +12,7 @@ import styles from '@/styles/ProductionSetting.module.scss'
 import { toast } from 'react-toastify'
 import putProductionTalent from '@/apis/settings/production/putTalent'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { SOMETHING_WENT_WRONG, ACCESS_TOKEN_INACTIVE, NOT_ALLOWED_TO_UPDATE_TALENT, SAVED_CHANGES, IMAGE_SIZE_EXCEEDED } from './../../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, ACCESS_TOKEN_INACTIVE, NOT_ALLOWED_TO_UPDATE_TALENT, SAVED_CHANGES, IMAGE_SIZE_EXCEEDED } from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
 
 
@@ -52,7 +52,7 @@ const TalentEdit: NextPage = () => {
 
   useEffect(()=> {
     if(typeof talentState === 'boolean' && !talentState) {
-      toast.warning('You cant edit this person', { autoClose: 3000, draggable: true})
+      toast.warning(NOT_ALLOWED_TO_UPDATE_TALENT, { autoClose: 3000, draggable: true})
       Router.push('/setting/production/talents')
     }
   },[talentState])
