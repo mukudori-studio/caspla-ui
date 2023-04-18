@@ -26,7 +26,8 @@ import {
   CASPLA_ID_AVAILABLE, 
   CASPLA_ID_NOT_AVAILABLE, 
   CASPLA_ID_LENGTH_REQUIRED, 
-  CASPLA_ID_VERIFICATION_ERROR} from './../../stores/messageAlerts/index';
+  CASPLA_ID_VERIFICATION_ERROR,
+  IMAGE_SIZE_EXCEEDED} from './../../stores/messageAlerts/index';
 import { validateCasplaId } from './../../utils/validations';
 
 type InputProps = {
@@ -129,7 +130,11 @@ const AccountRegistration: NextPage = ({query}:any) => {
           updateUserPhoto(userIdState,"THUMBNAIL", thumbnailState).then(res => {
             setThumbnailImage(res.response_message)
           }).catch((err)=>{
-            console.log(err)
+            if(err.response.status == 400) {
+              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+            } else {
+              console.log(err)
+            }
           })
         }
 

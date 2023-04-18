@@ -11,7 +11,7 @@ import Loading from '@/components/atoms/Loading'
 import PageTitle from '@/components/atoms/PageTitle'
 import TalentFormTemplate from '@/components/templates/TalentFormTemplate'
 import styles from '@/styles/AccountRegistration.module.scss'
-import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, SAVED_CHANGES, ACCESS_TOKEN_INACTIVE } from './../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, SAVED_CHANGES, ACCESS_TOKEN_INACTIVE, IMAGE_SIZE_EXCEEDED } from './../../../stores/messageAlerts/index';
 import Router from 'next/router'
 
 const Dashboard: NextPage = () => {
@@ -57,15 +57,33 @@ const Dashboard: NextPage = () => {
             if (changeCoverState) {
               updateUserPhoto(session.userId, "COVER", data.coverImage)
                 .then(()=>toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true}))
-                .catch((error) => console.log(error))
+                .catch((error) => {
+                  if(error.response.status == 400) {
+                    toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+                  } else {
+                    console.log(error)
+                  }
+                })
             } else toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
           })
-          .catch((error)=> console.log(error))
+          .catch((error)=> {
+            if(error.response.status == 400) {
+              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+            } else {
+              console.log(error)
+            }
+          })
       } else {
         if (changeCoverState) {
           updateUserPhoto(session.userId, "COVER", data.coverImage)
             .then(()=>toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true}))
-            .catch((error) => console.log(error))
+            .catch((error) => {
+              if(error.response.status == 400) {
+                toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+              } else {
+                console.log(error)
+              }
+            })
         } else toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
       }
     }).catch(() => {
