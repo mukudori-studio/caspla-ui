@@ -34,11 +34,11 @@ const BelongTalents: NextPage = () => {
       })
     }
   }, [])
-  
+
   const toggleTalent = (e: any) => {
     const checkedValue = e.target.id
     let filteredTalents:Array<string> = checkedTalentState
-    
+
     if (checkedTalentState.length === 0) {
       setCheckedTalent(() => [...checkedTalentState, checkedValue])
     } else if (checkedTalentState.includes(checkedValue)) {
@@ -47,7 +47,7 @@ const BelongTalents: NextPage = () => {
     } else {
       setCheckedTalent(() => [...checkedTalentState, checkedValue])
     }
-    
+
   }
 
   const deleteTalent = () => {
@@ -73,10 +73,10 @@ const BelongTalents: NextPage = () => {
           <h1 className={styles['p-production-setting__title']}>プロダクション管理</h1>
           <div className={styles['p-production-setting__buttons']}>
             <div className={styles['p-production-setting__button']}>
-              <LinkButton href="/setting/production/talents" color="primary" size="small" weight="bold" text="タレント一覧" />
+              <LinkButton href="/setting/production/talents" color="black" size="small" weight="bold" text="タレント一覧" />
             </div>
             <div className={styles['p-production-setting__button']}>
-              <LinkButton href="/setting/production/edit" color="secondary" size="small" weight="bold" text="事務所情報" />
+              <LinkButton href="/setting/production/edit" color="outline-mono" size="small" weight="bold" text="事務所情報" />
             </div>
           </div>
         </header>
