@@ -11,7 +11,7 @@ import createProductionTalent from '@/apis/productions/createProductionTalent'
 import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
 import { toast } from 'react-toastify'
-import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, ACCESS_TOKEN_INACTIVE } from './../../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, ACCESS_TOKEN_INACTIVE, IMAGE_SIZE_EXCEEDED, NEW_CAST_CREATED, PLEASE_USE_OTHER_CASPLA_ID } from './../../../../stores/messageAlerts/index';
 import { accessTokenAtom } from './../../../../stores/Session/index';
 
 
@@ -40,20 +40,38 @@ const TalentEdit: NextPage = () => {
             .then(()=>{
               if(changeCoverState) {
                 updateUserPhoto(response_message.userId, "COVER", data.coverImage)
-                .catch((err)=> console.log(err))
+                .catch((err)=> {
+                  if(err.response.status == 400) {
+                    toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+                  } else {
+                    console.log(err)
+                  }
+                })
               }
             })
-            .catch((err)=>console.log(err))
+            .catch((err)=>{
+              if(err.response.status == 400) {
+                toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+              } else {
+                console.log(err)
+              }
+            })
           } else {
             if(changeCoverState) {
               updateUserPhoto(response_message.userId, "COVER", data.coverImage)
-              .catch((err)=> console.log(err))
+              .catch((err)=> {
+                if(err.response.status == 400) {
+                  toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+                } else {
+                  console.log(err)
+                }
+              })
             }
           }
-          toast.success('新しいキャストが正常に作成されました。', { autoClose: 3000, draggable: true})
+          toast.success(NEW_CAST_CREATED, { autoClose: 3000, draggable: true})
           Router.push('/setting/production/talents')
         } else if(response_code==409) {
-          toast.error('ユーザーを登録できません。他のキCaspla IDをご利用ください', { autoClose: 3000, draggable: true})
+          toast.error(PLEASE_USE_OTHER_CASPLA_ID, { autoClose: 3000, draggable: true})
         } else {
           console.log(response_message)
           toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})

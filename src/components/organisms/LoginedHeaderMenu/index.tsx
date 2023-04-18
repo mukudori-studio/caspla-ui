@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import { accessTokenAtom, userAtom, thumbnailAtom } from '@/stores/Session'
 import PopOver from '@/components/molecules/Popover'
 import styles from '@/styles/components/organisms/LoginedHeaderMenu.module.scss'
+import { LOGGED_OUT } from '@/stores/messageAlerts/index'
 
 const LoginedHeaderMenu = () => {
 
@@ -27,7 +28,7 @@ const LoginedHeaderMenu = () => {
     resetSessionThumbnail()
     resetAccessToken()
     Router.push('/signin')
-    toast.success('ログアウトしました', {
+    toast.success(LOGGED_OUT, {
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,

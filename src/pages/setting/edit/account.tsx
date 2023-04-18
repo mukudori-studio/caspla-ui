@@ -26,7 +26,9 @@ import { CASPLA_ID_AVAILABLE,
   EMAIL_ALREADY_EXIST, 
   CASPLA_ID_VERIFICATION_ERROR, 
   ACCESS_TOKEN_INACTIVE, 
-  CASPLA_ID_LENGTH_REQUIRED } from '@/stores/messageAlerts/index';
+  CASPLA_ID_LENGTH_REQUIRED, 
+  IMAGE_SIZE_EXCEEDED,
+  SAVED_CHANGES} from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
 import { validateCasplaId } from './../../../utils/validations';
 
@@ -146,10 +148,16 @@ const AccountRegistration: NextPage = () => {
       if (changeThumbnailState) {
         updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
           setSessionThumbnail(thumbnailState.type?res.response_message:'')
-          toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
-        }).catch((err) => console.log(err))
+          toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
+        }).catch((err) => {
+          if(err.response.status == 400) {
+            toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+          } else {
+            console.log(err)
+          }
+        })
       } else {
-        toast.success('変更を保存しました。', { autoClose: 3000, draggable: true})
+        toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
       }
     }).catch((err) => {
       if(err.response.data){

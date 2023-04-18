@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 import getCompanyDetails from '@/apis/companies/getCompanyDetails'
 import updateCompanyDetails from '@/apis/companies/updateCompanyDetails'
 import updateCompanyLogo from '@/apis/images/updateCompanyLogo';
-import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, ACCESS_TOKEN_INACTIVE } from './../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, ACCESS_TOKEN_INACTIVE, COMPANY_UPDATED_SUCCESSFULLY } from '@/stores/messageAlerts/index';
 import { accessTokenAtom } from './../../../stores/Session/index';
 import Router from 'next/router';
 
@@ -42,7 +42,7 @@ const CompanyEdit: NextPage = () => {
         companyName: other.companyName,
         isAdmin: session.isAdmin
       })
-      toast.success('会社情報が正常に更新されました。', { autoClose: 3000, draggable: true})
+      toast.success(COMPANY_UPDATED_SUCCESSFULLY, { autoClose: 3000, draggable: true})
     })
     .catch((err)=> {
       console.log(err)

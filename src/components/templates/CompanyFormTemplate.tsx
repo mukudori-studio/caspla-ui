@@ -17,7 +17,7 @@ import prefectures from '@/utils/prefectures'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
-import { PRODUCTION_ID_AVAILABLE, PRODUCTION_ID_NOT_AVAILABLE, COMPANY_ID_AVAILABLE, COMPANY_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CASPLA_ID_VERIFICATION_ERROR } from '@/stores/messageAlerts/index'
+import { PRODUCTION_ID_AVAILABLE, PRODUCTION_ID_NOT_AVAILABLE, COMPANY_ID_AVAILABLE, COMPANY_ID_NOT_AVAILABLE, CASPLA_ID_LENGTH_REQUIRED, CASPLA_ID_VERIFICATION_ERROR, POSTALCODE_NOT_CORRECT, ERROR_OCCURED } from '@/stores/messageAlerts/index'
 import { validateCasplaId } from './../../utils/validations';
 
 type InputProps = {
@@ -123,12 +123,12 @@ const Signup = ({
         setPrefecture(result.address1)
         setValue('address1', result.address2 + result.address3)
       } else if(res.status === 400) {
-        toast.error('郵便番号が正しくありません。', { autoClose: 3000, draggable: true})
+        toast.error(POSTALCODE_NOT_CORRECT, { autoClose: 3000, draggable: true})
       } else {
-        toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
+        toast.error(ERROR_OCCURED, { autoClose: 3000, draggable: true})
       }
     }).catch(err => {
-      toast.error('エラーが発生しました。', { autoClose: 3000, draggable: true})
+      toast.error(ERROR_OCCURED, { autoClose: 3000, draggable: true})
     }).finally(() => {
       setSearching(false)
     })

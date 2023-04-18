@@ -19,15 +19,16 @@ import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
 import createUser from '@/apis/auth/talent/createUser'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import {
-  CONTACT_SYS_ADMIN,
-  SOMETHING_WENT_WRONG,
-  REGISTERED_SUCCESSFULLY,
-  CASPLA_ID_AVAILABLE,
-  CASPLA_ID_NOT_AVAILABLE,
-  CASPLA_ID_LENGTH_REQUIRED,
-  CASPLA_ID_VERIFICATION_ERROR} from './../../stores/messageAlerts/index';
-import { validateCasplaId } from './../../utils/validations';
+import { 
+  CONTACT_SYS_ADMIN, 
+  SOMETHING_WENT_WRONG, 
+  REGISTERED_SUCCESSFULLY, 
+  CASPLA_ID_AVAILABLE, 
+  CASPLA_ID_NOT_AVAILABLE, 
+  CASPLA_ID_LENGTH_REQUIRED, 
+  CASPLA_ID_VERIFICATION_ERROR,
+  IMAGE_SIZE_EXCEEDED} from '@/stores/messageAlerts/index';
+import { validateCasplaId } from '@/utils/validations';
 
 type InputProps = {
   fullName: string
@@ -129,7 +130,11 @@ const AccountRegistration: NextPage = ({query}:any) => {
           updateUserPhoto(userIdState,"THUMBNAIL", thumbnailState).then(res => {
             setThumbnailImage(res.response_message)
           }).catch((err)=>{
-            console.log(err)
+            if(err.response.status == 400) {
+              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+            } else {
+              console.log(err)
+            }
           })
         }
 

@@ -12,7 +12,7 @@ import styles from '@/styles/ProductionSetting.module.scss'
 import { toast } from 'react-toastify'
 import putProductionTalent from '@/apis/settings/production/putTalent'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { SOMETHING_WENT_WRONG, ACCESS_TOKEN_INACTIVE, NOT_ALLOWED_TO_UPDATE_TALENT, SAVED_CHANGES } from './../../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, ACCESS_TOKEN_INACTIVE, NOT_ALLOWED_TO_UPDATE_TALENT, SAVED_CHANGES, IMAGE_SIZE_EXCEEDED } from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
 
 
@@ -52,7 +52,7 @@ const TalentEdit: NextPage = () => {
 
   useEffect(()=> {
     if(typeof talentState === 'boolean' && !talentState) {
-      toast.warning('You cant edit this person', { autoClose: 3000, draggable: true})
+      toast.warning(NOT_ALLOWED_TO_UPDATE_TALENT, { autoClose: 3000, draggable: true})
       Router.push('/setting/production/talents')
     }
   },[talentState])
@@ -65,14 +65,32 @@ const TalentEdit: NextPage = () => {
         .then(() => {
           if(changeCoverState) {
             updateUserPhoto(talentState.userId, "COVER", data.coverImage)
-            .catch((err)=> console.log(err))
+            .catch((err)=> {
+              if(err.response.status == 400) {
+                toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+              } else {
+                console.log(err)
+              }
+            })
           }
         })
-        .catch((err)=>console.log(err))
+        .catch((err)=>{
+          if(err.response.status == 400) {
+            toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+          } else {
+            console.log(err)
+          }
+        })
       } else {
         if(changeCoverState) {
           updateUserPhoto(talentState.userId, "COVER", data.coverImage)
-          .catch((err)=> console.log(err))
+          .catch((err)=> {
+            if(err.response.status == 400) {
+              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+            } else {
+              console.log(err)
+            }
+          })
         }
       }
       setTimeout(()=>toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true}),4000)
