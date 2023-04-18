@@ -33,3 +33,4 @@ export const USERS_REMOVED_FROM_PRODUCTION = '選択したユーザーをプロ�
 export const USER_MUST_BE_LOGGED_IN = 'ログインする必要があります。'
 export const VERIFICATION_CODE_FAILED = '確認コードの確認に失敗しました。'
 export const VERIFICATION_CODE_SENT = '確認コードを送信しました。'
+export const CASPLAID_PASSWORD_INCORRECT = 'Caspla ID、もしくはパスワードが正しくありません。'

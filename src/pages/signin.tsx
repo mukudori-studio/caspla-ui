@@ -16,7 +16,7 @@ import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import Card from '@/components/molecules/Card'
 import { accessTokenAtom, thumbnailAtom, userAtom } from '@/stores/Session'
 import styles from '@/styles/Signin.module.scss'
-import buttonStyles from '@/styles/components/atoms/Button.module.scss'
+import { CASPLAID_PASSWORD_INCORRECT } from '@/stores/messageAlerts/index'
 
 type InputProps = {
   casplaId: string
@@ -48,7 +48,7 @@ const Signin: NextPage = () => {
       setThumbnail(res.data.thumbnailImage)
       Router.push('/dashboard')
     }).catch((err) => {
-      toast.error('Caspla ID、もしくはパスワードが正しくありません。', { autoClose: 3000, draggable: true})
+      toast.error(CASPLAID_PASSWORD_INCORRECT, { autoClose: 3000, draggable: true})
     }).finally(() => {
       isSubmitting = false
     })
