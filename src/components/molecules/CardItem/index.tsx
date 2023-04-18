@@ -1,4 +1,4 @@
-import React, { useEffect }from 'react'
+import React, { useEffect } from 'react'
 import Router from 'next/router'
 import Image from 'next/image'
 import BookMark from '@/components/atoms/BookMark'
@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import changeBookmark from './../../../apis/bookmarks/changeBookmark';
 import { userAtom } from './../../../stores/Session/index';
 import PopOver from '@/components/molecules/Popover';
-import Link from 'next/link'
+import { DELETE_BOOKMARK } from '@/stores/messageAlerts/index'
 
 interface CardItemProps {
   type?: 'cast' | 'agient';
@@ -61,28 +61,38 @@ const CardItem = ({
   }, [showMenu]);
   const popOverStyle = showMenu ? [styles['m-card-item__bookmark-popover'], styles['m-card-item__bookmark-popover--show']].join(' ') : styles['m-card-item__bookmark-popover']
 
+  const callBookmarkAPI = (casplaID:string, sessionCasplaId:string) => {
+    changeBookmark(casplaID, sessionCasplaId)
+      .then(({ response_message }) => {
+        if (response_message) {
+          openBookmarkMenu()
+          setTimeout(() => hideBookmarkMenu(), 3000)
+        }
+        setFlag(response_message)
+      })
+      .catch((err) => console.log(err))
+  }
+
   const changeBookmarkStatus = ((e: any) => {
     e.stopPropagation()
-    if(accessToken!=='') {
-      changeBookmark(casplaId, session.casplaId)
-        .then(({response_message})=> {
-          if(response_message){
-            openBookmarkMenu()
-            setTimeout(() => hideBookmarkMenu(), 3000)
-          }
-          setFlag(response_message)
-        })
-        .catch((err)=> console.log(err))
+    if (accessToken !== '') {
+      if(flag) {
+        if (window.confirm(DELETE_BOOKMARK)) {
+          callBookmarkAPI(casplaId, session.casplaId);
+        }
+      } else {
+        callBookmarkAPI(casplaId, session.casplaId);
+      }
     } else {
-      toast.warning('ログインする必要があります。', { autoClose: 3000, draggable: true})
+      toast.warning('ログインする必要があります。', { autoClose: 3000, draggable: true })
       Router.push('/signin')
     }
   })
-
-  const gotoBookmarks = (e: any) => {
-    e.stopPropagation();
-    hideBookmarkMenu();
-    Router.push('/bookmarks')
+    
+    const gotoBookmarks = (e: any) => {
+      e.stopPropagation();
+      hideBookmarkMenu();
+      Router.push('/bookmarks')
   }
 
   return (
@@ -99,7 +109,7 @@ const CardItem = ({
             //     layout="fill"
             //   />
             // </div>
-            <img src={thumbnailImage} className={styles['m-card-item__thumbnail']} onError={()=>setThumbnailImage('')}/>
+            <img src={thumbnailImage} className={styles['m-card-item__thumbnail']} onError={() => setThumbnailImage('')} />
           )
         }
         <div className={styles['m-card-item__head']}>
@@ -109,11 +119,11 @@ const CardItem = ({
               activity.length > 0 && (<LabelTexts texts={formattedActivity} />)
             } */}
             <BookMark checked={flag} changeBookmark={changeBookmarkStatus} />
-            { accessToken !== '' && showMenu && (
+            {accessToken !== '' && showMenu && (
               <div className={popOverStyle}>
                 <PopOver>
                   <div className={styles['m-card-item__list']}>
-                    <h4 style={{margin:0}}>ブックマークに登録しました！</h4>
+                    <h4 style={{ margin: 0 }}>ブックマークに登録しました！</h4>
                     <button onClick={gotoBookmarks} className={styles['m-card-item__list--button']}>ブックマークを見る</button>
                   </div>
                 </PopOver>

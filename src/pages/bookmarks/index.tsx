@@ -42,16 +42,18 @@ const Bookmarks: NextPage = () => {
   }, [])
 
   const onDeleteBookmark = (id: string) => {
-    changeBookmark(id, session.casplaId)
-      .then(({response_code}) => {
-        if(response_code == 200) {
-          setBookmarks(bookmarksState.filter((bookmark : any) => bookmark.casplaId !== id));
-          toast.success('ブックマークが正常に削除されました。', { autoClose: 3000, draggable: true})
-        } else {
-          toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
-        }
-      })
-      .catch((err)=> console.log(err))
+    if(window.confirm('ブックマークを削除します')) {
+      changeBookmark(id, session.casplaId)
+        .then(({response_code}) => {
+          if(response_code == 200) {
+            setBookmarks(bookmarksState.filter((bookmark : any) => bookmark.casplaId !== id));
+            toast.success('ブックマークが正常に削除されました。', { autoClose: 3000, draggable: true})
+          } else {
+            toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
+          }
+        })
+        .catch((err)=> console.log(err))
+    }
   }
   
   return (
