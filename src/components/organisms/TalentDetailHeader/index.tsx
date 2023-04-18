@@ -60,7 +60,7 @@ const TalentDetailHeader = ({
   const session = useRecoilValue(userAtom)
   const accessToken = useRecoilValue(accessTokenAtom)
   const [thumbnail, setThumbnail] = useState(thumbnailImage)
-  const [showMenu, setShowMenu] = useState(withBookmark)
+  const [showMenu, setShowMenu] = useState(false)
   
   const openBookmarkMenu = () => setShowMenu(true)
   const popOverStyle = showMenu ? [styles['o-talent-detail-header__bookmark-popover'], styles['o-talent-detail-header__bookmark-popover--show']].join(' ') : styles['o-talent-detail-header__bookmark-popover']
