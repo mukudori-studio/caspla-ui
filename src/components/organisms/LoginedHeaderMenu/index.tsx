@@ -73,7 +73,7 @@ const LoginedHeaderMenu = () => {
           )
         }
       </button>
-      <div className={popOverStyle}>
+      <div className={popOverStyle} onMouseLeave={() => setToggleMenu(false)}>
         <PopOver>
           <ul className={styles['m-logined-header-menu__list']}>
             <li><Link href="/dashboard"><a className={menuStyle} onClick={hideMenu}>ダッシュボード</a></Link></li>
