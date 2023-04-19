@@ -30,19 +30,25 @@
     color: g.$color-mono-50;
   }
 
+  &__fb {
+    color: #026DFF;
+  }
+  &__ig {
+    color: #D349A8;
+  }
+  &__tw {
+    color: #38ABFF;
+  }
+  &__tt {
+    color: #000;
+  }
+  &__yt {
+    color: #FF1C1C;
+  }
+
   &__sites {
     @include g.flex(center);
     gap: 16px;
-
-    a {
-      color: g.$color-mono-50;
-      background-color: g.$color-mono-10;
-
-      &:hover, &:active {
-        background: g.$color-mono-50;
-        color: g.$color-mono-0;
-      }
-    }
 
     @include g.mq-down(tablet--under) {
       gap: 10px;

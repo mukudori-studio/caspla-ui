@@ -11,8 +11,7 @@ import Meta from '@/components/Meta'
 import PageTitle from '@/components/atoms/PageTitle'
 import CompanyFormTemplate from '@/components/templates/CompanyFormTemplate'
 import styles from '@/styles/AccountRegistration.module.scss'
-import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, REGISTERED_SUCCESSFULLY } from './../../stores/messageAlerts/index';
-import { COMPANY_ID_NOT_AVAILABLE } from '@/stores/messageAlerts/index';
+import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG, REGISTERED_SUCCESSFULLY, COMPANY_ID_NOT_AVAILABLE, RESGISTRATION_EXPIRED  } from '@/stores/messageAlerts/index';
 
 
 const CompanyRegistration: NextPage = () => {
@@ -22,7 +21,7 @@ const CompanyRegistration: NextPage = () => {
   useEffect(() => {
     if (userSession.fullName === '') {
       Router.replace('/signup/')
-      toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
+      toast.error(RESGISTRATION_EXPIRED, { autoClose: 3000, draggable: true})
     }
   }, [])
 

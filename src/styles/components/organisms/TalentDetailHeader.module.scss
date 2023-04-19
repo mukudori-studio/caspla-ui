@@ -66,7 +66,7 @@
   }
   &__bookmark {
     position: absolute;
-    right: 0; 
+    right: 0;
     top: 50px;
 
     @include g.mq-down(tablet--under) {
@@ -106,6 +106,7 @@
   &__name {
     font-size: 24px;
     margin: 0;
+    color: g.$color-mono-100;
     line-height: 1.4;
     letter-spacing: 1px;
 
@@ -114,21 +115,23 @@
     }
   }
 
+  &__furigana {
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0;
+    color: g.$color-mono-60;
+    letter-spacing: .8px;
+  }
+
   &__caspla-id {
     font-size: 16px;
+    font-weight: normal;
     margin: 0;
-    color: g.$color-mono-50;
+    color: g.$color-mono-60;
     letter-spacing: .8px;
     margin-bottom: 12px;
   }
 
-  &__furigana {
-    font-size: 16px;
-    margin: 0;
-    color: g.$color-mono-50;
-    letter-spacing: .8px;
-  }
-  
   &__links {
     @include g.flex(end);
     margin-top: -16px;
@@ -155,8 +158,9 @@
 
   &__production-link {
     font-size: 14px;
-    background: #6681CC;
-    color: g.$color-mono-0;
+    background: g.$color-mono-0;
+    color: g.$color-mono-100;
+    border: 1px solid g.$color-mono-100;
     text-decoration: none;
     padding: 5px 10px;
     border-radius: 30px;
@@ -216,7 +220,7 @@
       width: 220px;
     }
   }
-  
+
   &__list {
     text-align: center;
     padding: 10px 10px;
@@ -225,10 +229,10 @@
         margin-top: 15px;
       }
     }
-    
+
     &--button {
       padding: 5px 0;
-      background-color: g.$color-mono-60;
+      background-color: g.$color-mono-100;
       color: g.$color-mono-0;
       font-weight: bold;
       text-decoration: none;

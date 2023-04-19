@@ -12,7 +12,7 @@ import styles from '@/styles/ProductionSetting.module.scss'
 import { toast } from 'react-toastify'
 import putProductionTalent from '@/apis/settings/production/putTalent'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { SOMETHING_WENT_WRONG, ACCESS_TOKEN_INACTIVE, NOT_ALLOWED_TO_UPDATE_TALENT, SAVED_CHANGES } from './../../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, ACCESS_TOKEN_INACTIVE, NOT_ALLOWED_TO_UPDATE_TALENT, SAVED_CHANGES, IMAGE_SIZE_EXCEEDED } from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
 
 
@@ -23,7 +23,7 @@ const TalentEdit: NextPage = () => {
   const session = useRecoilValue(userAtom)
   const accessToken = useRecoilValue(accessTokenAtom)
   const [talentState, setTalent] = useState<any>({})
-  
+
   const [changeThumbnailState, setChangeThumbnail] = useState(false)
   const [changeCoverState, setChangeCover] = useState(false)
 
@@ -38,7 +38,7 @@ const TalentEdit: NextPage = () => {
       .catch((err)=> {
         if(err.response) {
           if(err.response.status === 403) {
-            toast.error(NOT_ALLOWED_TO_UPDATE_TALENT, { autoClose: 3000, draggable: true}) 
+            toast.error(NOT_ALLOWED_TO_UPDATE_TALENT, { autoClose: 3000, draggable: true})
             setTimeout(()=>Router.back(),2500)
           }
         }
@@ -49,10 +49,10 @@ const TalentEdit: NextPage = () => {
       Router.push('/signin')
     }
   }, [casplaId])
-  
+
   useEffect(()=> {
     if(typeof talentState === 'boolean' && !talentState) {
-      toast.warning('You cant edit this person', { autoClose: 3000, draggable: true})
+      toast.warning(NOT_ALLOWED_TO_UPDATE_TALENT, { autoClose: 3000, draggable: true})
       Router.push('/setting/production/talents')
     }
   },[talentState])
@@ -65,17 +65,35 @@ const TalentEdit: NextPage = () => {
         .then(() => {
           if(changeCoverState) {
             updateUserPhoto(talentState.userId, "COVER", data.coverImage)
-            .catch((err)=> console.log(err))
+            .catch((err)=> {
+              if(err.response.status == 400) {
+                toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+              } else {
+                console.log(err)
+              }
+            })
           }
         })
-        .catch((err)=>console.log(err))
+        .catch((err)=>{
+          if(err.response.status == 400) {
+            toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+          } else {
+            console.log(err)
+          }
+        })
       } else {
         if(changeCoverState) {
           updateUserPhoto(talentState.userId, "COVER", data.coverImage)
-          .catch((err)=> console.log(err))
+          .catch((err)=> {
+            if(err.response.status == 400) {
+              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+            } else {
+              console.log(err)
+            }
+          })
         }
       }
-      setTimeout(()=>toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true}),4000) 
+      setTimeout(()=>toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true}),4000)
     })
     .catch((err)=> {
       console.log(err)
@@ -95,10 +113,10 @@ const TalentEdit: NextPage = () => {
             <h1 className={styles['p-production-setting__title']}>プロダクション管理</h1>
             <div className={styles['p-production-setting__buttons']}>
               <div className={styles['p-production-setting__button']}>
-                <LinkButton href="/setting/production/talents" color="primary" size="small" weight="bold" text="タレント一覧" />
+                <LinkButton href="/setting/production/talents" color="black" size="small" weight="bold" text="タレント一覧" />
               </div>
               <div className={styles['p-production-setting__button']}>
-                <LinkButton href="/setting/production/edit" color="secondary" size="small" weight="bold" text="事務所情報" />
+                <LinkButton href="/setting/production/edit" color="outline-mono" size="small" weight="bold" text="事務所情報" />
               </div>
             </div>
           </header>

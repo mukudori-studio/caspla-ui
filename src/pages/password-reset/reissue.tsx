@@ -12,7 +12,7 @@ import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
 
 import styles from '@/styles/PasswordReset.module.scss'
-import { CONTACT_SYS_ADMIN, SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
+import { CONTACT_SYS_ADMIN, EMAIL_ADDRESS_NOT_EXIST, SOMETHING_WENT_WRONG } from '@/stores/messageAlerts/index';
 
 type InputProps = {
   email: string
@@ -25,7 +25,7 @@ const PasswordReissue: NextPage = () => {
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     sendEmail(data.email).then(({response_code}) => {
       if (response_code==200) Router.push('/password-reset/sent-email')
-      else if(response_code==404) toast.error('入力いただいたメールアドレスは存在しません。', { autoClose: 3000, draggable: true})
+      else if(response_code==404) toast.error(EMAIL_ADDRESS_NOT_EXIST, { autoClose: 3000, draggable: true})
       else toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
     }).catch((err) => {
       console.log(err)

@@ -14,6 +14,7 @@ import FormLabel from '@/components/atoms/Forms/Label'
 import Card from '@/components/molecules/Card'
 
 import styles from '@/styles/Signup.module.scss'
+import { VERIFICATION_CODE_FAILED, VERIFICATION_CODE_SENT, EMAIL_SEND_FAILED } from '@/stores/messageAlerts/index'
 
 type InputProps = {
   code: string
@@ -38,15 +39,15 @@ const VerifyCode: NextPage = () => {
         }
       })
     }).catch(() => {
-      toast.error('確認コードの確認に失敗しました。', { autoClose: 3000, draggable: true})
+      toast.error(VERIFICATION_CODE_FAILED, { autoClose: 3000, draggable: true})
     })
   }
 
   const reSendCode = () => {
     sendEmail(email, needForLetter, true).then(res => {
-      toast.success('確認コードを送信しました。', { autoClose: 3000, draggable: true})
+      toast.success(VERIFICATION_CODE_SENT, { autoClose: 3000, draggable: true})
     }).catch(() => {
-      toast.error('メールの送信に失敗しました。', { autoClose: 3000, draggable: true})
+      toast.error(EMAIL_SEND_FAILED, { autoClose: 3000, draggable: true})
     })
   }
 

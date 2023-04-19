@@ -11,7 +11,7 @@ import Button from '@/components/atoms/Button'
 import PageTitle from '@/components/atoms/PageTitle'
 import styles from '@/styles/AccountRegistration.module.scss'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { REGISTERED_SUCCESSFULLY, SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
+import { IMAGE_SIZE_EXCEEDED, REGISTERED_SUCCESSFULLY, RESGISTRATION_EXPIRED, SOMETHING_WENT_WRONG } from './../../stores/messageAlerts/index';
 
 const TalentRegistration: NextPage = () => {
 
@@ -22,7 +22,13 @@ const TalentRegistration: NextPage = () => {
       .then(() => {
         if (data.coverImage) {
           updateUserPhoto(session.userId, "COVER", data.coverImage)
-            .catch((err)=> console.log(err))
+            .catch((err)=> {
+              if(err.response.status == 400) {
+                toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+              } else {
+                console.log(err)
+              }
+            })
         }
         toast.success(REGISTERED_SUCCESSFULLY, { autoClose: 3000, draggable: true})
         Router.push('/signup/complete')
@@ -36,7 +42,7 @@ const TalentRegistration: NextPage = () => {
   useEffect(() => {
     if (!session.userId) {
       Router.replace('/signup/')
-      toast.error('登録有効期限が切れました。メールアドレスの登録からやり直してください。', { autoClose: 3000, draggable: true})
+      toast.error(RESGISTRATION_EXPIRED, { autoClose: 3000, draggable: true})
     }
   }, [])
 

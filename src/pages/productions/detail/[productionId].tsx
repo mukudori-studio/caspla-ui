@@ -10,6 +10,7 @@ import TalentLinkCard from '@/components/atoms/TalentLinkCard'
 import ProductionDetailHeader from '@/components/organisms/ProductionDetailHeader'
 import Loading from '@/components/atoms/Loading'
 import styles from '@/styles/Production.module.scss'
+import { PRODUCTION_GET_FAILED } from '@/stores/messageAlerts/index'
 
 const productionDetail: NextPage = () => {
 
@@ -30,7 +31,7 @@ const productionDetail: NextPage = () => {
     }).catch(err => {
       console.log(err)
       Router.push('/')
-      toast.error('プロダクション情報の取得に失敗しました。', { autoClose: 3000, draggable: true})
+      toast.error(PRODUCTION_GET_FAILED, { autoClose: 3000, draggable: true})
     }).finally(() => {
       setLoading(false)
     })

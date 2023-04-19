@@ -31,7 +31,7 @@ const PaginationWrapper = styled.div`
 
   @media (min-width: 1024px) {
     &:hover {
-      opacity: 0.8;
+      opacity: .75;
     }
   }
 
@@ -41,16 +41,31 @@ const PaginationWrapper = styled.div`
     justify-content: center;
     width: 65px;
     height: 65px;
-    color: #3f4d5f;
-    background: #E6E8EA;
+    color: #212529;
+    background: #fff;
+    border: 1px solid #212529;
     border-radius: 100%;
     font-weight: bold;
   }
   &.active {
     pointer-events: none;
     a {
-      background: #3F4D5F !important;
-      color: #fff !important;
+      color: #6F42C1 !important;
+      background: #F0EBF9 !important;
+      border: 1px solid #6F42C1;
+    }
+  }
+  &.previous,
+  &.next {
+    a {
+      line-height: .8;
+    }
+  }
+  &.break {
+    pointer-events: none;
+    a {
+      background: transparent !important;
+      border: none;
     }
   }
   &.disabled {
@@ -71,8 +86,16 @@ const PaginationWrapper = styled.div`
     &.active {
       pointer-events: none;
       a {
-        background: #3F4D5F !important;
-        color: #fff !important;
+        color: #6F42C1 !important;
+        background: #F0EBF9 !important;
+        border: 1px solid #6F42C1;
+      }
+    }
+    &.previous,
+    &.next {
+      a {
+        font-size: 12px;
+        line-height: .8;
       }
     }
   }
@@ -98,8 +121,8 @@ const Pagination = ({
     <PaginationWrapper>
       <ReactPaginate
         pageCount={totalCount}
-        previousLabel="<"
-        nextLabel=">"
+        previousLabel="&lt;"
+        nextLabel="&gt;"
         marginPagesDisplayed={marginPagesDisplayed}
         pageRangeDisplayed={pageRangeDisplayed}
         onPageChange={handlePaginate}

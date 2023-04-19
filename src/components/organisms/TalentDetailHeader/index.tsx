@@ -11,7 +11,7 @@ import BookMark from '@/components/atoms/BookMark';
 import changeBookmark from './../../../apis/bookmarks/changeBookmark';
 import { useRecoilValue } from 'recoil';
 import { userAtom, accessTokenAtom } from './../../../stores/Session/index';
-import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN } from './../../../stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, CONTACT_SYS_ADMIN, USER_MUST_BE_LOGGED_IN, DELETE_BOOKMARK } from './../../../stores/messageAlerts/index';
 import PopOver from '@/components/molecules/Popover';
 import Link from 'next/link'
 
@@ -60,7 +60,7 @@ const TalentDetailHeader = ({
   const session = useRecoilValue(userAtom)
   const accessToken = useRecoilValue(accessTokenAtom)
   const [thumbnail, setThumbnail] = useState(thumbnailImage)
-  const [showMenu, setShowMenu] = useState(withBookmark)
+  const [showMenu, setShowMenu] = useState(false)
   
   const openBookmarkMenu = () => setShowMenu(true)
   const popOverStyle = showMenu ? [styles['o-talent-detail-header__bookmark-popover'], styles['o-talent-detail-header__bookmark-popover--show']].join(' ') : styles['o-talent-detail-header__bookmark-popover']
@@ -102,28 +102,38 @@ const TalentDetailHeader = ({
     }
   }
 
+  const toggleBookmark = (casplaId:string, sessionCasplaId:string) => {
+    changeBookmark(casplaId, sessionCasplaId)
+    .then(({response_code, response_message}) => {
+      if(response_code == 200) {
+        setBookmarked(response_message)
+        if(response_message) {
+          openBookmarkMenu()
+        } else {
+          hideBookmarkMenu()
+        }
+      } 
+      else console.log(response_code, response_message)
+    })
+    .catch((err) => {
+      console.log(err)
+      toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
+    })
+  }
+
   const onClickBookmark = (e : any) => {
     e.stopPropagation()
-    if(accessToken==='') {
-      toast.warning('ログインする必要があります。', { autoClose: 3000, draggable: true})
-      Router.push('/signin')
-    } else {
-      changeBookmark(casplaId, session.casplaId)
-      .then(({response_code, response_message}) => {
-        if(response_code == 200) {
-          setBookmarked(response_message)
-          if(response_message) {
-            openBookmarkMenu()
-          } else {
-            hideBookmarkMenu()
-          }
+    if(accessToken!=='') {
+      if(isBookmarked) {
+        if(window.confirm(DELETE_BOOKMARK)) {
+          toggleBookmark(casplaId, session.casplaId);
         } 
-        else console.log(response_code, response_message)
-        })
-        .catch((err) => {
-          console.log(err)
-          toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
-        })
+      } else {
+        toggleBookmark(casplaId, session.casplaId);
+      }
+    } else {
+      toast.warning(USER_MUST_BE_LOGGED_IN, { autoClose: 3000, draggable: true})
+      Router.push('/signin')
     }
   }
 

@@ -77,6 +77,13 @@
     width: 100px;
     height: 42px;
 
+    &:hover,
+    &:active {
+      background: g.$color-primary;
+      color: g.$color-mono-0;
+      opacity: .75;
+    }
+
     @include g.mq-down(tablet--under) {
       width: 100%;
       height: 40px;

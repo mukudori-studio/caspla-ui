@@ -3,7 +3,7 @@
 .o-production-detail-header {
   display: grid;
   grid-template:
-    "thumbnail .   .  " 40px  
+    "thumbnail .   .  " 40px
     "thumbnail . names" auto
     "thumbnail .   .  " 10px
     "thumbnail . links" auto /228px 16px auto;
@@ -13,7 +13,7 @@
       "thumbnail  .   names" auto
       "     .     .     .  " 10px
       "  links  links links" auto /100px 10px auto;
-  }  
+  }
 
   &__thumbnail {
     @include g.flex(center);
@@ -55,6 +55,7 @@
 
   &__name {
     font-size: 36px;
+    color: g.$color-mono-100;
     margin: 0;
     line-height: 1.4;
     letter-spacing: 1px;
@@ -68,10 +69,10 @@
   &__caspla-id {
     font-size: 16px;
     margin: 0;
-    color: g.$color-mono-50;
+    color: g.$color-mono-60;
     letter-spacing: .8px;
     font-weight: normal;
-    
+
     @include g.mq-up(tablet) {
       margin-bottom: 12px;
     }
@@ -84,10 +85,10 @@
   &__furigana {
     font-size: 16px;
     margin: 0;
-    color: g.$color-mono-50;
+    color: g.$color-mono-60;
     letter-spacing: .8px;
     font-weight: normal;
-    
+
     @include g.mq-down(tablet--under) {
       font-size: 14px;
     }
@@ -96,7 +97,7 @@
   &__links {
     grid-area: links;
   }
-  
+
   &__link {
     @include g.flex(center);
     min-width: 120px;

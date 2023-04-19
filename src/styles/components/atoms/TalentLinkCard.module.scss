@@ -10,10 +10,10 @@
   transition: .2s;
   // TODO：デザイン決まったらカラー修正
   background: g.$color-mono-5;
-  color: g.$color-mono-80;
+  color: g.$color-mono-100;
 
   &:hover {
-    opacity: .8;
+    opacity: .6;
   }
 
   &__thumbnail {
@@ -49,6 +49,7 @@
 
   &__name {
     font-size: 16px;
+    color: g.$color-mono-100;
     line-height: 1.3;
     font-weight: bold;
     letter-spacing: 1px;

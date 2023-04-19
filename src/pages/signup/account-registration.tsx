@@ -26,8 +26,9 @@ import {
   CASPLA_ID_AVAILABLE, 
   CASPLA_ID_NOT_AVAILABLE, 
   CASPLA_ID_LENGTH_REQUIRED, 
-  CASPLA_ID_VERIFICATION_ERROR} from './../../stores/messageAlerts/index';
-import { validateCasplaId } from './../../utils/validations';
+  CASPLA_ID_VERIFICATION_ERROR,
+  IMAGE_SIZE_EXCEEDED} from '@/stores/messageAlerts/index';
+import { validateCasplaId } from '@/utils/validations';
 
 type InputProps = {
   fullName: string
@@ -72,7 +73,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
   ]
 
   const setSubmitButton = (role: string) => {
-    role === 'FAN_USER' ? setSubmitButtonColor('primary') : setSubmitButtonColor('secondary')
+    role === 'FAN_USER' ? setSubmitButtonColor('primary') : setSubmitButtonColor('primary')
     if (role === 'COMPANY_ADMIN') setSubmitText('会社情報の入力へ')
     else if (role === 'TALENT') setSubmitText('タレントプロフィールの入力へ')
     else setSubmitText('この内容で登録する')
@@ -88,9 +89,9 @@ const AccountRegistration: NextPage = ({query}:any) => {
     switch (validateCasplaId(getValues('casplaId'))) {
       case 1:
         setCheckCasplaId(false)
-        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})  
+        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
         break;
-      case 2: 
+      case 2:
         setCheckCasplaId(false)
         toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true})
         break;
@@ -129,7 +130,11 @@ const AccountRegistration: NextPage = ({query}:any) => {
           updateUserPhoto(userIdState,"THUMBNAIL", thumbnailState).then(res => {
             setThumbnailImage(res.response_message)
           }).catch((err)=>{
-            console.log(err)
+            if(err.response.status == 400) {
+              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+            } else {
+              console.log(err)
+            }
           })
         }
 
@@ -138,7 +143,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
         if (roleState === 'FAN_USER') {
           toast.success(REGISTERED_SUCCESSFULLY, { autoClose: 3000, draggable: true})
           Router.push('/signup/complete')
-        } 
+        }
       })
       .catch((err) => {
         console.log(err)
@@ -149,7 +154,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
   const validatePassword = (data: string) =>{
     return getValues('password') === data
   }
-  
+
   return (
     <main className={styles['p-account-registration']}>
       <Meta title="アカウント情報登録" />
