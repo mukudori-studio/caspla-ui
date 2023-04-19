@@ -12,10 +12,10 @@ const SignupComplete: NextPage = () => {
         <p className={styles['p-sign-up-complete__lead']}>Casplaはあなたのキャスティングを手助けするタレントデータベース。<br />好きな条件を入れて検索してみよう！</p>
         <div className={styles['p-sign-up-complete__buttons']}>
           <div className={styles['p-sign-up-complete__button']}>
-            <LinkButton href="/talents/1" text="タレントを検索する" size="large" weight="bold" />
+            <LinkButton href="/talents/1" text="タレントを検索する" size="large" color="primary" weight="bold" />
           </div>
           <div className={styles['p-sign-up-complete__button']}>
-            <LinkButton href="/dashboard" text="ダッシュボードに行く" size="large" weight="bold" />
+            <LinkButton href="/dashboard" text="ダッシュボードに行く" size="large" color="outline-mono" weight="bold" />
           </div>
         </div>
       </section>
