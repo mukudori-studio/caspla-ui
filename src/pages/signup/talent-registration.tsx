@@ -23,7 +23,8 @@ const TalentRegistration: NextPage = () => {
         if (data.coverImage) {
           updateUserPhoto(session.userId, "COVER", data.coverImage)
             .catch((err)=> {
-              if(err.response.status == 400) {
+              let status = err.response.status;
+              if(status == 400||status == 413||status == 500) {
                 toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
               } else {
                 console.log(err)
