@@ -58,32 +58,22 @@ const Dashboard: NextPage = () => {
               updateUserPhoto(session.userId, "COVER", data.coverImage)
                 .then(()=>toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true}))
                 .catch((error) => {
-                  if(error.response.status == 400) {
                     toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
-                  } else {
                     console.log(error)
-                  }
                 })
             } else toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
           })
           .catch((error)=> {
-            if(error.response.status == 400) {
               toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
-            } else {
               console.log(error)
-            }
           })
       } else {
         if (changeCoverState) {
           updateUserPhoto(session.userId, "COVER", data.coverImage)
             .then(()=>toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true}))
             .catch((error) => {
-              let status = error.response.status;
-              if(status == 400||status == 413||status == 500) {
                 toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
-              } else {
                 console.log(error)
-              }
             })
         } else toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
       }
