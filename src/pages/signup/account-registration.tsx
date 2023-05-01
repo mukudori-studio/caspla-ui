@@ -130,11 +130,8 @@ const AccountRegistration: NextPage = ({query}:any) => {
           updateUserPhoto(userIdState,"THUMBNAIL", thumbnailState).then(res => {
             setThumbnailImage(res.response_message)
           }).catch((err)=>{
-            if(err.response.status == 400) {
               toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
-            } else {
               console.log(err)
-            }
           })
         }
 

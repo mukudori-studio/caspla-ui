@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Router from 'next/router'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -12,7 +12,7 @@ import styles from '@/styles/components/organisms/LoginedHeaderMenu.module.scss'
 import { LOGGED_OUT } from '@/stores/messageAlerts/index'
 
 const LoginedHeaderMenu = () => {
-
+  const divRef = useRef<HTMLDivElement>(null);
   const [showMenu, setToggleMenu] = useState(false)
   const session = useRecoilValue(userAtom)
   const sessionThumbnail = useRecoilValue(thumbnailAtom)
@@ -36,16 +36,25 @@ const LoginedHeaderMenu = () => {
       draggable: true,
     })
   }
-  
-  useEffect(()=> {
-    if(session.role==='COMPANY_ADMIN'||session.role==='PRODUCTION_ADMIN'){
+
+  const handleOutsideClick = (e: any) => {
+    if (divRef.current !== null) {
+      if (!divRef.current.contains(e.target)) {
+        hideMenu();
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (session.role === 'COMPANY_ADMIN' || session.role === 'PRODUCTION_ADMIN') {
       setBelong(session.companyName)
-    } else if (session.role==='TALENT') {
-        setBelong('無所属')
-    } else if(session.role==='FAN_USER') {
+    } else if (session.role === 'TALENT') {
+      setBelong('無所属')
+    } else if (session.role === 'FAN_USER') {
       setBelong('ゲストユーザー')
     }
-  },[])
+    document.addEventListener('click', handleOutsideClick, true);
+  }, [])
 
   const popOverStyle = showMenu ? [styles['m-logined-header-menu__popover'], styles['m-logined-header-menu__popover--show']].join(' ') : styles['m-logined-header-menu__popover']
   const menuStyle = styles['m-logined-header-menu__item']
@@ -73,15 +82,15 @@ const LoginedHeaderMenu = () => {
           )
         }
       </button>
-      <div className={popOverStyle}>
+      <div className={popOverStyle} ref={divRef}>
         <PopOver>
           <ul className={styles['m-logined-header-menu__list']}>
             <li><Link href="/dashboard"><a className={menuStyle} onClick={hideMenu}>ダッシュボード</a></Link></li>
             <li><Link href="/bookmarks"><a className={menuStyle} onClick={hideMenu}>ブックマーク管理</a></Link></li>
-            { (session.role === 'COMPANY_ADMIN' || session.role === 'FAN_USER' || session.role === 'PRODUCTION_ADMIN' || session.role === 'TALENT') &&<li><Link href="/setting/edit/account"><a className={menuStyle} onClick={hideMenu}>アカウント設定</a></Link></li>}
-            { (session.role === 'TALENT' || session.role === 'PRODUCTION_TALENT') && <li><Link href="/setting/edit/profile"><a className={menuStyle} onClick={hideMenu}>プロフィール編集</a></Link></li> }
-            { session.role === 'PRODUCTION_ADMIN' && <li><Link href="/setting/production/edit"><a className={menuStyle} onClick={hideMenu}>プロダクション管理</a></Link></li>}
-            { session.role === 'COMPANY_ADMIN' && <li><Link href="/setting/company/edit"><a className={menuStyle} onClick={hideMenu}>組織管理</a></Link></li> }
+            {(session.role === 'COMPANY_ADMIN' || session.role === 'FAN_USER' || session.role === 'PRODUCTION_ADMIN' || session.role === 'TALENT') && <li><Link href="/setting/edit/account"><a className={menuStyle} onClick={hideMenu}>アカウント設定</a></Link></li>}
+            {(session.role === 'TALENT' || session.role === 'PRODUCTION_TALENT') && <li><Link href="/setting/edit/profile"><a className={menuStyle} onClick={hideMenu}>プロフィール編集</a></Link></li>}
+            {session.role === 'PRODUCTION_ADMIN' && <li><Link href="/setting/production/edit"><a className={menuStyle} onClick={hideMenu}>プロダクション管理</a></Link></li>}
+            {session.role === 'COMPANY_ADMIN' && <li><Link href="/setting/company/edit"><a className={menuStyle} onClick={hideMenu}>組織管理</a></Link></li>}
             <li><button onClick={signOut} className={menuStyle}>ログアウト</button></li>
           </ul>
         </PopOver>

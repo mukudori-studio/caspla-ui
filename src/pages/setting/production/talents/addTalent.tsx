@@ -41,30 +41,21 @@ const TalentEdit: NextPage = () => {
               if(changeCoverState) {
                 updateUserPhoto(response_message.userId, "COVER", data.coverImage)
                 .catch((err)=> {
-                  if(err.response.status == 400) {
                     toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
-                  } else {
                     console.log(err)
-                  }
                 })
               }
             })
             .catch((err)=>{
-              if(err.response.status == 400) {
                 toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
-              } else {
                 console.log(err)
-              }
             })
           } else {
             if(changeCoverState) {
               updateUserPhoto(response_message.userId, "COVER", data.coverImage)
               .catch((err)=> {
-                if(err.response.status == 400) {
                   toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
-                } else {
                   console.log(err)
-                }
               })
             }
           }
