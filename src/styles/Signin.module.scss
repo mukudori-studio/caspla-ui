@@ -62,4 +62,11 @@
   &__description {
     text-align: center;
   }
+  &__forget-password {
+    text-align: right;
+    margin-top: 10px;
+    a {
+      color: g.$color-blue;
+    }
+  }
 }
