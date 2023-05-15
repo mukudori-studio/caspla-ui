@@ -14,6 +14,7 @@ import updatePassword from "@/apis/settings/profile/updatePassword";
 import { toast } from "react-toastify";
 import { CURRENT_PASSWORD_NOT_MATCHED, PASSWORDS_NOT_MATCHING, SAVED_CHANGES, SOMETHING_WENT_WRONG } from "@/stores/messageAlerts/index";
 import Router from "next/router";
+import Link from "next/link";
 
 type PasswordInputs = {
     prev_password: string
@@ -51,6 +52,9 @@ const PasswordResetPage: NextPage = () => {
                             <div className={styles['p-account-registration__item']}>
                                 <FormLabel text="Current Password" label="prev_password" required={true} />
                                 <PasswordInput id="prev_password" register={register} error={errors?.prev_password?.message} />
+                                <div className={signStyle['p-sign-in__forget-password']} >
+                                    <Link href="/password-reset/reissue">Forget password ?</Link>
+                                </div>
                             </div>
                             <div className={styles['p-account-registration__item']}>
                                 <FormLabel text="New Password" label="password" required={true} />
