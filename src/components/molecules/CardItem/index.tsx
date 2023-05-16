@@ -10,7 +10,6 @@ import changeBookmark from './../../../apis/bookmarks/changeBookmark';
 import { userAtom } from './../../../stores/Session/index';
 import PopOver from '@/components/molecules/Popover';
 import { DELETE_BOOKMARK, USER_MUST_BE_LOGGED_IN } from '@/stores/messageAlerts/index'
-import Link from 'next/link'
 
 interface CardItemProps {
   type?: 'cast' | 'agient';

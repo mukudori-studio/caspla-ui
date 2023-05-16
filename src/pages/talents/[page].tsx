@@ -49,7 +49,6 @@ const Talents: NextPage = (props: any) => {
     })
       .then(({ response_message }) => {
         let count = Math.ceil(response_message.totalCount)
-        console.log(response_message.casts)
         setTalents(response_message.casts)
         setPage(response_message.page)
         setTotalPageCount(Math.ceil(response_message.totalCount / 10))
