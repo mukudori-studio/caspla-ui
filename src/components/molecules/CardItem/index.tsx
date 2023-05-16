@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import Router from 'next/router'
-import Image from 'next/image'
 import BookMark from '@/components/atoms/BookMark'
-import LabelTexts from '@/components/atoms/LabelTexts'
 import activities from '@/utils/activities'
 import styles from '@/styles/components/molecules/CardItem.module.scss'
 import { accessTokenAtom } from '@/stores/Session';
@@ -22,6 +20,8 @@ interface CardItemProps {
   profile?: string;
   activity?: Array<string>;
   withBookmark?: boolean;
+  productionId?: string;
+  productionName?: string;
   onClick?: () => void;
 }
 
@@ -34,6 +34,8 @@ const CardItem = ({
   profile = '',
   type = 'cast',
   withBookmark = false,
+  productionId,
+  productionName,
   ...props
 }: CardItemProps) => {
   // NOTE:タレントとプロダクションで遷移先を分けておく(ビジネスロジック的に親に持たせる方が良いかも)
@@ -55,13 +57,13 @@ const CardItem = ({
   const openBookmarkMenu = () => setShowMenu(true)
   const hideBookmarkMenu = () => setShowMenu(false)
   useEffect(() => {
-    if(showMenu) {
+    if (showMenu) {
       setTimeout(() => hideBookmarkMenu(), 3000)
     }
   }, [showMenu]);
   const popOverStyle = showMenu ? [styles['m-card-item__bookmark-popover'], styles['m-card-item__bookmark-popover--show']].join(' ') : styles['m-card-item__bookmark-popover']
 
-  const callBookmarkAPI = (casplaID:string, sessionCasplaId:string) => {
+  const callBookmarkAPI = (casplaID: string, sessionCasplaId: string) => {
     changeBookmark(casplaID, sessionCasplaId)
       .then(({ response_message }) => {
         if (response_message) {
@@ -76,7 +78,7 @@ const CardItem = ({
   const changeBookmarkStatus = ((e: any) => {
     e.stopPropagation()
     if (accessToken !== '') {
-      if(flag) {
+      if (flag) {
         if (window.confirm(DELETE_BOOKMARK)) {
           callBookmarkAPI(casplaId, session.casplaId);
         }
@@ -88,11 +90,16 @@ const CardItem = ({
       Router.push('/signin')
     }
   })
-    
-    const gotoBookmarks = (e: any) => {
-      e.stopPropagation();
-      hideBookmarkMenu();
-      Router.push('/bookmarks')
+
+  const gotoBookmarks = (e: any) => {
+    e.stopPropagation();
+    hideBookmarkMenu();
+    Router.push('/bookmarks')
+  }
+
+  const toProduction = (e: any) => {
+    e.stopPropagation();
+    Router.push(`/productions/detail/${productionId}`)
   }
 
   return (
@@ -130,9 +137,22 @@ const CardItem = ({
               </div>
             )}
           </div>
-          {
+          {/* {
             (type === 'cast' && casplaId !== '') && (
               <div className={styles['m-card-item__sub']}>{casplaId}</div>
+            )
+          } */}
+          {
+            productionName && (
+              <div className={styles['m-card-item__sub']}>
+                {
+                  productionId !== '' ? (
+                    <span onClick={toProduction}>{productionName}</span>
+                  ) : (
+                    <span>{productionName}</span>
+                  )
+                }
+              </div>
             )
           }
         </div>
