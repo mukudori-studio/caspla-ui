@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-const Talents: NextPage = (props:any) => {
+const Talents: NextPage = (props: any) => {
 
   const [loadingState, setLoading] = useState(true)
   const [talentsState, setTalents] = useState([])
@@ -47,23 +47,24 @@ const Talents: NextPage = (props:any) => {
       gender: genderState,
       casplaId: session.casplaId
     })
-    .then(({response_message}) => {
-      let count = Math.ceil(response_message.totalCount)
-      setTalents(response_message.casts)
-      setPage(response_message.page)
-      setTotalPageCount(Math.ceil(response_message.totalCount / 10))
-      setTotalResults(count)
-      setLoading(false)
-      setDisplayString(count===10000?`${count.toLocaleString('en-US')}件以上`:`${count.toLocaleString('en-US')}件中`)
-    })
-    .catch((err)=> {
-      console.log(err)
-      toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
-      Router.push('/')
-    })
+      .then(({ response_message }) => {
+        let count = Math.ceil(response_message.totalCount)
+        console.log(response_message.casts)
+        setTalents(response_message.casts)
+        setPage(response_message.page)
+        setTotalPageCount(Math.ceil(response_message.totalCount / 10))
+        setTotalResults(count)
+        setLoading(false)
+        setDisplayString(count === 10000 ? `${count.toLocaleString('en-US')}件以上` : `${count.toLocaleString('en-US')}件中`)
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true })
+        Router.push('/')
+      })
   }, [props])
 
-  const onSearch = async (value:any) => {
+  const onSearch = async (value: any) => {
     setLoading(true)
     setPage(1)
     setKeyword(value.keyword)
@@ -99,7 +100,7 @@ const Talents: NextPage = (props:any) => {
     setLoading(false)
   }
 
-  const traversePage = (value:number) => {
+  const traversePage = (value: number) => {
     onChangePagination(value)
   }
 
@@ -108,53 +109,55 @@ const Talents: NextPage = (props:any) => {
       <Meta title="タレント一覧" />
 
       <main className={styles['p-talents__wrapper']}>
-        { loadingState && <Loading /> }
-        { !loadingState && talentsState.length === 0 && <Nodata text="タレント情報は0件となります。" /> }
-        { !loadingState && talentsState.length > 0 && (
-            <>
-              <div className={styles['p-talents__items']}>
-                {totalResults === 10000 && (
-                  <div className={styles['p-talents__alertbox']}>
-                    <p>とても多くの検索結果が見つかりました。<br/>的確な結果を表示するためには絞り込み検索を活用してください。</p>
-                  </div>
-                )}
-                <h4 className={styles['p-talents__search-results']}>{`${displayString}${pageState.toLocaleString('en-US')}ページ目を表示`}</h4>
-                {
-                  talentsState.map((talent: any) => {
-                    return (
-                      <div className={styles['p-talents__item']} key={`${talent?.casplaId}-${talent?.fullName}`}>
-                        <CardItem
-                          id={talent.casplaId}
-                          name={talent.fullName}
-                          casplaId={talent.casplaId}
-                          profile={talent.profile}
-                          thumbnail={talent.thumbnailUrl}
-                          activity={talent.activities}
-                          withBookmark={talent.bookMarked}
-                        />
-                      </div>
-                    )
-                  })
-                }
-              </div>
-              {totalPageCountState > 1 && (
-                <div className={styles['p-talents__pagination']}>
-                  { pageState !== 1 && totalPageCountState > 5 && (
-                    <div className={styles['p-talents__redirect']} onClick={()=>traversePage(0)}>
-                    <p>&laquo;</p>
-                    </div>
-                  )}
-                  <Pagination totalCount={totalPageCountState} currentNum={pageState} onChangePagination={onChangePagination} />
-                  {totalPageCountState > 5 && pageState!==totalPageCountState && (
-                    <div className={styles['p-talents__redirect']} onClick={()=>traversePage(totalPageCountState-1)} >
-                    <p>&raquo;</p>
-                    </div>
-                  )}
+        {loadingState && <Loading />}
+        {!loadingState && talentsState.length === 0 && <Nodata text="タレント情報は0件となります。" />}
+        {!loadingState && talentsState.length > 0 && (
+          <>
+            <div className={styles['p-talents__items']}>
+              {totalResults === 10000 && (
+                <div className={styles['p-talents__alertbox']}>
+                  <p>とても多くの検索結果が見つかりました。<br />的確な結果を表示するためには絞り込み検索を活用してください。</p>
                 </div>
               )}
+              <h4 className={styles['p-talents__search-results']}>{`${displayString}${pageState.toLocaleString('en-US')}ページ目を表示`}</h4>
+              {
+                talentsState.map((talent: any) => {
+                  return (
+                    <div className={styles['p-talents__item']} key={`${talent?.casplaId}-${talent?.fullName}`}>
+                      <CardItem
+                        id={talent.casplaId}
+                        name={talent.fullName}
+                        casplaId={talent.casplaId}
+                        profile={talent.profile}
+                        thumbnail={talent.thumbnailUrl}
+                        activity={talent.activities}
+                        withBookmark={talent.bookMarked}
+                        productionId={talent.productionId}
+                        productionName={talent.productionName}
+                      />
+                    </div>
+                  )
+                })
+              }
+            </div>
+            {totalPageCountState > 1 && (
+              <div className={styles['p-talents__pagination']}>
+                {pageState !== 1 && totalPageCountState > 5 && (
+                  <div className={styles['p-talents__redirect']} onClick={() => traversePage(0)}>
+                    <p>&laquo;</p>
+                  </div>
+                )}
+                <Pagination totalCount={totalPageCountState} currentNum={pageState} onChangePagination={onChangePagination} />
+                {totalPageCountState > 5 && pageState !== totalPageCountState && (
+                  <div className={styles['p-talents__redirect']} onClick={() => traversePage(totalPageCountState - 1)} >
+                    <p>&raquo;</p>
+                  </div>
+                )}
+              </div>
+            )}
 
-            </>
-          )
+          </>
+        )
         }
         <ItemSearchUnit onClick={onSearch} age={ageState} gender={genderState} activity={activityState} />
       </main>
