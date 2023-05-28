@@ -199,7 +199,7 @@ const AccountRegistration: NextPage = () => {
                 <div className={styles['p-account-registration__item']}>
                   <FormLabel text="パスワード" label="password" />
                   <div className={styles['p-account-registration__link']}>
-                    <Link href="/setting/edit/password" >Change Password</Link>
+                    <Link href="/setting/edit/password" >パスワードを変更する</Link>
                   </div>
                   {/* <PasswordInput id="password" register={register} error={errors?.password?.message} note="※8文字以上の半角英数字で入力してください。" /> */}
                 </div>
