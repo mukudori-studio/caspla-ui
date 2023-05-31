@@ -147,6 +147,7 @@
     }
   }
   &__production-link {
+    @include g.line-clamp(1);
     display: inline-block;
     background-color: transparent;
     color: g.$color-mono-100;
