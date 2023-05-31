@@ -147,9 +147,9 @@ const CardItem = ({
               <div className={styles['m-card-item__sub']}>
                 {
                   productionId !== '' ? (
-                    <button type='button' onClick={toProduction} className={styles['m-card-item__production-link']}>{productionName}</button>
+                    <div onClick={toProduction} className={styles['m-card-item__production-link']}>{productionName}</div>
                   ) : (
-                    <button type='button' className={styles['m-card-item__production-link']}>{productionName}</button>
+                    <div className={styles['m-card-item__production-link']}>{productionName}</div>
                   )
                 }
               </div>

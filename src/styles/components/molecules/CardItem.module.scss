@@ -160,5 +160,9 @@
     &:hover {
       opacity: .5;
     }
+
+    @include g.mq-down(tablet--under) {
+      max-width: 180px;
+    }
   }
 }
