@@ -154,15 +154,19 @@
     padding: 5px 10px;
     border: 1px solid g.$color-mono-100;
     border-radius: 30px;
+    font-size: 13px;
     line-height: 1.1;
+    letter-spacing: initial;
     cursor: pointer;
-    transition: all .5s;
+    transition: all .2s;
 
     &:hover {
       opacity: .5;
     }
 
     @include g.mq-down(tablet--under) {
+      padding: 3px 7px;
+      font-size: 11px;
       max-width: 180px;
     }
   }
