@@ -14,15 +14,15 @@ const confirmPasswordChange: NextPage = () => {
             <div className={styles['p-sign-in__content']}>
                 <Card>
                     <div >
-                        <PageTitle title="Confirmed" />
+                        <PageTitle title="パスワード変更完了" />
                         <p className={styles['p-sign-in__description']}>
-                            Your password change has been completed. Please continue to use the service.
+                          パスワードの変更が完了しました。 引き続きサービスをご利用ください。
                         </p>
                         <div className={styles['p-sign-in__button']}>
-                            <LinkButton href="/" text="Search" size="large" />
+                        <LinkButton href="/" text="タレントを検索する" size="large" weight="bold" />
                         </div>
                         <div className={styles['p-sign-in__button']}>
-                            <LinkButton href="/dashboard" text="Dashboard" color="default" size="large" />
+                        <LinkButton href="/dashboard" text="ダッシュボードに戻る" color="outline-mono" size="large" weight="bold" />
                         </div>
                     </div>
                 </Card>

@@ -48,24 +48,24 @@ const PasswordResetPage: NextPage = () => {
                 <Card>
                     <form onSubmit={handleSubmit(sumbitForm)} className={styles['p-account-registration__form']}>
                         <section className={styles['p-account-registration__section']}>
-                            <PageTitle title="Change Password" />
+                            <PageTitle title="パスワード変更" />
                             <div className={styles['p-account-registration__item']}>
-                                <FormLabel text="Current Password" label="prev_password" required={true} />
+                                <FormLabel text="現在のパスワード" label="prev_password" required={true} />
                                 <PasswordInput id="prev_password" register={register} error={errors?.prev_password?.message} />
                                 <div className={signStyle['p-sign-in__forget-password']} >
-                                    <Link href="/password-reset/reissue">Forget password ?</Link>
+                                <Link href="/password-reset/reissue">パスワードを忘れた場合</Link>
                                 </div>
                             </div>
                             <div className={styles['p-account-registration__item']}>
-                                <FormLabel text="New Password" label="password" required={true} />
-                                <PasswordInput id="password" register={register} error={errors?.password?.message} note="Pleas use single-byte alphanumeric characters" />
+                                <FormLabel text="新しいパスワード" label="password" required={true} />
+                                <PasswordInput id="password" register={register} error={errors?.password?.message} note="※半角英数で入力してください。" />
                             </div>
                             <div className={styles['p-account-registration__item']}>
-                                <FormLabel text="New Password(Confirm)" label="password_confirmation" required={true} />
+                                <FormLabel text="新しいパスワード(確認用)" label="password_confirmation" required={true} />
                                 <PasswordInput id="password_confirmation" register={register} error={errors?.password_confirmation?.message || (password !== password_confirmation ? 'New Passwords should be matched' : '')} />
                             </div>
                             <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
-                                <Button text="変更を保存" color='primary' size="large" type="submit" weight="bold" disabled={password !== password_confirmation} />
+                                <Button text="変更する" color='primary' size="large" type="submit" weight="bold" disabled={password !== password_confirmation} />
                             </div>
                         </section>
                     </form>
