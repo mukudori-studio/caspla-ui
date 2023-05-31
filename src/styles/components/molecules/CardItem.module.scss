@@ -148,12 +148,16 @@
   }
   &__production-link {
     display: inline-block;
-    background-color: g.$color-mono-0;
+    background-color: transparent;
     color: g.$color-mono-100;
     padding: 5px 10px;
     border: 1px solid g.$color-mono-100;
     border-radius: 30px;
     line-height: 1.1;
     cursor: pointer;
+
+    &:hover {
+      opacity: .5;
+    }
   }
 }
