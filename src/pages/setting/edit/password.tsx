@@ -62,7 +62,7 @@ const PasswordResetPage: NextPage = () => {
                             </div>
                             <div className={styles['p-account-registration__item']}>
                                 <FormLabel text="新しいパスワード(確認用)" label="password_confirmation" required={true} />
-                                <PasswordInput id="password_confirmation" register={register} error={errors?.password_confirmation?.message || (password !== password_confirmation ? 'New Passwords should be matched' : '')} />
+                                <PasswordInput id="password_confirmation" register={register} error={errors?.password_confirmation?.message || (password !== password_confirmation ? '※新しいパスワードと一致しません。' : '')} />
                             </div>
                             <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
                                 <Button text="変更する" color='primary' size="large" type="submit" weight="bold" disabled={password !== password_confirmation} />
