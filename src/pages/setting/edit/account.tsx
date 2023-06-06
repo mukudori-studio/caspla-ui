@@ -19,18 +19,21 @@ import RadioButton from '@/components/atoms/Forms/RadioButton'
 import PasswordInput from '@/components/molecules/Forms/PasswordInput'
 import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
-import { CASPLA_ID_AVAILABLE, 
-  CASPLA_ID_NOT_AVAILABLE, 
-  CONTACT_SYS_ADMIN, 
-  SOMETHING_WENT_WRONG, 
-  EMAIL_ALREADY_EXIST, 
-  CASPLA_ID_VERIFICATION_ERROR, 
-  ACCESS_TOKEN_INACTIVE, 
-  CASPLA_ID_LENGTH_REQUIRED, 
+import {
+  CASPLA_ID_AVAILABLE,
+  CASPLA_ID_NOT_AVAILABLE,
+  CONTACT_SYS_ADMIN,
+  SOMETHING_WENT_WRONG,
+  EMAIL_ALREADY_EXIST,
+  CASPLA_ID_VERIFICATION_ERROR,
+  ACCESS_TOKEN_INACTIVE,
+  CASPLA_ID_LENGTH_REQUIRED,
   IMAGE_SIZE_EXCEEDED,
-  SAVED_CHANGES} from '@/stores/messageAlerts/index';
+  SAVED_CHANGES
+} from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
 import { validateCasplaId } from './../../../utils/validations';
+import Link from 'next/link'
 
 type InputProps = {
   thumbnailImage?: object
@@ -60,10 +63,10 @@ const AccountRegistration: NextPage = () => {
   useEffect(() => {
     if (accessToken === undefined || accessToken === '') {
       Router.replace('/signin')
-      toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
+      toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true })
     } else if (accessToken !== '') {
       getAccount(session.casplaId)
-        .then(({response_message} : any) => {
+        .then(({ response_message }: any) => {
           setValue('fullName', response_message.fullName)
           setValue('furigana', response_message.furigana)
           setValue('casplaId', response_message.casplaId)
@@ -91,9 +94,9 @@ const AccountRegistration: NextPage = () => {
     { id: 'talent', label: 'タレント(フリー)', note: '無所属、もしくは個人で活動されているタレント様向けのアカウントです。プロフィール機能や各種SNSとの連携が可能です。' },
   ]
 
-  const filteredRole:any = getValues('role') === undefined ? roles[0] : roles.find(data => data.id === getValues('role'))
+  const filteredRole: any = getValues('role') === undefined ? roles[0] : roles.find(data => data.id === getValues('role'))
 
-  const onChangeRole = (e:any) => {
+  const onChangeRole = (e: any) => {
     // TODO：権限切り替えを実施するときにはコメントアウト外す
     // const changeValue = e.target.value
     // setRole(changeValue)
@@ -103,19 +106,19 @@ const AccountRegistration: NextPage = () => {
     switch (validateCasplaId(getValues('casplaId'))) {
       case 1:
         setCheckCasplaId(false)
-        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})  
+        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true })
         break;
-      case 2: 
+      case 2:
         setCheckCasplaId(false)
-        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true})
+        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true })
         break;
       case 3:
         checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
           setCheckCasplaId(true)
-          toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+          toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true })
         }).catch(() => {
           setCheckCasplaId(false)
-          toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+          toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true })
         })
         break;
       default:
@@ -123,7 +126,7 @@ const AccountRegistration: NextPage = () => {
     }
   }
 
-  const toggleNeedForLetter = (e:any) => {
+  const toggleNeedForLetter = (e: any) => {
     setNeedForLetter(!needForLetterState)
     setValue('needForLetter', e.target.checked)
   }
@@ -135,44 +138,44 @@ const AccountRegistration: NextPage = () => {
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
     updateAccount(session.casplaId, data)
-    .then((res) => {
-      setSession({
-        userId: session.userId,
-        role: session.role,
-        casplaId: res.data.response_message.casplaId,
-        fullName: res.data.response_message.fullName,
-        companyId: session.companyId,
-        companyName: session.companyName,
-        isAdmin: session.isAdmin
-      })
-      if (changeThumbnailState) {
-        updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
-          setSessionThumbnail(thumbnailState.type?res.response_message:'')
-          toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
-        }).catch((err) => {
-            toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
-            console.log(err)
+      .then((res) => {
+        setSession({
+          userId: session.userId,
+          role: session.role,
+          casplaId: res.data.response_message.casplaId,
+          fullName: res.data.response_message.fullName,
+          companyId: session.companyId,
+          companyName: session.companyName,
+          isAdmin: session.isAdmin
         })
-      } else {
-        toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true})
-      }
-    }).catch((err) => {
-      if(err.response.data){
-        if(err.response.data.response_code == 400) {
-          toast.error(EMAIL_ALREADY_EXIST, { autoClose: 3000, draggable: true})
+        if (changeThumbnailState) {
+          updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
+            setSessionThumbnail(thumbnailState.type ? res.response_message : '')
+            toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
+          }).catch((err) => {
+            toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true })
+            console.log(err)
+          })
+        } else {
+          toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
         }
-      } else {
-        console.log(err)
-        toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true})
-      }
-    })
+      }).catch((err) => {
+        if (err.response.data) {
+          if (err.response.data.response_code == 400) {
+            toast.error(EMAIL_ALREADY_EXIST, { autoClose: 3000, draggable: true })
+          }
+        } else {
+          console.log(err)
+          toast.error(SOMETHING_WENT_WRONG + CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true })
+        }
+      })
   }
 
   return (
     <main className={styles['p-account-registration']}>
       <Meta title="アカウント管理" />
-      {loading ? 
-        <Loading /> : 
+      {loading ?
+        <Loading /> :
         (
           <section className={styles['p-account-registration__content']}>
             <form onSubmit={handleSubmit(onSubmit)} className={styles['p-account-registration__form']}>
@@ -194,8 +197,11 @@ const AccountRegistration: NextPage = () => {
                   <Input id="email" register={register} required={true} type="email" disabled={false} />
                 </div>
                 <div className={styles['p-account-registration__item']}>
-                  <FormLabel text="パスワード" label="password" required={true} />
-                  <PasswordInput id="password" register={register} error={errors?.password?.message} note="※8文字以上の半角英数字で入力してください。" />
+                  <FormLabel text="パスワード" label="password" />
+                  <div className={styles['p-account-registration__link']}>
+                    <Link href="/setting/edit/password" >パスワードを変更する</Link>
+                  </div>
+                  {/* <PasswordInput id="password" register={register} error={errors?.password?.message} note="※8文字以上の半角英数字で入力してください。" /> */}
                 </div>
                 <div className={styles['p-account-registration__item']}>
                   <FormLabel text="Caspla ID" label="casplaId" required={true} />
@@ -213,7 +219,7 @@ const AccountRegistration: NextPage = () => {
                 </div>
                 <div className={[styles['p-account-registration__button'], styles['p-account-registration__button--submit']].join(' ')}>
                   <Button text="変更を保存" color='primary' size="large" type="submit" weight="bold" disabled={!checkedCasplaIdState} />
-                  {!checkedCasplaIdState && (<p style={{color:'red', textAlign: 'center'}}>Caspla ID の空き状況を確認します。</p>)}
+                  {!checkedCasplaIdState && (<p style={{ color: 'red', textAlign: 'center' }}>Caspla ID の空き状況を確認します。</p>)}
                 </div>
               </section>
               {/* <section className={styles['p-account-registration__section']}>

@@ -1,37 +1,29 @@
 @use './global' as g;
-
 .p-sign-in {
   @include g.page-margin;
   min-height: 100%;
-
   &__content {
     max-width: 632px;
     margin: 0 auto;
-
     @include g.mq-down(tablet--under) {
       width: 89vw;
     }
   }
-
   &__form {
     margin-bottom: 30px;
     padding-bottom: 30px;
     border-bottom: 1px solid rgba(129, 82, 150, 0.2);
   }
-
   &__item {
     margin-top: 24px;
-
     &:first-of-type {
       margin-top: 30px;
     }
   }
-
   &__logo {
     @include g.flex(center);
     margin: 0 auto 64px;
   }
-
   &__link {
     text-align: center;
     font-weight: bold;
@@ -40,35 +32,41 @@
     font-size: 14px;
     color: g.$color-primary;
     cursor: pointer;
-    transition: .2s;
-
-    &:hover, &:active {
-      opacity: .8;
+    transition: 0.2s;
+    &:hover,
+    &:active {
+      opacity: 0.8;
     }
-
     @include g.mq-down(tablet--under) {
       font-size: 12px;
       margin-top: 8px;
     }
   }
-
   &__button {
     box-sizing: border-box;
     margin: 30px auto 0;
     max-width: 310px;
     padding: 0;
   }
-
   &__password {
     box-sizing: border-box;
     margin: 15px auto 0;
     max-width: 310px;
     padding: 0;
   }
-
   &__sign-up {
     box-sizing: border-box;
     margin: auto;
     max-width: 310px;
+  }
+  &__description {
+    text-align: center;
+  }
+  &__forget-password {
+    text-align: right;
+    margin-top: 10px;
+    a {
+      color: g.$color-blue;
+    }
   }
 }
