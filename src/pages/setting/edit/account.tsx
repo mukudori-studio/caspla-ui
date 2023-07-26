@@ -29,16 +29,17 @@ import {
   ACCESS_TOKEN_INACTIVE,
   CASPLA_ID_LENGTH_REQUIRED,
   IMAGE_SIZE_EXCEEDED,
-  SAVED_CHANGES
+  SAVED_CHANGES,
+  INVALID_FURIGANA
 } from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
-import { validateCasplaId } from './../../../utils/validations';
+import { isValidateFurigana, validateCasplaId } from './../../../utils/validations';
 import Link from 'next/link'
 
 type InputProps = {
   thumbnailImage?: object
   fullName: string
-  furigana?: string
+  furigana: string
   email: string
   casplaId: string
   password: string
@@ -137,38 +138,42 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    updateAccount(session.casplaId, data)
-      .then((res) => {
-        setSession({
-          userId: session.userId,
-          role: session.role,
-          casplaId: res.data.response_message.casplaId,
-          fullName: res.data.response_message.fullName,
-          companyId: session.companyId,
-          companyName: session.companyName,
-          isAdmin: session.isAdmin
-        })
-        if (changeThumbnailState) {
-          updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
-            setSessionThumbnail(thumbnailState.type ? res.response_message : '')
-            toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
-          }).catch((err) => {
-            toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true })
-            console.log(err)
+    if (isValidateFurigana(data.furigana)) {
+      updateAccount(session.casplaId, data)
+        .then((res) => {
+          setSession({
+            userId: session.userId,
+            role: session.role,
+            casplaId: res.data.response_message.casplaId,
+            fullName: res.data.response_message.fullName,
+            companyId: session.companyId,
+            companyName: session.companyName,
+            isAdmin: session.isAdmin
           })
-        } else {
-          toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
-        }
-      }).catch((err) => {
-        if (err.response.data) {
-          if (err.response.data.response_code == 400) {
-            toast.error(EMAIL_ALREADY_EXIST, { autoClose: 3000, draggable: true })
+          if (changeThumbnailState) {
+            updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
+              setSessionThumbnail(thumbnailState.type ? res.response_message : '')
+              toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
+            }).catch((err) => {
+              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true })
+              console.log(err)
+            })
+          } else {
+            toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
           }
-        } else {
-          console.log(err)
-          toast.error(SOMETHING_WENT_WRONG + CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true })
-        }
-      })
+        }).catch((err) => {
+          if (err.response.data) {
+            if (err.response.data.response_code == 400) {
+              toast.error(EMAIL_ALREADY_EXIST, { autoClose: 3000, draggable: true })
+            }
+          } else {
+            console.log(err)
+            toast.error(SOMETHING_WENT_WRONG + CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true })
+          }
+        })
+    } else {
+      toast.error(INVALID_FURIGANA, { autoClose: 3000, draggable: true })
+    }
   }
 
   return (
@@ -189,8 +194,8 @@ const AccountRegistration: NextPage = () => {
                   <Input id="fullName" register={register} required={true} error={errors?.fullName?.message} type={'text'} note="※プロダクション・企業・団体でこのアカウントをご登録の場合は、ご担当者様のお名前を入力してください。" />
                 </div>
                 <div className={styles['p-account-registration__item']}>
-                  <FormLabel text="フリガナ" label="furigana" required={false} />
-                  <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} />
+                  <FormLabel text="フリガナ" label="furigana" required={true} />
+                  <Input id="furigana" register={register} required={true} error={errors?.furigana?.message} type={'text'} />
                 </div>
                 <div className={styles['p-account-registration__item']}>
                   <FormLabel text="メールアドレス" label="email" required={true} />
