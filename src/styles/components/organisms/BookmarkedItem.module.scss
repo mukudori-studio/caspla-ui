@@ -20,7 +20,7 @@
     margin-right: 20px;
     object-fit: cover;
     border-radius: 100%;
-    background: #B2E1E5;
+    background: #b2e1e5;
     position: relative;
     overflow: hidden;
 
@@ -72,15 +72,44 @@
     }
   }
 
+  &__production-detail {
+    @include g.line-clamp(1);
+    display: inline-block;
+    background-color: transparent;
+    color: g.$color-mono-100;
+    padding: 5px 10px;
+    border: 1px solid g.$color-mono-100;
+    border-radius: 30px;
+    font-size: 13px;
+    line-height: 1.1;
+    letter-spacing: initial;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      opacity: 0.5;
+    }
+
+    @include g.mq-down(tablet--under) {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 3px 7px;
+      font-size: 11px;
+      max-width: 180px;
+    }
+  }
+
   &__button {
     width: 46px;
     height: 46px;
     background: transparent;
-    transition: .2s;
+    transition: 0.2s;
     cursor: pointer;
 
-    &:hover, &:active {
-      opacity: .8;
+    &:hover,
+    &:active {
+      opacity: 0.8;
     }
   }
 
