@@ -17,6 +17,7 @@ export const EMAIL_ALREADY_EXIST = 'メールアドレスは既に存在しま�
 export const EMAIL_SEND_FAILED = 'メールの送信に失敗しました。'
 export const ERROR_OCCURED = 'エラーが発生しました。'
 export const IMAGE_SIZE_EXCEEDED = '画像ファイルサイズは4MByte以内でお願いします。'
+export const INVALID_FURIGANA = 'Furigana is invalid. Please check ';
 export const LOGGED_OUT = 'ログアウトしました'
 export const NEW_CAST_CREATED = '新しいキャストが正常に作成されました。'
 export const NOT_ALLOWED_TO_UPDATE_TALENT = 'You are not allowed to update this talent details.'

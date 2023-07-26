@@ -61,7 +61,7 @@ const Talents: NextPage = (props: any) => {
         toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true })
         Router.push('/')
       })
-  }, [props])
+  }, [props.query])
 
   const onSearch = async (value: any) => {
     setLoading(true)
