@@ -19,20 +19,22 @@ import ThumbnailUploader from '@/components/organisms/ThumbnailUploader'
 import styles from '@/styles/AccountRegistration.module.scss'
 import createUser from '@/apis/auth/talent/createUser'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { 
-  CONTACT_SYS_ADMIN, 
-  SOMETHING_WENT_WRONG, 
-  REGISTERED_SUCCESSFULLY, 
-  CASPLA_ID_AVAILABLE, 
-  CASPLA_ID_NOT_AVAILABLE, 
-  CASPLA_ID_LENGTH_REQUIRED, 
+import {
+  CONTACT_SYS_ADMIN,
+  SOMETHING_WENT_WRONG,
+  REGISTERED_SUCCESSFULLY,
+  CASPLA_ID_AVAILABLE,
+  CASPLA_ID_NOT_AVAILABLE,
+  CASPLA_ID_LENGTH_REQUIRED,
   CASPLA_ID_VERIFICATION_ERROR,
-  IMAGE_SIZE_EXCEEDED} from '@/stores/messageAlerts/index';
-import { validateCasplaId } from '@/utils/validations';
+  IMAGE_SIZE_EXCEEDED,
+  INVALID_FURIGANA
+} from '@/stores/messageAlerts/index';
+import { validateCasplaId, isValidateFurigana } from '@/utils/validations';
 
 type InputProps = {
   fullName: string
-  furigana?: string
+  furigana: string
   email: string | string[] | undefined
   casplaId: string
   password: string
@@ -48,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 }
 
-const AccountRegistration: NextPage = ({query}:any) => {
+const AccountRegistration: NextPage = ({ query }: any) => {
 
   const [roleState, setRole] = useState('FAN_USER')
   const [userIdState, setUserId] = useState(0)
@@ -79,7 +81,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
     else setSubmitText('この内容で登録する')
   }
 
-  const onChangeRole = (e:any) => {
+  const onChangeRole = (e: any) => {
     const changeValue = e.target.value
     setRole(changeValue)
     setSubmitButton(changeValue)
@@ -89,19 +91,19 @@ const AccountRegistration: NextPage = ({query}:any) => {
     switch (validateCasplaId(getValues('casplaId'))) {
       case 1:
         setCheckCasplaId(false)
-        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})
+        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true })
         break;
       case 2:
         setCheckCasplaId(false)
-        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true})
+        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true })
         break;
       case 3:
         checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
           setCheckCasplaId(true)
-          toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+          toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true })
         }).catch(() => {
           setCheckCasplaId(false)
-          toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+          toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true })
         })
         break;
       default:
@@ -112,43 +114,47 @@ const AccountRegistration: NextPage = ({query}:any) => {
   const changeThumbnail = (val: any) => setThumbnail(val)
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    createUser(data, roleState)
-      .then(({response_message})=> {
-        setSession({
-          userId: response_message.userId,
-          role: response_message.role,
-          casplaId: response_message.casplaId,
-          fullName: response_message.fullName,
-          companyId: response_message.productionId,
-          companyName: response_message.productionName,
-          isAdmin: response_message.productionAdmin
-        })
-        setAccessToken(response_message.accessToken)
-        setThumbnailImage(response_message.thumbnailImage)
-
-        if (thumbnailState !== '') {
-          updateUserPhoto(userIdState,"THUMBNAIL", thumbnailState).then(res => {
-            setThumbnailImage(res.response_message)
-          }).catch((err)=>{
-              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
-              console.log(err)
+    if (isValidateFurigana(data.furigana)) {
+      createUser(data, roleState)
+        .then(({ response_message }) => {
+          setSession({
+            userId: response_message.userId,
+            role: response_message.role,
+            casplaId: response_message.casplaId,
+            fullName: response_message.fullName,
+            companyId: response_message.productionId,
+            companyName: response_message.productionName,
+            isAdmin: response_message.productionAdmin
           })
-        }
+          setAccessToken(response_message.accessToken)
+          setThumbnailImage(response_message.thumbnailImage)
 
-        if (roleState === 'TALENT') Router.push('/signup/talent-registration')
-        if (roleState === 'COMPANY_ADMIN') Router.push('/signup/company-registration')
-        if (roleState === 'FAN_USER') {
-          toast.success(REGISTERED_SUCCESSFULLY, { autoClose: 3000, draggable: true})
-          Router.push('/signup/complete')
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-        toast.error(SOMETHING_WENT_WRONG+CONTACT_SYS_ADMIN, { autoClose: 5000, draggable: true})
-      })
+          if (thumbnailState !== '') {
+            updateUserPhoto(userIdState, "THUMBNAIL", thumbnailState).then(res => {
+              setThumbnailImage(res.response_message)
+            }).catch((err) => {
+              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true })
+              console.log(err)
+            })
+          }
+
+          if (roleState === 'TALENT') Router.push('/signup/talent-registration')
+          if (roleState === 'COMPANY_ADMIN') Router.push('/signup/company-registration')
+          if (roleState === 'FAN_USER') {
+            toast.success(REGISTERED_SUCCESSFULLY, { autoClose: 3000, draggable: true })
+            Router.push('/signup/complete')
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          toast.error(SOMETHING_WENT_WRONG + CONTACT_SYS_ADMIN, { autoClose: 5000, draggable: true })
+        })
+    } else {
+      toast.error(INVALID_FURIGANA, { autoClose: 5000, draggable: true })
+    }
   }
 
-  const validatePassword = (data: string) =>{
+  const validatePassword = (data: string) => {
     return getValues('password') === data
   }
 
@@ -168,8 +174,8 @@ const AccountRegistration: NextPage = ({query}:any) => {
               <Input id="fullName" register={register} required={true} error={errors?.fullName?.message} type={'text'} note="※プロダクション・企業・団体でこのアカウントをご登録の場合は、ご担当者様のお名前を入力してください。" />
             </div>
             <div className={styles['p-account-registration__item']}>
-              <FormLabel text="フリガナ" label="furigana" required={false} />
-              <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} type={'text'} />
+              <FormLabel text="フリガナ" label="furigana" required={true} />
+              <Input id="furigana" register={register} required={true} error={errors?.furigana?.message} type={'text'} />
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="メールアドレス" label="email" required={true} />
@@ -192,7 +198,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
             </div>
             <div className={styles['p-account-registration__item']}>
               <FormLabel text="パスワード(確認用)" label="rePassword" required={true} />
-              <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} validate={validatePassword}/>
+              <RePasswordInput id="rePassword" register={register} error={errors?.rePassword} password={getValues('password')} validate={validatePassword} />
             </div>
           </section>
           <section className={styles['p-account-registration__section']}>
@@ -201,7 +207,7 @@ const AccountRegistration: NextPage = ({query}:any) => {
             <div className={styles['p-account-registration__item']}>
               {
                 roles.map((role, index) => {
-                  return(
+                  return (
                     <div className={styles['p-account-registration__radio']} key={`roles-${index}`}>
                       <RadioButton id={role.id} name="role" label={role.label} note={role.note} onChange={onChangeRole} checked={role.id === roleState} />
                     </div>

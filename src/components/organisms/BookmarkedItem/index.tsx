@@ -9,20 +9,29 @@ type BookmarkedItemProps = {
   casplaId: string
   thumbnailImage: string
   fullName: string
-  onClick: (id:string) => void
+  productionName: string
+  productionId: string
+  onClick: (id: string) => void
 }
 
 const BookmarkedItem = (({
   casplaId,
   thumbnailImage,
   fullName,
+  productionId,
+  productionName,
   onClick
 }: BookmarkedItemProps) => {
 
   const deleteBookmark = () => onClick(casplaId)
-  
+
   const toTalentProfile = () => {
     Router.push(`/talents/detail/${casplaId}`)
+  }
+
+  const toProduction = (event: any) => {
+    event.stopPropagation();
+    Router.push(`/productions/detail/${productionId}`)
   }
 
   return (
@@ -46,7 +55,7 @@ const BookmarkedItem = (({
         }
         <div className={styles['o-book-marked-item__names']}>
           <h2 className={styles['o-book-marked-item__name']}>{fullName}</h2>
-          <h3 className={styles['o-book-marked-item__caspla-id']}>{casplaId}</h3>
+          <div className={styles['o-book-marked-item__production-detail']} onClick={toProduction}>{productionName}</div>
         </div>
       </div>
       <button onClick={deleteBookmark} className={styles['o-book-marked-item__button']} key={`${casplaId}-button`} >
