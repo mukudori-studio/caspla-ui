@@ -35,5 +35,6 @@ export const SAVED_CHANGES = '変更を保存しました。'
 export const SOMETHING_WENT_WRONG = 'エラーが発生しました。'
 export const USERS_REMOVED_FROM_PRODUCTION = '選択したユーザーをプロダクションから削除しました。'
 export const USER_MUST_BE_LOGGED_IN = 'ログインする必要があります。'
+export const USER_NOT_FOUND = 'User you are trying to fetch is not Found.';
 export const VERIFICATION_CODE_FAILED = '確認コードの確認に失敗しました。'
 export const VERIFICATION_CODE_SENT = '確認コードを送信しました。'
