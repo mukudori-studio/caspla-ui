@@ -66,7 +66,7 @@ const AccountRegistration: NextPage = () => {
       Router.replace('/signin')
       toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true })
     } else if (accessToken !== '') {
-      getAccount(session.casplaId, accessToken)
+      getAccount(session.casplaId)
         .then(({ response_message }: any) => {
           setValue('fullName', response_message.fullName)
           setValue('furigana', response_message.furigana)
