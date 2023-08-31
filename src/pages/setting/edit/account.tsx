@@ -138,7 +138,7 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    updateAccount(session.casplaId, data, accessToken)
+    updateAccount(session.casplaId, data)
       .then((res) => {
         setSession({
           userId: session.userId,
