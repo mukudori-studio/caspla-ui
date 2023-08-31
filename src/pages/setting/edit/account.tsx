@@ -138,42 +138,38 @@ const AccountRegistration: NextPage = () => {
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => {
-    if (isValidateFurigana(data.furigana)) {
-      updateAccount(session.casplaId, data)
-        .then((res) => {
-          setSession({
-            userId: session.userId,
-            role: session.role,
-            casplaId: res.data.response_message.casplaId,
-            fullName: res.data.response_message.fullName,
-            companyId: session.companyId,
-            companyName: session.companyName,
-            isAdmin: session.isAdmin
-          })
-          if (changeThumbnailState) {
-            updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
-              setSessionThumbnail(thumbnailState.type ? res.response_message : '')
-              toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
-            }).catch((err) => {
-              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true })
-              console.log(err)
-            })
-          } else {
-            toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
-          }
-        }).catch((err) => {
-          if (err.response.data) {
-            if (err.response.data.response_code == 400) {
-              toast.error(EMAIL_ALREADY_EXIST, { autoClose: 3000, draggable: true })
-            }
-          } else {
-            console.log(err)
-            toast.error(SOMETHING_WENT_WRONG + CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true })
-          }
+    updateAccount(session.casplaId, data)
+      .then((res) => {
+        setSession({
+          userId: session.userId,
+          role: session.role,
+          casplaId: res.data.response_message.casplaId,
+          fullName: res.data.response_message.fullName,
+          companyId: session.companyId,
+          companyName: session.companyName,
+          isAdmin: session.isAdmin
         })
-    } else {
-      toast.error(INVALID_FURIGANA, { autoClose: 3000, draggable: true })
-    }
+        if (changeThumbnailState) {
+          updateUserPhoto(session.userId, "THUMBNAIL", thumbnailState).then((res) => {
+            setSessionThumbnail(thumbnailState.type ? res.response_message : '')
+            toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
+          }).catch((err) => {
+            toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true })
+            console.log(err)
+          })
+        } else {
+          toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
+        }
+      }).catch((err) => {
+        if (err.response.data) {
+          if (err.response.data.response_code == 400) {
+            toast.error(EMAIL_ALREADY_EXIST, { autoClose: 3000, draggable: true })
+          }
+        } else {
+          console.log(err)
+          toast.error(SOMETHING_WENT_WRONG + CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true })
+        }
+      })
   }
 
   return (

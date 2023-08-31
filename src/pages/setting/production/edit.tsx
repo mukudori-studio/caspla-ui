@@ -41,33 +41,29 @@ const ProductionEdit: NextPage = () => {
   }, [])
 
   const updateProduction = (data: any) => {
-    if (isValidateFurigana(data.furigana)) {
-      updateProductionDetails(data, companyId)
-        .then((res) => {
-          const { links, ...other } = res.response_message
-          setLinks(links)
-          setProduction(other)
-          setSession({
-            userId: session.userId,
-            role: session.role,
-            casplaId: session.casplaId,
-            fullName: session.fullName,
-            companyId: other.productionId,
-            companyName: other.productionName,
-            isAdmin: session.isAdmin
-          })
-          toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
+    updateProductionDetails(data, companyId)
+      .then((res) => {
+        const { links, ...other } = res.response_message
+        setLinks(links)
+        setProduction(other)
+        setSession({
+          userId: session.userId,
+          role: session.role,
+          casplaId: session.casplaId,
+          fullName: session.fullName,
+          companyId: other.productionId,
+          companyName: other.productionName,
+          isAdmin: session.isAdmin
         })
-        .catch((error) => {
-          console.log(error)
-          toast.error(SOMETHING_WENT_WRONG + CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true })
-        })
-      if (typeof data.companyImage === 'object' || data.companyImage === '') {
-        updateProductionLogo(productionId, data.companyImage)
-          .catch((error) => console.log(error))
-      }
-    } else {
-      toast.error(INVALID_FURIGANA, { autoClose: 3000, draggable: true })
+        toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true })
+      })
+      .catch((error) => {
+        console.log(error)
+        toast.error(SOMETHING_WENT_WRONG + CONTACT_SYS_ADMIN, { autoClose: 3000, draggable: true })
+      })
+    if (typeof data.companyImage === 'object' || data.companyImage === '') {
+      updateProductionLogo(productionId, data.companyImage)
+        .catch((error) => console.log(error))
     }
   }
 
