@@ -18,11 +18,12 @@ import starSigns from '@/utils/starSigns'
 import styles from '@/styles/AccountRegistration.module.scss'
 import { useRecoilValue } from 'recoil'
 import { userAtom } from '@/stores/Session'
-import { 
-  CASPLA_ID_AVAILABLE, 
-  CASPLA_ID_NOT_AVAILABLE, 
-  CASPLA_ID_VERIFICATION_ERROR, 
-  CASPLA_ID_LENGTH_REQUIRED } from '@/stores/messageAlerts/index'
+import {
+  CASPLA_ID_AVAILABLE,
+  CASPLA_ID_NOT_AVAILABLE,
+  CASPLA_ID_VERIFICATION_ERROR,
+  CASPLA_ID_LENGTH_REQUIRED
+} from '@/stores/messageAlerts/index'
 import { validateCasplaId } from './../../utils/validations';
 
 type InputProps = {
@@ -155,9 +156,9 @@ const TalentFormTemplate = ({
     setValue('birthMonth', month)
     setValue('birthDay', day)
   }
-  const changeGender = (e:any) => setValue('gender', e.target.value)
-  const changeStarSign = (e:any) => setValue('constellation', e.target.value)
-  const changeBloodType = (e:any) => setValue('bloodType', e.target.value)
+  const changeGender = (e: any) => setValue('gender', e.target.value)
+  const changeStarSign = (e: any) => setValue('constellation', e.target.value)
+  const changeBloodType = (e: any) => setValue('bloodType', e.target.value)
   const checkActivity = (data: Array<string>) => {
     setActivity(data)
     setValue('activity', data)
@@ -167,19 +168,19 @@ const TalentFormTemplate = ({
     switch (validateCasplaId(getValues('casplaId'))) {
       case 1:
         setCheckCasplaId(false)
-        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})  
+        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true })
         break;
-      case 2: 
+      case 2:
         setCheckCasplaId(false)
-        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true})
+        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true })
         break;
       case 3:
         checkCasplaId(getValues('casplaId'), session.casplaId).then(res => {
           setCheckCasplaId(true)
-          toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+          toast.success(CASPLA_ID_AVAILABLE, { autoClose: 3000, draggable: true })
         }).catch(() => {
           setCheckCasplaId(false)
-          toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+          toast.error(CASPLA_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true })
         })
         break;
       default:
@@ -189,14 +190,14 @@ const TalentFormTemplate = ({
 
   const onChangeThumbnail = (val: any, isRemove: boolean) => {
     setValue('thumbnailImage', val)
-    setThumbnailImage(isRemove?'':val)
-    changeThumbnail(isRemove?false:true)
+    setThumbnailImage(isRemove ? '' : val)
+    changeThumbnail(isRemove ? false : true)
   }
 
-  const onChangeCover = (val:any, isRemove: boolean) => {
+  const onChangeCover = (val: any, isRemove: boolean) => {
     setValue('coverImage', val)
-    setCoverImage(isRemove?'':val)
-    changeCover(isRemove?false:true)
+    setCoverImage(isRemove ? '' : val)
+    changeCover(isRemove ? false : true)
   }
 
   const onSubmit: SubmitHandler<InputProps> = (data) => submitForm(data)
@@ -212,8 +213,8 @@ const TalentFormTemplate = ({
           <Input id="fullName" register={register} required={true} error={errors?.fullName?.message} type={'text'} note="※プロダクション・企業・団体でこのアカウントをご登録の場合は、ご担当者様のお名前を入力してください。" />
         </div>
         <div className={styles['p-account-registration__item']}>
-          <FormLabel text="フリガナ" label="furigana" required={false} />
-          <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} type={'text'} />
+          <FormLabel text="フリガナ" label="furigana" required={true} />
+          <Input id="furigana" register={register} required={true} error={errors?.furigana?.message} type={'text'} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="Caspla ID" label="casplaId" required={true} />
@@ -236,7 +237,7 @@ const TalentFormTemplate = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="性別" label="gender" />
-          <Select options={[{value: '男性', text: '男性'}, {value: '女性', text: '女性'}]} onChange={changeGender} selected={props.gender}/>
+          <Select options={[{ value: '男性', text: '男性' }, { value: '女性', text: '女性' }]} onChange={changeGender} selected={props.gender} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="生年月日" label="birthday" />
@@ -244,11 +245,11 @@ const TalentFormTemplate = ({
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="星座" label="constellation" />
-          <Select options={starSigns} onChange={changeStarSign} selected={props.constellation}/>
+          <Select options={starSigns} onChange={changeStarSign} selected={props.constellation} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="血液型" label="bloodType" />
-          <Select options={bloodTypes} onChange={changeBloodType} selected={props.bloodType}/>
+          <Select options={bloodTypes} onChange={changeBloodType} selected={props.bloodType} />
         </div>
         <div className={styles['p-account-registration__item']}>
           <FormLabel text="出身地" label="birthplace" />
