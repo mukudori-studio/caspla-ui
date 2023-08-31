@@ -23,7 +23,7 @@ import { validateCasplaId } from './../../utils/validations';
 type InputProps = {
   companyImage?: any
   companyName: string | undefined
-  furigana: string| undefined
+  furigana: string | undefined
   corpId: string
   zipCode: string
   prefecture: string | undefined
@@ -75,17 +75,17 @@ const Signup = ({
   submitForm,
   ...props
 }: registrationPorps) => {
-  
-  const {companyId} = useRecoilValue(userAtom)
+
+  const { companyId } = useRecoilValue(userAtom)
   const { register, handleSubmit, formState: { errors }, watch, setValue, getValues } = useForm<InputProps>()
   const [searchingState, setSearching] = useState(false)
   const [checkedIdState, setCheckId] = useState(false)
   const [prefectureState, setPrefecture] = useState<any>('北海道')
 
-  const changePrefecture = (e:any) => setValue('prefecture', e.target.value)
+  const changePrefecture = (e: any) => setValue('prefecture', e.target.value)
 
   const formattedPrefectures = prefectures.map(data => {
-    return { value: data.name, text: data.name}
+    return { value: data.name, text: data.name }
   })
 
   useEffect(() => {
@@ -114,7 +114,7 @@ const Signup = ({
   }, [])
 
   const onSearchZipCode = async () => {
-    if(searchingState) return
+    if (searchingState) return
     setSearching(true)
     searchZipCode(watch('zipCode')).then(res => {
       if (res.status === 200) {
@@ -122,13 +122,13 @@ const Signup = ({
         setValue('prefecture', result.address1)
         setPrefecture(result.address1)
         setValue('address1', result.address2 + result.address3)
-      } else if(res.status === 400) {
-        toast.error(POSTALCODE_NOT_CORRECT, { autoClose: 3000, draggable: true})
+      } else if (res.status === 400) {
+        toast.error(POSTALCODE_NOT_CORRECT, { autoClose: 3000, draggable: true })
       } else {
-        toast.error(ERROR_OCCURED, { autoClose: 3000, draggable: true})
+        toast.error(ERROR_OCCURED, { autoClose: 3000, draggable: true })
       }
     }).catch(err => {
-      toast.error(ERROR_OCCURED, { autoClose: 3000, draggable: true})
+      toast.error(ERROR_OCCURED, { autoClose: 3000, draggable: true })
     }).finally(() => {
       setSearching(false)
     })
@@ -140,28 +140,28 @@ const Signup = ({
     switch (validateCasplaId(getValues('corpId'))) {
       case 1:
         setCheckId(false)
-        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true})  
+        toast.error(CASPLA_ID_LENGTH_REQUIRED, { autoClose: 3000, draggable: true })
         break;
-      case 2: 
+      case 2:
         setCheckId(false)
-        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true})
+        toast.error(CASPLA_ID_VERIFICATION_ERROR, { autoClose: 3000, draggable: true })
         break;
       case 3:
         if (userType === 'production') {
           checkProductionId(getValues('corpId'), companyId).then(() => {
             setCheckId(true)
-            toast.success(PRODUCTION_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+            toast.success(PRODUCTION_ID_AVAILABLE, { autoClose: 3000, draggable: true })
           }).catch(() => {
             setCheckId(false)
-            toast.error(PRODUCTION_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+            toast.error(PRODUCTION_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true })
           })
         } else {
           checkCorpId(getValues('corpId'), companyId).then((res) => {
             setCheckId(true)
-            toast.success(COMPANY_ID_AVAILABLE, { autoClose: 3000, draggable: true})
+            toast.success(COMPANY_ID_AVAILABLE, { autoClose: 3000, draggable: true })
           }).catch(() => {
             setCheckId(false)
-            toast.error(COMPANY_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true})
+            toast.error(COMPANY_ID_NOT_AVAILABLE, { autoClose: 3000, draggable: true })
           })
         }
         break;
@@ -170,7 +170,7 @@ const Signup = ({
         break;
     }
   }
-  
+
   const onSubmit: SubmitHandler<InputProps> = (data) => submitForm(data)
 
   // NOTE：template部分はaccount-registrationと同じになるためCSSのClassとしては共通で使いまわし
@@ -184,10 +184,10 @@ const Signup = ({
           <FormLabel text="会社名" label="companyName" required={true} />
           <Input id="companyName" register={register} required={true} error={errors?.companyName?.message} />
         </div>
-        { userType === 'production' && (
+        {userType === 'production' && (
           <div className={styles['p-account-registration__item']}>
-            <FormLabel text="フリガナ" label="furigana" required={false} />
-            <Input id="furigana" register={register} required={false} error={errors?.furigana?.message} />
+            <FormLabel text="フリガナ" label="furigana" required={true} />
+            <Input id="furigana" register={register} required={true} error={errors?.furigana?.message} />
           </div>
         )}
         <div className={styles['p-account-registration__item']}>
@@ -246,7 +246,7 @@ const Signup = ({
           <Button text={editType === 'register' ? 'この内容で登録する' : '変更を保存'} color="primary" size="large" type="submit" disabled={!checkedIdState} />
         </div>
       </form>
-      {editType !== 'edit' && <div className={styles['p-account-registration__button']}><Button text="前の画面に戻る" color="default" size="large" onClick={() => Router.back()}/></div>}
+      {editType !== 'edit' && <div className={styles['p-account-registration__button']}><Button text="前の画面に戻る" color="default" size="large" onClick={() => Router.back()} /></div>}
     </div>
   )
 }

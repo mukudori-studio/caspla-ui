@@ -2,6 +2,7 @@ import React from 'react'
 import ErrorMessage from '@/components/atoms/Forms/ErrorMessage'
 import FormNote from '@/components/atoms/Forms/Note'
 import styles from '@/styles/components/molecules/Forms/Input.module.scss'
+import { INVALID_FURIGANA } from '@/stores/messageAlerts/index';
 
 type InputProps = {
   id: string
@@ -11,8 +12,8 @@ type InputProps = {
   max?: number
   steps?: string
   required?: boolean
-  placeholder? : string
-  disabled? : boolean
+  placeholder?: string
+  disabled?: boolean
   error?: any
   note?: string
   type?: 'text' | 'email' | 'number' | 'tel'
@@ -42,6 +43,7 @@ const Input = ({
           required: required && '入力必須項目です。',
           minLength: { value: min, message: `${min}文字以上で入力してください。` },
           maxLength: { value: max, message: `${max}文字以内で入力してください。` },
+          pattern: id === 'furigana' && { value: /^[ァ-ヶー　]+$/, message: INVALID_FURIGANA }
         })} />
       </div>
       {note !== '' && <FormNote text={note} />}

@@ -12,7 +12,7 @@ import styles from '@/styles/ProductionSetting.module.scss'
 import { toast } from 'react-toastify'
 import putProductionTalent from '@/apis/settings/production/putTalent'
 import updateUserPhoto from '@/apis/images/updateUserPhoto'
-import { SOMETHING_WENT_WRONG, ACCESS_TOKEN_INACTIVE, NOT_ALLOWED_TO_UPDATE_TALENT, SAVED_CHANGES, IMAGE_SIZE_EXCEEDED } from '@/stores/messageAlerts/index';
+import { SOMETHING_WENT_WRONG, ACCESS_TOKEN_INACTIVE, NOT_ALLOWED_TO_UPDATE_TALENT, SAVED_CHANGES, IMAGE_SIZE_EXCEEDED, USER_NOT_FOUND } from '@/stores/messageAlerts/index';
 import Loading from '@/components/atoms/Loading'
 
 
@@ -31,135 +31,138 @@ const TalentEdit: NextPage = () => {
   const onChangeCover = () => setChangeCover(true)
 
   useEffect(() => {
-    if(accessToken!==undefined||accessToken!=='') {
+    if (accessToken !== undefined || accessToken !== '') {
       getTalentDetail(session.casplaId, casplaId).then(res => {
         setTalent(res.response_message.castDetails)
       })
-      .catch((err)=> {
-        if(err.response) {
-          if(err.response.status === 403) {
-            toast.error(NOT_ALLOWED_TO_UPDATE_TALENT, { autoClose: 3000, draggable: true})
-            setTimeout(()=>Router.back(),2500)
+        .catch((err) => {
+          if (err.response) {
+            if (err.response.status === 403) {
+              toast.error(NOT_ALLOWED_TO_UPDATE_TALENT, { autoClose: 3000, draggable: true })
+              setTimeout(() => Router.back(), 2500)
+            } else if (err.response.status === 404) {
+              toast.error(USER_NOT_FOUND, { autoClose: 3000, draggable: true })
+              setTimeout(() => Router.back(), 2500)
+            }
           }
-        }
-        console.log(err)
-      })
+          console.log(err)
+        })
     } else {
-      toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true})
+      toast.error(ACCESS_TOKEN_INACTIVE, { autoClose: 3000, draggable: true })
       Router.push('/signin')
     }
   }, [casplaId])
 
-  useEffect(()=> {
-    if(typeof talentState === 'boolean' && !talentState) {
-      toast.warning(NOT_ALLOWED_TO_UPDATE_TALENT, { autoClose: 3000, draggable: true})
+  useEffect(() => {
+    if (typeof talentState === 'boolean' && !talentState) {
+      toast.warning(NOT_ALLOWED_TO_UPDATE_TALENT, { autoClose: 3000, draggable: true })
       Router.push('/setting/production/talents')
     }
-  },[talentState])
+  }, [talentState])
 
-  const onUpdateProfile = (data:any) => {
+  const onUpdateProfile = (data: any) => {
     putProductionTalent(talentState.casplaId, data, session.casplaId)
-    .then(()=>{
-      if(changeThumbnailState) {
-        updateUserPhoto(talentState.userId, 'THUMBNAIL', data.thumbnailImage)
-        .then(() => {
-          if(changeCoverState) {
-            updateUserPhoto(talentState.userId, "COVER", data.coverImage)
-            .catch((err)=> {
-                toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
-                console.log(err)
+      .then(() => {
+        if (changeThumbnailState) {
+          updateUserPhoto(talentState.userId, 'THUMBNAIL', data.thumbnailImage)
+            .then(() => {
+              if (changeCoverState) {
+                updateUserPhoto(talentState.userId, "COVER", data.coverImage)
+                  .catch((err) => {
+                    toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true })
+                    console.log(err)
+                  })
+              }
             })
-          }
-        })
-        .catch((err)=>{
-            toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
-            console.log(err)
-        })
-      } else {
-        if(changeCoverState) {
-          updateUserPhoto(talentState.userId, "COVER", data.coverImage)
-          .catch((err)=> {
-              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true})
+            .catch((err) => {
+              toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true })
               console.log(err)
-          })
+            })
+        } else {
+          if (changeCoverState) {
+            updateUserPhoto(talentState.userId, "COVER", data.coverImage)
+              .catch((err) => {
+                toast.error(IMAGE_SIZE_EXCEEDED, { autoClose: 3000, draggable: true })
+                console.log(err)
+              })
+          }
         }
-      }
-      setTimeout(()=>toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true}),4000)
-    })
-    .catch((err)=> {
-      console.log(err)
-      toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true})
-    })
+        setTimeout(() => toast.success(SAVED_CHANGES, { autoClose: 3000, draggable: true }), 4000)
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error(SOMETHING_WENT_WRONG, { autoClose: 3000, draggable: true })
+      })
   }
 
   return (
     <>
-    <main className={styles['p-production-setting']}>
-    { !talentState.casplaId && <Loading />}
-    {talentState.casplaId && talentState !== false && (
-      <>
-        <Meta title="プロダクション管理" />
-        <section className={styles['p-production-setting__content']}>
-          <header className={styles['p-production-setting__head']}>
-            <h1 className={styles['p-production-setting__title']}>プロダクション管理</h1>
-            <div className={styles['p-production-setting__buttons']}>
-              <div className={styles['p-production-setting__button']}>
-                <LinkButton href="/setting/production/talents" color="black" size="small" weight="bold" text="タレント一覧" />
+      <main className={styles['p-production-setting']}>
+        {!talentState.casplaId && <Loading />}
+        {talentState.casplaId && talentState !== false && (
+          <>
+            <Meta title="プロダクション管理" />
+            <section className={styles['p-production-setting__content']}>
+              <header className={styles['p-production-setting__head']}>
+                <h1 className={styles['p-production-setting__title']}>プロダクション管理</h1>
+                <div className={styles['p-production-setting__buttons']}>
+                  <div className={styles['p-production-setting__button']}>
+                    <LinkButton href="/setting/production/talents" color="black" size="small" weight="bold" text="タレント一覧" />
+                  </div>
+                  <div className={styles['p-production-setting__button']}>
+                    <LinkButton href="/setting/production/edit" color="outline-mono" size="small" weight="bold" text="事務所情報" />
+                  </div>
+                </div>
+              </header>
+              <div className={styles['p-production-setting__sub-head']}>
+                <h2 className={styles['p-production-setting__sub-title']}>タレントプロフィールの変更</h2>
+                <div className={styles['p-production-setting__menus']}>
+                  <Link href="/setting/production/talents">
+                    <a className={styles['p-production-setting__text-link']}>タレント一覧に戻る</a>
+                  </Link>
+                </div>
               </div>
-              <div className={styles['p-production-setting__button']}>
-                <LinkButton href="/setting/production/edit" color="outline-mono" size="small" weight="bold" text="事務所情報" />
+              <div className={styles['p-production-setting__edit']}>
+                <TalentFormTemplate
+                  editType="edit"
+                  changeThumbnail={onChangeThumbnail}
+                  changeCover={onChangeCover}
+                  submitForm={onUpdateProfile}
+                  fullName={talentState.fullName}
+                  furigana={talentState.furigana}
+                  casplaId={talentState.casplaId}
+                  userId={talentState.userId}
+                  thumbnailImage={talentState.thumbnailImage}
+                  profile={talentState.profile}
+                  gender={talentState.gender}
+                  constellation={talentState.constellation}
+                  bloodType={talentState.bloodType}
+                  birthplace={talentState.birthplace}
+                  birthDay={talentState.birthDay}
+                  birthMonth={talentState.birthMonth}
+                  birthYear={talentState.birthYear}
+                  height={talentState.height}
+                  weight={talentState.weight}
+                  bust={talentState.bust}
+                  waist={talentState.waist}
+                  hip={talentState.hip}
+                  footSize={talentState.footSize}
+                  siteUrl={talentState.links.siteUrl}
+                  blogUrl={talentState.links.blogUrl}
+                  twitterId={talentState.links.twitterId}
+                  facebookId={talentState.links.facebookId}
+                  youtubeId={talentState.links.youtubeId}
+                  tiktokId={talentState.links.tiktokId}
+                  activity={talentState.activities}
+                  history={talentState.history}
+                  note={talentState.note}
+                  coverImage={talentState.coverImage}
+                />
               </div>
-            </div>
-          </header>
-          <div className={styles['p-production-setting__sub-head']}>
-            <h2 className={styles['p-production-setting__sub-title']}>タレントプロフィールの変更</h2>
-            <div className={styles['p-production-setting__menus']}>
-              <Link href="/setting/production/talents">
-                <a className={styles['p-production-setting__text-link']}>タレント一覧に戻る</a>
-              </Link>
-            </div>
-          </div>
-          <div className={styles['p-production-setting__edit']}>
-            <TalentFormTemplate
-              editType="edit"
-              changeThumbnail={onChangeThumbnail}
-              changeCover={onChangeCover}
-              submitForm={onUpdateProfile}
-              fullName={talentState.fullName}
-              furigana={talentState.furigana}
-              casplaId={talentState.casplaId}
-              userId={talentState.userId}
-              thumbnailImage={talentState.thumbnailImage}
-              profile={talentState.profile}
-              gender={talentState.gender}
-              constellation={talentState.constellation}
-              bloodType={talentState.bloodType}
-              birthplace={talentState.birthplace}
-              birthDay={talentState.birthDay}
-              birthMonth={talentState.birthMonth}
-              birthYear={talentState.birthYear}
-              height={talentState.height}
-              weight={talentState.weight}
-              bust={talentState.bust}
-              waist={talentState.waist}
-              hip={talentState.hip}
-              footSize={talentState.footSize}
-              siteUrl={talentState.links.siteUrl}
-              blogUrl={talentState.links.blogUrl}
-              twitterId={talentState.links.twitterId}
-              facebookId={talentState.links.facebookId}
-              youtubeId={talentState.links.youtubeId}
-              tiktokId={talentState.links.tiktokId}
-              activity={talentState.activities}
-              history={talentState.history}
-              note={talentState.note}
-              coverImage={talentState.coverImage}
-            />
-          </div>
-        </section>
-      </>
-    )}
-    </main>
+            </section>
+          </>
+        )}
+      </main>
     </>
   )
 }
